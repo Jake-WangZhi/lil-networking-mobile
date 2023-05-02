@@ -2,7 +2,7 @@ import prisma from "../lib/prisma";
 
 async function main() {
   const response = await Promise.all([
-    prisma.contacts.upsert({
+    await prisma.contacts.upsert({
       where: { email: "rauchg@vercel.com" },
       update: {},
       create: {
@@ -12,7 +12,7 @@ async function main() {
           "https://pbs.twimg.com/profile_images/1576257734810312704/ucxb4lHy_400x400.jpg",
       },
     }),
-    prisma.contacts.upsert({
+    await prisma.contacts.upsert({
       where: { email: "lee@vercel.com" },
       update: {},
       create: {
