@@ -51,7 +51,7 @@ Then open .env.local and set the environment variables to match the ones in your
 Next, run Next.js in development mode:
 
 ```bash
-pnpm dev
+yarn dev
 ```
 
 Deploy it to the cloud with [Vercel](https://vercel.com/new?utm_source=github&utm_medium=readme&utm_campaign=vercel-examples) ([Documentation](https://nextjs.org/docs/deployment)).
