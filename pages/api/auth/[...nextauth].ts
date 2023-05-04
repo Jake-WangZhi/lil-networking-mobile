@@ -12,7 +12,7 @@ export const authOptions: AuthOptions = {
     }),
   ],
   callbacks: {
-    async redirect({ baseUrl, url }) {
+    async redirect({ baseUrl }) {
       return baseUrl;
     },
     async session({ session, token }) {
