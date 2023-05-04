@@ -39,7 +39,7 @@ export default async function Table() {
                 <p className="text-sm text-gray-500">{user.email}</p>
               </div>
             </div>
-            <p className="text-sm text-gray-500">{timeAgo(user.createdAt)}</p>
+            <p className="text-sm text-gray-500">{timeAgo(user.updatedAt)}</p>
           </div>
         ))}
       </div>
