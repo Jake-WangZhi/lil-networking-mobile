@@ -7,10 +7,8 @@ generator client {
 }
 
 datasource db {
-  provider          = "postgresql"
-  url               = env("POSTGRES_URL") // uses connection pooling
-  directUrl         = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
-  shadowDatabaseUrl = env("POSTGRES_URL_NON_POOLING") // used for migrations
+  provider = "postgresql"
+  url      = env("POSTGRES_URL") // uses connection pooling
 }
 
 model Contacts {
@@ -23,4 +21,17 @@ model Contacts {
   phone   String? @unique
   website String? @unique
   image   String?
+  Users   Users?  @relation(fields: [usersId], references: [id])
+  usersId String?
+}
+
+model Users {
+  id         String     @id @default(cuid())
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+  firstName  String
+  lastName   String
+  email      String     @unique
+  LinkedInId String     @unique
+  contacts   Contacts[]
 }
