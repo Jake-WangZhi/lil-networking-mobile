@@ -6,7 +6,7 @@ import placeholderProfileImage from "../public/images/placeholder_profile_image.
 
 export default async function Table() {
   const startTime = Date.now();
-  const users = await prisma.contacts.findMany();
+  const users = await prisma.users.findMany();
   const duration = Date.now() - startTime;
 
   return (
@@ -28,7 +28,7 @@ export default async function Table() {
           >
             <div className="flex items-center space-x-4">
               <Image
-                src={user.image ?? placeholderProfileImage}
+                src={user.picture ?? placeholderProfileImage}
                 alt={user.name}
                 width={48}
                 height={48}

@@ -17,3 +17,14 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
+.animate-gradient {
+  background-size: 200% auto;
+  animation: animatedgradient 2s linear infinite;
+}
+
+@keyframes animatedgradient {
+  to {
+    background-position: 200% center;
+  }
+}

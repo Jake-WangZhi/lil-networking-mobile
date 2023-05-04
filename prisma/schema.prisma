@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider        = "prisma-client-js"
   previewFeatures = ["jsonProtocol"]
@@ -30,9 +27,9 @@ model Users {
   id         String     @id @default(cuid())
   createdAt  DateTime   @default(now())
   updatedAt  DateTime   @updatedAt
-  firstName  String
-  lastName   String
+  name       String
   email      String     @unique
-  LinkedInId String     @unique
+  providerId String     @unique
+  picture    String?
   contacts   Contacts[]
 }
