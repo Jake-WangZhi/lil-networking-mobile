@@ -14,11 +14,7 @@ export default function AuthContext({ children, session }: AuthContextProps) {
   const router = useRouter();
 
   useEffect(() => {
-    if (session) {
-      router.push("/dashboard");
-    } else {
-      router.push("/signin");
-    }
+    if (!session) router.push("/signin");
   }, [router, session]);
 
   return <SessionProvider session={session}>{children}</SessionProvider>;
