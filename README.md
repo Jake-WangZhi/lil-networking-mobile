@@ -6,9 +6,9 @@ css: Tailwind
 database: Vercel Postgres
 ---
 
-# Little Networking
+# Lil Networking
 
-The Little Networking App is a tool designed to help people form intentional networking habits that lead to meaningful professional relationships. Maintaining a strong community of peers and mentors is essential for achieving professional growth, and this app is designed to make networking easier and more intentional.
+The Lil Networking App is a tool designed to help people form intentional networking habits that lead to meaningful professional relationships. Maintaining a strong community of peers and mentors is essential for achieving professional growth, and this app is designed to make networking easier and more intentional.
 
 ## Getting Started
 
@@ -26,4 +26,4 @@ The `main` branch automatically deploys to Vercel Production when pushing to `ma
 
 ## Additional Info
 
-The Vercel Project Link: https://vercel.com/foundry-makes/little-networking
+The Vercel Project Link: https://vercel.com/foundry-makes/lil-networking
