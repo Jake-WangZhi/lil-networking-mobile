@@ -15,9 +15,9 @@ model Contacts {
   updatedAt DateTime @updatedAt
 
   name    String
-  email   String? @unique
-  phone   String? @unique
-  website String? @unique
+  email   String?
+  phone   String?
+  website String?
   image   String?
   Users   Users?  @relation(fields: [usersId], references: [id])
   usersId String?
