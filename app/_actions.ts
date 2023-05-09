@@ -1,6 +1,6 @@
 "use server";
 
-import * as prisma from "@/lib/prisma";
+import * as db from "@/lib/prisma";
 import { formatPhoneNumber, validateEmail, validatePhone } from "@/lib/utils";
 import { redirect } from "next/navigation";
 
@@ -21,7 +21,7 @@ export async function createContact(formData: FormData) {
   const email = formData.get("email");
   const name = formData.get("name");
 
-  const user = await prisma.getUserByEmail(userEmail);
+  const user = await db.getUserByEmail(userEmail);
   if (!user) throw new Error("User not found");
 
   validateEmail(email);
@@ -29,7 +29,7 @@ export async function createContact(formData: FormData) {
 
   const formattedPhoneNumber = formatPhoneNumber(phone);
 
-  await prisma.createContact({
+  await db.createContact({
     name,
     email,
     phone: formattedPhoneNumber,
