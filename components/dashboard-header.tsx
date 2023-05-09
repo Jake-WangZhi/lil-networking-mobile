@@ -11,7 +11,9 @@ export default function DashboardHeader() {
       <h1 className="text-4xl font-medium tracking-tight md:text-7xl">
         Hi, {session?.user?.name?.split(" ")[0]}
       </h1>
-      <Button onClick={() => signOut()}>Sign Out</Button>
+      <Button onClick={() => signOut({ callbackUrl: "/signin" })}>
+        Sign Out
+      </Button>
     </div>
   );
 }
