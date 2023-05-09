@@ -1,6 +1,6 @@
 import { Dialog } from "@headlessui/react";
 import { ReactNode } from "react";
-import { RiCloseCircleFill } from "react-icons/ri";
+import { XCircle } from "react-feather";
 
 import { Button } from "./button";
 
@@ -43,10 +43,10 @@ export const Modal = ({
           <div className="mt-5">{children}</div>
           <Button
             variant="text"
-            className="absolute -top-5 -right-4 m-1 rounded-full bg-white"
+            className="absolute -top-5 -right-4 m-2 rounded-full bg-black"
             onClick={onClose}
           >
-            <RiCloseCircleFill className="text-4xl" />
+            <XCircle className="text-4xl text-white" />
           </Button>
         </div>
       </div>
