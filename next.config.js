@@ -5,10 +5,10 @@ const withPWA = require("next-pwa")({
 
 const nextConfig = {
   experimental: {
-    appDir: true,
+    serverActions: true,
   },
   images: {
-    domains: ["pbs.twimg.com", "media.licdn.com"],
+    domains: ["media.licdn.com"],
   },
 };
 

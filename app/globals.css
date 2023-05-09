@@ -28,3 +28,18 @@ body {
     background-position: 200% center;
   }
 }
+
+/* Add a margin of 8 units on medium screens and above */
+@media (min-width: 768px) {
+  body {
+    margin-left: 25%;
+    margin-right: 25%;
+  }
+}
+
+/* Add a margin of 16 units on large screens and above */
+@media (min-width: 1024px) {
+  body {
+    margin-left: 30%;
+    margin-right: 30%;  }
+}

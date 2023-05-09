@@ -3,59 +3,30 @@ import Link from "next/link";
 import { Suspense } from "react";
 import Table from "@/components/table";
 import TablePlaceholder from "@/components/table-placeholder";
-import AuthButton from "@/components/auth-button";
+import DashboardHeader from "@/components/dashboard-header";
+import { Divider } from "@/components/divider";
+import ContactFormModal from "@/components/contactForm-modal";
 
 export default function DashboardPage() {
   return (
-    <main className="relative flex min-h-screen flex-col items-center justify-center">
-      <AuthButton />
-      <h1 className="pt-4 pb-8 bg-gradient-to-r from-blue-500 via-blue-900 to-blue-500 bg-clip-text animate-gradient text-center text-4xl font-medium tracking-tight text-transparent md:text-7xl">
-        Lil Networking
-      </h1>
-      <Suspense fallback={<TablePlaceholder />}>
-        {/* @ts-expect-error Async Server Component */}
-        <Table />
-      </Suspense>
-      <p className="font-light text-gray-600 w-full max-w-lg text-center mt-6">
-        <Link
-          href="https://vercel.com/postgres"
-          className="font-medium underline underline-offset-4 hover:text-black transition-colors"
-        >
-          Vercel Postgres
-        </Link>{" "}
-        demo with{" "}
-        <Link
-          href="https://prisma.io"
-          className="font-medium underline underline-offset-4 hover:text-black transition-colors"
-        >
-          Prisma
-        </Link>{" "}
-        as the ORM. <br /> Built with{" "}
-        <Link
-          href="https://nextjs.org/docs"
-          className="font-medium underline underline-offset-4 hover:text-black transition-colors"
-        >
-          Next.js App Router
-        </Link>
-        .
-      </p>
+    <main className="relative min-h-screen flex flex-col items-center justify-between">
+      <DashboardHeader />
+      <div className="w-full">
+        <Suspense fallback={<TablePlaceholder />}>
+          {/* @ts-expect-error Async Server Component */}
+          <Table type="users" />
+        </Suspense>
 
-      <div className="flex justify-center space-x-5 pt-10 mt-10 border-t border-gray-300 w-full max-w-xl text-gray-600">
-        <Link
-          href="https://postgres-starter.vercel.app/"
-          className="font-medium underline underline-offset-4 hover:text-black transition-colors"
-        >
-          Starter
-        </Link>
-        <Link
-          href="https://postgres-kysely.vercel.app/"
-          className="font-medium underline underline-offset-4 hover:text-black transition-colors"
-        >
-          Kysely
-        </Link>
+        <Divider />
+
+        <Suspense fallback={<TablePlaceholder />}>
+          {/* @ts-expect-error Async Server Component */}
+          <Table type="contacts" />
+        </Suspense>
+
+        <ContactFormModal />
       </div>
-
-      <div className="sm:absolute sm:bottom-0 w-full px-20 py-10 flex justify-between">
+      <div className="w-full px-20 py-10 flex justify-between">
         <Link href="https://vercel.com">
           <Image
             src="/vercel.svg"

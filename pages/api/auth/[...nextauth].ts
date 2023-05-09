@@ -12,13 +12,13 @@ export const authOptions: AuthOptions = {
     }),
   ],
   callbacks: {
-    async redirect({ baseUrl }) {
-      return baseUrl;
-    },
     async session({ session, token }) {
       await upsertUser(token);
       return session;
     },
+  },
+  pages: {
+    signIn: "/signin",
   },
 };
 
