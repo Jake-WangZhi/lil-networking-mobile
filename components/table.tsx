@@ -1,7 +1,6 @@
 import prisma from "@/lib/prisma";
 import { timeAgo } from "@/lib/utils";
 import Image from "next/image";
-import RefreshButton from "./RefreshButton";
 import placeholderProfileImage from "../public/images/placeholder_profile_image.svg";
 
 type Props = {

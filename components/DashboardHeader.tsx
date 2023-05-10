@@ -1,7 +1,6 @@
 "use client";
 
 import { signOut, useSession } from "next-auth/react";
-import { Button } from "./Button";
 
 export default function DashboardHeader() {
   const { data: session } = useSession();

@@ -1,11 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Suspense } from "react";
-import Table from "@/components/Table";
-import TablePlaceholder from "@/components/TablePlaceholder";
-import DashboardHeader from "@/components/DashboardHeader";
-import { Divider } from "@/components/Divider";
-import ContactFormModal from "@/components/ContactFormModal";
 
 export default function DashboardPage() {
   return (
