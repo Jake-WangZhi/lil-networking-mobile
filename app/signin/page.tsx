@@ -5,12 +5,22 @@ import { signIn } from "next-auth/react";
 
 export default function SignInPage() {
   return (
-    <main className="relative flex min-h-screen flex-col items-center justify-center">
-      <h1 className="pt-4 pb-8 bg-gradient-to-r from-blue-500 via-blue-900 to-blue-500 bg-clip-text animate-gradient text-center text-4xl font-medium tracking-tight text-transparent md:text-7xl">
-        Lil Networking
+    <main className="relative flex min-h-screen flex-col justify-center px-8">
+      <h1 className="flex flex-col mb-4 text-light-blue text-start text-5xl font-bold tracking-tight leading-72 md:text-7xl">
+        <span className="text-3xl md:text-5xl leading-48">Lil</span>
+        <span className="text-white">Networking</span>
+        App
       </h1>
-      <Button onClick={() => signIn("linkedin", { callbackUrl: "/dashboard" })}>
-        Sign In With LinkedIn
+      <div className="mb-4 w-1/12 h-[202px] border-l-4 border-light-blue"></div>
+      <p className="mb-32 text-white text-xl font-bold md:text-3xl">
+        Build networking habits & <br />
+        reach your goals
+      </p>
+      <Button
+        className="mx-auto"
+        onClick={() => signIn("linkedin", { callbackUrl: "/dashboard" })}
+      >
+        Sign in with LinkedIn
       </Button>
     </main>
   );

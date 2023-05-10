@@ -17,13 +17,13 @@ export default async function Table({ type }: Props) {
   const duration = Date.now() - startTime;
 
   return (
-    <div className="bg-white/30 p-12 shadow-xl ring-1 ring-gray-900/5 rounded-lg backdrop-blur-lg max-w-xl mx-auto w-full">
+    <div className="bg-white/30 p-12 shadow-xl ring-1 ring-gray-900/5 rounded-lg backdrop-blur-lg md:max-w-xl lg:max-w-2xl mx-auto w-full">
       <div className="flex justify-between items-center mb-4">
         <div className="space-y-1">
           <h2 className="text-xl font-semibold">
             Recent {type === "users" ? "Users" : "Contacts"}
           </h2>
-          <p className="text-sm text-gray-500">
+          <p className="text-sm">
             Fetched {data.length} {type === "users" ? "users" : "contacts"} in{" "}
             {duration}ms
           </p>
@@ -43,10 +43,10 @@ export default async function Table({ type }: Props) {
               />
               <div className="space-y-1">
                 <p className="font-medium leading-none">{item.name}</p>
-                <p className="text-sm text-gray-500">{item.email}</p>
+                <p className="text-sm">{item.email}</p>
               </div>
             </div>
-            <p className="text-sm text-gray-500">{timeAgo(item.updatedAt)}</p>
+            <p className="text-sm">{timeAgo(item.updatedAt)}</p>
           </div>
         ))}
       </div>

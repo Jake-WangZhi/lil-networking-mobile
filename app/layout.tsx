@@ -1,5 +1,5 @@
-import "./globals.css";
-import { Inter } from "next/font/google";
+import "tailwindcss/tailwind.css";
+import "@fontsource/metropolis";
 import { Session } from "next-auth";
 import { headers } from "next/headers";
 import AuthContext from "./AuthContext";
@@ -8,12 +8,6 @@ export const metadata = {
   title: "Little Networking",
   description: "The app to help people form intentional networking habits ",
 };
-
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
-  display: "swap",
-});
 
 async function getSession(cookie: string): Promise<Session> {
   const response = await fetch(`${process.env.NEXTAUTH_URL}/api/auth/session`, {
@@ -39,7 +33,7 @@ export default async function RootLayout({
       <head>
         <link rel="manifest" href="/manifest.json" />
       </head>
-      <body className={inter.variable}>
+      <body className="font-sans bg-dark-blue mx-auto max-w-lg md:max-w-xl lg:max-w-2xl">
         <AuthContext session={session}>{children}</AuthContext>
       </body>
     </html>

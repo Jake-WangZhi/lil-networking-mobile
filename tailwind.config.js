@@ -7,8 +7,20 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontSize: {
+        xl: "19px",
+        "3xl": "32px", // Customize the font size of the text-3xl class here
+      },
+      lineHeight: {
+        72: "57.6px",
+        48: "38.4px",
+      },
       fontFamily: {
-        default: ["var(--font-inter)"],
+        sans: ["Metropolis", "sans-serif"],
+      },
+      colors: {
+        "light-blue": "#38ACE2",
+        "dark-blue": "#1D3144",
       },
     },
   },

@@ -14,7 +14,7 @@ type Props = {
 
 const VARIANTS: Record<string, string> = {
   primary:
-    "text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800",
+    "text-white bg-light-blue hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center w-[172px] md:w-[200px] md:text-base lg:w-[258px] lg:text-xl",
   secondary:
     "w-full flex items-center justify-center py-2 bg-transparent border rounded text-tertiary border-tertiary hover:bg-tertiary hover:bg-opacity-5 focus:border-2 active:bg-tertiary active:bg-opacity-5 active:border disabled:bg-grey-secondary-disabled disabled:text-white disabled:border-grey-secondary-disabled disabled:pointer-events-none",
   text: "text-tertiary disabled:pointer-events-none disabled:text-opacity-25",
