@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { useTransition } from "react";
 import { Button } from "./Button";
 
-export default function RefreshButton() {
+export const RefreshButton = () => {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
 
@@ -22,4 +22,4 @@ export default function RefreshButton() {
       {isPending ? "Refreshing..." : "Refresh"}
     </Button>
   );
-}
+};

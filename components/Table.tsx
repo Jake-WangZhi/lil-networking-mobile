@@ -2,13 +2,13 @@ import prisma from "@/lib/prisma";
 import { timeAgo } from "@/lib/utils";
 import Image from "next/image";
 import placeholderProfileImage from "../public/images/placeholder_profile_image.svg";
-import RefreshButton from "./RefreshButton";
+import { RefreshButton } from "./RefreshButton";
 
 type Props = {
   type: "users" | "contacts";
 };
 
-export default async function Table({ type }: Props) {
+export const Table = async ({ type }: Props) => {
   const startTime = Date.now();
   const data =
     type === "users"
@@ -52,4 +52,4 @@ export default async function Table({ type }: Props) {
       </div>
     </div>
   );
-}
+};

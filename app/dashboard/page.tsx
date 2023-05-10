@@ -1,8 +1,8 @@
-import ContactFormModal from "@/components/ContactFormModal";
-import DashboardHeader from "@/components/DashboardHeader";
+import { ContactFormModal } from "@/components/ContactFormModal";
+import { DashboardHeader } from "@/components/DashboardHeader";
 import { Divider } from "@/components/Divider";
-import TablePlaceholder from "@/components/TablePlaceholder";
-import Table from "@/components/Table";
+import { TablePlaceholder } from "@/components/TablePlaceholder";
+import { Table } from "@/components/Table";
 
 import Image from "next/image";
 import Link from "next/link";
