@@ -3,7 +3,7 @@
 import { signOut, useSession } from "next-auth/react";
 import { Button } from "./Button";
 
-export default function DashboardHeader() {
+export const DashboardHeader = () => {
   const { data: session } = useSession();
 
   return (
@@ -16,4 +16,4 @@ export default function DashboardHeader() {
       </Button>
     </div>
   );
-}
+};

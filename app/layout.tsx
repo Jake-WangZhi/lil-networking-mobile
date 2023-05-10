@@ -5,7 +5,7 @@ import { headers } from "next/headers";
 import AuthContext from "./AuthContext";
 
 export const metadata = {
-  title: "Little Networking",
+  title: "Lil Networking",
   description: "The app to help people form intentional networking habits ",
 };
 

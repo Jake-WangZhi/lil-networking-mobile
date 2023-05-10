@@ -6,7 +6,7 @@ import { useState } from "react";
 import { Button } from "./Button";
 import { Modal } from "./Modal";
 
-export default function ContactFormModal() {
+export const ContactFormModal = () => {
   const { data: session } = useSession();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -85,4 +85,4 @@ export default function ContactFormModal() {
       </Modal>
     </div>
   );
-}
+};
