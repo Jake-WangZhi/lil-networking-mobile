@@ -1,6 +1,7 @@
 import { Dialog } from "@headlessui/react";
 import { ReactNode } from "react";
 import { XCircle } from "react-feather";
+import { Button } from "./Button";
 interface ModalProps {
   title?: string | ReactNode;
   description?: string;

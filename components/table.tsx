@@ -2,6 +2,7 @@ import prisma from "@/lib/prisma";
 import { timeAgo } from "@/lib/utils";
 import Image from "next/image";
 import placeholderProfileImage from "../public/images/placeholder_profile_image.svg";
+import RefreshButton from "./RefreshButton";
 
 type Props = {
   type: "users" | "contacts";
