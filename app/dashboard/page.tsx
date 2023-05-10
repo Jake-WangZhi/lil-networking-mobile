@@ -9,7 +9,7 @@ import ContactFormModal from "@/components/contactForm-modal";
 
 export default function DashboardPage() {
   return (
-    <main className="relative min-h-screen flex flex-col items-center justify-between">
+    <main className="relative min-h-screen flex flex-col items-center justify-between text-white px-5">
       <DashboardHeader />
       <div className="w-full">
         <Suspense fallback={<TablePlaceholder />}>
