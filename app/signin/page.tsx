@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@/components/button";
+import { Button } from "@/component/Button";
 import { signIn } from "next-auth/react";
 
 export default function SignInPage() {

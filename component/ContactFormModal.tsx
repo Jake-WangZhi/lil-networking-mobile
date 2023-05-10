@@ -2,9 +2,9 @@
 
 import { createContact } from "@/app/_actions";
 import { useSession } from "next-auth/react";
-import { Modal } from "./modal";
 import { useState } from "react";
-import { Button } from "./button";
+import { Button } from "./Button";
+import { Modal } from "./Modal";
 
 export default function ContactFormModal() {
   const { data: session } = useSession();
