@@ -12,7 +12,7 @@ export const Table = async ({ type }: Props) => {
   const startTime = Date.now();
   const data =
     type === "users"
-      ? await prisma.users.findMany()
+      ? await prisma.user.findMany()
       : await prisma.contacts.findMany();
   const duration = Date.now() - startTime;
 
@@ -35,8 +35,8 @@ export const Table = async ({ type }: Props) => {
           <div key={item.id} className="flex items-center justify-between py-3">
             <div className="flex items-center space-x-4">
               <Image
-                src={item.picture ?? placeholderProfileImage}
-                alt={item.name}
+                src={item.image ?? placeholderProfileImage}
+                alt={item.name ?? ""}
                 width={48}
                 height={48}
                 className="rounded-full ring-1 ring-gray-900/5"

@@ -9,7 +9,7 @@ const prisma = global.prisma || new PrismaClient();
 if (process.env.NODE_ENV === "development") global.prisma = prisma;
 
 export function getUserByEmail(email: string) {
-  return prisma.users.findUnique({
+  return prisma.user.findUnique({
     where: { email },
   });
 }
@@ -18,19 +18,19 @@ export function createContact({
   name,
   email,
   phone,
-  usersId,
+  userId,
 }: {
   name: string;
   email: string;
   phone: string;
-  usersId: string;
+  userId: string;
 }) {
   return prisma.contacts.create({
     data: {
       name,
       email,
       phone,
-      usersId,
+      userId,
     },
   });
 }
