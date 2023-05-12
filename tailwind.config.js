@@ -22,6 +22,9 @@ module.exports = {
         "light-blue": "#38ACE2",
         "dark-blue": "#1D3144",
       },
+      screens: {
+        xs: "400px",
+      },
     },
   },
   plugins: [],
