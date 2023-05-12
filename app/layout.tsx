@@ -32,7 +32,6 @@ export default async function RootLayout({
     <html lang="en">
       <head>
         <link rel="manifest" href="/manifest.json" />
-        <meta name="theme-color" content="#1D3144" />
       </head>
       <body className="font-sans bg-dark-blue mx-auto max-w-lg md:max-w-xl lg:max-w-2xl">
         <AuthContext session={session}>{children}</AuthContext>
