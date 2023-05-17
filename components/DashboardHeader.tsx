@@ -1,19 +1,23 @@
 "use client";
 
-import { signOut, useSession } from "next-auth/react";
-import { Button } from "./Button";
+import { useSession } from "next-auth/react";
+import { GoalSummary } from "./GoalSummary";
+import { ContactFormModal } from "./ContactFormModal";
 
 export const DashboardHeader = () => {
   const { data: session } = useSession();
 
   return (
-    <div className="py-8 flex items-center justify-between w-full">
-      <h1 className="text-4xl font-medium tracking-tight md:text-7xl">
-        Hi, {session?.user?.name?.split(" ")[0]}
-      </h1>
-      <Button onClick={() => signOut({ callbackUrl: "/signin" })}>
-        Sign Out
-      </Button>
-    </div>
+    <>
+      <div className="pt-8 w-full">
+        <div className="flex justify-between items-center">
+          <h1 className="text-3xl font-semibold md:text-7xl">
+            Hi, {session?.user?.name?.split(" ")[0]}!
+          </h1>
+          <ContactFormModal />
+        </div>
+        <GoalSummary />
+      </div>
+    </>
   );
 };

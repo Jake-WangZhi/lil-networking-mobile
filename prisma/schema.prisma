@@ -9,18 +9,33 @@ datasource db {
   directUrl = env("POSTGRES_URL_NON_POOLING")
 }
 
-model Contacts {
+model Contact {
   id        String   @id @default(cuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  name    String
-  email   String?
-  phone   String?
-  website String?
-  image   String?
-  User    User?   @relation(fields: [userId], references: [id])
-  userId  String?
+  name           String
+  email          String?
+  phone          String?
+  website        String?
+  image          String?
+  User           User       @relation(fields: [userId], references: [id])
+  userId         String
+  category       String?
+  reachOutPeriod Int?
+  interests      String?
+  activities     Activity[]
+}
+
+model Activity {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  note String
+
+  Contact   Contact @relation(fields: [contactId], references: [id])
+  contactId String
 }
 
 model Account {
@@ -56,12 +71,12 @@ model User {
   updatedAt DateTime @updatedAt
 
   name          String?
-  email         String?    @unique
+  email         String?   @unique
   emailVerified DateTime?
   image         String?
   accounts      Account[]
   sessions      Session[]
-  Contacts      Contacts[]
+  Contacts      Contact[]
 }
 
 model VerificationToken {

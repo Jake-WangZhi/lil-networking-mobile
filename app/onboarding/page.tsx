@@ -50,11 +50,11 @@ export default function Page() {
   const router = useRouter();
 
   return (
-    <main className="relative h-screen">
+    <main className="relative min-h-screen">
       <Button
         onClick={() => router.push("/dashboard")}
         variant="text"
-        className="absolute right-4 top-6 text-xl text-white z-10 md:text-3xl"
+        className="absolute right-4 top-2 text-xl text-white z-10 md:text-3xl"
       >
         Skip
       </Button>
@@ -72,7 +72,7 @@ export default function Page() {
           <OnboardingActionPage
             title="Stay Informed"
             actionButton={
-              <Button disabled={true} onClick={() => {}} className="mb-5">
+              <Button onClick={() => {}} className="mb-5">
                 Allow notifications
               </Button>
             }
@@ -83,7 +83,7 @@ export default function Page() {
           <OnboardingActionPage
             title="Ready to set a goal?"
             actionButton={
-              <Button disabled={true} onClick={() => {}} className="mb-5">
+              <Button onClick={() => {}} className="mb-5">
                 {"I'm ready"}
               </Button>
             }

@@ -8,11 +8,11 @@ interface Props {
 
 export const OnboardingIntroPage = ({ title, description, image }: Props) => {
   return (
-    <div>
+    <div className="bg-dark-blue">
       <Image
         src={image}
         alt={title}
-        className="bottom-0 h-[500px] xs:h-[600px] w-full "
+        className="bottom-0 h-[450px] xs:h-[525px] w-full"
       />
       <div className="px-8 text-white md:mt-10">
         <h1 className="font-semibold text-3xl pb-6 md:text-5xl">{title}</h1>

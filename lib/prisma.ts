@@ -25,7 +25,7 @@ export function createContact({
   phone: string;
   userId: string;
 }) {
-  return prisma.contacts.create({
+  return prisma.contact.create({
     data: {
       name,
       email,

@@ -5,20 +5,21 @@ import { useSession } from "next-auth/react";
 import { useState } from "react";
 import { Button } from "./Button";
 import { Modal } from "./Modal";
+import { PlusSquare } from "react-feather";
 
 export const ContactFormModal = () => {
   const { data: session } = useSession();
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="flex justify-center m-8">
+    <div className="flex justify-center">
       <Button
-        type="button"
+        variant="text"
         onClick={() => {
           setIsOpen(true);
         }}
       >
-        {"+ Add Contact"}
+        <PlusSquare size={32} />
       </Button>
       <Modal
         title={"Create Contact"}
