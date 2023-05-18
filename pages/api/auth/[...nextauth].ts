@@ -1,9 +1,10 @@
-import NextAuth, { AuthOptions } from "next-auth";
+import NextAuth, { AuthOptions, User } from "next-auth";
 import LinkedInProvider from "next-auth/providers/linkedin";
 import prisma from "@/lib/prisma";
-import { JWT } from "next-auth/jwt/types";
+import { PrismaAdapter } from "@next-auth/prisma-adapter";
 
 export const authOptions: AuthOptions = {
+  adapter: PrismaAdapter(prisma),
   // Configure one or more authentication providers
   providers: [
     LinkedInProvider({
@@ -11,39 +12,13 @@ export const authOptions: AuthOptions = {
       clientSecret: String(process.env.LINKEDIN_CLIENT_SECRET),
     }),
   ],
-  callbacks: {
-    async session({ session, token }) {
-      await upsertUser(token);
-      return session;
-    },
+  session: {
+    strategy: "jwt",
   },
   pages: {
     signIn: "/signin",
+    newUser: "/onboarding",
   },
 };
-
-async function upsertUser(token: JWT) {
-  const name = token.name ?? "";
-  const email = token.email ?? "";
-  const providerId = token.sub ?? "";
-  const picture = token.picture ?? "";
-
-  await prisma.users.upsert({
-    where: {
-      providerId,
-    },
-    update: {
-      name,
-      email,
-      picture,
-    },
-    create: {
-      name,
-      email,
-      providerId,
-      picture,
-    },
-  });
-}
 
 export default NextAuth(authOptions);

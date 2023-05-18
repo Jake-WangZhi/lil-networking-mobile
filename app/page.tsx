@@ -24,7 +24,7 @@ export default function Home() {
 
   return (
     <main className="relative flex min-h-screen flex-col items-center justify-center">
-      <ClipLoader color="#36d7b7" />
+      <ClipLoader color="#36d7b7" size={150} />
     </main>
   );
 }

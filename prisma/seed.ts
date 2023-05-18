@@ -2,42 +2,18 @@
 
 // async function main() {
 //   const response = await Promise.all([
-//     await prisma.contacts.upsert({
-//       where: { email: "rauchg@vercel.com" },
-//       update: {},
-//       create: {
-//         name: "Guillermo Rauch",
-//         email: "rauchg@vercel.com",
-//         image:
-//           "https://pbs.twimg.com/profile_images/1576257734810312704/ucxb4lHy_400x400.jpg",
-//       },
-//     }),
-//     await prisma.contacts.upsert({
-//       where: { email: "lee@vercel.com" },
-//       update: {},
-//       create: {
-//         name: "Lee Robinson",
-//         email: "lee@vercel.com",
-//         image:
-//           "https://pbs.twimg.com/profile_images/1587647097670467584/adWRdqQ6_400x400.jpg",
-//       },
-//     }),
-//     await prisma.contacts.upsert({
-//       where: { email: "stey@vercel.com" },
-//       update: {},
-//       create: {
-//         name: "Steven Tey",
-//         email: "stey@vercel.com",
-//         image:
-//           "https://pbs.twimg.com/profile_images/1506792347840888834/dS-r50Je_400x400.jpg",
-//       },
-//     }),
-//     await prisma.contacts.upsert({
-//       where: { email: "test@gmail.com" },
-//       update: {},
-//       create: {
-//         name: "Test User",
-//         email: "test@gmail.com",
+//     // await prisma.contact.create({
+//     //   data: {
+//     //     userId: "clhqs85xz0000mfh078rv8ssu",
+//     //     name: "Test User 2",
+//     //     email: "rauchg@vercel.com",
+//     //     category: "Med Tech",
+//     //   },
+//     // }),
+//     await prisma.activity.create({
+//       data: {
+//         note: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+//         contactId: "clhrmf5el0001mfuarngs2uyj",
 //       },
 //     }),
 //   ]);

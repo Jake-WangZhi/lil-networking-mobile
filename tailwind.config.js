@@ -8,6 +8,7 @@ module.exports = {
   theme: {
     extend: {
       fontSize: {
+        xs: "11px",
         xl: "19px",
         "3xl": "32px", // Customize the font size of the text-3xl class here
       },
@@ -20,7 +21,12 @@ module.exports = {
       },
       colors: {
         "light-blue": "#38ACE2",
-        "dark-blue": "#1D3144",
+        "dark-blue": "#0F1A24",
+        "light-black": "#2E2E2E",
+        "light-yellow": "#FFCF79",
+      },
+      screens: {
+        xs: "400px",
       },
     },
   },

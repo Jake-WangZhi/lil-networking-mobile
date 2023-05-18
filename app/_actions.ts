@@ -33,7 +33,7 @@ export async function createContact(formData: FormData) {
     name,
     email,
     phone: formattedPhoneNumber,
-    usersId: user.id,
+    userId: user.id,
   });
 
   redirect("/dashboard");

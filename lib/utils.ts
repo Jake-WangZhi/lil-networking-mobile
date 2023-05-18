@@ -1,4 +1,4 @@
-import { formatDistanceToNow } from "date-fns";
+import { formatDistanceToNow, differenceInDays } from "date-fns";
 /* @ts-expect-error Server Component */
 import validator from "validator";
 
@@ -35,3 +35,12 @@ export const validatePhone = (phone: string) => {
     throw new Error("Invalid phone number");
   }
 };
+
+export function calculateDaysSinceCreatedAt(createdAt: Date) {
+  const createdAtDate = new Date(createdAt); // Convert the timestamp to a Date object
+  const currentDate = new Date(); // Get the current date
+
+  const timeDifferenceInDays = differenceInDays(currentDate, createdAtDate);
+
+  return timeDifferenceInDays;
+}
