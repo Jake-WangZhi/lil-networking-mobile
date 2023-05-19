@@ -50,7 +50,7 @@ export default function Page() {
   const router = useRouter();
 
   return (
-    <main className="relative min-h-screen">
+    <main className="relative h-screen">
       <div className="flex justify-end mr-4 mt-10">
         <Button
           onClick={() => router.push("/dashboard")}
