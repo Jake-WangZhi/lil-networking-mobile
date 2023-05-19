@@ -22,7 +22,11 @@ const FoldableComponent = ({ title, content }: Props) => {
       <div className="flex justify-between">
         {title}
         <Button onClick={toggleFold} variant="text">
-          {isFolded ? <ChevronDown /> : <ChevronUp />}
+          {isFolded ? (
+            <ChevronDown className="md:w-6 md:h-6 lg:w-8 lg:h-8" />
+          ) : (
+            <ChevronUp className="md:w-6 md:h-6 lg:w-8 lg:h-8" />
+          )}
         </Button>
       </div>
       {!isFolded && <div className="mt-4">{content}</div>}

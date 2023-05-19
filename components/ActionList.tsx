@@ -64,9 +64,13 @@ export const ActionList = () => {
           <FoldableComponent
             title={
               <div className="flex items-center space-x-2">
-                <div className="w-1 h-4 border-l-4 border-light-yellow"></div>
-                <h2>{`Past Due (${pastActions.length})`}</h2>
-                <Info size={18} opacity={0.7} />
+                <div className="w-1 h-4 border-l-4 border-light-yellow md:border-l-5 md:h-5 lg:border-l-6 lg:h-6"></div>
+                <h2 className="md:text-xl lg:text-2xl">{`Past Due (${pastActions.length})`}</h2>
+                <Info
+                  size={18}
+                  opacity={0.7}
+                  className="md:w-5 md:h-5 lg:w-6 lg:h-6"
+                />
               </div>
             }
             content={
@@ -85,9 +89,13 @@ export const ActionList = () => {
             <FoldableComponent
               title={
                 <div className="flex items-center space-x-2">
-                  <div className="w-1 h-4 border-l-4 border-light-blue"></div>
-                  <h2>{`New Action Items (${upcomingActions.length})`}</h2>
-                  <Info size={18} opacity={0.7} />
+                  <div className="w-1 h-4 border-l-4 border-light-blue md:border-l-5 md:h-5 lg:border-l-6 lg:h-6"></div>
+                  <h2 className="md:text-xl lg:text-2xl">{`New Action Items (${upcomingActions.length})`}</h2>
+                  <Info
+                    size={18}
+                    opacity={0.7}
+                    className="md:w-5 md:h-5 lg:w-6 lg:h-6"
+                  />
                 </div>
               }
               content={
