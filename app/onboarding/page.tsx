@@ -51,15 +51,13 @@ export default function Page() {
 
   return (
     <main className="relative h-screen">
-      <div className="flex justify-end mr-4 mt-4">
-        <Button
-          onClick={() => router.push("/dashboard")}
-          variant="text"
-          className="text-xl text-white md:text-3xl"
-        >
-          Skip
-        </Button>
-      </div>
+      <Button
+        onClick={() => router.push("/dashboard")}
+        variant="text"
+        className="absolute right-4 top-2 text-xl text-white z-10 md:text-3xl"
+      >
+        Skip
+      </Button>
       <Swiper pagination={{ clickable: true }} modules={[Pagination]}>
         {ONBOARDING_INTRO_PAGES.map((page, index) => (
           <SwiperSlide key={index}>
