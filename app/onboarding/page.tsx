@@ -50,11 +50,11 @@ export default function Page() {
   const router = useRouter();
 
   return (
-    <main className="relative h-screen">
+    <main className="relative min-h-screen">
       <Button
         onClick={() => router.push("/dashboard")}
         variant="text"
-        className="absolute right-4 top-2 text-xl text-white z-10 md:text-3xl"
+        className="absolute right-4 top-4 text-xl text-white z-10 md:text-3xl"
       >
         Skip
       </Button>
