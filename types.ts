@@ -3,6 +3,7 @@ export interface Action {
   days: number;
   contactCategory: string;
   note: string;
+  goalDays: number;
 }
 
 export enum ActionType {

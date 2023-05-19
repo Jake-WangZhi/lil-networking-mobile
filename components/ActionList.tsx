@@ -6,6 +6,7 @@ import { useSession } from "next-auth/react";
 import { Action, ActionType } from "@/types";
 import { ClipLoader } from "react-spinners";
 import { ActionCard } from "./ActionCard";
+import { Info } from "react-feather";
 
 export const ActionList = () => {
   const [pastActions, setPastActions] = useState<Action[]>([]);
@@ -62,9 +63,10 @@ export const ActionList = () => {
         <>
           <FoldableComponent
             title={
-              <div className="flex items-center">
-                <div className="mr-2 w-1 h-4 border-l-4 border-light-yellow"></div>
+              <div className="flex items-center space-x-2">
+                <div className="w-1 h-4 border-l-4 border-light-yellow"></div>
                 <h2>{`Past Due (${pastActions.length})`}</h2>
+                <Info size={18} opacity={0.7} />
               </div>
             }
             content={
@@ -82,9 +84,10 @@ export const ActionList = () => {
           <div className="mb-20">
             <FoldableComponent
               title={
-                <div className="flex items-center">
-                  <div className="mr-2 w-1 h-4 border-l-4 border-light-blue"></div>
+                <div className="flex items-center space-x-2">
+                  <div className="w-1 h-4 border-l-4 border-light-blue"></div>
                   <h2>{`New Action Items (${upcomingActions.length})`}</h2>
+                  <Info size={18} opacity={0.7} />
                 </div>
               }
               content={

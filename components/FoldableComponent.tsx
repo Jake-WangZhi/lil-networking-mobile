@@ -18,7 +18,7 @@ const FoldableComponent = ({ title, content }: Props) => {
   };
 
   return (
-    <div className="mb-4">
+    <div className="mb-8">
       <div className="flex justify-between">
         {title}
         <Button onClick={toggleFold} variant="text">
