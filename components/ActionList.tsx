@@ -51,7 +51,7 @@ export const ActionList = () => {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center">
-        <ClipLoader color="#36d7b7" size={150} />
+        <ClipLoader color="#38ACE2" size={150} />
       </div>
     );
   }
