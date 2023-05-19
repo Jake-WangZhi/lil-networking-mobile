@@ -16,7 +16,7 @@ export const OnboardingIntroPage = ({
   return (
     <div className="bg-dark-blue">
       <div
-        className={`flex flex-col h-[450px] md:h-[525px] lg:h-[700px] justify-end ${
+        className={`flex flex-col h-[450px] xs:h-[525px] lg:h-[700px] justify-end ${
           addImgPadding && "px-8 md:px-10 lg:px-12"
         }`}
       >
