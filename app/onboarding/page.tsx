@@ -65,6 +65,7 @@ export default function Page() {
               title={page.title}
               description={page.description}
               image={page.image}
+              addImgPadding={index === 1}
             />
           </SwiperSlide>
         ))}
