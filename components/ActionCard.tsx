@@ -16,16 +16,16 @@ export const ActionCard = ({ action, actionType }: Props) => {
             <h2>{action.contactName}</h2>
             <ArrowRight />
           </div>
-          <h3 className="text-sm font-normal text-white text-opacity-70">
+          <div className="text-sm font-normal text-white text-opacity-70">
             {action?.contactCategory} • Goal: {action?.goalDays} days
-          </h3>
-          <span
+          </div>
+          <div
             className={`text-sm font-semibold
               ${actionType === "past" ? "text-light-yellow" : "text-light-blue"}
               `}
           >
             {action.days} Days ago
-          </span>
+          </div>
           <p className="line-clamp-2 overflow-hidden">{action.note}</p>
         </div>
       </div>
