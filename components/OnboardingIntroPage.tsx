@@ -19,7 +19,7 @@ export const OnboardingIntroPage = ({
         src={image}
         alt={title}
         className={`bottom-0 h-[450px] xs:h-[525px] w-full ${
-          addImgPadding && "px-7"
+          addImgPadding && "px-8"
         }`}
       />
       <div className="px-8 text-white mt-12">
