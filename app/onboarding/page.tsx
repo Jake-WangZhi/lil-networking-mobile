@@ -51,7 +51,7 @@ export default function Page() {
 
   return (
     <main className="relative h-screen">
-      <div className="flex justify-end mr-4 mt-10">
+      <div className="flex justify-end mr-4 mt-4">
         <Button
           onClick={() => router.push("/dashboard")}
           variant="text"
