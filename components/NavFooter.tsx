@@ -27,7 +27,7 @@ export const NavFooter = () => {
   );
 
   return (
-    <div className="fixed left-1/2 transform -translate-x-1/2 bottom-0 max-w-lg bg-light-black p-4 text-center flex justify-between md:max-w-xl lg:max-w-5xl w-full">
+    <div className="fixed left-1/2 transform -translate-x-1/2 bottom-0 max-w-lg bg-dark-blue p-4 text-center flex justify-between md:max-w-xl lg:max-w-5xl w-full">
       <NavItem href="/dashboard" text="Dashboard" Icon={Home} />
       <NavItem href="/contacts" text="Contacts" Icon={Users} />
       <NavItem href="/settings" text="Settings" Icon={Settings} />
