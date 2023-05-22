@@ -66,7 +66,7 @@ export const ActionList = () => {
               <div className="w-1 h-4 border-l-4 border-light-yellow md:border-l-5 md:h-5 lg:border-l-6 lg:h-6"></div>
               <h2 className="md:text-xl lg:text-2xl">{`Past Due (${pastActions.length})`}</h2>
               <Info
-                size={18}
+                size={16}
                 opacity={0.7}
                 className="md:w-5 md:h-5 lg:w-6 lg:h-6"
               />

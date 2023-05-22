@@ -2,9 +2,9 @@
 
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
-import { Action } from "@/types";
 import { ClipLoader } from "react-spinners";
-import { Contact } from "@prisma/client";
+import { ContactCard } from "./ContactCard";
+import { Contact } from "@/types";
 
 export const ContactList = () => {
   const [contacts, setContacts] = useState<Contact[]>([]);
@@ -25,9 +25,8 @@ export const ContactList = () => {
       const data = await response.json();
 
       if (response.ok) {
-        const { pastActions, upcomingActions } = data.actions;
-        // setPastActions(pastActions as Action[]);
-        // setUpcomingActions(upcomingActions as Action[]);
+        const contacts = data.contacts;
+        setContacts(contacts);
       } else {
         throw new Error(response.statusText);
       }
@@ -56,7 +55,10 @@ export const ContactList = () => {
 
   return (
     <div className="w-full">
-      <h6>{`All Contacts ()`}</h6>
+      <h6 className="mb-2 md:text-xl lg:text-2xl">{`All Contacts (${contacts.length})`}</h6>
+      {contacts.map((contact, index) => (
+        <ContactCard key={index} contact={contact} />
+      ))}
     </div>
   );
 };
