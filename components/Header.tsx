@@ -4,7 +4,7 @@ import { useSession } from "next-auth/react";
 import { GoalSummary } from "./GoalSummary";
 import { ContactFormModal } from "./ContactFormModal";
 
-export const DashboardHeader = () => {
+export const Header = () => {
   const { data: session } = useSession();
 
   return (
@@ -16,7 +16,6 @@ export const DashboardHeader = () => {
           </h1>
           <ContactFormModal />
         </div>
-        <GoalSummary />
       </div>
     </>
   );
