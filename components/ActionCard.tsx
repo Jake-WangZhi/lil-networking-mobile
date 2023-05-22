@@ -17,7 +17,8 @@ export const ActionCard = ({ action, actionType }: Props) => {
             <ArrowRight className="md:w-6 md:h-6 lg:w-8 lg:h-8" />
           </div>
           <div className="text-sm font-normal text-white text-opacity-70 md:text-base lg:text-lg">
-            {action?.contactCategory} • Goal: {action?.goalDays} days
+            {action.contactCategory && <>{action.contactCategory} • </>}
+            Goal: {action.goalDays} days
           </div>
           <div
             className={`text-sm md:text-base lg:text-lg font-semibold

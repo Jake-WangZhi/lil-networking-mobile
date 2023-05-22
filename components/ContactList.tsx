@@ -22,10 +22,9 @@ export const ContactList = () => {
   const fetchContactsBasedOnEmail = async (email: string) => {
     try {
       const response = await fetch(`/contacts/api?email=${email}`);
-      const data = await response.json();
+      const contacts = await response.json();
 
       if (response.ok) {
-        const contacts = data.contacts;
         setContacts(contacts);
       } else {
         throw new Error(response.statusText);

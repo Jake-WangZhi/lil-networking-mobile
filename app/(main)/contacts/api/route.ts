@@ -42,7 +42,7 @@ export async function GET(request: Request) {
 
   const parsedContacts = parseContacts(contacts, activities);
 
-  return NextResponse.json({ contacts: parsedContacts });
+  return NextResponse.json(parsedContacts);
 }
 
 const parseContacts = (contacts: Contact[], activities: Activity[]) => {

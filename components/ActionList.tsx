@@ -25,10 +25,9 @@ export const ActionList = () => {
   const fetchActionsBasedOnEmail = async (email: string) => {
     try {
       const response = await fetch(`/dashboard/api?email=${email}`);
-      const data = await response.json();
+      const { pastActions, upcomingActions } = await response.json();
 
       if (response.ok) {
-        const { pastActions, upcomingActions } = data.actions;
         setPastActions(pastActions as Action[]);
         setUpcomingActions(upcomingActions as Action[]);
       } else {
