@@ -24,7 +24,7 @@ export const ActionList = () => {
 
   const fetchActionsBasedOnEmail = async (email: string) => {
     try {
-      const response = await fetch(`/api/actions?email=${email}`);
+      const response = await fetch(`/dashboard/api?email=${email}`);
       const data = await response.json();
 
       if (response.ok) {
