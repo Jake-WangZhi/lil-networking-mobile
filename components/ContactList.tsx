@@ -54,7 +54,7 @@ export const ContactList = () => {
   }
 
   return (
-    <div className="w-full">
+    <div className="w-full mb-20">
       <h6 className="mb-2 md:text-xl lg:text-2xl">{`All Contacts (${contacts.length})`}</h6>
       {contacts.map((contact, index) => (
         <ContactCard key={index} contact={contact} />
