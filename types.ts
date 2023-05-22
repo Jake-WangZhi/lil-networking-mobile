@@ -18,7 +18,7 @@ export interface Contact {
   website: string;
   image?: string;
   category?: string;
-  reachOutPeriod?: number;
+  goalDays?: number;
   interests?: string;
   activities?: Array<Activity>;
 }

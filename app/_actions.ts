@@ -8,6 +8,8 @@ interface FormDataOptions {
   name: string;
   email: string;
   phone: string;
+  category: string;
+  goalDays: number;
   userEmail: string;
 }
 

@@ -54,7 +54,7 @@ const parseContacts = (contacts: Contact[], activities: Activity[]) => {
       website: contact.website,
       image: contact.image,
       category: contact.category,
-      reachOutPeriod: contact.reachOutPeriod,
+      goalDays: contact.goalDays,
       interests: contact.interests,
       activities: activities.filter(
         (activity) => activity.contactId === contact.id
