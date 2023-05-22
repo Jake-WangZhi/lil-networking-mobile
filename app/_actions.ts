@@ -10,6 +10,7 @@ interface FormDataOptions {
   phone: string;
   category: string;
   goalDays: number;
+  note: string;
   userEmail: string;
 }
 
@@ -22,6 +23,9 @@ export async function createContact(formData: FormData) {
   const phone = formData.get("phone");
   const email = formData.get("email");
   const name = formData.get("name");
+  const category = formData.get("category");
+  const goalDays = Number(formData.get("goalDays"));
+  const note = formData.get("note");
 
   const user = await db.getUserByEmail(userEmail);
   if (!user) throw new Error("User not found");
@@ -35,6 +39,9 @@ export async function createContact(formData: FormData) {
     name,
     email,
     phone: formattedPhoneNumber,
+    category,
+    goalDays,
+    note,
     userId: user.id,
   });
 
