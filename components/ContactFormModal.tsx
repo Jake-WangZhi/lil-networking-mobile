@@ -2,12 +2,15 @@
 
 import { createContact } from "@/app/_actions";
 import { useSession } from "next-auth/react";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { Button } from "./Button";
 import { Modal } from "./Modal";
 import { PlusSquare } from "react-feather";
 
 export const ContactFormModal = () => {
+  const pathname = usePathname();
+
   const { data: session } = useSession();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -113,9 +116,15 @@ export const ContactFormModal = () => {
             type="hidden"
             defaultValue={session?.user?.email || ""}
           />
+          <input
+            id="pathname"
+            name="pathname"
+            type="hidden"
+            defaultValue={pathname || ""}
+          />
           <button
             type="submit"
-            className="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-md px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 mt-6"
+            className="text-white focus:outline-none focus:ring-4 font-medium rounded-full text-md px-5 py-2.5 text-center bg-blue-600 hover:bg-blue-700 focus:ring-blue-800 mt-6"
           >
             Submit
           </button>

@@ -12,6 +12,7 @@ interface FormDataOptions {
   goalDays: number;
   note: string;
   userEmail: string;
+  pathname: string;
 }
 
 interface FormData {
@@ -20,6 +21,8 @@ interface FormData {
 
 export async function createContact(formData: FormData) {
   const userEmail = formData.get("userEmail");
+  const pathname = formData.get("pathname");
+
   const phone = formData.get("phone");
   const email = formData.get("email");
   const name = formData.get("name");
@@ -45,5 +48,5 @@ export async function createContact(formData: FormData) {
     userId: user.id,
   });
 
-  redirect("/dashboard");
+  redirect(`${pathname}`);
 }
