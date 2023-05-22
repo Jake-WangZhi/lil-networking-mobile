@@ -4,10 +4,10 @@ import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { Action } from "@/types";
 import { ClipLoader } from "react-spinners";
+import { Contact } from "@prisma/client";
 
 export const ContactList = () => {
-  const [pastActions, setPastActions] = useState<Action[]>([]);
-  const [upcomingActions, setUpcomingActions] = useState<Action[]>([]);
+  const [contacts, setContacts] = useState<Contact[]>([]);
   const [error, setError] = useState<string | null>(null);
   const { data: session } = useSession();
   const [isLoading, setIsLoading] = useState(true);
@@ -15,19 +15,19 @@ export const ContactList = () => {
   useEffect(() => {
     const email = session?.user?.email;
     if (email) {
-      fetchActionsBasedOnEmail(email);
+      fetchContactsBasedOnEmail(email);
     }
   }, [session]);
 
-  const fetchActionsBasedOnEmail = async (email: string) => {
+  const fetchContactsBasedOnEmail = async (email: string) => {
     try {
-      const response = await fetch(`/api/actions?email=${email}`);
+      const response = await fetch(`/api/contacts?email=${email}`);
       const data = await response.json();
 
       if (response.ok) {
         const { pastActions, upcomingActions } = data.actions;
-        setPastActions(pastActions as Action[]);
-        setUpcomingActions(upcomingActions as Action[]);
+        // setPastActions(pastActions as Action[]);
+        // setUpcomingActions(upcomingActions as Action[]);
       } else {
         throw new Error(response.statusText);
       }
@@ -56,13 +56,7 @@ export const ContactList = () => {
 
   return (
     <div className="w-full">
-      {pastActions.length > 0 || upcomingActions.length > 0 ? (
-        <>Contact List</>
-      ) : (
-        <div className="flex items-center justify-center text-xl md:text-3xl">
-          No contacts
-        </div>
-      )}
+      <h6>{`All Contacts ()`}</h6>
     </div>
   );
 };

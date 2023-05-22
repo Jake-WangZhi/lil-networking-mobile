@@ -59,62 +59,56 @@ export const ActionList = () => {
 
   return (
     <div className="w-full">
-      {pastActions.length > 0 || upcomingActions.length > 0 ? (
-        <div className="mb-20">
-          <FoldableComponent
-            title={
-              <div className="flex items-center space-x-2">
-                <div className="w-1 h-4 border-l-4 border-light-yellow md:border-l-5 md:h-5 lg:border-l-6 lg:h-6"></div>
-                <h2 className="md:text-xl lg:text-2xl">{`Past Due (${pastActions.length})`}</h2>
-                <Info
-                  size={18}
-                  opacity={0.7}
-                  className="md:w-5 md:h-5 lg:w-6 lg:h-6"
+      <div className="mb-20">
+        <FoldableComponent
+          title={
+            <div className="flex items-center space-x-2">
+              <div className="w-1 h-4 border-l-4 border-light-yellow md:border-l-5 md:h-5 lg:border-l-6 lg:h-6"></div>
+              <h2 className="md:text-xl lg:text-2xl">{`Past Due (${pastActions.length})`}</h2>
+              <Info
+                size={18}
+                opacity={0.7}
+                className="md:w-5 md:h-5 lg:w-6 lg:h-6"
+              />
+            </div>
+          }
+          content={
+            <>
+              {pastActions.map((action, index) => (
+                <ActionCard
+                  key={index}
+                  action={action}
+                  actionType={ActionType.Past}
                 />
-              </div>
-            }
-            content={
-              <>
-                {pastActions.map((action, index) => (
-                  <ActionCard
-                    key={index}
-                    action={action}
-                    actionType={ActionType.Past}
-                  />
-                ))}
-              </>
-            }
-          />
-          <FoldableComponent
-            title={
-              <div className="flex items-center space-x-2">
-                <div className="w-1 h-4 border-l-4 border-light-blue md:border-l-5 md:h-5 lg:border-l-6 lg:h-6"></div>
-                <h2 className="md:text-xl lg:text-2xl">{`New Action Items (${upcomingActions.length})`}</h2>
-                <Info
-                  size={18}
-                  opacity={0.7}
-                  className="md:w-5 md:h-5 lg:w-6 lg:h-6"
+              ))}
+            </>
+          }
+        />
+        <FoldableComponent
+          title={
+            <div className="flex items-center space-x-2">
+              <div className="w-1 h-4 border-l-4 border-light-blue md:border-l-5 md:h-5 lg:border-l-6 lg:h-6"></div>
+              <h2 className="md:text-xl lg:text-2xl">{`New Action Items (${upcomingActions.length})`}</h2>
+              <Info
+                size={18}
+                opacity={0.7}
+                className="md:w-5 md:h-5 lg:w-6 lg:h-6"
+              />
+            </div>
+          }
+          content={
+            <>
+              {upcomingActions.map((action, index) => (
+                <ActionCard
+                  key={index}
+                  action={action}
+                  actionType={ActionType.Upcoming}
                 />
-              </div>
-            }
-            content={
-              <>
-                {upcomingActions.map((action, index) => (
-                  <ActionCard
-                    key={index}
-                    action={action}
-                    actionType={ActionType.Upcoming}
-                  />
-                ))}
-              </>
-            }
-          />
-        </div>
-      ) : (
-        <div className="flex items-center justify-center text-xl md:text-3xl">
-          No actions needed
-        </div>
-      )}
+              ))}
+            </>
+          }
+        />
+      </div>
     </div>
   );
 };
