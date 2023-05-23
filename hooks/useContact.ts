@@ -12,7 +12,7 @@ export const useContact = ({ email }: Args) => {
     data: contacts,
     isError,
   } = useQuery({
-    queryKey: ["contact"],
+    queryKey: ["contact", email],
     queryFn: () => fetcher(`/contacts/api?email=${email}`),
     enabled: !!email,
   });

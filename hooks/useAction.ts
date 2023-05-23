@@ -17,7 +17,7 @@ export const useAction = ({ email }: Args) => {
     data: actions,
     isLoading,
   } = useQuery({
-    queryKey: ["action"],
+    queryKey: ["action", email],
     queryFn: () => fetcher(`/dashboard/api?email=${email}`),
     enabled: !!email,
   });
