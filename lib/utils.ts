@@ -44,3 +44,9 @@ export function calculateDaysSinceCreatedAt(createdAt: Date) {
 
   return timeDifferenceInDays;
 }
+
+export const fetcher = (url: string) =>
+  fetch(url).then((response) => {
+    if (response.ok) return response.json();
+    else throw new Error(response.statusText);
+  });
