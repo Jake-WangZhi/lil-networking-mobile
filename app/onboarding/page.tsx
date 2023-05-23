@@ -40,7 +40,11 @@ const ONBOARDING_INTRO_PAGES = [
 const SwiperButtonNext = ({ children }: { children: ReactNode }) => {
   const swiper = useSwiper();
   return (
-    <Button variant="text" onClick={() => swiper.slideNext()}>
+    <Button
+      variant="text"
+      onClick={() => swiper.slideNext()}
+      className="text-white"
+    >
       {children}
     </Button>
   );
@@ -54,7 +58,7 @@ export default function Page() {
       <Button
         onClick={() => router.push("/dashboard")}
         variant="text"
-        className="absolute right-4 top-4 z-10"
+        className="absolute right-4 top-4 z-10 text-white"
       >
         Skip
       </Button>
@@ -89,7 +93,11 @@ export default function Page() {
               </Button>
             }
             textButton={
-              <Button onClick={() => router.push("/dashboard")} variant="text">
+              <Button
+                onClick={() => router.push("/dashboard")}
+                variant="text"
+                className="text-white"
+              >
                 Go to Dashboard
               </Button>
             }

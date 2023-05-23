@@ -42,10 +42,10 @@ export const Modal = ({
             <div className="mt-5">{children}</div>
             <Button
               variant="text"
-              className="absolute -top-5 -right-4 m-2 rounded-full bg-black"
+              className="absolute -top-5 -right-4 m-2 rounded-full bg-black text-white"
               onClick={onClose}
             >
-              <XCircle className="text-4xl text-white" />
+              <XCircle className="text-4xl" />
             </Button>
           </div>
         </div>
