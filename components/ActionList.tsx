@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import FoldableComponent from "./FoldableComponent";
 import { useSession } from "next-auth/react";
 import { Action, ActionType } from "@/types";
@@ -22,23 +22,26 @@ export const ActionList = () => {
     }
   }, [session]);
 
-  const fetchActionsBasedOnEmail = async (email: string) => {
-    try {
-      const response = await fetch(`/dashboard/api?email=${email}`);
-      const { pastActions, upcomingActions } = await response.json();
+  const fetchActionsBasedOnEmail = useCallback(
+    async (email: string) => {
+      try {
+        const response = await fetch(`/dashboard/api?email=${email}`);
+        const { pastActions, upcomingActions } = await response.json();
 
-      if (response.ok) {
-        setPastActions(pastActions as Action[]);
-        setUpcomingActions(upcomingActions as Action[]);
-      } else {
-        throw new Error(response.statusText);
+        if (response.ok) {
+          setPastActions(pastActions as Action[]);
+          setUpcomingActions(upcomingActions as Action[]);
+        } else {
+          throw new Error(response.statusText);
+        }
+      } catch (error: any) {
+        setError(error.message);
+      } finally {
+        setIsLoading(false);
       }
-    } catch (error: any) {
-      setError(error.message);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+    },
+    [setPastActions, setUpcomingActions, setError, setIsLoading]
+  );
 
   if (error) {
     return (

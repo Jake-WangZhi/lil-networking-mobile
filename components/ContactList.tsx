@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { ClipLoader } from "react-spinners";
 import { ContactCard } from "./ContactCard";
@@ -19,22 +19,25 @@ export const ContactList = () => {
     }
   }, [session]);
 
-  const fetchContactsBasedOnEmail = async (email: string) => {
-    try {
-      const response = await fetch(`/contacts/api?email=${email}`);
-      const contacts = await response.json();
+  const fetchContactsBasedOnEmail = useCallback(
+    async (email: string) => {
+      try {
+        const response = await fetch(`/contacts/api?email=${email}`);
+        const contacts = await response.json();
 
-      if (response.ok) {
-        setContacts(contacts);
-      } else {
-        throw new Error(response.statusText);
+        if (response.ok) {
+          setContacts(contacts);
+        } else {
+          throw new Error(response.statusText);
+        }
+      } catch (error: any) {
+        setError(error.message);
+      } finally {
+        setIsLoading(false);
       }
-    } catch (error: any) {
-      setError(error.message);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+    },
+    [setContacts, setError, setIsLoading]
+  );
 
   if (error) {
     return (

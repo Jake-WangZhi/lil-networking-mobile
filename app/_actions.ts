@@ -48,5 +48,5 @@ export async function createContact(formData: FormData) {
     userId: user.id,
   });
 
-  redirect(`${pathname}`);
+  redirect(pathname);
 }
