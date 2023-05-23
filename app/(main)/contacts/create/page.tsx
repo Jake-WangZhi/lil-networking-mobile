@@ -5,11 +5,23 @@ import { Button } from "@/components/Button";
 import { useSession } from "next-auth/react";
 import { usePathname, useRouter } from "next/navigation";
 import { ChevronLeft, PlusCircle } from "react-feather";
+import { ReactNode, useState } from "react";
 
 export default function Create() {
   const pathname = usePathname();
   const { data: session } = useSession();
   const router = useRouter();
+  const [links, setLinks] = useState([""]);
+
+  const handleAddLink = () => {
+    setLinks([...links, ""]); // Add an empty link to the array
+  };
+
+  const handleLinkChange = (index: number, value: string) => {
+    const updatedLinks = [...links];
+    updatedLinks[index] = value;
+    setLinks(updatedLinks);
+  };
 
   return (
     <main className="relative min-h-screen flex flex-col items-center text-white px-4">
@@ -24,6 +36,7 @@ export default function Create() {
             Save
           </Button>
         </div>
+
         <div className="mb-4 flex items-center justify-between">
           <label className="block text-md font-medium text-white">Name</label>
           <input
@@ -34,6 +47,7 @@ export default function Create() {
             required
           />
         </div>
+
         <div className="mb-4 flex items-center justify-between">
           <label className="block text-md font-medium text-white">Title</label>
           <input
@@ -44,6 +58,7 @@ export default function Create() {
             required
           />
         </div>
+
         <div className="mb-4 flex items-center justify-between">
           <label className="block text-md font-medium text-white">
             Company
@@ -93,34 +108,37 @@ export default function Create() {
           />
         </div>
 
-        <div className="mb-4 flex items-center justify-between">
-          <label className="block text-md font-medium text-white">Link</label>
-          <input
-            type="text"
-            id="link"
-            name="link"
-            className="border text-md rounded-[4px] block w-[260px] h-8 p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
-            required
-          />
-        </div>
+        {links.map((link, index) => (
+          <div key={index} className="mb-4 flex items-center justify-between">
+            <label className="block text-md font-medium text-white">
+              {index === 0 && "Link"}
+            </label>
+            <input
+              type="text"
+              className="border text-md rounded-[4px] block w-[260px] h-8 p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+              onChange={(e) => handleLinkChange(index, e.target.value)}
+              required
+            />
+          </div>
+        ))}
         <div className="flex justify-end">
-          <Button variant="text" className="flex space-x-1">
+          <Button
+            variant="text"
+            className="flex space-x-1"
+            onClick={handleAddLink}
+          >
             <PlusCircle size={20} />
             <div className="text-sm">Add Link</div>
           </Button>
         </div>
+
         <input
           id="userEmail"
           name="userEmail"
           type="hidden"
           defaultValue={session?.user?.email || ""}
         />
-        <input
-          id="pathname"
-          name="pathname"
-          type="hidden"
-          defaultValue={pathname || ""}
-        />
+        <input id="links" name="links" type="hidden" defaultValue={links} />
       </form>
     </main>
   );
