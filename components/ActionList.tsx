@@ -16,7 +16,7 @@ interface Props {
 export const ActionList = ({ actions, isLoading, isError }: Props) => {
   if (isError) {
     return (
-      <div className="flex items-center justify-center text-3xl text-red-400">
+      <div className="flex items-center justify-center text-base text-red-400 md:text-lg lg:text-xl">
         Something went wrong, please try again later
       </div>
     );
