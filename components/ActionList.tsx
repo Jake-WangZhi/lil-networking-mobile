@@ -1,52 +1,23 @@
-"use client";
-
-import { useEffect, useState, useCallback } from "react";
 import FoldableComponent from "./FoldableComponent";
-import { useSession } from "next-auth/react";
 import { Action, ActionType } from "@/types";
 import { ClipLoader } from "react-spinners";
 import { ActionCard } from "./ActionCard";
 import { Info } from "react-feather";
 
-export const ActionList = () => {
-  const [pastActions, setPastActions] = useState<Action[]>([]);
-  const [upcomingActions, setUpcomingActions] = useState<Action[]>([]);
-  const [error, setError] = useState<string | null>(null);
-  const { data: session } = useSession();
-  const [isLoading, setIsLoading] = useState(true);
+interface Props {
+  actions: {
+    pastActions: Array<Action>;
+    upcomingActions: Array<Action>;
+  };
+  isLoading: boolean;
+  isError: boolean;
+}
 
-  useEffect(() => {
-    const email = session?.user?.email;
-    if (email) {
-      fetchActionsBasedOnEmail(email);
-    }
-  }, [session]);
-
-  const fetchActionsBasedOnEmail = useCallback(
-    async (email: string) => {
-      try {
-        const response = await fetch(`/dashboard/api?email=${email}`);
-        const { pastActions, upcomingActions } = await response.json();
-
-        if (response.ok) {
-          setPastActions(pastActions as Action[]);
-          setUpcomingActions(upcomingActions as Action[]);
-        } else {
-          throw new Error(response.statusText);
-        }
-      } catch (error: any) {
-        setError(error.message);
-      } finally {
-        setIsLoading(false);
-      }
-    },
-    [setPastActions, setUpcomingActions, setError, setIsLoading]
-  );
-
-  if (error) {
+export const ActionList = ({ actions, isLoading, isError }: Props) => {
+  if (isError) {
     return (
       <div className="flex items-center justify-center text-3xl text-red-400">
-        {error}
+        Something went wrong, please try again later
       </div>
     );
   }
@@ -65,7 +36,7 @@ export const ActionList = () => {
         title={
           <div className="flex items-center space-x-2">
             <div className="w-1 h-4 border-l-4 border-light-yellow md:border-l-5 md:h-5 lg:border-l-6 lg:h-6"></div>
-            <h2 className="md:text-xl lg:text-2xl">{`Past Due (${pastActions.length})`}</h2>
+            <h2 className="md:text-xl lg:text-2xl">{`Past Due (${actions?.pastActions?.length})`}</h2>
             <Info
               size={16}
               opacity={0.7}
@@ -75,7 +46,7 @@ export const ActionList = () => {
         }
         content={
           <>
-            {pastActions.map((action, index) => (
+            {actions?.pastActions?.map((action, index) => (
               <ActionCard
                 key={index}
                 action={action}
@@ -89,7 +60,7 @@ export const ActionList = () => {
         title={
           <div className="flex items-center space-x-2">
             <div className="w-1 h-4 border-l-4 border-light-blue md:border-l-5 md:h-5 lg:border-l-6 lg:h-6"></div>
-            <h2 className="md:text-xl lg:text-2xl">{`New Action Items (${upcomingActions.length})`}</h2>
+            <h2 className="md:text-xl lg:text-2xl">{`New Action Items (${actions?.upcomingActions?.length})`}</h2>
             <Info
               size={18}
               opacity={0.7}
@@ -99,7 +70,7 @@ export const ActionList = () => {
         }
         content={
           <>
-            {upcomingActions.map((action, index) => (
+            {actions?.upcomingActions?.map((action, index) => (
               <ActionCard
                 key={index}
                 action={action}
