@@ -16,39 +16,46 @@ export function getUserByEmail(email: string) {
 
 export async function createContact({
   name,
+  title,
+  company,
+  industry,
+  goalDays,
   email,
   phone,
-  category,
-  goalDays,
-  note,
+  links,
   userId,
 }: {
   name: string;
+  title: string;
+  company: string;
+  industry: string;
+  goalDays: number;
   email: string;
   phone: string;
-  category: string;
-  goalDays: number;
-  note: string;
+  links: string[];
   userId: string;
 }) {
   const contact = await prisma.contact.create({
     data: {
       name,
+      title,
+      company,
+      industry,
+      goalDays,
       email,
       phone,
-      category,
-      goalDays,
+      links,
       userId,
     },
   });
 
-  if (note)
-    await prisma.activity.create({
-      data: {
-        contactId: contact.id,
-        note,
-      },
-    });
+  // if (note)
+  //   await prisma.activity.create({
+  //     data: {
+  //       contactId: contact.id,
+  //       note,
+  //     },
+  //   });
 }
 
 export default prisma;

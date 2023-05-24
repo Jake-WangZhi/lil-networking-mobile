@@ -12,14 +12,16 @@ export enum ActionType {
 }
 
 export interface Contact {
+  id: string;
   name: string;
+  title?: string;
+  company?: string;
+  industry?: string;
+  goalDays: number;
   email?: string;
   phone?: string;
-  website: string;
-  image?: string;
-  category?: string;
-  goalDays?: number;
-  interests?: string;
+  links?: string[];
+  interests?: string[];
   activities?: Array<Activity>;
 }
 

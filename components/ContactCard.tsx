@@ -16,7 +16,7 @@ export const ContactCard = ({ contact }: Props) => {
             <ArrowRight className="md:w-6 md:h-6 lg:w-8 lg:h-8" />
           </div>
           <div className="text-sm font-normal text-white text-opacity-70 md:text-base lg:text-lg">
-            {contact?.category}
+            {contact?.industry}
           </div>
           <p className="text-sm md:text-base lg:text-lg line-clamp-2 overflow-hidden">
             {contact?.activities?.[0]?.note}

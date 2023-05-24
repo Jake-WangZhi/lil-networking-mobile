@@ -66,7 +66,7 @@ const parseActions = (contacts: Contact[], activities: Activity[]) => {
 
       const action = {
         contactName: contact.name,
-        contactCategory: contact.category || "",
+        contactCategory: contact.industry || "",
         note: activity.note,
         days,
         goalDays,

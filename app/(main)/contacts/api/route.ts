@@ -48,13 +48,15 @@ export async function GET(request: Request) {
 const parseContacts = (contacts: Contact[], activities: Activity[]) => {
   const parsedContacts = contacts.map((contact) => {
     return {
+      id: contact.id,
       name: contact.name,
+      title: contact.title,
+      company: contact.company,
+      industry: contact.industry,
+      goalDays: contact.goalDays,
       email: contact.email,
       phone: contact.phone,
-      website: contact.website,
-      image: contact.image,
-      category: contact.category,
-      goalDays: contact.goalDays,
+      links: contact.links,
       interests: contact.interests,
       activities: activities.filter(
         (activity) => activity.contactId === contact.id

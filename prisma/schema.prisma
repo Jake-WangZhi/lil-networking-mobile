@@ -15,15 +15,16 @@ model Contact {
   updatedAt DateTime @updatedAt
 
   name       String
+  title      String?
+  company    String?
+  industry   String?
+  goalDays   Int?
   email      String?
   phone      String?
-  website    String?
-  image      String?
-  User       User       @relation(fields: [userId], references: [id])
+  links      String[]
+  interests  String[]
+  User       User?      @relation(fields: [userId], references: [id])
   userId     String
-  category   String?
-  goalDays   Int?
-  interests  String?
   activities Activity[]
 }
 
@@ -34,7 +35,7 @@ model Activity {
 
   note String
 
-  Contact   Contact @relation(fields: [contactId], references: [id])
+  Contact   Contact? @relation(fields: [contactId], references: [id])
   contactId String
 }
 
@@ -52,7 +53,7 @@ model Account {
   id_token          String? @db.Text
   session_state     String?
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user User? @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
 }

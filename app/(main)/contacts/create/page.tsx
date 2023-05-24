@@ -3,25 +3,31 @@
 import { createContact } from "@/app/_actions";
 import { Button } from "@/components/Button";
 import { useSession } from "next-auth/react";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { ChevronLeft, PlusCircle } from "react-feather";
-import { ReactNode, useState } from "react";
+import { useCallback, useState } from "react";
 
 export default function Create() {
-  const pathname = usePathname();
   const { data: session } = useSession();
   const router = useRouter();
   const [links, setLinks] = useState([""]);
+  const [selectedGoalDays, setSelectedGoalDays] = useState(30);
 
-  const handleAddLink = () => {
-    setLinks([...links, ""]); // Add an empty link to the array
-  };
+  const handleAddLink = useCallback(() => {
+    setLinks((prevLinks) => [...prevLinks, ""]);
+  }, []);
 
-  const handleLinkChange = (index: number, value: string) => {
-    const updatedLinks = [...links];
-    updatedLinks[index] = value;
-    setLinks(updatedLinks);
-  };
+  const handleLinkChange = useCallback((index: number, value: string) => {
+    setLinks((prevLinks) => {
+      const updatedLinks = [...prevLinks];
+      updatedLinks[index] = value;
+      return updatedLinks;
+    });
+  }, []);
+
+  const handleButtonClick = useCallback((goalDays: number) => {
+    setSelectedGoalDays(goalDays);
+  }, []);
 
   return (
     <main className="relative min-h-screen flex flex-col items-center text-white px-4">
@@ -43,7 +49,7 @@ export default function Create() {
             type="text"
             id="name"
             name="name"
-            className="border text-md rounded-[4px] block w-[260px] h-8 p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+            className="text-md rounded-[4px] block w-[260px] h-8 p-2.5 bg-white bg-opacity-5  placeholder-gray-400 text-white focus:ring-1 focus:ring-white focus:outline-none appearance-none caret-white"
             required
           />
         </div>
@@ -54,7 +60,7 @@ export default function Create() {
             type="text"
             id="title"
             name="title"
-            className="border text-md rounded-[4px] block w-[260px] h-8 p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+            className="text-md rounded-[4px] block w-[260px] h-8 p-2.5 bg-white bg-opacity-5 placeholder-gray-400 text-white focus:ring-1 focus:ring-white focus:outline-none appearance-none caret-white"
             required
           />
         </div>
@@ -67,10 +73,11 @@ export default function Create() {
             type="text"
             id="company"
             name="company"
-            className="border text-md rounded-[4px] block w-[260px] h-8 p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+            className="text-md rounded-[4px] block w-[260px] h-8 p-2.5 bg-white bg-opacity-5  placeholder-gray-400 text-white focus:ring-1 focus:ring-white focus:outline-none appearance-none caret-white"
             required
           />
         </div>
+
         <div className="mb-4 flex items-center justify-between">
           <label className="block text-md font-medium text-white">
             Industry
@@ -79,9 +86,51 @@ export default function Create() {
             type="text"
             id="industry"
             name="industry"
-            className="border text-md rounded-[4px] block w-[260px] h-8 p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+            className="text-md rounded-[4px] block w-[260px] h-8 p-2.5 bg-white bg-opacity-5  placeholder-gray-400 text-white focus:ring-1 focus:ring-white focus:outline-none appearance-none caret-white"
             required
           />
+        </div>
+
+        <div className="mb-4 flex items-center justify-between">
+          <div>Goal</div>
+          <div className="block w-[260px] h-8 space-x-1">
+            <Button
+              variant="secondary"
+              type="button"
+              className={`w-[84px] ${
+                selectedGoalDays === 30
+                  ? "border border-1 border-light-blue text-light-blue"
+                  : ""
+              }`}
+              onClick={() => handleButtonClick(30)}
+            >
+              30 days
+            </Button>
+            <Button
+              variant="secondary"
+              type="button"
+              className={`w-[84px] ${
+                selectedGoalDays === 60
+                  ? "border border-1 border-light-blue text-light-blue"
+                  : ""
+              }`}
+              onClick={() => handleButtonClick(60)}
+            >
+              60 days
+            </Button>
+            <Button
+              variant="secondary"
+              type="button"
+              className={`w-[84px] ${
+                selectedGoalDays === 90
+                  ? "border border-1 border-light-blue text-light-blue"
+                  : ""
+              }`}
+              onClick={() => handleButtonClick(90)}
+            >
+              90 days
+            </Button>
+          </div>
         </div>
 
         <div className="mb-4 flex items-center justify-between">
@@ -90,7 +139,7 @@ export default function Create() {
             type="email"
             id="email"
             name="email"
-            className="border text-md rounded-[4px] block w-[260px] h-8 p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+            className="text-md rounded-[4px] block w-[260px] h-8 p-2.5 bg-white bg-opacity-5  placeholder-gray-400 text-white focus:ring-1 focus:ring-white focus:outline-none appearance-none caret-white"
             required
           />
         </div>
@@ -101,7 +150,7 @@ export default function Create() {
             type="tel"
             id="phone"
             name="phone"
-            className="border text-md rounded-[4px] block w-[260px] h-8 p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+            className="text-md rounded-[4px] block w-[260px] h-8 p-2.5 bg-white bg-opacity-5  placeholder-gray-400 text-white focus:ring-1 focus:ring-white focus:outline-none appearance-none caret-white"
             pattern="[0-9]{10}"
             title="Please enter a valid 10-digit U.S. phone number"
             autoComplete="tel"
@@ -115,21 +164,30 @@ export default function Create() {
             </label>
             <input
               type="text"
-              className="border text-md rounded-[4px] block w-[260px] h-8 p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+              className="text-md rounded-[4px] block w-[260px] h-8 p-2.5 bg-white bg-opacity-5  placeholder-gray-400 text-white focus:ring-1 focus:ring-white focus:outline-none appearance-none caret-white"
               onChange={(e) => handleLinkChange(index, e.target.value)}
-              required
             />
           </div>
         ))}
         <div className="flex justify-end">
           <Button
             variant="text"
-            className="flex space-x-1"
+            className="flex space-x-1 mb-5"
             onClick={handleAddLink}
           >
             <PlusCircle size={20} />
             <div className="text-sm">Add Link</div>
           </Button>
+        </div>
+
+        <div className="mb-20 space-y-2">
+          <label>Interests</label>
+          <textarea
+            id="interests"
+            name="interests"
+            className="text-md rounded-xl block w-full h-[160px] p-2.5 bg-white bg-opacity-5 placeholder-gray-400 text-white focus:ring-1 focus:ring-white focus:outline-none appearance-none caret-white"
+            required
+          />
         </div>
 
         <input
@@ -139,6 +197,12 @@ export default function Create() {
           defaultValue={session?.user?.email || ""}
         />
         <input id="links" name="links" type="hidden" defaultValue={links} />
+        <input
+          id="goalDays"
+          name="goalDays"
+          type="hidden"
+          defaultValue={selectedGoalDays}
+        />
       </form>
     </main>
   );

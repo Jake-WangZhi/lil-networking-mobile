@@ -6,13 +6,15 @@ import { redirect } from "next/navigation";
 
 interface FormDataOptions {
   name: string;
+  title: string;
+  company: string;
+  industry: string;
+  goalDays: number;
   email: string;
   phone: string;
-  category: string;
-  goalDays: number;
-  note: string;
+  links: string;
+  interests: string;
   userEmail: string;
-  links: string[];
 }
 
 interface FormData {
@@ -22,13 +24,17 @@ interface FormData {
 export async function createContact(formData: FormData) {
   const userEmail = formData.get("userEmail");
 
-  const phone = formData.get("phone");
-  const email = formData.get("email");
   const name = formData.get("name");
-  const category = formData.get("category");
+  const title = formData.get("title");
+  const company = formData.get("company");
+  const industry = formData.get("industry");
   const goalDays = Number(formData.get("goalDays"));
-  const note = formData.get("note");
-  const links = formData.get("links");
+  const email = formData.get("email");
+  const phone = formData.get("phone");
+  const links = formData
+    .get("links")
+    .split(",")
+    .filter((link) => link !== "");
 
   const user = await db.getUserByEmail(userEmail);
   if (!user) throw new Error("User not found");
@@ -40,11 +46,13 @@ export async function createContact(formData: FormData) {
 
   await db.createContact({
     name,
+    title,
+    company,
+    industry,
+    goalDays,
     email,
     phone: formattedPhoneNumber,
-    category,
-    goalDays,
-    note,
+    links,
     userId: user.id,
   });
 
