@@ -23,6 +23,7 @@ export async function createContact({
   email,
   phone,
   links,
+  interests,
   userId,
 }: {
   name: string;
@@ -33,6 +34,7 @@ export async function createContact({
   email: string;
   phone: string;
   links: string[];
+  interests: string[];
   userId: string;
 }) {
   const contact = await prisma.contact.create({
@@ -45,6 +47,7 @@ export async function createContact({
       email,
       phone,
       links,
+      interests,
       userId,
     },
   });

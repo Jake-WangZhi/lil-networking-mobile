@@ -6,12 +6,22 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { ChevronLeft, PlusCircle } from "react-feather";
 import { useCallback, useState } from "react";
+// @ts-ignore
+import TagsInput from "react-tagsinput";
+import "react-tagsinput/react-tagsinput.css";
+import "./styles.css";
 
 export default function Create() {
   const { data: session } = useSession();
   const router = useRouter();
   const [links, setLinks] = useState([""]);
   const [selectedGoalDays, setSelectedGoalDays] = useState(30);
+
+  const [tags, setTags] = useState<string[]>([]);
+
+  const handleChange = (tags: string[]) => {
+    setTags(tags);
+  };
 
   const handleAddLink = useCallback(() => {
     setLinks((prevLinks) => [...prevLinks, ""]);
@@ -182,11 +192,12 @@ export default function Create() {
 
         <div className="mb-20 space-y-2">
           <label>Interests</label>
-          <textarea
-            id="interests"
-            name="interests"
-            className="text-md rounded-xl block w-full h-[160px] p-2.5 bg-white bg-opacity-5 placeholder-gray-400 text-white focus:ring-1 focus:ring-white focus:outline-none appearance-none caret-white"
-            required
+          <TagsInput
+            value={tags}
+            onChange={handleChange}
+            inputProps={{ placeholder: "" }}
+            focusedClassName="ring-1 ring-white outline-none appearance-none caret-white"
+            className="text-md rounded-xl block w-full p-2.5 bg-white bg-opacity-5 placeholder-white text-white overflow-auto"
           />
         </div>
 
@@ -202,6 +213,12 @@ export default function Create() {
           name="goalDays"
           type="hidden"
           defaultValue={selectedGoalDays}
+        />
+        <input
+          id="interests"
+          name="interests"
+          type="hidden"
+          defaultValue={tags}
         />
       </form>
     </main>

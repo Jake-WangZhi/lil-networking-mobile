@@ -35,6 +35,7 @@ export async function createContact(formData: FormData) {
     .get("links")
     .split(",")
     .filter((link) => link !== "");
+  const interests = formData.get("interests").split(",");
 
   const user = await db.getUserByEmail(userEmail);
   if (!user) throw new Error("User not found");
@@ -53,6 +54,7 @@ export async function createContact(formData: FormData) {
     email,
     phone: formattedPhoneNumber,
     links,
+    interests,
     userId: user.id,
   });
 
