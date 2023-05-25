@@ -1,8 +1,9 @@
 "use client";
 
 import { Home, Users, Settings } from "react-feather";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { Button } from "./Button";
+import { useState } from "react";
 
 interface NavItemProps {
   href: string;
@@ -12,18 +13,26 @@ interface NavItemProps {
 
 export const NavFooter = () => {
   const pathname = usePathname();
+  const router = useRouter();
+
+  const [currentPath, setCurrentPath] = useState(pathname);
 
   const isActive = (path: string) => {
-    return pathname === path ? "text-white" : "text-gray-300";
+    return currentPath === path ? "text-white" : "text-grey-30";
   };
 
   const NavItem = ({ href, text, Icon }: NavItemProps) => (
-    <Link href={href}>
-      <div className={`text-xs flex flex-col items-center ${isActive(href)}`}>
-        <Icon className="w-5 h-5 mx-auto mb-1" />
-        {text}
-      </div>
-    </Link>
+    <Button
+      variant="text"
+      onClick={() => {
+        setCurrentPath(href);
+        router.push(href);
+      }}
+      className={`${isActive(href)}`}
+    >
+      <Icon size={20} className="mx-auto" />
+      <div className={`text-xs leading-5`}>{text}</div>
+    </Button>
   );
 
   return (

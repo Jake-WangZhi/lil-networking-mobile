@@ -54,7 +54,7 @@ export default function Create() {
         </div>
 
         <div className="mb-4 flex items-center justify-between">
-          <label className="block text-md font-medium text-white">Name</label>
+          <label className="block text-md font-medium text-white">Name*</label>
           <input
             type="text"
             id="name"
@@ -65,7 +65,7 @@ export default function Create() {
         </div>
 
         <div className="mb-4 flex items-center justify-between">
-          <label className="block text-md font-medium text-white">Title</label>
+          <label className="block text-md font-medium text-white">Title*</label>
           <input
             type="text"
             id="title"
@@ -77,7 +77,7 @@ export default function Create() {
 
         <div className="mb-4 flex items-center justify-between">
           <label className="block text-md font-medium text-white">
-            Company
+            Company*
           </label>
           <input
             type="text"
@@ -90,7 +90,7 @@ export default function Create() {
 
         <div className="mb-4 flex items-center justify-between">
           <label className="block text-md font-medium text-white">
-            Industry
+            Industry*
           </label>
           <input
             type="text"
@@ -102,7 +102,7 @@ export default function Create() {
         </div>
 
         <div className="mb-4 flex items-center justify-between">
-          <div>Goal</div>
+          <div>Goal*</div>
           <div className="block w-[260px] h-8 space-x-1">
             <Button
               variant="secondary"
@@ -150,7 +150,6 @@ export default function Create() {
             id="email"
             name="email"
             className="text-md rounded-[4px] block w-[260px] h-8 p-2.5 bg-white bg-opacity-5  placeholder-gray-400 text-white focus:ring-1 focus:ring-white focus:outline-none appearance-none caret-white"
-            required
           />
         </div>
 
@@ -197,7 +196,7 @@ export default function Create() {
             onChange={handleChange}
             inputProps={{ placeholder: "" }}
             focusedClassName="ring-1 ring-white outline-none appearance-none caret-white"
-            className="text-md rounded-xl block w-full p-2.5 bg-white bg-opacity-5 placeholder-white text-white overflow-auto"
+            className="text-md rounded-xl block w-full h-[160px] p-2.5 bg-white bg-opacity-5 placeholder-white text-white overflow-auto"
           />
         </div>
 

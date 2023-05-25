@@ -35,17 +35,20 @@ export async function createContact(formData: FormData) {
     .get("links")
     .split(",")
     .filter((link) => link !== "");
-  const interests = formData.get("interests").split(",");
+  const interests = formData
+    .get("interests")
+    .split(",")
+    .filter((link) => link !== "");
 
   const user = await db.getUserByEmail(userEmail);
   if (!user) throw new Error("User not found");
 
-  validateEmail(email);
+  if (email) validateEmail(email);
   if (phone) validatePhone(phone);
 
   const formattedPhoneNumber = formatPhoneNumber(phone);
 
-  await db.createContact({
+  const contactId = await db.createContact({
     name,
     title,
     company,
@@ -58,5 +61,5 @@ export async function createContact(formData: FormData) {
     userId: user.id,
   });
 
-  redirect(`/contacts/create`);
+  redirect(`/contacts/${contactId}`);
 }

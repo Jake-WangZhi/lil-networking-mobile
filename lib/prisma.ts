@@ -52,13 +52,16 @@ export async function createContact({
     },
   });
 
-  // if (note)
-  //   await prisma.activity.create({
-  //     data: {
-  //       contactId: contact.id,
-  //       note,
-  //     },
-  //   });
+  await prisma.activity.create({
+    data: {
+      contactId: contact.id,
+      title: "Contact created",
+      description: "",
+      date: new Date(),
+    },
+  });
+
+  return contact.id;
 }
 
 export default prisma;
