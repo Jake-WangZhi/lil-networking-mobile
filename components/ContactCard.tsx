@@ -17,7 +17,7 @@ export const ContactCard = ({ contact }: Props) => {
             </div>
             <ArrowRight className="md:w-6 md:h-6 lg:w-8 lg:h-8" />
           </div>
-          <div className="text-sm font-normal text-white text-opacity-70 md:text-base lg:text-lg">
+          <div className="text-sm font-normal text-white text-opacity-70 mb-2 md:text-base lg:text-lg">
             {contact?.industry}
           </div>
           <p className="text-sm md:text-base lg:text-lg line-clamp-2 overflow-hidden">
