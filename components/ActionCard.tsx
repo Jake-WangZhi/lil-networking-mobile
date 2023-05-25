@@ -17,7 +17,7 @@ export const ActionCard = ({ action, actionType }: Props) => {
             <ArrowRight className="md:w-6 md:h-6 lg:w-8 lg:h-8" />
           </div>
           <div className="text-sm font-normal text-white text-opacity-70 md:text-base lg:text-lg">
-            {action.contactCategory && <>{action.contactCategory} • </>}
+            {action.contactIndustry && <>{action.contactIndustry} • </>}
             Goal: {action.goalDays} days
           </div>
           <div
@@ -28,7 +28,7 @@ export const ActionCard = ({ action, actionType }: Props) => {
             {action.days} Days ago
           </div>
           <p className="text-sm md:text-base lg:text-lg line-clamp-2 overflow-hidden">
-            {action.note}
+            {action.description}
           </p>
         </div>
       </div>

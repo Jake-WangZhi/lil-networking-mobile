@@ -13,9 +13,9 @@ export const Header = () => {
     <>
       <div className="pt-8 w-full">
         <div className="flex justify-between items-center">
-          <h1 className="text-3xl font-semibold md:text-5xl">
+          <div className="text-3xl font-semibold md:text-5xl">
             Hi, {session?.user?.name?.split(" ")[0]}!
-          </h1>
+          </div>
           <Button
             variant="text"
             onClick={() => router.push("/contacts/create")}

@@ -1,8 +1,8 @@
 export interface Action {
   contactName: string;
   days: number;
-  contactCategory: string;
-  note: string;
+  contactIndustry: string;
+  description: string;
   goalDays: number;
 }
 
@@ -14,9 +14,9 @@ export enum ActionType {
 export interface Contact {
   id: string;
   name: string;
-  title?: string;
-  company?: string;
-  industry?: string;
+  title: string;
+  company: string;
+  industry: string;
   goalDays: number;
   email?: string;
   phone?: string;
@@ -26,5 +26,6 @@ export interface Contact {
 }
 
 interface Activity {
-  note: string;
+  title: string;
+  description?: string;
 }

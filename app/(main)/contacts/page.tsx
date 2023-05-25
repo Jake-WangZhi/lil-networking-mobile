@@ -13,7 +13,6 @@ export default function ContactsPage() {
     email: session?.user?.email,
   });
 
-  console.log("contacts", contacts);
   return (
     <main className="relative min-h-screen flex flex-col items-center text-white px-4">
       <Header />

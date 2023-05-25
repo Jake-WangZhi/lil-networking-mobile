@@ -5,6 +5,7 @@ import { Activity, Contact } from "@prisma/client";
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const email = searchParams.get("email");
+  const id = searchParams.get("id");
 
   if (!email)
     return new NextResponse(
@@ -23,6 +24,7 @@ export async function GET(request: Request) {
   const contacts = await prisma.contact.findMany({
     where: {
       userId: user.id,
+      ...(id ? { id } : {}),
     },
     orderBy: {
       name: "asc",

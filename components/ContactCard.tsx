@@ -8,18 +8,20 @@ interface Props {
 
 export const ContactCard = ({ contact }: Props) => {
   return (
-    <Link href="/contacts">
+    <Link href={`/contacts/${contact.id}`}>
       <div className="bg-white bg-opacity-5 p-4 mb-4 hover:bg-opacity-[0.08] active:bg-opacity-10 rounded-lg">
         <div className="flex flex-col">
           <div className="flex justify-between">
-            <h2 className="md:text-xl lg:text-2xl">{contact.name}</h2>
+            <div className="text-base md:text-xl lg:text-2xl">
+              {contact.name}
+            </div>
             <ArrowRight className="md:w-6 md:h-6 lg:w-8 lg:h-8" />
           </div>
           <div className="text-sm font-normal text-white text-opacity-70 md:text-base lg:text-lg">
             {contact?.industry}
           </div>
           <p className="text-sm md:text-base lg:text-lg line-clamp-2 overflow-hidden">
-            {contact?.activities?.[0]?.note}
+            {contact?.activities?.[0]?.description}
           </p>
         </div>
       </div>

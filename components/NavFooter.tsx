@@ -1,9 +1,9 @@
 "use client";
 
 import { Home, Users, Settings } from "react-feather";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { Button } from "./Button";
-import { useState } from "react";
+import { useCurrentPath } from "@/contexts/CurrentPathContext";
 
 interface NavItemProps {
   href: string;
@@ -12,10 +12,9 @@ interface NavItemProps {
 }
 
 export const NavFooter = () => {
-  const pathname = usePathname();
-  const router = useRouter();
+  const { currentPath, setCurrentPath } = useCurrentPath();
 
-  const [currentPath, setCurrentPath] = useState(pathname);
+  const router = useRouter();
 
   const isActive = (path: string) => {
     return currentPath === path ? "text-white" : "text-grey-30";

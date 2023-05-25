@@ -10,6 +10,7 @@ module.exports = {
       fontSize: {
         xs: "11px",
         xl: "19px",
+        "2xl": "23px",
         "3xl": "32px",
       },
       lineHeight: {

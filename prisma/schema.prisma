@@ -15,17 +15,17 @@ model Contact {
   updatedAt DateTime @updatedAt
 
   name       String
-  title      String?
-  company    String?
-  industry   String?
-  goalDays   Int?
+  title      String
+  company    String
+  industry   String
+  goalDays   Int
   email      String?
   phone      String?
   links      String[]
   interests  String[]
+  activities Activity[]
   User       User?      @relation(fields: [userId], references: [id])
   userId     String
-  activities Activity[]
 }
 
 model Activity {
@@ -34,7 +34,7 @@ model Activity {
   updatedAt DateTime @updatedAt
 
   title       String
-  description String
+  description String?
   date        DateTime
 
   Contact   Contact? @relation(fields: [contactId], references: [id])
