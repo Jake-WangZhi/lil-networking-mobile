@@ -3,6 +3,7 @@ import "@fontsource/metropolis";
 import { Session } from "next-auth";
 import { headers } from "next/headers";
 import AuthContext from "./AuthContext";
+import Provider from "@/app/provider";
 
 export const metadata = {
   title: "Lil Networking",
@@ -34,7 +35,9 @@ export default async function RootLayout({
         <link rel="manifest" href="/manifest.json" />
       </head>
       <body className="font-sans bg-dark-blue mx-auto max-w-lg md:max-w-xl lg:max-w-3xl">
-        <AuthContext session={session}>{children}</AuthContext>
+        <Provider>
+          <AuthContext session={session}>{children}</AuthContext>
+        </Provider>
       </body>
     </html>
   );

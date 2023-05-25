@@ -45,7 +45,7 @@ export async function GET(request: Request) {
 
   const actions = parseActions(contacts, activities);
 
-  return NextResponse.json({ actions });
+  return NextResponse.json(actions);
 }
 
 const parseActions = (contacts: Contact[], activities: Activity[]) => {
@@ -62,7 +62,7 @@ const parseActions = (contacts: Contact[], activities: Activity[]) => {
 
     if (contact) {
       const days = calculateDaysSinceCreatedAt(activity.createdAt);
-      const goalDays = contact.reachOutPeriod || DEFAUL_REACH_OUT_PERIOD;
+      const goalDays = contact.goalDays || DEFAUL_REACH_OUT_PERIOD;
 
       const action = {
         contactName: contact.name,

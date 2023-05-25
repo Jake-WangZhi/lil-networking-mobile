@@ -14,25 +14,41 @@ export function getUserByEmail(email: string) {
   });
 }
 
-export function createContact({
+export async function createContact({
   name,
   email,
   phone,
+  category,
+  goalDays,
+  note,
   userId,
 }: {
   name: string;
   email: string;
   phone: string;
+  category: string;
+  goalDays: number;
+  note: string;
   userId: string;
 }) {
-  return prisma.contact.create({
+  const contact = await prisma.contact.create({
     data: {
       name,
       email,
       phone,
+      category,
+      goalDays,
       userId,
     },
   });
+
+  if (note)
+    await prisma.activity.create({
+      data: {
+        contactId: contact.id,
+        note,
+      },
+    });
 }
 
 export default prisma;
