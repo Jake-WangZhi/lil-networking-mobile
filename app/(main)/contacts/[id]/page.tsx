@@ -21,7 +21,7 @@ export default function ContactPage({ params }: { params: { id: string } }) {
   });
 
   return (
-    <main className="relative min-h-screen flex flex-col items-center text-white px-4">
+    <main className="relative min-h-screen text-white px-4">
       <Button
         variant="text"
         className="pt-8 w-full mb-4"

@@ -22,10 +22,11 @@ export interface Contact {
   phone?: string;
   links?: string[];
   interests?: string[];
-  activities?: Array<Activity>;
+  activities?: Activity[];
 }
 
 interface Activity {
   title: string;
   description?: string;
+  date: string;
 }

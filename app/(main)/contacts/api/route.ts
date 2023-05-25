@@ -43,7 +43,7 @@ export async function GET(request: Request) {
   });
 
   const parsedContacts = parseContacts(contacts, activities);
-
+  console.log("parsedContacts", parsedContacts[0].activities[0]);
   return NextResponse.json(parsedContacts);
 }
 
@@ -60,9 +60,16 @@ const parseContacts = (contacts: Contact[], activities: Activity[]) => {
       phone: contact.phone,
       links: contact.links,
       interests: contact.interests,
-      activities: activities.filter(
-        (activity) => activity.contactId === contact.id
-      ),
+      activities: activities
+        .filter((activity) => activity.contactId === contact.id)
+        .map((activity) => ({
+          ...activity,
+          date: new Date(activity.date).toLocaleDateString("en-US", {
+            month: "long",
+            day: "numeric",
+            year: "numeric",
+          }),
+        })),
     };
   });
 
