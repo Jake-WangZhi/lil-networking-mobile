@@ -15,8 +15,10 @@ export default function DashboardPage() {
 
   return (
     <main className="relative min-h-screen flex flex-col items-center text-white px-4">
-      <Header />
-      <GoalSummary />
+      <div className="sticky top-0 w-full bg-dark-blue z-10">
+        <Header />
+        <GoalSummary />
+      </div>
       <ActionList actions={actions} isLoading={isLoading} isError={isError} />
     </main>
   );

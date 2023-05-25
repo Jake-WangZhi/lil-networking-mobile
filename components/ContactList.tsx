@@ -12,7 +12,7 @@ interface Props {
 export const ContactList = ({ contacts, isLoading, isError }: Props) => {
   if (isError) {
     return (
-      <div className="flex items-center justify-center text-base text-red-400 md:text-lg lg:text-xl">
+      <div className="flex items-center justify-center text-base text-red-400 mt-5 md:text-lg lg:text-xl">
         Something went wrong, please try again later
       </div>
     );
@@ -20,14 +20,14 @@ export const ContactList = ({ contacts, isLoading, isError }: Props) => {
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center">
+      <div className="flex items-center justify-center mt-5">
         <ClipLoader color="#38ACE2" size={150} />
       </div>
     );
   }
 
   return (
-    <div className="w-full mb-20">
+    <div className="w-full mb-20 mt-5">
       <div className="flex items-center space-x-2 mb-2">
         <div className="text-base md:text-xl lg:text-2xl">{`All Contacts (${contacts?.length})`}</div>
         <Info size={18} opacity={0.7} className="md:w-5 md:h-5 lg:w-6 lg:h-6" />

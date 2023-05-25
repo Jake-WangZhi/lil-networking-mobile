@@ -16,7 +16,7 @@ interface Props {
 export const ActionList = ({ actions, isLoading, isError }: Props) => {
   if (isError) {
     return (
-      <div className="flex items-center justify-center text-base text-red-400 md:text-lg lg:text-xl">
+      <div className="flex items-center justify-center text-base text-red-400 mt-5 md:text-lg lg:text-xl">
         Something went wrong, please try again later
       </div>
     );
@@ -24,14 +24,14 @@ export const ActionList = ({ actions, isLoading, isError }: Props) => {
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center">
+      <div className="flex items-center justify-center mt-5">
         <ClipLoader color="#38ACE2" size={150} />
       </div>
     );
   }
 
   return (
-    <div className="w-full mb-20">
+    <div className="w-full mb-20 mt-5">
       <FoldableComponent
         title={
           <div className="flex items-center space-x-2">
