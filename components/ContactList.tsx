@@ -3,7 +3,7 @@ import { ContactCard } from "./ContactCard";
 import { Contact } from "@/types";
 
 interface Props {
-  contacts: Array<Contact>;
+  contacts?: Array<Contact>;
   isLoading: boolean;
   isError: boolean;
 }
@@ -28,7 +28,7 @@ export const ContactList = ({ contacts, isLoading, isError }: Props) => {
   return (
     <div className="w-full mb-20">
       <h6 className="mb-2 md:text-xl lg:text-2xl">{`All Contacts (${contacts?.length})`}</h6>
-      {contacts.map((contact, index) => (
+      {contacts?.map((contact, index) => (
         <ContactCard key={index} contact={contact} />
       ))}
     </div>
