@@ -1,6 +1,7 @@
 import { ClipLoader } from "react-spinners";
 import { ContactCard } from "./ContactCard";
 import { Contact } from "@/types";
+import { Info } from "react-feather";
 
 interface Props {
   contacts?: Array<Contact>;
@@ -27,7 +28,10 @@ export const ContactList = ({ contacts, isLoading, isError }: Props) => {
 
   return (
     <div className="w-full mb-20">
-      <h6 className="mb-2 md:text-xl lg:text-2xl">{`All Contacts (${contacts?.length})`}</h6>
+      <div className="flex items-center space-x-2 mb-2">
+        <div className="text-base md:text-xl lg:text-2xl">{`All Contacts (${contacts?.length})`}</div>
+        <Info size={18} opacity={0.7} className="md:w-5 md:h-5 lg:w-6 lg:h-6" />
+      </div>
       {contacts?.map((contact, index) => (
         <ContactCard key={index} contact={contact} />
       ))}
