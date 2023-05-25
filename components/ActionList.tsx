@@ -5,7 +5,7 @@ import { ActionCard } from "./ActionCard";
 import { Info } from "react-feather";
 
 interface Props {
-  actions: {
+  actions?: {
     pastActions: Array<Action>;
     upcomingActions: Array<Action>;
   };

@@ -16,14 +16,14 @@ export const useAction = ({ email }: Args) => {
     isError,
     data: actions,
     isLoading,
-  } = useQuery({
+  } = useQuery<ActionType>({
     queryKey: ["action", email],
     queryFn: () => fetcher(`/dashboard/api?email=${email}`),
     enabled: !!email,
   });
 
   return {
-    actions: actions as ActionType,
+    actions,
     isLoading,
     isError,
   };
