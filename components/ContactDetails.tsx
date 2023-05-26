@@ -1,14 +1,9 @@
 import { Contact } from "@/types";
 import { ClipLoader } from "react-spinners";
-import {
-  MoreVertical,
-  Mail,
-  Phone,
-  Link,
-  PlusCircle,
-  Circle,
-  Trash2,
-} from "react-feather";
+import { PlusCircle, Circle, Trash2 } from "react-feather";
+import { ContactInfo } from "./ContactInfo";
+import { ContactInterests } from "./ContactInterests";
+import { ContactActivites } from "./ContactActivities";
 
 interface Props {
   contact?: Contact;
@@ -37,85 +32,33 @@ export const ContactDetails = ({ contact, isLoading, isError }: Props) => {
     return <p className="text-2xl font-semibold">No contact available</p>;
   }
 
+  const {
+    name,
+    title,
+    company,
+    industry,
+    goalDays,
+    email,
+    phone,
+    links,
+    interests,
+    activities,
+  } = contact;
+
   return (
     <div className="mb-20">
-      <div className="bg-white bg-opacity-5 w-full p-4 space-y-1 text-base mb-6 rounded-lg">
-        <div className="flex justify-between items-center">
-          <div className="text-2xl leading-6 font-semibold">{contact.name}</div>
-          <MoreVertical />
-        </div>
-        <div>{contact.title}</div>
-        <div>{contact.company}</div>
-        <div>{contact.industry}</div>
-        {contact.email && (
-          <div className="flex items-center space-x-1">
-            <Mail size={16} />
-            <div>{contact.email}</div>
-          </div>
-        )}
-        {contact.phone && (
-          <div className="flex items-center space-x-1">
-            <Phone size={16} />
-            <div>{contact.phone}</div>
-          </div>
-        )}
-        {contact.links?.map((link, index) => (
-          <div key={`link-${index}`} className="flex items-center space-x-1">
-            <Link size={16} />
-            <div>{link}</div>
-          </div>
-        ))}
-        <div>Goal: Every {contact.goalDays} days</div>
-      </div>
-      <div>
-        <div className="text-base mb-2">Interests</div>
-        <div className="bg-white bg-opacity-5 w-full p-4 space-x-2 text-base mb-6 rounded-xl">
-          {contact.interests?.map((interest, index) => (
-            <span
-              key={`interest-${index}`}
-              className="inline-block bg-white bg-opacity-[0.12] text-white rounded-2xl px-4 py-[6px]"
-            >
-              {interest}
-            </span>
-          ))}
-        </div>
-      </div>
-      <div>
-        <div className="flex justify-between mb-3">
-          <div>Activites</div>
-          <div className="flex items-center space-x-1">
-            <PlusCircle size={24} />
-            <div>Log Activity</div>
-          </div>
-        </div>
-        {contact.activities?.map((activity, index) => (
-          <>
-            <div className="absolute bg-dark-blue w-4 h-7 flex items-center -mt-2">
-              <Circle size={16} fill="#38ACE2" color="#38ACE2" />
-            </div>
-            <div
-              key={`activity-${index}`}
-              className={`flex pb-4 ml-[7px] bg-dark-blue ${
-                index + 1 !== contact.activities?.length &&
-                "border-l-2 border-light-blue border-dashed"
-              }`}
-            >
-              <div className="bg-white bg-opacity-5 w-full ml-6 p-4 text-white rounded-lg">
-                <div className="flex justify-between">
-                  <div className="text-base font-semibold">
-                    {activity.title}
-                  </div>
-                  <Trash2 size={24} />
-                </div>
-                <div className="text-sm opacity-[0.7] mb-2">
-                  {activity.date}
-                </div>
-                <div className="text-sm">{activity.description}</div>
-              </div>
-            </div>
-          </>
-        ))}
-      </div>
+      <ContactInfo
+        name={name}
+        title={title}
+        company={company}
+        industry={industry}
+        goalDays={goalDays}
+        email={email}
+        phone={phone}
+        links={links}
+      />
+      <ContactInterests interests={interests} />
+      <ContactActivites activities={activities} />
     </div>
   );
 };

@@ -25,7 +25,7 @@ export interface Contact {
   activities?: Activity[];
 }
 
-interface Activity {
+export interface Activity {
   title: string;
   description?: string;
   date: string;
