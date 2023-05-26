@@ -2,7 +2,7 @@ import { Activity } from "@/types";
 import { Circle, PlusCircle, Trash2 } from "react-feather";
 
 interface Props {
-  activities?: Activity[];
+  activities: Activity[] | null;
 }
 
 export const ContactActivites = ({ activities }: Props) => {

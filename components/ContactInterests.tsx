@@ -1,5 +1,5 @@
 interface Props {
-  interests?: String[];
+  interests: String[] | null;
 }
 
 export const ContactInterests = ({ interests }: Props) => {

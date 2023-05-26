@@ -6,9 +6,9 @@ interface Props {
   company: string;
   industry: string;
   goalDays: number;
-  email?: string;
-  phone?: string;
-  links?: string[];
+  email: string | null;
+  phone: string | null;
+  links: string[] | null;
 }
 
 export const ContactInfo = ({

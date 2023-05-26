@@ -1,6 +1,5 @@
 import { Contact } from "@/types";
 import { ClipLoader } from "react-spinners";
-import { PlusCircle, Circle, Trash2 } from "react-feather";
 import { ContactInfo } from "./ContactInfo";
 import { ContactInterests } from "./ContactInterests";
 import { ContactActivites } from "./ContactActivities";
