@@ -22,6 +22,7 @@ The Lil Networking App is a tool designed to help people form intentional networ
 
 This app is using Vercel's Git integration, which gives the ability to test new features and changes using [Preview Deployments](https://vercel.com/docs/concepts/deployments/preview-deployments) before merging to the main branch to automatically create a [Production Deployment](https://vercel.com/docs/concepts/deployments/environments#production)
 
+The `staging` branch automatically deploys to Vercel Preview when pushing to `staging` branch
 The `main` branch automatically deploys to Vercel Production when pushing to `main` branch, or triggering a one-time manual deploy of the `main` branch by `vercel --prod`
 
 ## Additional Info
