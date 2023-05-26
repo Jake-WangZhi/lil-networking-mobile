@@ -24,10 +24,10 @@ export default function ContactPage({ params }: { params: { id: string } }) {
     <main className="relative min-h-screen text-white px-4">
       <Button
         variant="text"
-        className="pt-8 w-full mb-4"
+        className="relative pt-8 w-full mb-4 -ml-3"
         onClick={() => router.push(currentPath)}
       >
-        <ChevronLeft size={36} />
+        <ChevronLeft size={36} color="#737373" />
       </Button>
       <ContactDetails
         contact={contacts?.[0]}

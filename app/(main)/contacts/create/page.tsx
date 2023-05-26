@@ -45,7 +45,7 @@ export default function Create() {
       <form action={createContact} className="w-full pt-8">
         <div className="flex items-center justify-between mb-9">
           <Button variant="text" onClick={() => router.back()}>
-            <ChevronLeft size={36} />
+            <ChevronLeft size={36} color="#737373" />
           </Button>
           <h1 className="text-xl">Create contact</h1>
           <Button type="submit" variant="text" className="text-light-blue">

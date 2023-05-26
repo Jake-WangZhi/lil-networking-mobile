@@ -8,7 +8,6 @@ import {
   PlusCircle,
   Circle,
   Trash2,
-  Activity,
 } from "react-feather";
 
 interface Props {
@@ -39,8 +38,8 @@ export const ContactDetails = ({ contact, isLoading, isError }: Props) => {
   }
 
   return (
-    <>
-      <div className="bg-white bg-opacity-5 w-full p-4 space-y-1 text-base mb-6">
+    <div className="mb-20">
+      <div className="bg-white bg-opacity-5 w-full p-4 space-y-1 text-base mb-6 rounded-lg">
         <div className="flex justify-between items-center">
           <div className="text-2xl leading-6 font-semibold">{contact.name}</div>
           <MoreVertical />
@@ -70,11 +69,11 @@ export const ContactDetails = ({ contact, isLoading, isError }: Props) => {
       </div>
       <div>
         <div className="text-base mb-2">Interests</div>
-        <div className="bg-white bg-opacity-5 w-full p-4 space-x-2 text-base mb-6">
+        <div className="bg-white bg-opacity-5 w-full p-4 space-x-2 text-base mb-6 rounded-xl">
           {contact.interests?.map((interest, index) => (
             <span
               key={`interest-${index}`}
-              className="inline-block bg-white bg-opacity-[0.12] text-white rounded-full px-4 py-[6px]"
+              className="inline-block bg-white bg-opacity-[0.12] text-white rounded-2xl px-4 py-[6px]"
             >
               {interest}
             </span>
@@ -90,19 +89,33 @@ export const ContactDetails = ({ contact, isLoading, isError }: Props) => {
           </div>
         </div>
         {contact.activities?.map((activity, index) => (
-          <div key={`activity-${index}`} className="flex space-x-4 mb-4">
-            <Circle className="pt-1" fill="#38ACE2" color="#38ACE2" />
-            <div className="bg-white bg-opacity-5 w-full p-4 text-white">
-              <div className="flex justify-between">
-                <div className="text-base font-semibold">{activity.title}</div>
-                <Trash2 size={24} />
-              </div>
-              <div className="text-sm opacity-[0.7] mb-2">{activity.date}</div>
-              <div className="text-sm">{activity.description}</div>
+          <>
+            <div className="absolute bg-dark-blue w-4 h-7 flex items-center -mt-2">
+              <Circle size={16} fill="#38ACE2" color="#38ACE2" />
             </div>
-          </div>
+            <div
+              key={`activity-${index}`}
+              className={`flex pb-4 ml-[7px] bg-dark-blue ${
+                index + 1 !== contact.activities?.length &&
+                "border-l-2 border-light-blue border-dashed"
+              }`}
+            >
+              <div className="bg-white bg-opacity-5 w-full ml-6 p-4 text-white rounded-lg">
+                <div className="flex justify-between">
+                  <div className="text-base font-semibold">
+                    {activity.title}
+                  </div>
+                  <Trash2 size={24} />
+                </div>
+                <div className="text-sm opacity-[0.7] mb-2">
+                  {activity.date}
+                </div>
+                <div className="text-sm">{activity.description}</div>
+              </div>
+            </div>
+          </>
         ))}
       </div>
-    </>
+    </div>
   );
 };
