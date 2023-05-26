@@ -10,7 +10,7 @@ module.exports = {
       fontSize: {
         xs: "11px",
         xl: "19px",
-        "3xl": "32px", // Customize the font size of the text-3xl class here
+        "3xl": "32px",
       },
       lineHeight: {
         72: "57.6px",
@@ -24,6 +24,7 @@ module.exports = {
         "dark-blue": "#0F1A24",
         "light-black": "#2E2E2E",
         "light-yellow": "#FFCF79",
+        grey: "#EBEBF5",
       },
       screens: {
         xs: "400px",

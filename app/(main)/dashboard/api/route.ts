@@ -4,6 +4,9 @@ import { Activity, Contact } from "@prisma/client";
 import { calculateDaysSinceCreatedAt } from "@/lib/utils";
 import { Action } from "@/types";
 
+const DEFAUL_REACH_OUT_PERIOD = 30;
+const DAYS_BEFORE_PAST_DUE = 10;
+
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const email = searchParams.get("email");
@@ -37,25 +40,20 @@ export async function GET(request: Request) {
     orderBy: {
       createdAt: "desc",
     },
+    distinct: ["contactId"],
   });
 
-  const actions = parseActions({ contacts, activities });
+  const actions = parseActions(contacts, activities);
 
-  return NextResponse.json({ actions });
+  return NextResponse.json(actions);
 }
 
-const parseActions = ({
-  activities,
-  contacts,
-}: {
-  activities: Array<Activity>;
-  contacts: Array<Contact>;
-}) => {
+const parseActions = (contacts: Contact[], activities: Activity[]) => {
   const pastActions: Array<Action> = [];
   const upcomingActions: Array<Action> = [];
 
   const contactIndex: Record<string, Contact> = {};
-  contacts.map((contact) => {
+  contacts.forEach((contact) => {
     contactIndex[contact.id] = contact;
   });
 
@@ -64,16 +62,19 @@ const parseActions = ({
 
     if (contact) {
       const days = calculateDaysSinceCreatedAt(activity.createdAt);
+      const goalDays = contact.goalDays || DEFAUL_REACH_OUT_PERIOD;
+
       const action = {
         contactName: contact.name,
         contactCategory: contact.category || "",
         note: activity.note,
-        days: days,
+        days,
+        goalDays,
       };
 
-      if (days > 10) {
+      if (days > goalDays + DAYS_BEFORE_PAST_DUE) {
         pastActions.push(action);
-      } else {
+      } else if (goalDays <= days && days <= goalDays + DAYS_BEFORE_PAST_DUE) {
         upcomingActions.push(action);
       }
     }

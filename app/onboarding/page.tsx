@@ -54,7 +54,7 @@ export default function Page() {
       <Button
         onClick={() => router.push("/dashboard")}
         variant="text"
-        className="absolute right-4 top-2 text-xl text-white z-10 md:text-3xl"
+        className="absolute right-4 top-4 z-10"
       >
         Skip
       </Button>
@@ -65,6 +65,7 @@ export default function Page() {
               title={page.title}
               description={page.description}
               image={page.image}
+              addImgPadding={index === 1}
             />
           </SwiperSlide>
         ))}
