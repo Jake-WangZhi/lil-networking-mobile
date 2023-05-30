@@ -10,9 +10,6 @@
     "start": "next start",
     "lint": "next lint"
   },
-  "prisma": {
-    "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
-  },
   "dependencies": {
     "@fontsource/metropolis": "^4.5.3",
     "@headlessui/react": "^1.7.14",
