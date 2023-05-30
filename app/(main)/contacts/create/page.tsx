@@ -115,7 +115,7 @@ export default function CreatePage() {
             <Button
               variant="secondary"
               type="button"
-              className={`w-[84px] ${
+              className={`${
                 selectedGoalDays === 30
                   ? "border border-1 border-light-blue text-light-blue"
                   : ""
@@ -127,7 +127,7 @@ export default function CreatePage() {
             <Button
               variant="secondary"
               type="button"
-              className={`w-[84px] ${
+              className={`${
                 selectedGoalDays === 60
                   ? "border border-1 border-light-blue text-light-blue"
                   : ""
@@ -139,7 +139,7 @@ export default function CreatePage() {
             <Button
               variant="secondary"
               type="button"
-              className={`w-[84px] ${
+              className={`${
                 selectedGoalDays === 90
                   ? "border border-1 border-light-blue text-light-blue"
                   : ""
