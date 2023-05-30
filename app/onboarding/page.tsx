@@ -77,9 +77,7 @@ export default function Page() {
           <OnboardingActionPage
             title="Stay Informed"
             actionButton={
-              <Button onClick={() => {}} className="mb-5">
-                Allow notifications
-              </Button>
+              <Button onClick={() => {}}>Allow notifications</Button>
             }
             textButton={<SwiperButtonNext>Not now</SwiperButtonNext>}
           />
@@ -87,14 +85,12 @@ export default function Page() {
         <SwiperSlide>
           <OnboardingActionPage
             title="Ready to set a goal?"
-            actionButton={
-              <Button onClick={() => {}} className="mb-5">
-                {"I'm ready"}
-              </Button>
-            }
+            actionButton={<Button onClick={() => {}}>{"I'm ready"}</Button>}
             textButton={
               <Button
-                onClick={() => router.push("/dashboard")}
+                onClick={() => {
+                  router.push("/dashboard");
+                }}
                 variant="text"
                 className="text-white"
               >
