@@ -38,7 +38,7 @@ model Activity {
   description String?
   date        DateTime
 
-  Contact   Contact? @relation(fields: [contactId], references: [id])
+  Contact   Contact? @relation(fields: [contactId], references: [id], onDelete: Cascade)
   contactId String
 }
 

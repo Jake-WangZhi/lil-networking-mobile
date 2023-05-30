@@ -31,31 +31,11 @@ export const ContactDetails = ({ contact, isLoading, isError }: Props) => {
     return <p className="text-2xl font-semibold">No contact available</p>;
   }
 
-  const {
-    name,
-    title,
-    company,
-    industry,
-    goalDays,
-    email,
-    phone,
-    links,
-    interests,
-    activities,
-  } = contact;
+  const { interests, activities } = contact;
 
   return (
     <div className="mb-20">
-      <ContactInfo
-        name={name}
-        title={title}
-        company={company}
-        industry={industry}
-        goalDays={goalDays}
-        email={email}
-        phone={phone}
-        links={links}
-      />
+      <ContactInfo contact={contact} />
       <ContactInterests interests={interests} />
       <ContactActivites activities={activities} />
     </div>

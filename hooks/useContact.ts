@@ -1,5 +1,5 @@
 import { fetcher } from "@/lib/utils";
-import { Action, Contact } from "@/types";
+import { Contact } from "@/types";
 import { useQuery } from "@tanstack/react-query";
 
 type Args = {

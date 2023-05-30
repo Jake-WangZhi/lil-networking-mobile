@@ -1,22 +1,35 @@
 "use client";
 
-import { createContact } from "@/app/_actions";
+import { updateContact } from "@/app/_actions";
 import { Button } from "@/components/Button";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { ChevronLeft, PlusCircle } from "react-feather";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 // @ts-ignore
 import TagsInput from "react-tagsinput";
 import "react-tagsinput/react-tagsinput.css";
 import "./styles.css";
+import { useContact } from "@/hooks/useContact";
 
-export default function CreatePage() {
+export default function EditPage({ params }: { params: { id: string } }) {
   const { data: session } = useSession();
-  const router = useRouter();
-  const [links, setLinks] = useState([""]);
-  const [selectedGoalDays, setSelectedGoalDays] = useState(30);
+  const { contacts, isLoading, isError } = useContact({
+    email: session?.user?.email,
+    id: params.id,
+  });
 
+  const contact = contacts?.[0];
+
+  const router = useRouter();
+  const [name, setName] = useState(contact?.name);
+  const [title, setTitle] = useState(contact?.title);
+  const [company, setCompany] = useState(contact?.company);
+  const [industry, setIndustry] = useState(contact?.industry);
+  const [email, setEmail] = useState(contact?.email);
+  const [phone, setPhone] = useState(contact?.phone);
+  const [links, setLinks] = useState<string[]>([]);
+  const [selectedGoalDays, setSelectedGoalDays] = useState(30);
   const [tags, setTags] = useState<string[]>([]);
 
   const handleChange = (tags: string[]) => {
@@ -39,15 +52,26 @@ export default function CreatePage() {
     setSelectedGoalDays(goalDays);
   }, []);
 
+  useEffect(() => {
+    const contact = contacts?.[0];
+    if (contact) {
+      const { links: curLinks, goalDays, interests } = contact;
+      console.log("links", curLinks);
+      setLinks(curLinks ?? []);
+      setSelectedGoalDays(goalDays ?? 30);
+      setTags(interests ?? []);
+    }
+  }, [contacts]);
+
   return (
     <main className="relative min-h-screen flex flex-col items-center text-white px-4">
       {/* @ts-expect-error Async Server Component */}
-      <form action={createContact} className="w-full pt-8">
+      <form action={updateContact} className="w-full pt-8">
         <div className="flex items-center justify-between mb-9">
           <Button variant="text" onClick={() => router.back()}>
             <ChevronLeft size={36} color="#737373" />
           </Button>
-          <h1 className="text-xl">Create contact</h1>
+          <h1 className="text-xl">Update contact</h1>
           <Button type="submit" variant="text" className="text-light-blue">
             Save
           </Button>
@@ -59,6 +83,8 @@ export default function CreatePage() {
             type="text"
             id="name"
             name="name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
             className="text-md rounded-[4px] block w-[260px] h-8 p-2.5 bg-white bg-opacity-5  placeholder-gray-400 text-white focus:ring-1 focus:ring-white focus:outline-none appearance-none caret-white"
             required
           />
@@ -70,6 +96,8 @@ export default function CreatePage() {
             type="text"
             id="title"
             name="title"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
             className="text-md rounded-[4px] block w-[260px] h-8 p-2.5 bg-white bg-opacity-5 placeholder-gray-400 text-white focus:ring-1 focus:ring-white focus:outline-none appearance-none caret-white"
             required
           />
@@ -83,6 +111,8 @@ export default function CreatePage() {
             type="text"
             id="company"
             name="company"
+            value={company}
+            onChange={(e) => setCompany(e.target.value)}
             className="text-md rounded-[4px] block w-[260px] h-8 p-2.5 bg-white bg-opacity-5  placeholder-gray-400 text-white focus:ring-1 focus:ring-white focus:outline-none appearance-none caret-white"
             required
           />
@@ -96,6 +126,8 @@ export default function CreatePage() {
             type="text"
             id="industry"
             name="industry"
+            value={industry}
+            onChange={(e) => setIndustry(e.target.value)}
             className="text-md rounded-[4px] block w-[260px] h-8 p-2.5 bg-white bg-opacity-5  placeholder-gray-400 text-white focus:ring-1 focus:ring-white focus:outline-none appearance-none caret-white"
             required
           />
@@ -149,6 +181,8 @@ export default function CreatePage() {
             type="email"
             id="email"
             name="email"
+            value={email ?? ""}
+            onChange={(e) => setEmail(e.target.value)}
             className="text-md rounded-[4px] block w-[260px] h-8 p-2.5 bg-white bg-opacity-5  placeholder-gray-400 text-white focus:ring-1 focus:ring-white focus:outline-none appearance-none caret-white"
           />
         </div>
@@ -159,6 +193,8 @@ export default function CreatePage() {
             type="tel"
             id="phone"
             name="phone"
+            value={phone ?? ""}
+            onChange={(e) => setPhone(e.target.value)}
             className="text-md rounded-[4px] block w-[260px] h-8 p-2.5 bg-white bg-opacity-5  placeholder-gray-400 text-white focus:ring-1 focus:ring-white focus:outline-none appearance-none caret-white"
             pattern="[0-9]{10}"
             title="Please enter a valid 10-digit U.S. phone number"
@@ -173,6 +209,7 @@ export default function CreatePage() {
             </label>
             <input
               type="text"
+              value={link}
               className="text-md rounded-[4px] block w-[260px] h-8 p-2.5 bg-white bg-opacity-5  placeholder-gray-400 text-white focus:ring-1 focus:ring-white focus:outline-none appearance-none caret-white"
               onChange={(e) => handleLinkChange(index, e.target.value)}
             />
@@ -200,6 +237,7 @@ export default function CreatePage() {
           />
         </div>
 
+        <input id="id" name="id" type="hidden" defaultValue={contact?.id} />
         <input
           id="userEmail"
           name="userEmail"

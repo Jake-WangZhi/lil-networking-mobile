@@ -43,8 +43,67 @@ export async function GET(request: Request) {
   });
 
   const parsedContacts = parseContacts(contacts, activities);
-  console.log("parsedContacts", parsedContacts[0].activities[0]);
+
   return NextResponse.json(parsedContacts);
+}
+
+export async function DELETE(request: Request) {
+  const { searchParams } = new URL(request.url);
+  const id = searchParams.get("id");
+
+  if (!id)
+    return new NextResponse(
+      JSON.stringify({ success: false, message: "Missing contact id" }),
+      { status: 400, headers: { "content-type": "application/json" } }
+    );
+
+  const contact = await prisma.contact.delete({
+    where: { id },
+  });
+
+  return NextResponse.json(contact);
+}
+
+export async function PUT(request: Request) {
+  const contact = (await request.json()) as Contact;
+
+  if (!contact.id)
+    return new NextResponse(
+      JSON.stringify({ success: false, message: "Missing contact id" }),
+      { status: 400, headers: { "content-type": "application/json" } }
+    );
+
+  const {
+    id,
+    name,
+    title,
+    company,
+    industry,
+    goalDays,
+    email,
+    phone,
+    links,
+    interests,
+    isArchived,
+  } = contact;
+
+  const updatedContact = await prisma.contact.update({
+    where: { id },
+    data: {
+      name,
+      title,
+      company,
+      industry,
+      goalDays,
+      email,
+      phone,
+      links,
+      interests,
+      isArchived,
+    },
+  });
+
+  return NextResponse.json(updatedContact);
 }
 
 const parseContacts = (contacts: Contact[], activities: Activity[]) => {
@@ -70,6 +129,7 @@ const parseContacts = (contacts: Contact[], activities: Activity[]) => {
             year: "numeric",
           }),
         })),
+      isArchived: contact.isArchived,
     };
   });
 

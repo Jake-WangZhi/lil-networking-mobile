@@ -23,6 +23,7 @@ export interface Contact {
   links: string[] | null;
   interests: string[] | null;
   activities: Activity[] | null;
+  isArchived: boolean;
 }
 
 export interface Activity {

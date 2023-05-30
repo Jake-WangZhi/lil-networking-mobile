@@ -64,4 +64,57 @@ export async function createContact({
   return contact.id;
 }
 
+export async function updateContact({
+  id,
+  name,
+  title,
+  company,
+  industry,
+  goalDays,
+  email,
+  phone,
+  links,
+  interests,
+  userId,
+}: {
+  id: string;
+  name: string;
+  title: string;
+  company: string;
+  industry: string;
+  goalDays: number;
+  email: string;
+  phone: string;
+  links: string[];
+  interests: string[];
+  userId: string;
+}) {
+  const contact = await prisma.contact.update({
+    where: { id },
+    data: {
+      name,
+      title,
+      company,
+      industry,
+      goalDays,
+      email,
+      phone,
+      links,
+      interests,
+      userId,
+    },
+  });
+
+  await prisma.activity.create({
+    data: {
+      contactId: contact.id,
+      title: "Contact updated",
+      description: "",
+      date: new Date(),
+    },
+  });
+
+  return contact.id;
+}
+
 export default prisma;

@@ -1,7 +1,6 @@
 "use client";
 
 import { ChevronLeft } from "react-feather";
-
 import { ContactDetails } from "@/components/ContactDetails";
 import { useRouter } from "next/navigation";
 import { useCurrentPath } from "@/contexts/CurrentPathContext";
