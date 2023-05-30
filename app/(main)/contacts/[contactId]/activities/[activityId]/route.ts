@@ -22,7 +22,6 @@ export async function DELETE(
   request: Request,
   { params }: { params: { activityId: string } }
 ) {
-  console.log("here");
   const activity = await prisma?.activity.delete({
     where: { id: params.activityId },
   });

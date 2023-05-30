@@ -12,15 +12,13 @@ export const useContactMutation = ({ onSuccess, onError, method }: Props) =>
     mutationFn: async (contact: Contact) => {
       let url = "/contacts/api";
 
-      if (method === "DELETE") {
-        url = `/contacts/api?id=${contact.id}`;
-      }
+      if (method === "DELETE") url = `/contacts/api?id=${contact.id}`;
 
       const response = await fetch(url, {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(contact),
+        ...(method === "DELETE" ? {} : { body: JSON.stringify(contact) }),
         method,
       });
 
