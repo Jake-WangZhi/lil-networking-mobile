@@ -57,7 +57,7 @@ export async function createContact({
       contactId: contact.id,
       title: "Contact created",
       description: "",
-      date: new Date(),
+      date: new Date().toISOString().split("T")[0],
     },
   });
 
@@ -110,7 +110,7 @@ export async function updateContact({
       contactId: contact.id,
       title: "Contact edited",
       description: "",
-      date: new Date(),
+      date: new Date().toISOString().split("T")[0],
     },
   });
 
@@ -124,7 +124,7 @@ export function createActivity({
   contactId,
 }: {
   title: string;
-  date: Date;
+  date: string;
   description?: string;
   contactId: string;
 }) {

@@ -111,7 +111,7 @@ export async function updateContact(formData: FormData) {
 
 export async function createActivity(formData: FormData) {
   const title = formData.get("title");
-  const date = new Date(formData.get("date"));
+  const date = formData.get("date");
   const description = formData.get("description");
   const contactId = formData.get("contactId");
 

@@ -19,7 +19,7 @@ ALTER TABLE "Activity" DROP CONSTRAINT "Activity_contactId_fkey";
 
 -- AlterTable
 ALTER TABLE "Activity" DROP COLUMN "note",
-ADD COLUMN     "date" TIMESTAMP(3) NOT NULL,
+ADD COLUMN     "date" TEXT NOT NULL,
 ADD COLUMN     "description" TEXT,
 ADD COLUMN     "title" TEXT NOT NULL;
 

@@ -36,7 +36,7 @@ model Activity {
 
   title       String
   description String?
-  date        DateTime
+  date        String
 
   Contact   Contact? @relation(fields: [contactId], references: [id], onDelete: Cascade)
   contactId String

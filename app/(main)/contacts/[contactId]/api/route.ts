@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { Activity, Contact } from "@prisma/client";
+import { formatDate } from "@/lib/utils";
 
 export async function GET(
   request: Request,
@@ -111,11 +112,7 @@ const parseContact = (contact: Contact, activities: Activity[]) => {
       .filter((activity) => activity.contactId === contact.id)
       .map((activity) => ({
         ...activity,
-        date: new Date(activity.date).toLocaleDateString("en-US", {
-          month: "long",
-          day: "numeric",
-          year: "numeric",
-        }),
+        date: formatDate(activity.date),
       })),
     isArchived,
   };

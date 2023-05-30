@@ -4,7 +4,7 @@ import { useMutation } from "@tanstack/react-query";
 type Props = {
   onSuccess: () => void;
   onError: (error: unknown) => void;
-  method: "POST" | "DELETE";
+  method: "DELETE";
 };
 
 export const useActivityMutation = ({ onSuccess, onError, method }: Props) =>
@@ -20,7 +20,7 @@ export const useActivityMutation = ({ onSuccess, onError, method }: Props) =>
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(activity),
+        ...(method === "DELETE" ? {} : { body: JSON.stringify(activity) }),
         method,
       });
 
