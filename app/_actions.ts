@@ -16,6 +16,9 @@ interface FormDataOptions {
   links: string;
   interests: string;
   userEmail: string;
+  date: string;
+  description: string;
+  contactId: string;
 }
 
 interface FormData {
@@ -101,6 +104,22 @@ export async function updateContact(formData: FormData) {
     links,
     interests,
     userId: user.id,
+  });
+
+  redirect(`/contacts/${contactId}`);
+}
+
+export async function createActivity(formData: FormData) {
+  const title = formData.get("title");
+  const date = new Date(formData.get("date"));
+  const description = formData.get("description");
+  const contactId = formData.get("contactId");
+
+  await db.createActivity({
+    title,
+    date,
+    description,
+    contactId,
   });
 
   redirect(`/contacts/${contactId}`);

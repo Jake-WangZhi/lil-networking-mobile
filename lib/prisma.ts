@@ -117,4 +117,25 @@ export async function updateContact({
   return contact.id;
 }
 
+export function createActivity({
+  title,
+  date,
+  description,
+  contactId,
+}: {
+  title: string;
+  date: Date;
+  description?: string;
+  contactId: string;
+}) {
+  return prisma.activity.create({
+    data: {
+      contactId,
+      title,
+      description,
+      date,
+    },
+  });
+}
+
 export default prisma;

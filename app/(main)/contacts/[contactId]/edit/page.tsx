@@ -14,7 +14,7 @@ import { useContact } from "@/hooks/useContact";
 
 export default function EditPage({ params }: { params: { id: string } }) {
   const { data: session } = useSession();
-  const { contacts, isLoading, isError } = useContact({
+  const { contacts } = useContact({
     email: session?.user?.email,
     id: params.id,
   });

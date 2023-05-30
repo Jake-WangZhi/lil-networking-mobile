@@ -3,14 +3,21 @@ import { ClipLoader } from "react-spinners";
 import { ContactInfo } from "./ContactInfo";
 import { ContactInterests } from "./ContactInterests";
 import { ContactActivites } from "./ContactActivities";
+import { Dispatch, SetStateAction } from "react";
 
 interface Props {
   contact?: Contact;
   isLoading: boolean;
   isError: boolean;
+  setIsActivityPageOpen: Dispatch<SetStateAction<boolean>>;
 }
 
-export const ContactDetails = ({ contact, isLoading, isError }: Props) => {
+export const ContactDetails = ({
+  contact,
+  isLoading,
+  isError,
+  setIsActivityPageOpen,
+}: Props) => {
   if (isError) {
     return (
       <div className="flex items-center justify-center text-base text-red-400 md:text-lg lg:text-xl">
@@ -37,7 +44,10 @@ export const ContactDetails = ({ contact, isLoading, isError }: Props) => {
     <div className="mb-20">
       <ContactInfo contact={contact} />
       <ContactInterests interests={interests} />
-      <ContactActivites activities={activities} />
+      <ContactActivites
+        activities={activities}
+        setIsActivityPageOpen={setIsActivityPageOpen}
+      />
     </div>
   );
 };

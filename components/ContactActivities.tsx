@@ -2,13 +2,17 @@ import { useActivityMutation } from "@/hooks/useActivityMutation";
 import { Activity } from "@/types";
 import { Circle, PlusCircle, Trash2 } from "react-feather";
 import { Button } from "./Button";
-import { useCallback } from "react";
+import { Dispatch, SetStateAction, useCallback } from "react";
 
 interface Props {
   activities: Activity[] | null;
+  setIsActivityPageOpen: Dispatch<SetStateAction<boolean>>;
 }
 
-export const ContactActivites = ({ activities }: Props) => {
+export const ContactActivites = ({
+  activities,
+  setIsActivityPageOpen,
+}: Props) => {
   const deleteActivityMutation = useActivityMutation({
     method: "DELETE",
     onSuccess: () => {
@@ -30,10 +34,14 @@ export const ContactActivites = ({ activities }: Props) => {
     <div>
       <div className="flex justify-between mb-3">
         <div>Activites</div>
-        <div className="flex items-center space-x-1">
+        <Button
+          variant="text"
+          className="flex items-center space-x-1"
+          onClick={() => setIsActivityPageOpen(true)}
+        >
           <PlusCircle size={24} />
           <div>Log Activity</div>
-        </div>
+        </Button>
       </div>
       {activities?.map((activity, index) => (
         <div key={`activity-${index}`}>
