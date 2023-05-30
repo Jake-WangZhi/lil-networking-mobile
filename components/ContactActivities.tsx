@@ -3,6 +3,7 @@ import { Activity } from "@/types";
 import { Circle, PlusCircle, Trash2 } from "react-feather";
 import { Button } from "./Button";
 import { Dispatch, SetStateAction, useCallback } from "react";
+import { useQueryClient } from "@tanstack/react-query";
 
 interface Props {
   activities: Activity[] | null;
@@ -13,10 +14,12 @@ export const ContactActivites = ({
   activities,
   setIsActivityPageOpen,
 }: Props) => {
+  const queryClient = useQueryClient();
+
   const deleteActivityMutation = useActivityMutation({
     method: "DELETE",
     onSuccess: () => {
-      window.location.reload();
+      queryClient.refetchQueries(["contact", activities?.[0].contactId]);
     },
     onError: (error) => {
       console.log(error);

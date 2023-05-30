@@ -56,7 +56,6 @@ export default function EditPage({
   useEffect(() => {
     if (contact) {
       const { links: curLinks, goalDays, interests } = contact;
-      console.log("links", curLinks);
       setLinks(curLinks ?? []);
       setSelectedGoalDays(goalDays ?? 30);
       setTags(interests ?? []);
