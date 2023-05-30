@@ -3,7 +3,13 @@ import { useContactMutation } from "@/hooks/useContactMutation";
 import { DotsThreeCircleVertical } from "@phosphor-icons/react";
 import { useRouter } from "next/navigation";
 import { useState, useCallback } from "react";
-import { ChevronLeft, Edit, Archive, Trash2 } from "react-feather";
+import {
+  ChevronLeft,
+  Edit,
+  Archive,
+  Trash2,
+  MessageSquare,
+} from "react-feather";
 import { Button } from "./Button";
 import { Contact } from "@/types";
 
@@ -73,6 +79,16 @@ export const ContactHeader = ({ contact }: Props) => {
         </div>
         {showDropdown && (
           <div className="absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-[#3C3C43] divide-opacity-[0.36] rounded-md bg-[#EDEDED] shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+            <div className="py-2">
+              <Button
+                variant="text"
+                onClick={() => {}}
+                className="w-full flex justify-between items-center px-4 py-2 text-black hover:bg-opacity-[0.08]"
+              >
+                <div className="text-base md:text-lg lg:text-xl">Message</div>
+                <MessageSquare size={24} />
+              </Button>
+            </div>
             <div className="py-2">
               <Button
                 variant="text"
