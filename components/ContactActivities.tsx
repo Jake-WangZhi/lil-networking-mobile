@@ -36,14 +36,14 @@ export const ContactActivites = ({
   return (
     <div>
       <div className="flex justify-between mb-3">
-        <div>Activites</div>
+        <div className="text-base md:text-lg lg:text-xl">Activites</div>
         <Button
           variant="text"
           className="flex items-center space-x-1"
           onClick={() => setIsActivityPageOpen(true)}
         >
           <PlusCircle size={24} />
-          <div>Log Activity</div>
+          <div className="text-sm md:text-base lg:text-lg">Log Activity</div>
         </Button>
       </div>
       {activities?.map((activity, index) => (
@@ -62,13 +62,19 @@ export const ContactActivites = ({
           >
             <div className="bg-white bg-opacity-5 w-full ml-6 p-4 text-white rounded-lg">
               <div className="flex justify-between">
-                <div className="text-base font-semibold">{activity.title}</div>
+                <div className="text-base md:text-lg lg:text-xl font-semibold">
+                  {activity.title}
+                </div>
                 <Button variant="text" onClick={() => handleDelete(activity)}>
                   <Trash2 size={24} />
                 </Button>
               </div>
-              <div className="text-sm opacity-[0.7] mb-2">{activity.date}</div>
-              <div className="text-sm">{activity.description}</div>
+              <div className="text-sm md:text-base lg:text-lg opacity-[0.7] mb-2">
+                {activity.date}
+              </div>
+              <div className="text-sm md:text-base lg:text-lg">
+                {activity.description}
+              </div>
             </div>
           </div>
         </div>

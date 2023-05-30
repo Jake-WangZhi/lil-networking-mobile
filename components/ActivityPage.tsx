@@ -36,47 +36,51 @@ export const ActivityPage = ({
         <Minus size={56} />
       </div>
       <div className="flex justify-between mb-2">
-        <div className="text-2xl font-semibold">Log New Activity</div>
+        <div className="text-2xl font-semibold md:text-3xl lg:text-4xl">
+          Log New Activity
+        </div>
         <Button variant="text" onClick={() => setIsActivityPageOpen(false)}>
-          <X size={32} />
+          <X size={32} className="md:w-11 md:h-11 lg:w-13 lg:h-13" />
         </Button>
       </div>
-      <div className="text-sm">Track interactions</div>
+      <div className="text-sm md:text-base lg:text-lg">Track interactions</div>
       <div>
         {/* @ts-expect-error Async Server Component */}
         <form action={createActivity} className="w-full pt-8">
           <div className="mb-4 flex items-center justify-between">
-            <label className="block text-md font-medium text-white">
+            <label className="block text-base font-medium text-white md:text-lg lg:text-xl">
               Title
             </label>
             <input
               type="text"
               id="title"
               name="title"
-              className="text-md rounded-[4px] block w-[260px] h-8 p-2.5 bg-white bg-opacity-5  placeholder-gray-400 text-white focus:ring-1 focus:ring-white focus:outline-none appearance-none caret-white"
+              className="text-base rounded-[4px] block w-[260px] h-8 p-2.5 bg-white bg-opacity-5  placeholder-gray-400 text-white md:text-lg lg:text-xl focus:ring-1 focus:ring-white focus:outline-none appearance-none caret-white"
               required
             />
           </div>
 
           <div className="mb-4 flex items-center justify-between">
-            <label className="block text-md font-medium text-white">Date</label>
+            <label className="block text-base font-medium text-white md:text-lg lg:text-xl">
+              Date
+            </label>
             <input
               type="date"
               id="date"
               name="date"
               style={{ colorScheme: "dark" }}
-              className="text-md rounded-[4px] w-[260px] h-8 p-2.5 bg-white bg-opacity-5 placeholder-gray-400 text-white focus:ring-1 focus:ring-white focus:outline-none appearance-none caret-white"
+              className="text-base rounded-[4px] w-[260px] h-8 p-2.5 bg-white bg-opacity-5 placeholder-gray-400 text-white md:text-lg lg:text-xl focus:ring-1 focus:ring-white focus:outline-none appearance-none caret-white"
               required
             />
           </div>
           <div className="space-y-1">
-            <label className="block text-md font-medium text-white">
+            <label className="block text-base font-medium text-white md:text-lg lg:text-xl">
               Activity Details
             </label>
             <textarea
               id="description"
               name="description"
-              className="text-md rounded-[4px] block p-2.5 w-full h-56 bg-white bg-opacity-5  placeholder-gray-400 text-white focus:ring-1 focus:ring-white focus:outline-none appearance-none caret-white"
+              className="text-base rounded-[4px] block p-2.5 w-full h-56 bg-white bg-opacity-5 placeholder-gray-400 text-white md:text-lg lg:text-xl focus:ring-1 focus:ring-white focus:outline-none appearance-none caret-white"
             />
           </div>
 

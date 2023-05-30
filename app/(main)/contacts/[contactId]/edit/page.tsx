@@ -77,33 +77,37 @@ export default function EditPage({
         </div>
 
         <div className="mb-4 flex items-center justify-between">
-          <label className="block text-md font-medium text-white">Name*</label>
+          <label className="block text-base font-medium text-white md:text-lg lg:text-xl">
+            Name*
+          </label>
           <input
             type="text"
             id="name"
             name="name"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="text-md rounded-[4px] block w-[260px] h-8 p-2.5 bg-white bg-opacity-5  placeholder-gray-400 text-white focus:ring-1 focus:ring-white focus:outline-none appearance-none caret-white"
+            className="text-base rounded-[4px] block w-[260px] h-8 p-2.5 bg-white bg-opacity-5  placeholder-gray-400 text-white md:text-lg lg:text-xl focus:ring-1 focus:ring-white focus:outline-none appearance-none caret-white"
             required
           />
         </div>
 
         <div className="mb-4 flex items-center justify-between">
-          <label className="block text-md font-medium text-white">Title*</label>
+          <label className="block text-base font-medium text-white md:text-lg lg:text-xl">
+            Title*
+          </label>
           <input
             type="text"
             id="title"
             name="title"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            className="text-md rounded-[4px] block w-[260px] h-8 p-2.5 bg-white bg-opacity-5 placeholder-gray-400 text-white focus:ring-1 focus:ring-white focus:outline-none appearance-none caret-white"
+            className="text-base rounded-[4px] block w-[260px] h-8 p-2.5 bg-white bg-opacity-5 placeholder-gray-400 text-white md:text-lg lg:text-xl focus:ring-1 focus:ring-white focus:outline-none appearance-none caret-white"
             required
           />
         </div>
 
         <div className="mb-4 flex items-center justify-between">
-          <label className="block text-md font-medium text-white">
+          <label className="block text-base font-medium text-white md:text-lg lg:text-xl">
             Company*
           </label>
           <input
@@ -112,13 +116,13 @@ export default function EditPage({
             name="company"
             value={company}
             onChange={(e) => setCompany(e.target.value)}
-            className="text-md rounded-[4px] block w-[260px] h-8 p-2.5 bg-white bg-opacity-5  placeholder-gray-400 text-white focus:ring-1 focus:ring-white focus:outline-none appearance-none caret-white"
+            className="text-base rounded-[4px] block w-[260px] h-8 p-2.5 bg-white bg-opacity-5  placeholder-gray-400 text-white md:text-lg lg:text-xl focus:ring-1 focus:ring-white focus:outline-none appearance-none caret-white"
             required
           />
         </div>
 
         <div className="mb-4 flex items-center justify-between">
-          <label className="block text-md font-medium text-white">
+          <label className="block text-base font-medium text-white md:text-lg lg:text-xl">
             Industry*
           </label>
           <input
@@ -127,13 +131,13 @@ export default function EditPage({
             name="industry"
             value={industry}
             onChange={(e) => setIndustry(e.target.value)}
-            className="text-md rounded-[4px] block w-[260px] h-8 p-2.5 bg-white bg-opacity-5  placeholder-gray-400 text-white focus:ring-1 focus:ring-white focus:outline-none appearance-none caret-white"
+            className="text-base rounded-[4px] block w-[260px] h-8 p-2.5 bg-white bg-opacity-5  placeholder-gray-400 text-white md:text-lg lg:text-xl focus:ring-1 focus:ring-white focus:outline-none appearance-none caret-white"
             required
           />
         </div>
 
         <div className="mb-4 flex items-center justify-between">
-          <div>Goal*</div>
+          <div className="text-base md:text-lg lg:text-xl">Goal*</div>
           <div className="block w-[260px] h-8 space-x-1">
             <Button
               variant="secondary"
@@ -175,26 +179,30 @@ export default function EditPage({
         </div>
 
         <div className="mb-4 flex items-center justify-between">
-          <label className="block text-md font-medium text-white">Email</label>
+          <label className="block text-base font-medium text-white md:text-lg lg:text-xl">
+            Email
+          </label>
           <input
             type="email"
             id="email"
             name="email"
             value={email ?? ""}
             onChange={(e) => setEmail(e.target.value)}
-            className="text-md rounded-[4px] block w-[260px] h-8 p-2.5 bg-white bg-opacity-5  placeholder-gray-400 text-white focus:ring-1 focus:ring-white focus:outline-none appearance-none caret-white"
+            className="text-base rounded-[4px] block w-[260px] h-8 p-2.5 bg-white bg-opacity-5  placeholder-gray-400 text-white md:text-lg lg:text-xl focus:ring-1 focus:ring-white focus:outline-none appearance-none caret-white"
           />
         </div>
 
         <div className="mb-4 flex items-center justify-between">
-          <label className="block text-md font-medium text-white">Phone</label>
+          <label className="block text-base font-medium text-white md:text-lg lg:text-xl">
+            Phone
+          </label>
           <input
             type="tel"
             id="phone"
             name="phone"
             value={phone ?? ""}
             onChange={(e) => setPhone(e.target.value)}
-            className="text-md rounded-[4px] block w-[260px] h-8 p-2.5 bg-white bg-opacity-5  placeholder-gray-400 text-white focus:ring-1 focus:ring-white focus:outline-none appearance-none caret-white"
+            className="text-base rounded-[4px] block w-[260px] h-8 p-2.5 bg-white bg-opacity-5  placeholder-gray-400 text-white md:text-lg lg:text-xl focus:ring-1 focus:ring-white focus:outline-none appearance-none caret-white"
             pattern="[0-9]{10}"
             title="Please enter a valid 10-digit U.S. phone number"
             autoComplete="tel"
@@ -203,13 +211,13 @@ export default function EditPage({
 
         {links.map((link, index) => (
           <div key={index} className="mb-4 flex items-center justify-between">
-            <label className="block text-md font-medium text-white">
+            <label className="block text-base font-medium text-white md:text-lg lg:text-xl">
               {index === 0 && "Link"}
             </label>
             <input
               type="text"
               value={link}
-              className="text-md rounded-[4px] block w-[260px] h-8 p-2.5 bg-white bg-opacity-5  placeholder-gray-400 text-white focus:ring-1 focus:ring-white focus:outline-none appearance-none caret-white"
+              className="text-base rounded-[4px] block w-[260px] h-8 p-2.5 bg-white bg-opacity-5  placeholder-gray-400 text-white md:text-lg lg:text-xl focus:ring-1 focus:ring-white focus:outline-none appearance-none caret-white"
               onChange={(e) => handleLinkChange(index, e.target.value)}
             />
           </div>
@@ -217,16 +225,16 @@ export default function EditPage({
         <div className="flex justify-end">
           <Button
             variant="text"
-            className="flex space-x-1 mb-5"
+            className="flex space-x-1 mb-5 items-center"
             onClick={handleAddLink}
           >
-            <PlusCircle size={20} />
-            <div className="text-sm">Add Link</div>
+            <PlusCircle size={20} className="md:w-6 md:h-6 lg:w-8 lg:h-8" />
+            <div className="text-sm md:text-base lg:text-lg">Add Link</div>
           </Button>
         </div>
 
         <div className="mb-20 space-y-2">
-          <label>Interests</label>
+          <label className="text-base md:text-lg lg:text-xl">Interests</label>
           <TagsInput
             value={tags}
             onChange={handleChange}

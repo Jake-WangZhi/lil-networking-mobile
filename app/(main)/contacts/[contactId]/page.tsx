@@ -5,7 +5,6 @@ import { ContactDetails } from "@/components/ContactDetails";
 import { useRouter } from "next/navigation";
 import { useCurrentPath } from "@/contexts/CurrentPathContext";
 import { Button } from "@/components/Button";
-import { useSession } from "next-auth/react";
 import { useContact } from "@/hooks/useContact";
 import { ActivityPage } from "@/components/ActivityPage";
 import { useState } from "react";
@@ -17,8 +16,6 @@ export default function ContactPage({
 }) {
   const router = useRouter();
   const { currentPath } = useCurrentPath();
-
-  const { data: session } = useSession();
 
   const { contact, isLoading, isError } = useContact({
     id: params.contactId,
@@ -33,7 +30,11 @@ export default function ContactPage({
         className="relative pt-8 w-full mb-4 -ml-3"
         onClick={() => router.push(currentPath)}
       >
-        <ChevronLeft size={36} color="#737373" />
+        <ChevronLeft
+          size={36}
+          color="#737373"
+          className="md:w-11 md:h-11 lg:w-13 lg:h-13"
+        />
       </Button>
 
       <ContactDetails

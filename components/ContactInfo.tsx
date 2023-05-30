@@ -72,7 +72,9 @@ export const ContactInfo = ({ contact }: Props) => {
   return (
     <div className="bg-white bg-opacity-5 w-full p-4 space-y-1 text-base mb-6 rounded-lg">
       <div className="flex justify-between items-center">
-        <div className="text-2xl leading-6 font-semibold">{name}</div>
+        <div className="text-2xl leading-6 font-semibold md:text-3xl lg:text-4xl">
+          {name}
+        </div>
         <div className="relative">
           <div>
             <Button
@@ -91,7 +93,7 @@ export const ContactInfo = ({ contact }: Props) => {
                   onClick={() => router.push(`/contacts/${id}/edit`)}
                   className="w-full flex justify-between items-center px-4 py-2 text-black hover:bg-opacity-[0.08]"
                 >
-                  <div className="text-base">Edit</div>
+                  <div className="text-base md:text-lg lg:text-xl">Edit</div>
                   <Edit size={24} />
                 </Button>
               </div>
@@ -101,7 +103,7 @@ export const ContactInfo = ({ contact }: Props) => {
                   onClick={isArchived ? handleActivate : handleArchive}
                   className="w-full flex justify-between items-center px-4 py-2 text-black hover:bg-opacity-[0.08]"
                 >
-                  <div className="text-base">
+                  <div className="text-base md:text-lg lg:text-xl">
                     {isArchived ? "Activate" : "Archive"}
                   </div>
                   <Archive size={24} />
@@ -113,7 +115,7 @@ export const ContactInfo = ({ contact }: Props) => {
                   onClick={handleDelete}
                   className="w-full flex justify-between items-center px-4 py-2 text-black hover:bg-opacity-[0.08]"
                 >
-                  <div className="text-base">Delete</div>
+                  <div className="text-base md:text-lg lg:text-xl">Delete</div>
                   <Trash2 size={24} />
                 </Button>
               </div>
@@ -121,28 +123,32 @@ export const ContactInfo = ({ contact }: Props) => {
           )}
         </div>
       </div>
-      <div>{title}</div>
-      <div>{company}</div>
-      <div>{industry}</div>
+      <div className="text-base md:text-lg lg:text-xl">{title}</div>
+      <div className="text-base md:text-lg lg:text-xl">{company}</div>
+      <div className="text-base md:text-lg lg:text-xl">{industry}</div>
       {email && (
         <div className="flex items-center space-x-1">
-          <Mail size={16} />
-          <div>{email}</div>
+          <Mail size={16} className="md:w-5 md:h-5 lg:w-6 lg:h-6" />
+          <div className="text-base md:text-lg lg:text-xl">{email}</div>
         </div>
       )}
       {phone && (
         <div className="flex items-center space-x-1">
-          <Phone size={16} />
-          <div>{formatPhoneNumber(phone)}</div>
+          <Phone size={16} className="md:w-5 md:h-5 lg:w-6 lg:h-6" />
+          <div className="text-base md:text-lg lg:text-xl">
+            {formatPhoneNumber(phone)}
+          </div>
         </div>
       )}
       {links?.map((link, index) => (
         <div key={`link-${index}`} className="flex items-center space-x-1">
-          <Link size={16} />
-          <div>{link}</div>
+          <Link size={16} className="md:w-5 md:h-5 lg:w-6 lg:h-6" />
+          <div className="text-base md:text-lg lg:text-xl">{link}</div>
         </div>
       ))}
-      <div>Goal: Every {goalDays} days</div>
+      <div className="text-base md:text-lg lg:text-xl">
+        Goal: Every {goalDays} days
+      </div>
     </div>
   );
 };
