@@ -27,7 +27,7 @@ export const ActivityPage = ({
 
   return (
     <div
-      className={`bg-dark-blue absolute inset-0 w-full h-full px-4 transition-transform duration-500 ${
+      className={`bg-dark-blue absolute z-10 inset-0 w-full h-full px-4 transition-transform duration-500 ${
         isOpen ? "translate-y-0" : "translate-y-full"
       }`}
       {...handlers}
@@ -55,7 +55,7 @@ export const ActivityPage = ({
               type="text"
               id="title"
               name="title"
-              className="text-base rounded-[4px] block w-[260px] h-8 p-2.5 bg-white bg-opacity-5  placeholder-gray-400 text-white md:text-lg lg:text-xl focus:ring-1 focus:ring-white focus:outline-none appearance-none caret-white"
+              className="text-base rounded-[4px] block w-[260px] h-8 p-2.5 bg-white bg-opacity-5  placeholder-gray-400 text-white md:text-lg lg:text-xl focus:ring-1 focus:ring-white focus:bg-white focus:bg-opacity-[0.12] focus:outline-none appearance-none caret-white"
               required
             />
           </div>
@@ -69,7 +69,7 @@ export const ActivityPage = ({
               id="date"
               name="date"
               style={{ colorScheme: "dark" }}
-              className="text-base rounded-[4px] w-[260px] h-8 p-2.5 bg-white bg-opacity-5 placeholder-gray-400 text-white md:text-lg lg:text-xl focus:ring-1 focus:ring-white focus:outline-none appearance-none caret-white"
+              className="text-base rounded-[4px] w-[260px] h-8 p-2.5 bg-white bg-opacity-5 placeholder-gray-400 text-white md:text-lg lg:text-xl focus:ring-1 focus:ring-white focus:bg-white focus:bg-opacity-[0.12] focus:outline-none appearance-none caret-white"
               required
             />
           </div>
@@ -80,7 +80,7 @@ export const ActivityPage = ({
             <textarea
               id="description"
               name="description"
-              className="text-base rounded-[4px] block p-2.5 w-full h-56 bg-white bg-opacity-5 placeholder-gray-400 text-white md:text-lg lg:text-xl focus:ring-1 focus:ring-white focus:outline-none appearance-none caret-white"
+              className="text-base rounded-[4px] block p-2.5 w-full h-56 bg-white bg-opacity-5 placeholder-gray-400 text-white md:text-lg lg:text-xl focus:ring-1 focus:ring-white focus:bg-white focus:bg-opacity-[0.12] focus:outline-none appearance-none caret-white"
             />
           </div>
 
