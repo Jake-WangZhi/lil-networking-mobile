@@ -2,6 +2,7 @@ import { Dispatch, SetStateAction } from "react";
 import { X, Minus } from "react-feather";
 import { Button } from "./Button";
 import { createActivity } from "@/app/_actions";
+import { useSwipeable } from "react-swipeable";
 
 interface Props {
   isOpen: boolean;
@@ -14,11 +15,22 @@ export const ActivityPage = ({
   setIsActivityPageOpen,
   contactId,
 }: Props) => {
+  const handlers = useSwipeable({
+    onSwipedDown: () => {
+      setIsActivityPageOpen(false);
+    },
+    swipeDuration: 500,
+    preventScrollOnSwipe: true,
+    trackMouse: true,
+    trackTouch: true,
+  });
+
   return (
     <div
       className={`bg-dark-blue absolute inset-0 w-full h-full px-4 transition-transform duration-500 ${
         isOpen ? "translate-y-0" : "translate-y-full"
       }`}
+      {...handlers}
     >
       <div className="flex justify-center">
         <Minus size={56} />
