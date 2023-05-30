@@ -21,8 +21,8 @@ export interface Contact {
   email: string | null;
   phone: string | null;
   links: string[] | null;
-  interests: string[] | null;
-  activities: Activity[] | null;
+  interests: string[];
+  activities: Activity[];
   isArchived: boolean;
 }
 

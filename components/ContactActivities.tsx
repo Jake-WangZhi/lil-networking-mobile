@@ -6,7 +6,7 @@ import { Dispatch, SetStateAction, useCallback } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 
 interface Props {
-  activities: Activity[] | null;
+  activities: Activity[];
   setIsActivityPageOpen: Dispatch<SetStateAction<boolean>>;
 }
 

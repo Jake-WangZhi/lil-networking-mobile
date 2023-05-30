@@ -43,7 +43,7 @@ export const ContactDetails = ({
   return (
     <div className="mb-20">
       <ContactInfo contact={contact} />
-      <ContactInterests interests={interests} />
+      {interests.length !== 0 && <ContactInterests interests={interests} />}
       <ContactActivites
         activities={activities}
         setIsActivityPageOpen={setIsActivityPageOpen}

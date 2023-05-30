@@ -21,7 +21,7 @@ export const ContactCard = ({ contact }: Props) => {
             {`${contact?.industry}${contact?.isArchived ? " • Archived" : ""}`}
           </div>
           <p className="text-sm md:text-base lg:text-lg line-clamp-2 overflow-hidden">
-            {contact?.activities?.[0]?.description}
+            {contact?.activities[0]?.description}
           </p>
         </div>
       </div>
