@@ -65,7 +65,7 @@ export const ActivityPage = ({
               id="date"
               name="date"
               style={{ colorScheme: "dark" }}
-              className="text-md rounded-[4px] block w-[260px] h-8 p-2.5 bg-white bg-opacity-5  placeholder-gray-400 text-white focus:ring-1 focus:ring-white focus:outline-none appearance-none caret-white"
+              className="text-md rounded-[4px] w-[260px] h-8 p-2.5 bg-white bg-opacity-5 placeholder-gray-400 text-white focus:ring-1 focus:ring-white focus:outline-none appearance-none caret-white"
               required
             />
           </div>
