@@ -143,9 +143,8 @@ export default function EditPage({
               variant="secondary"
               type="button"
               className={`${
-                selectedGoalDays === 30
-                  ? "border border-1 border-light-blue text-light-blue"
-                  : ""
+                selectedGoalDays === 30 &&
+                "border border-1 border-light-blue text-light-blue"
               }`}
               onClick={() => handleButtonClick(30)}
             >
@@ -155,9 +154,8 @@ export default function EditPage({
               variant="secondary"
               type="button"
               className={`${
-                selectedGoalDays === 60
-                  ? "border border-1 border-light-blue text-light-blue"
-                  : ""
+                selectedGoalDays === 60 &&
+                "border border-1 border-light-blue text-light-blue"
               }`}
               onClick={() => handleButtonClick(60)}
             >
@@ -167,9 +165,8 @@ export default function EditPage({
               variant="secondary"
               type="button"
               className={`${
-                selectedGoalDays === 90
-                  ? "border border-1 border-light-blue text-light-blue"
-                  : ""
+                selectedGoalDays === 90 &&
+                "border border-1 border-light-blue text-light-blue"
               }`}
               onClick={() => handleButtonClick(90)}
             >

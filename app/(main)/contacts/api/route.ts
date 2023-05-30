@@ -38,9 +38,14 @@ export async function GET(request: Request) {
     where: {
       contactId: { in: contactIds },
     },
-    orderBy: {
-      date: "desc",
-    },
+    orderBy: [
+      {
+        date: "desc",
+      },
+      {
+        createdAt: "desc",
+      },
+    ],
   });
 
   const parsedContacts = parseContacts(contacts, activities);

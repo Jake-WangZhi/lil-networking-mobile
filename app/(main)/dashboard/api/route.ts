@@ -37,9 +37,14 @@ export async function GET(request: Request) {
     where: {
       contactId: { in: contactIds },
     },
-    orderBy: {
-      createdAt: "desc",
-    },
+    orderBy: [
+      {
+        date: "desc",
+      },
+      {
+        createdAt: "desc",
+      },
+    ],
     distinct: ["contactId"],
   });
 
