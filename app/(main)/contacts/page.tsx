@@ -3,13 +3,13 @@
 import { ContactList } from "@/components/ContactList";
 import { Header } from "@/components/Header";
 import { SearchBar } from "@/components/SearchBar";
-import { useContact } from "@/hooks/useContact";
+import { useContacts } from "@/hooks/useContacts";
 import { useSession } from "next-auth/react";
 
 export default function ContactsPage() {
   const { data: session } = useSession();
 
-  const { contacts, isLoading, isError } = useContact({
+  const { contacts, isLoading, isError } = useContacts({
     email: session?.user?.email,
   });
 

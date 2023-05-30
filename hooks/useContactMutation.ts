@@ -10,11 +10,7 @@ type Props = {
 export const useContactMutation = ({ onSuccess, onError, method }: Props) =>
   useMutation({
     mutationFn: async (contact: Contact) => {
-      let url = "/contacts/api";
-
-      if (method === "DELETE") url = `/contacts/api?id=${contact.id}`;
-
-      const response = await fetch(url, {
+      const response = await fetch(`/contacts/${contact.id}/api`, {
         headers: {
           "Content-Type": "application/json",
         },

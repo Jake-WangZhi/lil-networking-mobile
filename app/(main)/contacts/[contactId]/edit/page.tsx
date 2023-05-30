@@ -12,14 +12,15 @@ import "react-tagsinput/react-tagsinput.css";
 import "./styles.css";
 import { useContact } from "@/hooks/useContact";
 
-export default function EditPage({ params }: { params: { id: string } }) {
+export default function EditPage({
+  params,
+}: {
+  params: { contactId: string };
+}) {
   const { data: session } = useSession();
-  const { contacts } = useContact({
-    email: session?.user?.email,
-    id: params.id,
+  const { contact } = useContact({
+    id: params.contactId,
   });
-
-  const contact = contacts?.[0];
 
   const router = useRouter();
   const [name, setName] = useState(contact?.name);
@@ -53,7 +54,6 @@ export default function EditPage({ params }: { params: { id: string } }) {
   }, []);
 
   useEffect(() => {
-    const contact = contacts?.[0];
     if (contact) {
       const { links: curLinks, goalDays, interests } = contact;
       console.log("links", curLinks);
@@ -61,7 +61,7 @@ export default function EditPage({ params }: { params: { id: string } }) {
       setSelectedGoalDays(goalDays ?? 30);
       setTags(interests ?? []);
     }
-  }, [contacts]);
+  }, [contact]);
 
   return (
     <main className="relative min-h-screen flex flex-col items-center text-white px-4">

@@ -20,8 +20,7 @@ export default function ContactPage({
 
   const { data: session } = useSession();
 
-  const { contacts, isLoading, isError } = useContact({
-    email: session?.user?.email,
+  const { contact, isLoading, isError } = useContact({
     id: params.contactId,
   });
 
@@ -38,7 +37,7 @@ export default function ContactPage({
       </Button>
 
       <ContactDetails
-        contact={contacts?.[0]}
+        contact={contact}
         isError={isError}
         isLoading={isLoading}
         setIsActivityPageOpen={setIsActivityPageOpen}
