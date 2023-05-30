@@ -65,13 +65,7 @@ export async function DELETE(request: Request) {
 }
 
 export async function PUT(request: Request) {
-  const contact = (await request.json()) as Contact;
-
-  if (!contact.id)
-    return new NextResponse(
-      JSON.stringify({ success: false, message: "Missing contact id" }),
-      { status: 400, headers: { "content-type": "application/json" } }
-    );
+  const contact: Contact = await request.json();
 
   const {
     id,

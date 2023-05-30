@@ -108,7 +108,7 @@ export async function updateContact({
   await prisma.activity.create({
     data: {
       contactId: contact.id,
-      title: "Contact updated",
+      title: "Contact edited",
       description: "",
       date: new Date(),
     },

@@ -71,7 +71,7 @@ export default function EditPage({ params }: { params: { id: string } }) {
           <Button variant="text" onClick={() => router.back()}>
             <ChevronLeft size={36} color="#737373" />
           </Button>
-          <h1 className="text-xl">Update contact</h1>
+          <h1 className="text-xl">Edit contact</h1>
           <Button type="submit" variant="text" className="text-light-blue">
             Save
           </Button>

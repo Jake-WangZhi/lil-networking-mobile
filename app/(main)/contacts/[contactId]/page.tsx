@@ -8,7 +8,11 @@ import { Button } from "@/components/Button";
 import { useSession } from "next-auth/react";
 import { useContact } from "@/hooks/useContact";
 
-export default function ContactPage({ params }: { params: { id: string } }) {
+export default function ContactPage({
+  params,
+}: {
+  params: { contactId: string };
+}) {
   const router = useRouter();
   const { currentPath } = useCurrentPath();
 
@@ -16,7 +20,7 @@ export default function ContactPage({ params }: { params: { id: string } }) {
 
   const { contacts, isLoading, isError } = useContact({
     email: session?.user?.email,
-    id: params.id,
+    id: params.contactId,
   });
 
   return (

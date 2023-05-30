@@ -1,26 +1,26 @@
-import { Contact } from "@/types";
+import { Activity } from "@/types";
 import { useMutation } from "@tanstack/react-query";
 
 type Props = {
   onSuccess: () => void;
   onError: (error: unknown) => void;
-  method: "PUT" | "DELETE";
+  method: "POST" | "DELETE";
 };
 
-export const useContactMutation = ({ onSuccess, onError, method }: Props) =>
+export const useActivityMutation = ({ onSuccess, onError, method }: Props) =>
   useMutation({
-    mutationFn: async (contact: Contact) => {
-      let url = "/contacts/api";
+    mutationFn: async (activity: Activity) => {
+      let url = `/contacts/${activity.contactId}/activities`;
 
       if (method === "DELETE") {
-        url = `/contacts/api?id=${contact.id}`;
+        url = `/contacts/${activity.contactId}/activities/${activity.id}`;
       }
 
       const response = await fetch(url, {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(contact),
+        body: JSON.stringify(activity),
         method,
       });
 

@@ -27,6 +27,8 @@ export interface Contact {
 }
 
 export interface Activity {
+  id: string;
+  contactId: string;
   title: string;
   description: string | null;
   date: string;
