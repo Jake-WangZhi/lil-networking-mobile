@@ -1,4 +1,12 @@
-import { Link, Mail, MoreVertical, Phone } from "react-feather";
+import {
+  Link,
+  Mail,
+  MoreVertical,
+  Phone,
+  Edit,
+  Archive,
+  Trash2,
+} from "react-feather";
 import { Button } from "./Button";
 import { useCallback, useState } from "react";
 import { useContactMutation } from "@/hooks/useContactMutation";
@@ -76,32 +84,37 @@ export const ContactInfo = ({ contact }: Props) => {
           </div>
 
           {showDropdown && (
-            <div className="absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+            <div className="absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-[#3C3C43] divide-opacity-[0.36] rounded-md bg-[#EDEDED] bg-opacity-80 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
               <div className="py-2">
                 <Button
                   variant="text"
                   onClick={() => router.push(`/contacts/${id}/edit`)}
-                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  className="w-full flex justify-between items-center px-4 py-2 text-black hover:bg-opacity-[0.08]"
                 >
-                  Edit
+                  <div className="text-base">Edit</div>
+                  <Edit size={24} />
                 </Button>
               </div>
               <div className="py-2">
                 <Button
                   variant="text"
                   onClick={isArchived ? handleActivate : handleArchive}
-                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  className="w-full flex justify-between items-center px-4 py-2 text-black hover:bg-opacity-[0.08]"
                 >
-                  {isArchived ? "Activate" : "Archive"}
+                  <div className="text-base">
+                    {isArchived ? "Activate" : "Archive"}
+                  </div>
+                  <Archive size={24} />
                 </Button>
               </div>
               <div className="py-2">
                 <Button
                   variant="text"
                   onClick={handleDelete}
-                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  className="w-full flex justify-between items-center px-4 py-2 text-black hover:bg-opacity-[0.08]"
                 >
-                  Delete
+                  <div className="text-base">Delete</div>
+                  <Trash2 size={24} />
                 </Button>
               </div>
             </div>
