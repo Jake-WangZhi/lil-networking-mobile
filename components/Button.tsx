@@ -30,7 +30,7 @@ export const Button = ({
   type = "button",
 }: Props) => {
   return (
-    <Ripples color="rgba(255, 255, 255, 0.1)" className="!flex">
+    <Ripples color="rgba(255, 255, 255, 0.1)" className="!inline">
       <button
         onClick={onClick}
         disabled={disabled}
