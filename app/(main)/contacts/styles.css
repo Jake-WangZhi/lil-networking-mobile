@@ -18,7 +18,11 @@
     border-radius: 50%;
 }
 
-
 .react-tagsinput-tag a::before {
     content: "×";
+}
+
+.react-tagsinput-input {
+    color: white;
+    font-size: 14px;
 }

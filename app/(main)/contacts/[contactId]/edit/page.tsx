@@ -9,7 +9,7 @@ import { useCallback, useEffect, useState } from "react";
 // @ts-ignore
 import TagsInput from "react-tagsinput";
 import "react-tagsinput/react-tagsinput.css";
-import "./styles.css";
+import "../../styles.css";
 import { useContact } from "@/hooks/useContact";
 
 export default function EditPage({
@@ -233,7 +233,7 @@ export default function EditPage({
             onChange={handleChange}
             inputProps={{ placeholder: "" }}
             focusedClassName="ring-1 ring-white outline-none appearance-none caret-white"
-            className="text-md rounded-xl block w-full h-[160px] p-2.5 bg-white bg-opacity-5 placeholder-white text-white overflow-auto"
+            className="rounded-xl block w-full h-[160px] p-2.5 bg-white bg-opacity-5 overflow-auto"
           />
         </div>
 

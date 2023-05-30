@@ -38,7 +38,7 @@ export async function GET(request: Request) {
       contactId: { in: contactIds },
     },
     orderBy: {
-      createdAt: "desc",
+      date: "desc",
     },
   });
 

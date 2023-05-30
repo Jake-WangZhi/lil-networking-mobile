@@ -23,7 +23,7 @@ export async function GET(
       contactId: contact?.id,
     },
     orderBy: {
-      createdAt: "desc",
+      date: "desc",
     },
   });
 
