@@ -20,7 +20,7 @@ export default function ContactPage({
 
   if (isError) {
     return (
-      <div className="flex items-center justify-center pt-8 text-base text-red-400 md:text-lg lg:text-xl">
+      <div className="min-h-screen flex items-center justify-center pt-8 text-base text-red-400 md:text-lg lg:text-xl">
         Something went wrong, please try again later
       </div>
     );
@@ -28,7 +28,7 @@ export default function ContactPage({
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center pt-8">
+      <div className="min-h-screen flex items-center justify-center pt-8">
         <ClipLoader color="#38ACE2" size={150} />
       </div>
     );
