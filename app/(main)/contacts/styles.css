@@ -7,6 +7,26 @@
     padding-left: 16px;
     padding-right: 16px;
 }
+
+@media (min-width: 768px) {
+    .react-tagsinput-tag {
+      font-size: 16px;
+    }
+
+    .react-tagsinput-input {
+        font-size: 16px !important;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .react-tagsinput-tag {
+      font-size: 18px;
+    }
+
+    .react-tagsinput-input {
+        font-size: 18px !important;
+    }
+  }
   
 .react-tagsinput-remove {
     color: black;
@@ -24,5 +44,6 @@
 
 .react-tagsinput-input {
     color: white;
-    font-size: 14px;
+    font-size: 14px !important;
+    width: -webkit-fill-available;
 }
