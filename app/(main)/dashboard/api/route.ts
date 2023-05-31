@@ -66,7 +66,7 @@ const parseActions = (contacts: Contact[], activities: Activity[]) => {
     const contact = contactIndex[activity.contactId];
 
     if (contact) {
-      const days = calculateDaysSinceCreatedAt(activity.createdAt);
+      const days = calculateDaysSinceCreatedAt(new Date(activity.date));
       const goalDays = contact.goalDays || DEFAUL_REACH_OUT_PERIOD;
 
       const action = {
