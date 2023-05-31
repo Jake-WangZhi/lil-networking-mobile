@@ -53,13 +53,13 @@ export const ContactHeader = ({ contact }: Props) => {
     deleteContactMutation.mutate({ ...contact, id: contact.id });
   }, [deleteContactMutation, contact]);
 
-  const handleStatusChange = useCallback(
-    (isArchived: boolean) => {
-      updateContactMutation.mutate({ ...contact, isArchived: !isArchived });
-      setShowDropdown(false);
-    },
-    [contact, updateContactMutation]
-  );
+  const handleStatusChange = useCallback(() => {
+    updateContactMutation.mutate({
+      ...contact,
+      isArchived: !contact.isArchived,
+    });
+    setShowDropdown(false);
+  }, [contact, updateContactMutation]);
 
   return (
     <div className="pt-8 mb-4">
@@ -116,7 +116,7 @@ export const ContactHeader = ({ contact }: Props) => {
               <div className="py-2">
                 <Button
                   variant="text"
-                  onClick={() => handleStatusChange(contact.isArchived)}
+                  onClick={handleStatusChange}
                   className="w-full flex justify-between items-center px-4 py-2 text-black hover:bg-opacity-[0.08]"
                 >
                   <div className="text-base md:text-lg lg:text-xl">

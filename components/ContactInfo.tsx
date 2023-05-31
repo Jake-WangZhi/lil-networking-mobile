@@ -1,17 +1,5 @@
-import {
-  Link,
-  Mail,
-  MoreVertical,
-  Phone,
-  Edit,
-  Archive,
-  Trash2,
-} from "react-feather";
-import { Button } from "./Button";
-import { useCallback, useState } from "react";
-import { useContactMutation } from "@/hooks/useContactMutation";
-import { useRouter } from "next/navigation";
-import { useCurrentPath } from "@/contexts/CurrentPathContext";
+import { Link, Mail, Phone } from "react-feather";
+
 import { Contact } from "@/types";
 import { formatPhoneNumber } from "@/lib/utils";
 
