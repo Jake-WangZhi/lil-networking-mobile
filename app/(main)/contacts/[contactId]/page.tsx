@@ -2,7 +2,7 @@
 
 import { ContactDetails } from "@/components/ContactDetails";
 import { useContact } from "@/hooks/useContact";
-import { ActivityPage } from "@/components/ActivityPage";
+import { ActivityForm } from "@/components/ActivityForm";
 import { useState } from "react";
 import { ClipLoader } from "react-spinners";
 import { ContactHeader } from "@/components/ContactHeader";
@@ -47,7 +47,7 @@ export default function ContactPage({
         isLoading={isLoading}
         setIsActivityPageOpen={setIsActivityPageOpen}
       />
-      <ActivityPage
+      <ActivityForm
         isOpen={isActivityPageOpen}
         setIsActivityPageOpen={setIsActivityPageOpen}
         contactId={params.contactId}

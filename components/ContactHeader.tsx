@@ -3,6 +3,7 @@ import { useContactMutation } from "@/hooks/useContactMutation";
 import { DotsThreeCircleVertical } from "@phosphor-icons/react";
 import { useRouter } from "next/navigation";
 import { useState, useCallback } from "react";
+import { useQueryClient } from "@tanstack/react-query";
 import {
   ChevronLeft,
   Edit,
@@ -20,6 +21,7 @@ interface Props {
 export const ContactHeader = ({ contact }: Props) => {
   const router = useRouter();
   const { currentPath } = useCurrentPath();
+  const queryClient = useQueryClient();
   const [showDropdown, setShowDropdown] = useState(false);
 
   const deleteContactMutation = useContactMutation({
@@ -35,7 +37,7 @@ export const ContactHeader = ({ contact }: Props) => {
   const updateContactMutation = useContactMutation({
     method: "PUT",
     onSuccess: () => {
-      router.push(currentPath);
+      queryClient.refetchQueries(["contact", contact.id]);
     },
     onError: (error) => {
       console.log(error);
@@ -48,10 +50,12 @@ export const ContactHeader = ({ contact }: Props) => {
 
   const handleArchive = useCallback(() => {
     updateContactMutation.mutate({ ...contact, isArchived: true });
+    setShowDropdown(false);
   }, [contact, updateContactMutation]);
 
   const handleActivate = useCallback(() => {
     updateContactMutation.mutate({ ...contact, isArchived: false });
+    setShowDropdown(false);
   }, [contact, updateContactMutation]);
 
   return (

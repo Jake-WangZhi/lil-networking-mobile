@@ -10,7 +10,7 @@ interface Props {
   contactId: string;
 }
 
-export const ActivityPage = ({
+export const ActivityForm = ({
   isOpen,
   setIsActivityPageOpen,
   contactId,

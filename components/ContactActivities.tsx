@@ -65,9 +65,11 @@ export const ContactActivites = ({
                 <div className="text-base md:text-lg lg:text-xl font-semibold">
                   {activity.title}
                 </div>
-                <Button variant="text" onClick={() => handleDelete(activity)}>
-                  <Trash2 size={24} />
-                </Button>
+                {index !== activities?.length - 1 && (
+                  <Button variant="text" onClick={() => handleDelete(activity)}>
+                    <Trash2 size={24} />
+                  </Button>
+                )}
               </div>
               <div className="text-sm md:text-base lg:text-lg opacity-[0.7] mb-2">
                 {activity.date}
