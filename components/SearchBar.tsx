@@ -1,4 +1,4 @@
-import { Search, Mic } from "react-feather";
+import { Search } from "react-feather";
 
 export const SearchBar = () => {
   return (
