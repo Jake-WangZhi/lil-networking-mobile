@@ -2,7 +2,7 @@ import { useActivityMutation } from "@/hooks/useActivityMutation";
 import { Activity } from "@/types";
 import { Circle, PlusCircle, Trash2 } from "react-feather";
 import { Button } from "./Button";
-import { Dispatch, SetStateAction, useCallback } from "react";
+import { Dispatch, SetStateAction, useCallback, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 
 interface Props {
@@ -15,13 +15,16 @@ export const ContactActivites = ({
   setIsActivityPageOpen,
 }: Props) => {
   const queryClient = useQueryClient();
+  const [errorMessage, setErrorMessage] = useState("");
 
   const deleteActivityMutation = useActivityMutation({
     method: "DELETE",
     onSuccess: () => {
+      setErrorMessage("");
       queryClient.refetchQueries(["contact", activities?.[0].contactId]);
     },
     onError: (error) => {
+      setErrorMessage("An error occurred. Please try again.");
       console.log(error);
     },
   });
@@ -35,6 +38,9 @@ export const ContactActivites = ({
 
   return (
     <div>
+      {errorMessage && (
+        <div className="text-red-500 flex justify-center">{errorMessage}</div>
+      )}
       <div className="flex justify-between mb-3">
         <div className="text-base md:text-lg lg:text-xl">Activites</div>
         <Button
