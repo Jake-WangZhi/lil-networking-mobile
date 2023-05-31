@@ -1,8 +1,10 @@
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useState, ChangeEvent } from "react";
 import { X, Minus } from "react-feather";
 import { Button } from "./Button";
 import { createActivity } from "@/app/_actions";
 import { useSwipeable } from "react-swipeable";
+
+const characterLimit = 200;
 
 interface Props {
   isOpen: boolean;
@@ -15,6 +17,12 @@ export const ActivityForm = ({
   setIsActivityPageOpen,
   contactId,
 }: Props) => {
+  const [description, setDescription] = useState("");
+
+  const handleDescriptionChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
+    setDescription(event.target.value);
+  };
+
   const handlers = useSwipeable({
     onSwipedDown: () => {
       setIsActivityPageOpen(false);
@@ -80,8 +88,14 @@ export const ActivityForm = ({
             <textarea
               id="description"
               name="description"
+              value={description}
+              onChange={handleDescriptionChange}
+              maxLength={characterLimit}
               className="text-base rounded-[4px] block p-2.5 w-full h-56 bg-white bg-opacity-5 placeholder-gray-400 text-white md:text-lg lg:text-xl focus:ring-1 focus:ring-white focus:bg-white focus:bg-opacity-[0.12] focus:outline-none appearance-none caret-white"
             />
+            <div className="text-sm flex justify-end">
+              {description.length}/{characterLimit}
+            </div>
           </div>
 
           <input

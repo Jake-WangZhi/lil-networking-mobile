@@ -46,7 +46,10 @@ export const ContactActivites = ({
         <Button
           variant="text"
           className="flex items-center space-x-1"
-          onClick={() => setIsActivityPageOpen(true)}
+          onClick={() => {
+            setIsActivityPageOpen(true);
+            window.scrollTo({ top: 0, behavior: "smooth" });
+          }}
         >
           <PlusCircle size={24} />
           <div className="text-sm md:text-base lg:text-lg">Log Activity</div>
