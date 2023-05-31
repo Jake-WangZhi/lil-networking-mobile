@@ -50,7 +50,7 @@ export async function createContact(formData: FormData) {
   if (email) validateEmail(email);
   if (phone) validatePhone(phone);
 
-  const contactId = await db.createContact({
+  const contact = await db.createContact({
     name,
     title,
     company,
@@ -63,7 +63,7 @@ export async function createContact(formData: FormData) {
     userId: user.id,
   });
 
-  redirect(`/contacts/${contactId}`);
+  redirect(`/contacts/${contact.id}`);
 }
 
 export async function updateContact(formData: FormData) {
@@ -92,7 +92,7 @@ export async function updateContact(formData: FormData) {
   if (email) validateEmail(email);
   if (phone) validatePhone(phone);
 
-  const contactId = await db.updateContact({
+  const contact = await db.updateContact({
     id,
     name,
     title,
@@ -106,7 +106,7 @@ export async function updateContact(formData: FormData) {
     userId: user.id,
   });
 
-  redirect(`/contacts/${contactId}`);
+  redirect(`/contacts/${contact.id}`);
 }
 
 export async function createActivity(formData: FormData) {

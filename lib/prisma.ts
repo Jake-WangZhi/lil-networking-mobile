@@ -61,7 +61,7 @@ export async function createContact({
     },
   });
 
-  return contact.id;
+  return contact;
 }
 
 export async function updateContact({
@@ -105,16 +105,7 @@ export async function updateContact({
     },
   });
 
-  await prisma.activity.create({
-    data: {
-      contactId: contact.id,
-      title: "Contact edited",
-      description: "",
-      date: new Date().toISOString().split("T")[0],
-    },
-  });
-
-  return contact.id;
+  return contact;
 }
 
 export function createActivity({
