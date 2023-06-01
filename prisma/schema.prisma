@@ -38,8 +38,15 @@ model Activity {
   description String
   date        String
 
+  type ActivityType
+
   Contact   Contact? @relation(fields: [contactId], references: [id], onDelete: Cascade)
   contactId String
+}
+
+enum ActivityType {
+  USER
+  SYSTEM
 }
 
 model Account {

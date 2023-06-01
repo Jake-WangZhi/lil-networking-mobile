@@ -32,4 +32,10 @@ export interface Activity {
   title: string;
   description: string;
   date: string;
+  type: ActivityType;
+}
+
+export enum ActivityType {
+  USER = "USER",
+  SYSTEM = "SYSTEM",
 }

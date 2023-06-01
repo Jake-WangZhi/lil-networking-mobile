@@ -9,6 +9,7 @@
   - Added the required column `date` to the `Activity` table without a default value. This is not possible if the table is not empty.
   - Added the required column `description` to the `Activity` table without a default value. This is not possible if the table is not empty.
   - Added the required column `title` to the `Activity` table without a default value. This is not possible if the table is not empty.
+  - Added the required column `type` to the `Activity` table without a default value. This is not possible if the table is not empty.
   - Added the required column `company` to the `Contact` table without a default value. This is not possible if the table is not empty.
   - Added the required column `industry` to the `Contact` table without a default value. This is not possible if the table is not empty.
   - Added the required column `title` to the `Contact` table without a default value. This is not possible if the table is not empty.
@@ -17,6 +18,9 @@
   - Made the column `goalDays` on table `Contact` required. This step will fail if there are existing NULL values in that column.
 
 */
+-- CreateEnum
+CREATE TYPE "ActivityType" AS ENUM ('USER', 'SYSTEM');
+
 -- DropForeignKey
 ALTER TABLE "Activity" DROP CONSTRAINT "Activity_contactId_fkey";
 
@@ -24,7 +28,8 @@ ALTER TABLE "Activity" DROP CONSTRAINT "Activity_contactId_fkey";
 ALTER TABLE "Activity" DROP COLUMN "note",
 ADD COLUMN     "date" TEXT NOT NULL,
 ADD COLUMN     "description" TEXT NOT NULL,
-ADD COLUMN     "title" TEXT NOT NULL;
+ADD COLUMN     "title" TEXT NOT NULL,
+ADD COLUMN     "type" "ActivityType" NOT NULL;
 
 -- AlterTable
 ALTER TABLE "Contact" DROP COLUMN "category",

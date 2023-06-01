@@ -1,5 +1,5 @@
 import { useActivityMutation } from "@/hooks/useActivityMutation";
-import { Activity } from "@/types";
+import { Activity, ActivityType } from "@/types";
 import { Circle, PlusCircle, Trash2 } from "react-feather";
 import { Button } from "./Button";
 import { Dispatch, SetStateAction, useCallback, useState } from "react";
@@ -74,7 +74,7 @@ export const ContactActivites = ({
                 <div className="text-base md:text-lg lg:text-xl font-semibold">
                   {activity.title}
                 </div>
-                {index !== activities?.length - 1 && (
+                {activity.type === ActivityType.USER && (
                   <Button variant="text" onClick={() => handleDelete(activity)}>
                     <Trash2 size={24} />
                   </Button>

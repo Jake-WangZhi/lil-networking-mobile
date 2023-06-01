@@ -58,6 +58,7 @@ export async function createContact({
       title: "Contact created",
       description: "",
       date: new Date().toISOString().split("T")[0],
+      type: "SYSTEM",
     },
   });
 
@@ -125,6 +126,7 @@ export function createActivity({
       title,
       description,
       date,
+      type: "USER",
     },
   });
 }
