@@ -15,9 +15,9 @@ type Props = {
 
 const VARIANTS: Record<string, string> = {
   primary:
-    "text-black bg-light-blue font-medium rounded-full text-base px-5 py-2.5 text-center w-[200px] md:w-[258px] md:text-lg lg:w-[300px] lg:text-xl disabled:text-white disabled:cursor-not-allowed disabled:bg-gray-400",
+    "text-black bg-light-blue font-semibold rounded-full text-base px-5 py-2.5 text-center w-[200px] md:w-[258px] md:text-lg lg:w-[300px] lg:text-xl disabled:text-white disabled:cursor-not-allowed disabled:bg-gray-400",
   secondary:
-    "bg-white bg-opacity-5 font-medium rounded-full text-sm px-3 py-1.5 text-center w-[84px]",
+    "bg-white bg-opacity-5 font-normal rounded-full text-sm px-3 py-1.5 text-center w-[84px]",
 };
 
 export const Button = ({

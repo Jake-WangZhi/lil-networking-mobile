@@ -106,7 +106,7 @@ export const ActivityForm = ({
           />
 
           <div className="flex justify-center mt-8">
-            <Button type="submit" variant="primary">
+            <Button type="submit" variant="primary" className="!font-normal">
               Log Activity
             </Button>
           </div>
