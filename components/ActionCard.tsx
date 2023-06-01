@@ -10,7 +10,10 @@ interface Props {
 
 export const ActionCard = ({ action, actionType }: Props) => {
   return (
-    <Ripples color="rgba(255, 255, 255, 0.1)" className="w-full">
+    <Ripples
+      color="rgba(255, 255, 255, 0.1)"
+      className="w-full rounded-lg overflow-hidden"
+    >
       <Link href="/dashboard" className="w-full">
         <div className="bg-white bg-opacity-5 p-4 hover:bg-opacity-[0.08] rounded-lg">
           <div className="flex justify-between">
