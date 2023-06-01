@@ -93,7 +93,7 @@ export default function EditPage({
 
         <div className="mb-4 flex items-center justify-between">
           <label className="block text-base font-medium text-white md:text-lg lg:text-xl">
-            Title*
+            Title
           </label>
           <input
             type="text"
@@ -102,13 +102,12 @@ export default function EditPage({
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             className="text-base rounded-[4px] block w-[260px] h-8 p-2.5 bg-white bg-opacity-5 placeholder-gray-400 text-white md:text-lg lg:text-xl focus:ring-1 focus:ring-white focus:bg-white focus:bg-opacity-[0.12] focus:outline-none appearance-none caret-white"
-            required
           />
         </div>
 
         <div className="mb-4 flex items-center justify-between">
           <label className="block text-base font-medium text-white md:text-lg lg:text-xl">
-            Company*
+            Company
           </label>
           <input
             type="text"
@@ -117,7 +116,6 @@ export default function EditPage({
             value={company}
             onChange={(e) => setCompany(e.target.value)}
             className="text-base rounded-[4px] block w-[260px] h-8 p-2.5 bg-white bg-opacity-5  placeholder-gray-400 text-white md:text-lg lg:text-xl focus:ring-1 focus:ring-white focus:bg-white focus:bg-opacity-[0.12] focus:outline-none appearance-none caret-white"
-            required
           />
         </div>
 
