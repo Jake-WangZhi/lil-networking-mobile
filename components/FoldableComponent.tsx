@@ -20,7 +20,7 @@ const FoldableComponent = ({ title, content }: Props) => {
     <div className="mb-8">
       <div className="flex justify-between">
         {title}
-        <button onClick={toggleFold} className="text-white">
+        <button type="button" onClick={toggleFold} className="text-white">
           {isFolded ? (
             <ChevronDown className="md:w-6 md:h-6 lg:w-8 lg:h-8" />
           ) : (

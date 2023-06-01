@@ -21,6 +21,7 @@ export const NavFooter = () => {
 
   const NavItem = ({ href, text, Icon }: NavItemProps) => (
     <button
+      type="button"
       onClick={() => {
         setCurrentPath(href);
         router.push(href);

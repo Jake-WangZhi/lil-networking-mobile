@@ -67,6 +67,7 @@ export const ContactHeader = ({ contact }: Props) => {
       )}
       <div className="flex justify-between items-center">
         <button
+          type="button"
           className="relative -ml-3"
           onClick={() => router.push(currentPath)}
         >
@@ -82,6 +83,7 @@ export const ContactHeader = ({ contact }: Props) => {
               <div className="text-sm md:text-base lg:text-lg">Archived</div>
             )}
             <button
+              type="button"
               className="flex items-center"
               onClick={() => setShowDropdown(!showDropdown)}
             >
@@ -95,6 +97,7 @@ export const ContactHeader = ({ contact }: Props) => {
             <div className="absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-[#3C3C43] divide-opacity-[0.36] rounded-md bg-[#EDEDED] shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
               <div className="py-2">
                 <button
+                  type="button"
                   onClick={() => {}}
                   className="w-full flex justify-between items-center px-4 py-2 text-black hover:bg-opacity-[0.08]"
                 >
@@ -104,6 +107,7 @@ export const ContactHeader = ({ contact }: Props) => {
               </div>
               <div className="py-2">
                 <button
+                  type="button"
                   onClick={() => router.push(`/contacts/${contact.id}/edit`)}
                   className="w-full flex justify-between items-center px-4 py-2 text-black hover:bg-opacity-[0.08]"
                 >
@@ -113,6 +117,7 @@ export const ContactHeader = ({ contact }: Props) => {
               </div>
               <div className="py-2">
                 <button
+                  type="button"
                   onClick={handleStatusChange}
                   className="w-full flex justify-between items-center px-4 py-2 text-black hover:bg-opacity-[0.08]"
                 >
@@ -124,6 +129,7 @@ export const ContactHeader = ({ contact }: Props) => {
               </div>
               <div className="py-2">
                 <button
+                  type="button"
                   onClick={handleDelete}
                   className="w-full flex justify-between items-center px-4 py-2 text-black hover:bg-opacity-[0.08]"
                 >

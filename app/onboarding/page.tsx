@@ -41,6 +41,7 @@ const SwiperButtonNext = ({ children }: { children: ReactNode }) => {
   const swiper = useSwiper();
   return (
     <button
+      type="button"
       onClick={() => swiper.slideNext()}
       className="text-white text-sm md:text-base lg:text-lg"
     >

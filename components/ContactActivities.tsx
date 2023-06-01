@@ -43,6 +43,7 @@ export const ContactActivites = ({
       <div className="flex justify-between mb-3">
         <div className="text-base md:text-lg lg:text-xl">Activites</div>
         <button
+          type="button"
           className="flex items-center space-x-1"
           onClick={() => {
             setIsActivityPageOpen(true);
@@ -73,7 +74,7 @@ export const ContactActivites = ({
                   {activity.title}
                 </div>
                 {activity.type === ActivityType.USER && (
-                  <button onClick={() => handleDelete(activity)}>
+                  <button type="button" onClick={() => handleDelete(activity)}>
                     <Trash2 size={24} />
                   </button>
                 )}

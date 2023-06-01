@@ -16,6 +16,7 @@ export const Header = () => {
             Hi, {session?.user?.name?.split(" ")[0]}!
           </div>
           <button
+            type="button"
             onClick={() => router.push("/contacts/create")}
             className="text-white"
           >

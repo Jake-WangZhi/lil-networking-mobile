@@ -44,7 +44,7 @@ export default function CreatePage() {
       {/* @ts-expect-error Async Server Component */}
       <form action={createContact} className="w-full pt-8">
         <div className="flex items-center justify-between mb-9">
-          <button onClick={() => router.back()}>
+          <button type="button" onClick={() => router.back()}>
             <ChevronLeft
               size={36}
               color="#737373"
@@ -203,6 +203,7 @@ export default function CreatePage() {
         ))}
         <div className="flex justify-end">
           <button
+            type="button"
             className="flex space-x-1 mb-5 items-center"
             onClick={handleAddLink}
           >
