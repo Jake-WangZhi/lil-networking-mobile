@@ -6,7 +6,8 @@ import { redirect } from "next/navigation";
 
 interface FormDataOptions {
   id: string;
-  name: string;
+  firstName: string;
+  lastName: string;
   title: string;
   company: string;
   industry: string;
@@ -28,7 +29,8 @@ interface FormData {
 export async function createContact(formData: FormData) {
   const userEmail = formData.get("userEmail");
 
-  const name = formData.get("name");
+  const firstName = formData.get("firstName");
+  const lastName = formData.get("lastName");
   const title = formData.get("title");
   const company = formData.get("company");
   const industry = formData.get("industry");
@@ -51,7 +53,8 @@ export async function createContact(formData: FormData) {
   if (phone) validatePhone(phone);
 
   const contact = await db.createContact({
-    name,
+    firstName,
+    lastName,
     title,
     company,
     industry,
@@ -70,7 +73,8 @@ export async function updateContact(formData: FormData) {
   const userEmail = formData.get("userEmail");
 
   const id = formData.get("id");
-  const name = formData.get("name");
+  const firstName = formData.get("firstName");
+  const lastName = formData.get("lastName");
   const title = formData.get("title");
   const company = formData.get("company");
   const industry = formData.get("industry");
@@ -94,7 +98,8 @@ export async function updateContact(formData: FormData) {
 
   const contact = await db.updateContact({
     id,
-    name,
+    firstName,
+    lastName,
     title,
     company,
     industry,

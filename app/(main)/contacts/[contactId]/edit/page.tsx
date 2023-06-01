@@ -23,7 +23,8 @@ export default function EditPage({
   });
 
   const router = useRouter();
-  const [name, setName] = useState(contact?.name);
+  const [firstName, setFirstName] = useState(contact?.firstName);
+  const [lastName, setLastName] = useState(contact?.lastName);
   const [title, setTitle] = useState(contact?.title);
   const [company, setCompany] = useState(contact?.company);
   const [industry, setIndustry] = useState(contact?.industry);
@@ -81,14 +82,29 @@ export default function EditPage({
 
         <div className="mb-4 flex items-center justify-between">
           <label className="block text-base font-medium text-white md:text-lg lg:text-xl">
-            Name*
+            First Name*
           </label>
           <input
             type="text"
-            id="name"
-            name="name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            id="firstName"
+            name="firstName"
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
+            className="text-base rounded-[4px] block w-[260px] h-8 p-2.5 bg-white bg-opacity-5  placeholder-gray-400 text-white md:text-lg lg:text-xl focus:ring-1 focus:ring-white focus:bg-white focus:bg-opacity-[0.12] focus:outline-none appearance-none caret-white"
+            required
+          />
+        </div>
+
+        <div className="mb-4 flex items-center justify-between">
+          <label className="block text-base font-medium text-white md:text-lg lg:text-xl">
+            Last Name*
+          </label>
+          <input
+            type="text"
+            id="lastName"
+            name="lastName"
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
             className="text-base rounded-[4px] block w-[260px] h-8 p-2.5 bg-white bg-opacity-5  placeholder-gray-400 text-white md:text-lg lg:text-xl focus:ring-1 focus:ring-white focus:bg-white focus:bg-opacity-[0.12] focus:outline-none appearance-none caret-white"
             required
           />

@@ -17,7 +17,7 @@ export const ContactCard = ({ contact }: Props) => {
         <div className="bg-white bg-opacity-5 p-4 hover:bg-opacity-[0.08] rounded-lg">
           <div className="flex justify-between">
             <div className="text-left text-base md:text-xl lg:text-2xl overflow-hidden break-words">
-              {contact.name}
+              {contact.firstName} {contact.lastName}
             </div>
             <ArrowRight className="md:w-6 md:h-6 lg:w-8 lg:h-8 flex-shrink-0" />
           </div>

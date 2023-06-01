@@ -18,7 +18,7 @@ export const ActionCard = ({ action, actionType }: Props) => {
         <div className="bg-white bg-opacity-5 p-4 hover:bg-opacity-[0.08] rounded-lg">
           <div className="flex justify-between">
             <h2 className="md:text-xl lg:text-2xl overflow-hidden break-words">
-              {action.contactName}
+              {action.contactFirstName} {action.contactLastName}
             </h2>
             <ArrowRight className="md:w-6 md:h-6 lg:w-8 lg:h-8 flex-shrink-0" />
           </div>

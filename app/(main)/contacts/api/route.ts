@@ -27,9 +27,14 @@ export async function GET(request: Request) {
       userId: user.id,
       ...(id ? { id } : {}),
     },
-    orderBy: {
-      name: "asc",
-    },
+    orderBy: [
+      {
+        firstName: "asc",
+      },
+      {
+        lastName: "asc",
+      },
+    ],
   });
 
   const contactIds = contacts.map((c) => c.id);
@@ -75,7 +80,8 @@ export async function PUT(request: Request) {
 
   const {
     id,
-    name,
+    firstName,
+    lastName,
     title,
     company,
     industry,
@@ -90,7 +96,8 @@ export async function PUT(request: Request) {
   const updatedContact = await prisma.contact.update({
     where: { id },
     data: {
-      name,
+      firstName,
+      lastName,
       title,
       company,
       industry,
@@ -110,7 +117,8 @@ const parseContacts = (contacts: Contact[], activities: Activity[]) => {
   const parsedContacts = contacts.map((contact) => {
     return {
       id: contact.id,
-      name: contact.name,
+      firstName: contact.firstName,
+      lastName: contact.lastName,
       title: contact.title,
       company: contact.company,
       industry: contact.industry,

@@ -71,7 +71,8 @@ const parseActions = (contacts: Contact[], activities: Activity[]) => {
       const goalDays = contact.goalDays || DEFAUL_REACH_OUT_PERIOD;
 
       const action = {
-        contactName: contact.name,
+        contactFirstName: contact.firstName,
+        contactLastName: contact.lastName,
         contactIndustry: contact.industry || "",
         description: activity.description,
         days,

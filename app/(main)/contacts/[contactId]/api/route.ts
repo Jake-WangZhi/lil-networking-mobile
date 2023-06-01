@@ -56,7 +56,8 @@ export async function PUT(
   const contact: Contact = await request.json();
 
   const {
-    name,
+    firstName,
+    lastName,
     title,
     company,
     industry,
@@ -71,7 +72,8 @@ export async function PUT(
   const updatedContact = await prisma.contact.update({
     where: { id: params.contactId },
     data: {
-      name,
+      firstName,
+      lastName,
       title,
       company,
       industry,
@@ -90,7 +92,8 @@ export async function PUT(
 const parseContact = (contact: Contact, activities: Activity[]) => {
   const {
     id,
-    name,
+    firstName,
+    lastName,
     title,
     company,
     industry,
@@ -104,7 +107,8 @@ const parseContact = (contact: Contact, activities: Activity[]) => {
 
   return {
     id,
-    name,
+    firstName,
+    lastName,
     title,
     company,
     industry,

@@ -15,7 +15,8 @@ export function getUserByEmail(email: string) {
 }
 
 export async function createContact({
-  name,
+  firstName,
+  lastName,
   title,
   company,
   industry,
@@ -26,7 +27,8 @@ export async function createContact({
   interests,
   userId,
 }: {
-  name: string;
+  firstName: string;
+  lastName: string;
   title: string;
   company: string;
   industry: string;
@@ -39,7 +41,8 @@ export async function createContact({
 }) {
   const contact = await prisma.contact.create({
     data: {
-      name,
+      firstName,
+      lastName,
       title,
       company,
       industry,
@@ -67,7 +70,8 @@ export async function createContact({
 
 export async function updateContact({
   id,
-  name,
+  firstName,
+  lastName,
   title,
   company,
   industry,
@@ -79,7 +83,8 @@ export async function updateContact({
   userId,
 }: {
   id: string;
-  name: string;
+  firstName: string;
+  lastName: string;
   title: string;
   company: string;
   industry: string;
@@ -93,7 +98,8 @@ export async function updateContact({
   const contact = await prisma.contact.update({
     where: { id },
     data: {
-      name,
+      firstName,
+      lastName,
       title,
       company,
       industry,

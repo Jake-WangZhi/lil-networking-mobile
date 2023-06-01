@@ -8,13 +8,22 @@ interface Props {
 }
 
 export const ContactInfo = ({ contact }: Props) => {
-  const { name, title, company, industry, goalDays, email, phone, links } =
-    contact;
+  const {
+    firstName,
+    lastName,
+    title,
+    company,
+    industry,
+    goalDays,
+    email,
+    phone,
+    links,
+  } = contact;
 
   return (
     <div className="bg-white bg-opacity-5 w-full p-4 space-y-1 text-base mb-6 rounded-lg overflow-hidden break-words">
       <div className="text-2xl leading-6 font-semibold md:text-3xl lg:text-4xl">
-        {name}
+        {firstName} {lastName}
       </div>
       <div className="text-base md:text-lg lg:text-xl">{title}</div>
       <div className="text-base md:text-lg lg:text-xl">{company}</div>

@@ -62,12 +62,25 @@ export default function CreatePage() {
 
         <div className="mb-4 flex items-center justify-between">
           <label className="block text-base font-medium text-white md:text-lg lg:text-xl">
-            Name*
+            First Name*
           </label>
           <input
             type="text"
-            id="name"
-            name="name"
+            id="firstName"
+            name="firstName"
+            className="text-base rounded-[4px] block w-[260px] h-8 p-2.5 bg-white bg-opacity-5  placeholder-gray-400 text-white md:text-lg lg:text-xl focus:ring-1 focus:ring-white focus:bg-white focus:bg-opacity-[0.12] focus:outline-none appearance-none caret-white"
+            required
+          />
+        </div>
+
+        <div className="mb-4 flex items-center justify-between">
+          <label className="block text-base font-medium text-white md:text-lg lg:text-xl">
+            Last Name*
+          </label>
+          <input
+            type="text"
+            id="lastName"
+            name="lastName"
             className="text-base rounded-[4px] block w-[260px] h-8 p-2.5 bg-white bg-opacity-5  placeholder-gray-400 text-white md:text-lg lg:text-xl focus:ring-1 focus:ring-white focus:bg-white focus:bg-opacity-[0.12] focus:outline-none appearance-none caret-white"
             required
           />

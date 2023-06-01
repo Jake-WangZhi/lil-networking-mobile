@@ -85,7 +85,10 @@ export const ContactHeader = ({ contact }: Props) => {
               className="flex items-center"
               onClick={() => setShowDropdown(!showDropdown)}
             >
-              <DotsThreeCircleVertical size={24} />
+              <DotsThreeCircleVertical
+                size={24}
+                className="md:w-7 md:h-7 lg:w-8 lg:h-8"
+              />
             </button>
           </div>
           {showDropdown && (

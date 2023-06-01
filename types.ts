@@ -1,5 +1,6 @@
 export interface Action {
-  contactName: string;
+  contactFirstName: string;
+  contactLastName: string;
   days: number;
   contactIndustry: string;
   description: string;
@@ -13,7 +14,8 @@ export enum ActionType {
 
 export interface Contact {
   id: string;
-  name: string;
+  firstName: string;
+  lastName: string;
   title: string;
   company: string;
   industry: string;
