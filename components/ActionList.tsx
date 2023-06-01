@@ -45,7 +45,7 @@ export const ActionList = ({ actions, isLoading, isError }: Props) => {
           </div>
         }
         content={
-          <>
+          <div className="space-y-4">
             {actions?.pastActions?.map((action, index) => (
               <ActionCard
                 key={index}
@@ -53,7 +53,7 @@ export const ActionList = ({ actions, isLoading, isError }: Props) => {
                 actionType={ActionType.Past}
               />
             ))}
-          </>
+          </div>
         }
       />
       <FoldableComponent
@@ -69,7 +69,7 @@ export const ActionList = ({ actions, isLoading, isError }: Props) => {
           </div>
         }
         content={
-          <>
+          <div className="space-y-4">
             {actions?.upcomingActions?.map((action, index) => (
               <ActionCard
                 key={index}
@@ -77,7 +77,7 @@ export const ActionList = ({ actions, isLoading, isError }: Props) => {
                 actionType={ActionType.Upcoming}
               />
             ))}
-          </>
+          </div>
         }
       />
     </div>
