@@ -181,7 +181,7 @@ export default function EditPage({
             type="email"
             id="email"
             name="email"
-            value={email ?? ""}
+            value={email}
             onChange={(e) => setEmail(e.target.value)}
             className="text-base rounded-[4px] block w-[260px] h-8 p-2.5 bg-white bg-opacity-5  placeholder-gray-400 text-white md:text-lg lg:text-xl focus:ring-1 focus:ring-white focus:bg-white focus:bg-opacity-[0.12] focus:outline-none appearance-none caret-white"
           />
@@ -195,7 +195,7 @@ export default function EditPage({
             type="tel"
             id="phone"
             name="phone"
-            value={phone ?? ""}
+            value={phone}
             onChange={(e) => setPhone(e.target.value)}
             className="text-base rounded-[4px] block w-[260px] h-8 p-2.5 bg-white bg-opacity-5  placeholder-gray-400 text-white md:text-lg lg:text-xl focus:ring-1 focus:ring-white focus:bg-white focus:bg-opacity-[0.12] focus:outline-none appearance-none caret-white"
             pattern="[0-9]{10}"

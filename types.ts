@@ -2,7 +2,7 @@ export interface Action {
   contactName: string;
   days: number;
   contactIndustry: string;
-  description: string | null;
+  description: string;
   goalDays: number;
 }
 
@@ -18,9 +18,9 @@ export interface Contact {
   company: string;
   industry: string;
   goalDays: number;
-  email: string | null;
-  phone: string | null;
-  links: string[] | null;
+  email: string;
+  phone: string;
+  links: string[];
   interests: string[];
   activities: Activity[];
   isArchived: boolean;
@@ -30,6 +30,6 @@ export interface Activity {
   id: string;
   contactId: string;
   title: string;
-  description: string | null;
+  description: string;
   date: string;
 }

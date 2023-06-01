@@ -19,8 +19,8 @@ model Contact {
   company    String
   industry   String
   goalDays   Int
-  email      String?
-  phone      String?
+  email      String
+  phone      String
   links      String[]
   interests  String[]
   activities Activity[]
@@ -35,7 +35,7 @@ model Activity {
   updatedAt DateTime @updatedAt
 
   title       String
-  description String?
+  description String
   date        String
 
   Contact   Contact? @relation(fields: [contactId], references: [id], onDelete: Cascade)

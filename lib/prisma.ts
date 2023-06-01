@@ -116,7 +116,7 @@ export function createActivity({
 }: {
   title: string;
   date: string;
-  description?: string;
+  description: string;
   contactId: string;
 }) {
   return prisma.activity.create({
