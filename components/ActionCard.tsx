@@ -24,7 +24,7 @@ export const ActionCard = ({ action, actionType }: Props) => {
           </div>
           <div
             className={`text-sm md:text-base lg:text-lg font-semibold
-              ${actionType === "past" ? "text-light-yellow" : "text-light-blue"}
+              ${actionType === "past" ? "text-magenta" : "text-light-yellow"}
               `}
           >
             {action.days} Days ago
