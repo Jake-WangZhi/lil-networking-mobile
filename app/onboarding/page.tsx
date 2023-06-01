@@ -12,9 +12,9 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "./styles.css";
 
-import { useRouter } from "next/navigation";
 import { Button } from "@/components/Button";
 import { ReactNode } from "react";
+import Link from "next/link";
 
 const ONBOARDING_INTRO_PAGES = [
   {
@@ -43,7 +43,7 @@ const SwiperButtonNext = ({ children }: { children: ReactNode }) => {
     <Button
       variant="text"
       onClick={() => swiper.slideNext()}
-      className="text-white"
+      className="text-white text-sm md:text-base lg:text-lg"
     >
       {children}
     </Button>
@@ -51,17 +51,14 @@ const SwiperButtonNext = ({ children }: { children: ReactNode }) => {
 };
 
 export default function Page() {
-  const router = useRouter();
-
   return (
     <main className="relative min-h-screen">
-      <Button
-        onClick={() => router.push("/dashboard")}
-        variant="text"
-        className="absolute right-4 top-4 z-10 text-white"
+      <Link
+        href={"/dashboard"}
+        className="absolute right-4 top-4 z-10 text-white text-xl md:text-2xl"
       >
         Skip
-      </Button>
+      </Link>
       <Swiper pagination={{ clickable: true }} modules={[Pagination]}>
         {ONBOARDING_INTRO_PAGES.map((page, index) => (
           <SwiperSlide key={index}>
@@ -87,15 +84,12 @@ export default function Page() {
             title="Ready to set a goal?"
             actionButton={<Button onClick={() => {}}>{"I'm ready"}</Button>}
             textButton={
-              <Button
-                onClick={() => {
-                  router.push("/dashboard");
-                }}
-                variant="text"
-                className="text-white"
+              <Link
+                href={"/dashboard"}
+                className="text-white text-sm md:text-base lg:text-lg"
               >
                 Go to Dashboard
-              </Button>
+              </Link>
             }
           />
         </SwiperSlide>
