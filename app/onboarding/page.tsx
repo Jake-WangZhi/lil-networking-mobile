@@ -40,13 +40,12 @@ const ONBOARDING_INTRO_PAGES = [
 const SwiperButtonNext = ({ children }: { children: ReactNode }) => {
   const swiper = useSwiper();
   return (
-    <Button
-      variant="text"
+    <button
       onClick={() => swiper.slideNext()}
       className="text-white text-sm md:text-base lg:text-lg"
     >
       {children}
-    </Button>
+    </button>
   );
 };
 
@@ -74,7 +73,9 @@ export default function Page() {
           <OnboardingActionPage
             title="Stay Informed"
             actionButton={
-              <Button onClick={() => {}}>Allow notifications</Button>
+              <Button variant="primary" onClick={() => {}}>
+                Allow notifications
+              </Button>
             }
             textButton={<SwiperButtonNext>Not now</SwiperButtonNext>}
           />
@@ -82,7 +83,11 @@ export default function Page() {
         <SwiperSlide>
           <OnboardingActionPage
             title="Ready to set a goal?"
-            actionButton={<Button onClick={() => {}}>{"I'm ready"}</Button>}
+            actionButton={
+              <Button variant="primary" onClick={() => {}}>
+                {"I'm ready"}
+              </Button>
+            }
             textButton={
               <Link
                 href={"/dashboard"}

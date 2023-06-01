@@ -1,7 +1,6 @@
 import { useActivityMutation } from "@/hooks/useActivityMutation";
 import { Activity, ActivityType } from "@/types";
 import { Circle, PlusCircle, Trash2 } from "react-feather";
-import { Button } from "./Button";
 import { Dispatch, SetStateAction, useCallback, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 
@@ -43,8 +42,7 @@ export const ContactActivites = ({
       )}
       <div className="flex justify-between mb-3">
         <div className="text-base md:text-lg lg:text-xl">Activites</div>
-        <Button
-          variant="text"
+        <button
           className="flex items-center space-x-1"
           onClick={() => {
             setIsActivityPageOpen(true);
@@ -53,7 +51,7 @@ export const ContactActivites = ({
         >
           <PlusCircle size={24} />
           <div className="text-sm md:text-base lg:text-lg">Log Activity</div>
-        </Button>
+        </button>
       </div>
       {activities?.map((activity, index) => (
         <div key={`activity-${index}`}>
@@ -75,9 +73,9 @@ export const ContactActivites = ({
                   {activity.title}
                 </div>
                 {activity.type === ActivityType.USER && (
-                  <Button variant="text" onClick={() => handleDelete(activity)}>
+                  <button onClick={() => handleDelete(activity)}>
                     <Trash2 size={24} />
-                  </Button>
+                  </button>
                 )}
               </div>
               <div className="text-sm md:text-base lg:text-lg opacity-[0.7] mb-2">

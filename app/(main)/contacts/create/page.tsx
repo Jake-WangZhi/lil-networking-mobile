@@ -44,17 +44,20 @@ export default function CreatePage() {
       {/* @ts-expect-error Async Server Component */}
       <form action={createContact} className="w-full pt-8">
         <div className="flex items-center justify-between mb-9">
-          <Button variant="text" onClick={() => router.back()}>
+          <button onClick={() => router.back()}>
             <ChevronLeft
               size={36}
               color="#737373"
               className="md:w-11 md:h-11 lg:w-13 lg:h-13"
             />
-          </Button>
+          </button>
           <h1 className="text-xl md:text-2xl lg:text-3xl">Create contact</h1>
-          <Button type="submit" variant="text" className="text-light-blue">
+          <button
+            type="submit"
+            className="text-light-blue text-base md:text-lg lg:text-xl"
+          >
             Save
-          </Button>
+          </button>
         </div>
 
         <div className="mb-4 flex items-center justify-between">
@@ -186,14 +189,13 @@ export default function CreatePage() {
           </div>
         ))}
         <div className="flex justify-end">
-          <Button
-            variant="text"
+          <button
             className="flex space-x-1 mb-5 items-center"
             onClick={handleAddLink}
           >
             <PlusCircle size={20} className="md:w-6 md:h-6 lg:w-8 lg:h-8" />
             <div className="text-sm md:text-base lg:text-lg">Add Link</div>
-          </Button>
+          </button>
         </div>
 
         <div className="mb-20 space-y-2">

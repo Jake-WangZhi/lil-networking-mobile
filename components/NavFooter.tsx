@@ -2,7 +2,6 @@
 
 import { Home, Users, Settings } from "react-feather";
 import { useRouter } from "next/navigation";
-import { Button } from "./Button";
 import { useCurrentPath } from "@/contexts/CurrentPathContext";
 
 interface NavItemProps {
@@ -21,17 +20,16 @@ export const NavFooter = () => {
   };
 
   const NavItem = ({ href, text, Icon }: NavItemProps) => (
-    <Button
-      variant="text"
+    <button
       onClick={() => {
         setCurrentPath(href);
         router.push(href);
       }}
       className={`${isActive(href)}`}
     >
-      <Icon size={20} className="mx-auto" />
-      <div className={`text-xs leading-5`}>{text}</div>
-    </Button>
+      <Icon size={20} className="mx-auto md:w-5 md:h-5 lg:w-6 lg:h-6" />
+      <div className="text-xs leading-5 md:text-sm lg:text-base">{text}</div>
+    </button>
   );
 
   return (

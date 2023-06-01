@@ -18,6 +18,7 @@ export default function SignInPage() {
       </p>
       <div className="flex justify-center">
         <Button
+          variant="primary"
           className="mx-auto"
           onClick={() => signIn("linkedin", { callbackUrl: "/dashboard" })}
         >

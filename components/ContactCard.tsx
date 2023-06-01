@@ -10,8 +10,8 @@ interface Props {
 export const ContactCard = ({ contact }: Props) => {
   return (
     <Ripples color="rgba(255, 255, 255, 0.1)" className="w-full">
-      <div className="w-full bg-white bg-opacity-5 p-4 hover:bg-opacity-[0.08] rounded-lg">
-        <Link href={`/contacts/${contact.id}`}>
+      <Link href={`/contacts/${contact.id}`} className="w-full">
+        <div className="bg-white bg-opacity-5 p-4 hover:bg-opacity-[0.08] rounded-lg">
           <div className="flex justify-between">
             <div className="text-left text-base md:text-xl lg:text-2xl overflow-hidden break-words">
               {contact.name}
@@ -24,8 +24,8 @@ export const ContactCard = ({ contact }: Props) => {
           <p className="text-sm md:text-base lg:text-lg line-clamp-2 overflow-hidden">
             {contact?.activities[0]?.description}
           </p>
-        </Link>
-      </div>
+        </div>
+      </Link>
     </Ripples>
   );
 };

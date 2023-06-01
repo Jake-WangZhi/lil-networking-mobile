@@ -47,9 +47,9 @@ export const ActivityForm = ({
         <div className="text-2xl font-semibold md:text-3xl lg:text-4xl">
           Log New Activity
         </div>
-        <Button variant="text" onClick={() => setIsActivityPageOpen(false)}>
+        <button onClick={() => setIsActivityPageOpen(false)}>
           <X size={32} className="md:w-11 md:h-11 lg:w-13 lg:h-13" />
-        </Button>
+        </button>
       </div>
       <div className="text-sm md:text-base lg:text-lg">Track interactions</div>
       <div>

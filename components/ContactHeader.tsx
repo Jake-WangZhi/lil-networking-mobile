@@ -11,7 +11,6 @@ import {
   Trash2,
   MessageSquare,
 } from "react-feather";
-import { Button } from "./Button";
 import { Contact } from "@/types";
 
 interface Props {
@@ -67,8 +66,7 @@ export const ContactHeader = ({ contact }: Props) => {
         <div className="text-red-500 flex justify-center">{errorMessage}</div>
       )}
       <div className="flex justify-between items-center">
-        <Button
-          variant="text"
+        <button
           className="relative -ml-3"
           onClick={() => router.push(currentPath)}
         >
@@ -77,45 +75,41 @@ export const ContactHeader = ({ contact }: Props) => {
             color="#737373"
             className="md:w-11 md:h-11 lg:w-13 lg:h-13"
           />
-        </Button>
+        </button>
         <div className="relative">
           <div className="flex items-center space-x-5">
             {contact.isArchived && (
               <div className="text-sm md:text-base lg:text-lg">Archived</div>
             )}
-            <Button
-              variant="text"
+            <button
               className="flex items-center"
               onClick={() => setShowDropdown(!showDropdown)}
             >
               <DotsThreeCircleVertical size={24} />
-            </Button>
+            </button>
           </div>
           {showDropdown && (
             <div className="absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-[#3C3C43] divide-opacity-[0.36] rounded-md bg-[#EDEDED] shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
               <div className="py-2">
-                <Button
-                  variant="text"
+                <button
                   onClick={() => {}}
                   className="w-full flex justify-between items-center px-4 py-2 text-black hover:bg-opacity-[0.08]"
                 >
                   <div className="text-base md:text-lg lg:text-xl">Message</div>
                   <MessageSquare size={24} />
-                </Button>
+                </button>
               </div>
               <div className="py-2">
-                <Button
-                  variant="text"
+                <button
                   onClick={() => router.push(`/contacts/${contact.id}/edit`)}
                   className="w-full flex justify-between items-center px-4 py-2 text-black hover:bg-opacity-[0.08]"
                 >
                   <div className="text-base md:text-lg lg:text-xl">Edit</div>
                   <Edit size={24} />
-                </Button>
+                </button>
               </div>
               <div className="py-2">
-                <Button
-                  variant="text"
+                <button
                   onClick={handleStatusChange}
                   className="w-full flex justify-between items-center px-4 py-2 text-black hover:bg-opacity-[0.08]"
                 >
@@ -123,17 +117,16 @@ export const ContactHeader = ({ contact }: Props) => {
                     {contact.isArchived ? "Activate" : "Archive"}
                   </div>
                   <Archive size={24} />
-                </Button>
+                </button>
               </div>
               <div className="py-2">
-                <Button
-                  variant="text"
+                <button
                   onClick={handleDelete}
                   className="w-full flex justify-between items-center px-4 py-2 text-black hover:bg-opacity-[0.08]"
                 >
                   <div className="text-base md:text-lg lg:text-xl">Delete</div>
                   <Trash2 size={24} />
-                </Button>
+                </button>
               </div>
             </div>
           )}
