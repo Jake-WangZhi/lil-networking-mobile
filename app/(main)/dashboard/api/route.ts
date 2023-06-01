@@ -28,6 +28,7 @@ export async function GET(request: Request) {
   const contacts = await prisma.contact.findMany({
     where: {
       userId: user.id,
+      isArchived: false,
     },
   });
 
@@ -37,9 +38,14 @@ export async function GET(request: Request) {
     where: {
       contactId: { in: contactIds },
     },
-    orderBy: {
-      createdAt: "desc",
-    },
+    orderBy: [
+      {
+        date: "desc",
+      },
+      {
+        createdAt: "desc",
+      },
+    ],
     distinct: ["contactId"],
   });
 
@@ -61,13 +67,14 @@ const parseActions = (contacts: Contact[], activities: Activity[]) => {
     const contact = contactIndex[activity.contactId];
 
     if (contact) {
-      const days = calculateDaysSinceCreatedAt(activity.createdAt);
+      const days = calculateDaysSinceCreatedAt(new Date(activity.date));
       const goalDays = contact.goalDays || DEFAUL_REACH_OUT_PERIOD;
 
       const action = {
-        contactName: contact.name,
-        contactCategory: contact.category || "",
-        note: activity.note,
+        contactFirstName: contact.firstName,
+        contactLastName: contact.lastName,
+        contactIndustry: contact.industry || "",
+        description: activity.description,
         days,
         goalDays,
       };

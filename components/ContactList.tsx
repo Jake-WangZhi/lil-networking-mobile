@@ -32,9 +32,11 @@ export const ContactList = ({ contacts, isLoading, isError }: Props) => {
         <div className="text-base md:text-xl lg:text-2xl">{`All Contacts (${contacts?.length})`}</div>
         <Info size={18} opacity={0.7} className="md:w-5 md:h-5 lg:w-6 lg:h-6" />
       </div>
-      {contacts?.map((contact, index) => (
-        <ContactCard key={index} contact={contact} />
-      ))}
+      <div className="space-y-4">
+        {contacts?.map((contact, index) => (
+          <ContactCard key={index} contact={contact} />
+        ))}
+      </div>
     </div>
   );
 };

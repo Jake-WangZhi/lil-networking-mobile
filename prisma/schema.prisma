@@ -14,17 +14,20 @@ model Contact {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  name       String
-  email      String?
-  phone      String?
-  website    String?
-  image      String?
-  User       User       @relation(fields: [userId], references: [id])
-  userId     String
-  category   String?
-  goalDays   Int?
-  interests  String?
+  firstName  String
+  lastName   String
+  title      String
+  company    String
+  industry   String
+  goalDays   Int
+  email      String
+  phone      String
+  links      String[]
+  interests  String[]
   activities Activity[]
+  isArchived Boolean    @default(false)
+  User       User?      @relation(fields: [userId], references: [id])
+  userId     String
 }
 
 model Activity {
@@ -32,10 +35,19 @@ model Activity {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  note String
+  title       String
+  description String
+  date        String
 
-  Contact   Contact @relation(fields: [contactId], references: [id])
+  type ActivityType
+
+  Contact   Contact? @relation(fields: [contactId], references: [id], onDelete: Cascade)
   contactId String
+}
+
+enum ActivityType {
+  USER
+  SYSTEM
 }
 
 model Account {
@@ -52,7 +64,7 @@ model Account {
   id_token          String? @db.Text
   session_state     String?
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user User? @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
 }

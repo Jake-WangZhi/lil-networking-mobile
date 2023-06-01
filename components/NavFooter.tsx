@@ -1,8 +1,8 @@
 "use client";
 
 import { Home, Users, Settings } from "react-feather";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { useCurrentPath } from "@/contexts/CurrentPathContext";
 
 interface NavItemProps {
   href: string;
@@ -11,19 +11,25 @@ interface NavItemProps {
 }
 
 export const NavFooter = () => {
-  const pathname = usePathname();
+  const { currentPath, setCurrentPath } = useCurrentPath();
+
+  const router = useRouter();
 
   const isActive = (path: string) => {
-    return pathname === path ? "text-white" : "text-gray-300";
+    return currentPath === path ? "text-white" : "text-grey-30";
   };
 
   const NavItem = ({ href, text, Icon }: NavItemProps) => (
-    <Link href={href}>
-      <div className={`text-xs flex flex-col items-center ${isActive(href)}`}>
-        <Icon className="w-5 h-5 mx-auto mb-1" />
-        {text}
-      </div>
-    </Link>
+    <button
+      onClick={() => {
+        setCurrentPath(href);
+        router.push(href);
+      }}
+      className={`${isActive(href)}`}
+    >
+      <Icon size={20} className="mx-auto md:w-5 md:h-5 lg:w-6 lg:h-6" />
+      <div className="text-xs leading-5 md:text-sm lg:text-base">{text}</div>
+    </button>
   );
 
   return (

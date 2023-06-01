@@ -16,12 +16,15 @@ export default function SignInPage() {
         Build networking habits & <br />
         reach your goals
       </p>
-      <Button
-        className="mx-auto"
-        onClick={() => signIn("linkedin", { callbackUrl: "/dashboard" })}
-      >
-        Sign in with LinkedIn
-      </Button>
+      <div className="flex justify-center">
+        <Button
+          variant="primary"
+          className="mx-auto"
+          onClick={() => signIn("linkedin", { callbackUrl: "/dashboard" })}
+        >
+          Sign in with LinkedIn
+        </Button>
+      </div>
     </main>
   );
 }

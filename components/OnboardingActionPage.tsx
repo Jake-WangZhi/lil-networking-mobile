@@ -16,8 +16,10 @@ export const OnboardingActionPage = ({
       <h1 className="mb-12 font-semibold text-3xl text-white md:text-5xl">
         {title}
       </h1>
-      {actionButton}
-      {textButton}
+      <div className="flex flex-col items-center space-y-5">
+        {actionButton}
+        {textButton}
+      </div>
     </div>
   );
 };

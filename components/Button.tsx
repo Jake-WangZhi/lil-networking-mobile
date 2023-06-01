@@ -2,9 +2,10 @@
 
 import { classNames } from "@/lib/utils";
 import { MouseEvent, ReactNode } from "react";
+import Ripples from "react-ripples";
 
 type Props = {
-  variant?: "primary" | "secondary" | "text";
+  variant?: "primary" | "secondary";
   children: ReactNode;
   disabled?: boolean;
   onClick?: (event: MouseEvent<HTMLButtonElement>) => void;
@@ -14,10 +15,9 @@ type Props = {
 
 const VARIANTS: Record<string, string> = {
   primary:
-    "text-white bg-light-blue hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-base px-5 py-2.5 text-center w-[200px] md:w-[258px] md:text-lg lg:w-[300px] lg:text-xl disabled:text-white disabled:cursor-not-allowed disabled:bg-gray-400",
+    "text-black bg-light-blue font-medium rounded-full text-base px-5 py-2.5 text-center w-[200px] md:w-[258px] md:text-lg lg:w-[300px] lg:text-xl disabled:text-white disabled:cursor-not-allowed disabled:bg-gray-400",
   secondary:
-    "w-full flex items-center justify-center py-2 bg-transparent border rounded text-tertiary border-tertiary hover:bg-tertiary hover:bg-opacity-5 focus:border-2 active:bg-tertiary active:bg-opacity-5 active:border disabled:text-white disabled:cursor-not-allowed disabled:bg-gray-400",
-  text: "disabled:pointer-events-none disabled:text-opacity-25 text-white text-base md:text-lg lg:text-xl",
+    "bg-white bg-opacity-5 font-medium rounded-full text-sm px-3 py-1.5 text-center w-[84px]",
 };
 
 export const Button = ({
@@ -29,13 +29,18 @@ export const Button = ({
   type = "button",
 }: Props) => {
   return (
-    <button
-      onClick={onClick}
-      disabled={disabled}
-      className={classNames(VARIANTS[variant], className)}
-      type={type}
+    <Ripples
+      color="rgba(255, 255, 255, 0.1)"
+      className="rounded-full overflow-hidden"
     >
-      {children}
-    </button>
+      <button
+        onClick={onClick}
+        disabled={disabled}
+        className={classNames(VARIANTS[variant], className)}
+        type={type}
+      >
+        {children}
+      </button>
+    </Ripples>
   );
 };

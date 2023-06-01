@@ -1,24 +1,24 @@
 import { fetcher } from "@/lib/utils";
-import { Action, Contact } from "@/types";
+import { Contact } from "@/types";
 import { useQuery } from "@tanstack/react-query";
 
 type Args = {
-  email?: string | null;
+  id: string;
 };
 
-export const useContact = ({ email }: Args) => {
+export const useContact = ({ id }: Args) => {
   const {
     isLoading,
-    data: contacts,
+    data: contact,
     isError,
-  } = useQuery<Contact[]>({
-    queryKey: ["contact", email],
-    queryFn: () => fetcher(`/contacts/api?email=${email}`),
-    enabled: !!email,
+  } = useQuery<Contact>({
+    queryKey: ["contact", id],
+    queryFn: () => fetcher(`/contacts/${id}/api`),
+    enabled: !!id,
   });
 
   return {
-    contacts,
+    contact,
     isLoading,
     isError,
   };

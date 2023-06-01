@@ -35,7 +35,7 @@ export const ActionList = ({ actions, isLoading, isError }: Props) => {
       <FoldableComponent
         title={
           <div className="flex items-center space-x-2">
-            <div className="w-1 h-4 border-l-4 border-light-yellow md:border-l-5 md:h-5 lg:border-l-6 lg:h-6"></div>
+            <div className="w-1 h-4 border-l-4 border-magenta md:border-l-5 md:h-5 lg:border-l-6 lg:h-6"></div>
             <h2 className="md:text-xl lg:text-2xl">{`Past Due (${actions?.pastActions?.length})`}</h2>
             <Info
               size={16}
@@ -45,7 +45,7 @@ export const ActionList = ({ actions, isLoading, isError }: Props) => {
           </div>
         }
         content={
-          <>
+          <div className="space-y-4">
             {actions?.pastActions?.map((action, index) => (
               <ActionCard
                 key={index}
@@ -53,13 +53,13 @@ export const ActionList = ({ actions, isLoading, isError }: Props) => {
                 actionType={ActionType.Past}
               />
             ))}
-          </>
+          </div>
         }
       />
       <FoldableComponent
         title={
           <div className="flex items-center space-x-2">
-            <div className="w-1 h-4 border-l-4 border-light-blue md:border-l-5 md:h-5 lg:border-l-6 lg:h-6"></div>
+            <div className="w-1 h-4 border-l-4 border-light-yellow md:border-l-5 md:h-5 lg:border-l-6 lg:h-6"></div>
             <h2 className="md:text-xl lg:text-2xl">{`New Action Items (${actions?.upcomingActions?.length})`}</h2>
             <Info
               size={18}
@@ -69,7 +69,7 @@ export const ActionList = ({ actions, isLoading, isError }: Props) => {
           </div>
         }
         content={
-          <>
+          <div className="space-y-4">
             {actions?.upcomingActions?.map((action, index) => (
               <ActionCard
                 key={index}
@@ -77,7 +77,7 @@ export const ActionList = ({ actions, isLoading, isError }: Props) => {
                 actionType={ActionType.Upcoming}
               />
             ))}
-          </>
+          </div>
         }
       />
     </div>

@@ -1,8 +1,9 @@
 export interface Action {
-  contactName: string;
+  contactFirstName: string;
+  contactLastName: string;
   days: number;
-  contactCategory: string;
-  note: string;
+  contactIndustry: string;
+  description: string;
   goalDays: number;
 }
 
@@ -12,17 +13,31 @@ export enum ActionType {
 }
 
 export interface Contact {
-  name: string;
-  email?: string;
-  phone?: string;
-  website: string;
-  image?: string;
-  category?: string;
-  goalDays?: number;
-  interests?: string;
-  activities?: Array<Activity>;
+  id: string;
+  firstName: string;
+  lastName: string;
+  title: string;
+  company: string;
+  industry: string;
+  goalDays: number;
+  email: string;
+  phone: string;
+  links: string[];
+  interests: string[];
+  activities: Activity[];
+  isArchived: boolean;
 }
 
-interface Activity {
-  note: string;
+export interface Activity {
+  id: string;
+  contactId: string;
+  title: string;
+  description: string;
+  date: string;
+  type: ActivityType;
+}
+
+export enum ActivityType {
+  USER = "USER",
+  SYSTEM = "SYSTEM",
 }
