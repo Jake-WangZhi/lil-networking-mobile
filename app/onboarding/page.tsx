@@ -85,7 +85,11 @@ export default function Page() {
           <OnboardingActionPage
             title="Ready to set a goal?"
             actionButton={
-              <Button variant="primary" onClick={() => {}}>
+              <Button
+                variant="primary"
+                onClick={() => {}}
+                className="w-[163px]"
+              >
                 {"I'm ready"}
               </Button>
             }
