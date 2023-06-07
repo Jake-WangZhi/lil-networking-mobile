@@ -140,7 +140,10 @@ export const ActivityForm = ({
                   name="date"
                   value={date}
                   onChange={(e) => setDate(e.target.value)}
-                  style={{ colorScheme: "dark" }}
+                  style={{
+                    colorScheme: "dark",
+                  }}
+                  className="!text-left"
                 />
               </Grid>
 

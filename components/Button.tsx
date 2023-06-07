@@ -36,6 +36,9 @@ const VARIANTS: Record<string, {}> = {
       cursor: "not-allowed",
       backgroundColor: "gray400",
     },
+    "&:hover": {
+      color: "#0F1A24",
+    },
   },
   outlined: {
     color: "white",
