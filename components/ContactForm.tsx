@@ -25,7 +25,7 @@ export const ContactForm = ({ contact, userEmail }: Props) => {
   const [industry, setIndustry] = useState(contact?.industry);
   const [email, setEmail] = useState(contact?.email);
   const [phone, setPhone] = useState(contact?.phone);
-  const [links, setLinks] = useState<string[]>(contact?.links ?? []);
+  const [links, setLinks] = useState<string[]>(contact?.links ?? [""]);
   const [selectedGoalDays, setSelectedGoalDays] = useState(
     contact?.goalDays ?? 30
   );
