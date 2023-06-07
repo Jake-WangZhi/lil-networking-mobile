@@ -38,8 +38,8 @@ export const ActionCard = ({ action, actionType }: Props) => {
           </Typography>
           <Typography
             variant="body1"
-            className={`font-semibold ${
-              actionType === "past" ? "text-magenta" : "text-light-yellow"
+            className={`!font-semibold ${
+              actionType === "past" ? "!text-magenta" : "!text-light-yellow"
             }`}
           >
             {action.days} Days ago
