@@ -2,6 +2,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { FreeMode } from "swiper";
 import "swiper/css";
 import "swiper/css/free-mode";
+import { Typography } from "@mui/material";
 
 interface Props {
   interests: String[];
@@ -9,9 +10,9 @@ interface Props {
 
 export const ContactInterests = ({ interests }: Props) => {
   return (
-    <div>
-      <div className="text-base md:text-lg lg:text-xl mb-3">Interests</div>
-      <div className="text-base mb-8 rounded-xl">
+    <div className="space-y-3 mb-8">
+      <Typography variant="subtitle1">Interests</Typography>
+      <div className="text-base rounded-xl">
         <Swiper
           slidesPerView={"auto"}
           spaceBetween={8}

@@ -14,61 +14,7 @@ export function getUserByEmail(email: string) {
   });
 }
 
-export async function createContact({
-  firstName,
-  lastName,
-  title,
-  company,
-  industry,
-  goalDays,
-  email,
-  phone,
-  links,
-  interests,
-  userId,
-}: {
-  firstName: string;
-  lastName: string;
-  title: string;
-  company: string;
-  industry: string;
-  goalDays: number;
-  email: string;
-  phone: string;
-  links: string[];
-  interests: string[];
-  userId: string;
-}) {
-  const contact = await prisma.contact.create({
-    data: {
-      firstName,
-      lastName,
-      title,
-      company,
-      industry,
-      goalDays,
-      email,
-      phone,
-      links,
-      interests,
-      userId,
-    },
-  });
-
-  await prisma.activity.create({
-    data: {
-      contactId: contact.id,
-      title: "Contact created",
-      description: "",
-      date: new Date().toISOString().split("T")[0],
-      type: "SYSTEM",
-    },
-  });
-
-  return contact;
-}
-
-export async function updateContact({
+export async function upsertContact({
   id,
   firstName,
   lastName,
@@ -95,9 +41,9 @@ export async function updateContact({
   interests: string[];
   userId: string;
 }) {
-  const contact = await prisma.contact.update({
+  const contact = await prisma.contact.upsert({
     where: { id },
-    data: {
+    create: {
       firstName,
       lastName,
       title,
@@ -110,7 +56,30 @@ export async function updateContact({
       interests,
       userId,
     },
+    update: {
+      firstName,
+      lastName,
+      title,
+      company,
+      industry,
+      goalDays,
+      email,
+      phone,
+      links,
+      interests,
+    },
   });
+
+  if (!id)
+    await prisma.activity.create({
+      data: {
+        contactId: contact.id,
+        title: "Contact created",
+        description: "",
+        date: new Date().toISOString().split("T")[0],
+        type: "SYSTEM",
+      },
+    });
 
   return contact;
 }

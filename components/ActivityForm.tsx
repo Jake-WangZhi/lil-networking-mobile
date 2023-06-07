@@ -1,10 +1,17 @@
-import { Dispatch, SetStateAction, useState, ChangeEvent } from "react";
-import { X, Minus } from "react-feather";
+import {
+  Dispatch,
+  SetStateAction,
+  useState,
+  ChangeEvent,
+  useCallback,
+} from "react";
+import { X, Minus, AlertTriangle } from "react-feather";
 import { Button } from "./Button";
 import { createActivity } from "@/app/_actions";
 import { useSwipeable } from "react-swipeable";
+import { Grid, Typography } from "@mui/material";
 
-const characterLimit = 200;
+const characterLimit = 300;
 
 interface Props {
   isOpen: boolean;
@@ -18,6 +25,11 @@ export const ActivityForm = ({
   contactId,
 }: Props) => {
   const [description, setDescription] = useState("");
+  const [title, setTitle] = useState("");
+  const [date, setDate] = useState("");
+
+  const [titleError, setTitleError] = useState("");
+  const [dateError, setDateError] = useState("");
 
   const handleDescriptionChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     setDescription(event.target.value);
@@ -33,6 +45,25 @@ export const ActivityForm = ({
     trackTouch: true,
   });
 
+  const validateFields = useCallback(() => {
+    let hasError = false;
+
+    setTitleError("");
+    setDateError("");
+
+    if (!title) {
+      setTitleError("Title is required");
+      hasError = true;
+    }
+
+    if (!date) {
+      setDateError("Invalid entry");
+      hasError = true;
+    }
+
+    if (!hasError) document.getElementById("submitActivityForm")?.click();
+  }, [date, title]);
+
   return (
     <div
       className={`bg-dark-blue absolute z-10 inset-0 w-full h-full px-4 transition-transform duration-500 ${
@@ -43,75 +74,132 @@ export const ActivityForm = ({
       <div className="flex justify-center">
         <Minus size={56} />
       </div>
-      <div className="flex justify-between mb-2">
-        <div className="text-2xl font-semibold md:text-3xl lg:text-4xl">
-          Log New Activity
-        </div>
-        <button type="button" onClick={() => setIsActivityPageOpen(false)}>
-          <X size={32} className="md:w-11 md:h-11 lg:w-13 lg:h-13" />
-        </button>
-      </div>
-      <div className="text-sm md:text-base lg:text-lg">Track interactions</div>
-      <div>
-        {/* @ts-expect-error Async Server Component */}
-        <form action={createActivity} className="w-full pt-8">
-          <div className="mb-4 flex items-center justify-between">
-            <label className="block text-base font-medium text-white md:text-lg lg:text-xl">
-              Title
-            </label>
-            <input
-              type="text"
-              id="title"
-              name="title"
-              className="text-base rounded-[4px] block w-[260px] h-8 p-2.5 bg-white bg-opacity-5  placeholder-gray-400 text-white md:text-lg lg:text-xl focus:ring-1 focus:ring-white focus:bg-white focus:bg-opacity-[0.12] focus:outline-none appearance-none caret-white"
-              required
-            />
-          </div>
 
-          <div className="mb-4 flex items-center justify-between">
-            <label className="block text-base font-medium text-white md:text-lg lg:text-xl">
-              Date
-            </label>
-            <input
-              type="date"
-              id="date"
-              name="date"
-              style={{ colorScheme: "dark" }}
-              className="text-base rounded-[4px] w-[260px] h-8 p-2.5 bg-white bg-opacity-5 placeholder-gray-400 text-white md:text-lg lg:text-xl focus:ring-1 focus:ring-white focus:bg-white focus:bg-opacity-[0.12] focus:outline-none appearance-none caret-white"
-              required
-            />
-          </div>
-          <div className="space-y-1">
-            <label className="block text-base font-medium text-white md:text-lg lg:text-xl">
-              Activity Details
-            </label>
+      {/* @ts-expect-error Async Server Component */}
+      <form action={createActivity}>
+        <Grid container spacing={2} alignItems="center">
+          <Grid item xs={10}>
+            <Typography variant="h2">Log New Activity</Typography>
+          </Grid>
+          <Grid item xs={2} className="flex justify-end">
+            <Button
+              variant="text"
+              onClick={() => setIsActivityPageOpen(false)}
+              customStyles={{
+                py: "8px",
+              }}
+            >
+              <X size={32} className="md:w-11 md:h-11 lg:w-13 lg:h-13" />
+            </Button>
+          </Grid>
+          <Grid item xs={12} className="-mt-4">
+            <Typography variant="body1">Track interactions</Typography>
+          </Grid>
+
+          <Grid item xs={12}>
+            <Grid container alignItems="center">
+              <Grid item xs={3}>
+                <Typography variant="subtitle1">Title *</Typography>
+              </Grid>
+              <Grid item xs={9}>
+                <input
+                  type="text"
+                  id="title"
+                  name="title"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                />
+              </Grid>
+
+              <Grid item xs={3} />
+              <Grid item xs={9}>
+                {titleError && (
+                  <div className=" flex items-center space-x-1">
+                    <AlertTriangle
+                      size={16}
+                      fill="#F42010"
+                      color="black"
+                      className="md:w-5 md:h-5 lg:w-6 lg:h-6"
+                    />
+                    <Typography variant="subtitle2">{titleError}</Typography>
+                  </div>
+                )}
+              </Grid>
+            </Grid>
+          </Grid>
+
+          <Grid item xs={12}>
+            <Grid container alignItems="center">
+              <Grid item xs={3}>
+                <Typography variant="subtitle1">Date *</Typography>
+              </Grid>
+              <Grid item xs={9}>
+                <input
+                  type="date"
+                  id="date"
+                  name="date"
+                  value={date}
+                  onChange={(e) => setDate(e.target.value)}
+                  style={{ colorScheme: "dark" }}
+                />
+              </Grid>
+
+              <Grid item xs={3} />
+              <Grid item xs={9}>
+                {dateError && (
+                  <div className=" flex items-center space-x-1">
+                    <AlertTriangle
+                      size={16}
+                      fill="#F42010"
+                      color="black"
+                      className="md:w-5 md:h-5 lg:w-6 lg:h-6"
+                    />
+                    <Typography variant="subtitle2">{dateError}</Typography>
+                  </div>
+                )}
+              </Grid>
+            </Grid>
+          </Grid>
+
+          <Grid item xs={12} className="mt-2">
+            <Typography variant="subtitle1">Activity Details</Typography>
+          </Grid>
+          <Grid item xs={12}>
             <textarea
               id="description"
               name="description"
               value={description}
               onChange={handleDescriptionChange}
+              placeholder="Describe this activity here..."
               maxLength={characterLimit}
-              className="text-base rounded-[4px] block p-2.5 w-full h-56 bg-white bg-opacity-5 placeholder-gray-400 text-white md:text-lg lg:text-xl focus:ring-1 focus:ring-white focus:bg-white focus:bg-opacity-[0.12] focus:outline-none appearance-none caret-white"
+              className="text-base rounded-[4px] block p-2.5 w-full h-56 bg-white bg-opacity-5 placeholder-gray-400 text-white md:text-lg lg:text-xl focus:ring-1 focus:ring-white focus:bg-white focus:bg-opacity-[0.12] outline-none appearance-none caret-white"
             />
-            <div className="text-sm flex justify-end">
+          </Grid>
+          <Grid item xs={12} className="relative -mt-2 flex justify-end">
+            <Typography variant="body1">
               {description.length}/{characterLimit}
-            </div>
-          </div>
+            </Typography>
+          </Grid>
 
-          <input
-            id="contactId"
-            name="contactId"
-            type="hidden"
-            defaultValue={contactId}
-          />
-
-          <div className="flex justify-center mt-8">
-            <Button type="submit" variant="primary" className="!font-normal">
+          <Grid item xs={12} className="flex justify-center mt-2">
+            <Button variant="contained" onClick={validateFields}>
               Log Activity
             </Button>
-          </div>
-        </form>
-      </div>
+          </Grid>
+        </Grid>
+
+        <input
+          id="contactId"
+          name="contactId"
+          type="hidden"
+          defaultValue={contactId}
+        />
+        <button
+          id="submitActivityForm"
+          className="hidden"
+          type="submit"
+        ></button>
+      </form>
     </div>
   );
 };

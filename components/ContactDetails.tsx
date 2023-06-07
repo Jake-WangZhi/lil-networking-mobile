@@ -1,5 +1,4 @@
 import { Contact } from "@/types";
-import { ClipLoader } from "react-spinners";
 import { ContactInfo } from "./ContactInfo";
 import { ContactInterests } from "./ContactInterests";
 import { ContactActivites } from "./ContactActivities";
@@ -16,7 +15,7 @@ export const ContactDetails = ({ contact, setIsActivityPageOpen }: Props) => {
   const { interests, activities } = contact;
 
   return (
-    <div className="mb-20">
+    <div>
       <ContactInfo contact={contact} />
       {interests.length !== 0 && <ContactInterests interests={interests} />}
       <ContactActivites

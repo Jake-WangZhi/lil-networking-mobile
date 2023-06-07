@@ -1,8 +1,8 @@
-import FoldableComponent from "./FoldableComponent";
+import { FoldableComponent } from "./FoldableComponent";
 import { Action, ActionType } from "@/types";
 import { ClipLoader } from "react-spinners";
 import { ActionCard } from "./ActionCard";
-import { Info } from "react-feather";
+import { Typography } from "@mui/material";
 
 interface Props {
   actions?: {
@@ -16,9 +16,12 @@ interface Props {
 export const ActionList = ({ actions, isLoading, isError }: Props) => {
   if (isError) {
     return (
-      <div className="flex items-center justify-center text-base text-red-400 mt-5 md:text-lg lg:text-xl">
+      <Typography
+        variant="h2"
+        className="flex items-center justify-center p-8 !text-error"
+      >
         Something went wrong, please try again later
-      </div>
+      </Typography>
     );
   }
 
@@ -30,23 +33,32 @@ export const ActionList = ({ actions, isLoading, isError }: Props) => {
     );
   }
 
+  if (!actions) {
+    return (
+      <Typography
+        variant="h2"
+        className="flex items-center justify-center p-8 !text-error"
+      >
+        No actions available
+      </Typography>
+    );
+  }
+
   return (
     <div className="w-full mb-20 mt-5">
       <FoldableComponent
         title={
           <div className="flex items-center space-x-2">
             <div className="w-1 h-4 border-l-4 border-magenta md:border-l-5 md:h-5 lg:border-l-6 lg:h-6"></div>
-            <h2 className="md:text-xl lg:text-2xl">{`Past Due (${actions?.pastActions?.length})`}</h2>
-            <Info
-              size={16}
-              opacity={0.7}
-              className="md:w-5 md:h-5 lg:w-6 lg:h-6"
-            />
+            <Typography
+              variant="subtitle1"
+              className="font-semibold"
+            >{`Past Due (${actions.pastActions.length})`}</Typography>
           </div>
         }
         content={
           <div className="space-y-4">
-            {actions?.pastActions?.map((action, index) => (
+            {actions.pastActions?.map((action, index) => (
               <ActionCard
                 key={index}
                 action={action}
@@ -60,17 +72,15 @@ export const ActionList = ({ actions, isLoading, isError }: Props) => {
         title={
           <div className="flex items-center space-x-2">
             <div className="w-1 h-4 border-l-4 border-light-yellow md:border-l-5 md:h-5 lg:border-l-6 lg:h-6"></div>
-            <h2 className="md:text-xl lg:text-2xl">{`New Action Items (${actions?.upcomingActions?.length})`}</h2>
-            <Info
-              size={18}
-              opacity={0.7}
-              className="md:w-5 md:h-5 lg:w-6 lg:h-6"
-            />
+            <Typography
+              variant="subtitle1"
+              className="font-semibold"
+            >{`New Action Items (${actions.upcomingActions?.length})`}</Typography>
           </div>
         }
         content={
           <div className="space-y-4">
-            {actions?.upcomingActions?.map((action, index) => (
+            {actions.upcomingActions?.map((action, index) => (
               <ActionCard
                 key={index}
                 action={action}

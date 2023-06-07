@@ -26,50 +26,7 @@ interface FormData {
   get(name: keyof FormDataOptions): string;
 }
 
-export async function createContact(formData: FormData) {
-  const userEmail = formData.get("userEmail");
-
-  const firstName = formData.get("firstName");
-  const lastName = formData.get("lastName");
-  const title = formData.get("title");
-  const company = formData.get("company");
-  const industry = formData.get("industry");
-  const goalDays = Number(formData.get("goalDays"));
-  const email = formData.get("email");
-  const phone = formData.get("phone");
-  const links = formData
-    .get("links")
-    .split(",")
-    .filter((link) => link !== "");
-  const interests = formData
-    .get("interests")
-    .split(",")
-    .filter((link) => link !== "");
-
-  const user = await db.getUserByEmail(userEmail);
-  if (!user) throw new Error("User not found");
-
-  if (email) validateEmail(email);
-  if (phone) validatePhone(phone);
-
-  const contact = await db.createContact({
-    firstName,
-    lastName,
-    title,
-    company,
-    industry,
-    goalDays,
-    email,
-    phone,
-    links,
-    interests,
-    userId: user.id,
-  });
-
-  redirect(`/contacts/${contact.id}`);
-}
-
-export async function updateContact(formData: FormData) {
+export async function upsertContact(formData: FormData) {
   const userEmail = formData.get("userEmail");
 
   const id = formData.get("id");
@@ -96,7 +53,7 @@ export async function updateContact(formData: FormData) {
   if (email) validateEmail(email);
   if (phone) validatePhone(phone);
 
-  const contact = await db.updateContact({
+  const contact = await db.upsertContact({
     id,
     firstName,
     lastName,

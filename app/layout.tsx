@@ -3,7 +3,7 @@ import "@fontsource/metropolis";
 import { Session } from "next-auth";
 import { headers } from "next/headers";
 import AuthContext from "./AuthContext";
-import Provider from "@/app/provider";
+import { QCProvider, MuiCssProvider } from "@/app/provider";
 
 export const metadata = {
   title: "Lil Networking",
@@ -35,9 +35,11 @@ export default async function RootLayout({
         <link rel="manifest" href="/manifest.json" />
       </head>
       <body className="font-sans bg-dark-blue mx-auto max-w-lg md:max-w-xl lg:max-w-3xl">
-        <Provider>
-          <AuthContext session={session}>{children}</AuthContext>
-        </Provider>
+        <QCProvider>
+          <MuiCssProvider>
+            <AuthContext session={session}>{children}</AuthContext>
+          </MuiCssProvider>
+        </QCProvider>
       </body>
     </html>
   );

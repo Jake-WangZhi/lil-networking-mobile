@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import React from "react";
 import { useState } from "react";
 
-export default function DashboardLayout({
+export default function MainLayout({
   children,
 }: {
   children: React.ReactNode;

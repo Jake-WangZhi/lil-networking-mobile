@@ -1,43 +1,96 @@
 "use client";
 
 import { Home, Users, Settings } from "react-feather";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useCurrentPath } from "@/contexts/CurrentPathContext";
-
-interface NavItemProps {
-  href: string;
-  text: string;
-  Icon: React.ComponentType<any>;
-}
+import { BottomNavigation, BottomNavigationAction, Paper } from "@mui/material";
+import { useState } from "react";
 
 export const NavFooter = () => {
   const { currentPath, setCurrentPath } = useCurrentPath();
-
+  const [value, setValue] = useState(currentPath);
   const router = useRouter();
+  const pathname = usePathname();
 
-  const isActive = (path: string) => {
-    return currentPath === path ? "text-white" : "text-grey-30";
-  };
-
-  const NavItem = ({ href, text, Icon }: NavItemProps) => (
-    <button
-      type="button"
-      onClick={() => {
-        setCurrentPath(href);
-        router.push(href);
-      }}
-      className={`${isActive(href)}`}
-    >
-      <Icon size={20} className="mx-auto md:w-5 md:h-5 lg:w-6 lg:h-6" />
-      <div className="text-xs leading-5 md:text-sm lg:text-base">{text}</div>
-    </button>
-  );
+  const shouldShowFooter =
+    pathname !== "/contacts/create" &&
+    !pathname?.match(/^\/contacts\/.*\/edit$/);
 
   return (
-    <div className="fixed left-1/2 transform -translate-x-1/2 bottom-0 max-w-lg bg-dark-blue p-4 text-center flex justify-between md:max-w-xl lg:max-w-3xl w-full">
-      <NavItem href="/dashboard" text="Dashboard" Icon={Home} />
-      <NavItem href="/contacts" text="Contacts" Icon={Users} />
-      <NavItem href="/settings" text="Settings" Icon={Settings} />
-    </div>
+    <>
+      {shouldShowFooter && (
+        <Paper
+          sx={{
+            position: "fixed",
+            bottom: 0,
+            left: 0,
+            right: 0,
+            backgroundColor: "transparent",
+          }}
+          elevation={3}
+        >
+          <BottomNavigation
+            showLabels
+            value={value}
+            onChange={(event, newValue) => {
+              setValue(newValue);
+              setCurrentPath(newValue);
+              router.push(newValue);
+            }}
+            sx={{
+              backgroundColor: "#0F1A24",
+              margin: "auto",
+              justifyContent: "space-between",
+              "& .MuiBottomNavigationAction-root.Mui-selected": {
+                color: "white",
+              },
+              "@media (min-width: 768px)": {
+                maxWidth: "576px",
+              },
+              "@media (min-width: 1024px)": {
+                maxWidth: "768px",
+              },
+            }}
+          >
+            <BottomNavigationAction
+              label="Dashboard"
+              icon={<Home />}
+              value={"/dashboard"}
+              sx={{
+                color: "#C5C6C7",
+                padding: 0,
+                "& .MuiBottomNavigationAction-label": {
+                  fontSize: "11px !important",
+                },
+              }}
+            />
+            <BottomNavigationAction
+              label="Contacts"
+              icon={<Users />}
+              value={"/contacts"}
+              sx={{
+                color: "#C5C6C7",
+                mx: "48px",
+                "& .MuiBottomNavigationAction-label": {
+                  fontSize: "11px !important",
+                },
+              }}
+            />
+            <BottomNavigationAction
+              label="Settings"
+              icon={<Settings />}
+              value={"/settings"}
+              sx={{
+                color: "#C5C6C7",
+                padding: 0,
+                "& .MuiBottomNavigationAction-label": {
+                  fontSize: "11px !important",
+                },
+              }}
+            />
+          </BottomNavigation>
+        </Paper>
+      )}
+    </>
   );
 };

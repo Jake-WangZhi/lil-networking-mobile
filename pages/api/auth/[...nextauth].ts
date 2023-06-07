@@ -1,4 +1,4 @@
-import NextAuth, { AuthOptions, User } from "next-auth";
+import NextAuth, { AuthOptions } from "next-auth";
 import LinkedInProvider from "next-auth/providers/linkedin";
 import prisma from "@/lib/prisma";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";

@@ -1,7 +1,7 @@
 import { Link, Mail, Phone } from "react-feather";
-
 import { Contact } from "@/types";
 import { formatPhoneNumber } from "@/lib/utils";
+import { Typography } from "@mui/material";
 
 interface Props {
   contact: Contact;
@@ -21,22 +21,25 @@ export const ContactInfo = ({ contact }: Props) => {
   } = contact;
 
   return (
-    <div className="bg-white bg-opacity-5 w-full p-4 space-y-1 text-base mb-6 rounded-lg overflow-hidden break-words">
-      <div className="text-2xl leading-6 font-semibold md:text-3xl lg:text-4xl">
+    <div className="bg-white bg-opacity-5 w-full p-4 space-y-2 text-base mb-6 rounded-lg overflow-hidden break-words">
+      <Typography variant="h2">
         {firstName} {lastName}
-      </div>
-      <div className="text-base md:text-lg lg:text-xl">{title}</div>
-      <div className="text-base md:text-lg lg:text-xl">{company}</div>
-      <div className="text-base md:text-lg lg:text-xl">{industry}</div>
+      </Typography>
+      <Typography variant="subtitle1">{title}</Typography>
+      <Typography variant="subtitle1">{company}</Typography>
+      <Typography variant="subtitle1">{industry}</Typography>
       {email && (
         <div className="flex space-x-1">
           <Mail
             size={16}
             className="md:w-5 md:h-5 lg:w-6 lg:h-6 flex-shrink-0 mt-1"
           />
-          <div className="text-base md:text-lg lg:text-xl overflow-hidden break-words">
+          <Typography
+            variant="subtitle1"
+            className="overflow-hidden break-words"
+          >
             {email}
-          </div>
+          </Typography>
         </div>
       )}
       {phone && (
@@ -45,9 +48,12 @@ export const ContactInfo = ({ contact }: Props) => {
             size={16}
             className="md:w-5 md:h-5 lg:w-6 lg:h-6 flex-shrink-0 mt-1"
           />
-          <div className="text-base md:text-lg lg:text-xl overflow-hidden break-words">
+          <Typography
+            variant="subtitle1"
+            className="overflow-hidden break-words"
+          >
             {formatPhoneNumber(phone)}
-          </div>
+          </Typography>
         </div>
       )}
       {links?.map((link, index) => (
@@ -56,14 +62,17 @@ export const ContactInfo = ({ contact }: Props) => {
             size={16}
             className="md:w-5 md:h-5 lg:w-6 lg:h-6 flex-shrink-0 mt-1"
           />
-          <div className="text-base md:text-lg lg:text-xl overflow-hidden break-words">
+          <Typography
+            variant="subtitle1"
+            className="overflow-hidden break-words"
+          >
             {link}
-          </div>
+          </Typography>
         </div>
       ))}
-      <div className="text-base md:text-lg lg:text-xl">
-        Goal: Every {goalDays} days
-      </div>
+      <Typography variant="subtitle1">
+        Cadence: Every {goalDays} days
+      </Typography>{" "}
     </div>
   );
 };

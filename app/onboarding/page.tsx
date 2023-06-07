@@ -14,7 +14,7 @@ import "./styles.css";
 
 import { Button } from "@/components/Button";
 import { ReactNode } from "react";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const ONBOARDING_INTRO_PAGES = [
   {
@@ -39,26 +39,48 @@ const ONBOARDING_INTRO_PAGES = [
 
 const SwiperButtonNext = ({ children }: { children: ReactNode }) => {
   const swiper = useSwiper();
+
   return (
-    <button
-      type="button"
+    <Button
+      variant="text"
       onClick={() => swiper.slideNext()}
-      className="text-white text-sm md:text-base lg:text-lg"
+      customStyles={{
+        width: "172px",
+        height: "48px",
+        py: "12px",
+      }}
     >
       {children}
-    </button>
+    </Button>
   );
 };
 
 export default function Page() {
+  const router = useRouter();
+
   return (
     <main className="relative min-h-screen">
-      <Link
-        href={"/dashboard"}
-        className="absolute right-4 top-4 z-10 text-white text-xl md:text-2xl"
+      <Button
+        variant="text"
+        onClick={() => router.push("/dashboard")}
+        customStyles={{
+          position: "absolute",
+          top: "16px",
+          right: "16px",
+          zIndex: "10",
+          color: "white",
+          fontSize: "19px",
+          fontWeight: 400,
+          "@media (min-width: 768px)": {
+            fontSize: "22px",
+          },
+          "@media (min-width: 1024px)": {
+            fontSize: "24px",
+          },
+        }}
       >
         Skip
-      </Link>
+      </Button>
       <Swiper pagination={{ clickable: true }} modules={[Pagination]}>
         {ONBOARDING_INTRO_PAGES.map((page, index) => (
           <SwiperSlide key={index}>
@@ -74,7 +96,7 @@ export default function Page() {
           <OnboardingActionPage
             title="Stay Informed"
             actionButton={
-              <Button variant="primary" onClick={() => {}}>
+              <Button variant="contained" onClick={() => {}}>
                 Allow notifications
               </Button>
             }
@@ -86,20 +108,25 @@ export default function Page() {
             title="Ready to set a goal?"
             actionButton={
               <Button
-                variant="primary"
+                variant="contained"
                 onClick={() => {}}
-                className="w-[163px]"
+                customStyles={{ width: "172px" }}
               >
                 {"I'm ready"}
               </Button>
             }
             textButton={
-              <Link
-                href={"/dashboard"}
-                className="text-white text-sm md:text-base lg:text-lg"
+              <Button
+                variant="text"
+                onClick={() => router.push("/dashboard")}
+                customStyles={{
+                  width: "172px",
+                  height: "48px",
+                  py: "12px",
+                }}
               >
                 Go to Dashboard
-              </Link>
+              </Button>
             }
           />
         </SwiperSlide>

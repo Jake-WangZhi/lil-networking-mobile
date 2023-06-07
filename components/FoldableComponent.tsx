@@ -9,7 +9,7 @@ interface Props {
   content: ReactNode;
 }
 
-const FoldableComponent = ({ title, content }: Props) => {
+export const FoldableComponent = ({ title, content }: Props) => {
   const [isFolded, setIsFolded] = useState(false);
 
   const toggleFold = () => {
@@ -17,8 +17,8 @@ const FoldableComponent = ({ title, content }: Props) => {
   };
 
   return (
-    <div className="mb-8">
-      <div className="flex justify-between">
+    <div className="mb-6">
+      <div className="flex justify-between py-3">
         {title}
         <button type="button" onClick={toggleFold} className="text-white">
           {isFolded ? (
@@ -28,9 +28,7 @@ const FoldableComponent = ({ title, content }: Props) => {
           )}
         </button>
       </div>
-      {!isFolded && <div className="mt-4">{content}</div>}
+      {!isFolded && <div className="mt-2">{content}</div>}
     </div>
   );
 };
-
-export default FoldableComponent;

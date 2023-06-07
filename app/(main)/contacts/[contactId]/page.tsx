@@ -6,6 +6,8 @@ import { ActivityForm } from "@/components/ActivityForm";
 import { useState } from "react";
 import { ClipLoader } from "react-spinners";
 import { ContactHeader } from "@/components/ContactHeader";
+import "../styles.css";
+import { Typography } from "@mui/material";
 
 export default function ContactPage({
   params,
@@ -20,9 +22,12 @@ export default function ContactPage({
 
   if (isError) {
     return (
-      <div className="min-h-screen flex items-center justify-center pt-8 text-base text-red-400 md:text-lg lg:text-xl">
+      <Typography
+        variant="h2"
+        className="min-h-screen flex items-center justify-center p-8 !text-error"
+      >
         Something went wrong, please try again later
-      </div>
+      </Typography>
     );
   }
 
@@ -35,11 +40,18 @@ export default function ContactPage({
   }
 
   if (!contact) {
-    return <p className="text-2xl font-semibold">No contact available</p>;
+    return (
+      <Typography
+        variant="h2"
+        className="min-h-screen flex items-center justify-center p-8"
+      >
+        No contact available
+      </Typography>
+    );
   }
 
   return (
-    <main className="relative min-h-screen text-white px-4 overflow-hidden">
+    <main className="relative min-h-screen text-white px-4 pt-8 pb-20 overflow-hidden">
       <ContactHeader contact={contact} />
       <ContactDetails
         contact={contact}

@@ -1,7 +1,7 @@
 import { Contact } from "@/types";
 import { ArrowRight } from "react-feather";
 import Link from "next/link";
-import Ripples from "react-ripples";
+import { Card, CardActionArea, CardContent, Typography } from "@mui/material";
 
 interface Props {
   contact: Contact;
@@ -9,26 +9,41 @@ interface Props {
 
 export const ContactCard = ({ contact }: Props) => {
   return (
-    <Ripples
-      color="rgba(255, 255, 255, 0.1)"
-      className="w-full rounded-lg overflow-hidden"
+    <Card
+      sx={{
+        backgroundColor: "rgba(255, 255, 255, 0.05)",
+        borderRadius: "8px",
+      }}
     >
-      <Link href={`/contacts/${contact.id}`} className="w-full">
-        <div className="bg-white bg-opacity-5 p-4 hover:bg-opacity-[0.08] rounded-lg">
-          <div className="flex justify-between">
-            <div className="text-left text-base md:text-xl lg:text-2xl overflow-hidden break-words">
-              {contact.firstName} {contact.lastName}
+      <CardActionArea>
+        <CardContent>
+          <Link href={`/contacts/${contact.id}`}>
+            <div className="flex justify-between text-white">
+              <Typography
+                variant="subtitle1"
+                className="font-semibold overflow-hidden break-words"
+              >
+                {contact.firstName} {contact.lastName}
+              </Typography>
+              <ArrowRight className="md:w-6 md:h-6 lg:w-8 lg:h-8 flex-shrink-0" />
             </div>
-            <ArrowRight className="md:w-6 md:h-6 lg:w-8 lg:h-8 flex-shrink-0" />
-          </div>
-          <div className="flex justify-start text-sm font-normal text-white text-opacity-70 mb-2 md:text-base lg:text-lg overflow-hidden break-words">
-            {`${contact?.industry}${contact?.isArchived ? " • Archived" : ""}`}
-          </div>
-          <p className="text-sm md:text-base lg:text-lg line-clamp-2 overflow-hidden">
-            {contact?.activities[0]?.description}
-          </p>
-        </div>
-      </Link>
-    </Ripples>
+            <Typography
+              variant="body1"
+              className="text-white text-opacity-70 overflow-hidden break-words"
+            >
+              {`${contact?.industry}${
+                contact?.isArchived ? " • Archived" : ""
+              }`}
+            </Typography>
+            <Typography
+              variant="body1"
+              className="line-clamp-2 overflow-hidden"
+            >
+              {contact?.activities[0]?.description}
+            </Typography>
+          </Link>
+        </CardContent>
+      </CardActionArea>
+    </Card>
   );
 };

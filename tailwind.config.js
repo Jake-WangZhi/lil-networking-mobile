@@ -28,6 +28,7 @@ module.exports = {
         grey: "#EBEBF5",
         "grey-30": "#C5C6C7",
         magenta: "#ED3293",
+        error: "#F42010",
       },
       screens: {
         xs: "400px",

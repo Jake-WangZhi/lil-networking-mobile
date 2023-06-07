@@ -12,6 +12,9 @@ import {
   MessageSquare,
 } from "react-feather";
 import { Contact } from "@/types";
+import { Typography } from "@mui/material";
+import { Button } from "./Button";
+import { AlertDialog } from "./AlertDialog";
 
 interface Props {
   contact: Contact;
@@ -23,6 +26,9 @@ export const ContactHeader = ({ contact }: Props) => {
   const queryClient = useQueryClient();
   const [showDropdown, setShowDropdown] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [isAlertOpen, setIsAlertOpen] = useState(false);
+  const [action, setAction] = useState<"delete" | "archive">();
+  const [alertDescription, setAlertDescription] = useState("");
 
   const deleteContactMutation = useContactMutation({
     method: "DELETE",
@@ -49,98 +55,205 @@ export const ContactHeader = ({ contact }: Props) => {
   });
 
   const handleDelete = useCallback(() => {
-    deleteContactMutation.mutate({ ...contact, id: contact.id });
-  }, [deleteContactMutation, contact]);
-
-  const handleStatusChange = useCallback(() => {
-    updateContactMutation.mutate({
-      ...contact,
-      isArchived: !contact.isArchived,
-    });
     setShowDropdown(false);
-  }, [contact, updateContactMutation]);
+    setAction("delete");
+    setAlertDescription(
+      "Deleting this contact will remove them from the app. This contact will need to be reentered."
+    );
+    setIsAlertOpen(true);
+  }, []);
+
+  const handleStatusChange = useCallback(
+    (isActive: boolean) => {
+      setShowDropdown(false);
+      if (isActive) {
+        setAction("archive");
+        setAlertDescription(
+          "Archiving this contact will remove them the dashboard."
+        );
+        setIsAlertOpen(true);
+      } else {
+        updateContactMutation.mutate({
+          ...contact,
+          isArchived: !contact.isArchived,
+        });
+      }
+    },
+    [contact, updateContactMutation]
+  );
+
+  const handleClick = useCallback(() => {
+    if (action === "delete") {
+      deleteContactMutation.mutate({ ...contact, id: contact.id });
+    } else if (action === "archive") {
+      updateContactMutation.mutate({
+        ...contact,
+        isArchived: !contact.isArchived,
+      });
+    }
+    setIsAlertOpen(false);
+  }, [action, contact, deleteContactMutation, updateContactMutation]);
 
   return (
-    <div className="pt-8 mb-4">
+    <div className="mb-2">
       {errorMessage && (
-        <div className="text-red-500 flex justify-center">{errorMessage}</div>
+        <Typography variant="subtitle2" className="flex justify-center">
+          {errorMessage}
+        </Typography>
       )}
       <div className="flex justify-between items-center">
-        <button
-          type="button"
-          className="relative -ml-3"
+        <Button
+          variant="text"
           onClick={() => router.push(currentPath)}
+          customStyles={{ py: "6px" }}
         >
           <ChevronLeft
             size={36}
             color="#737373"
             className="md:w-11 md:h-11 lg:w-13 lg:h-13"
           />
-        </button>
+        </Button>
         <div className="relative">
           <div className="flex items-center space-x-5">
             {contact.isArchived && (
-              <div className="text-sm md:text-base lg:text-lg">Archived</div>
+              <Typography variant="body1">Archived</Typography>
             )}
-            <button
-              type="button"
-              className="flex items-center"
+            <Button
+              variant="text"
+              customStyles={{ display: "flex", alignItems: "center" }}
               onClick={() => setShowDropdown(!showDropdown)}
             >
               <DotsThreeCircleVertical
                 size={24}
                 className="md:w-7 md:h-7 lg:w-8 lg:h-8"
               />
-            </button>
+            </Button>
           </div>
           {showDropdown && (
             <div className="absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-[#3C3C43] divide-opacity-[0.36] rounded-md bg-[#EDEDED] shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
               <div className="py-2">
-                <button
-                  type="button"
+                <Button
                   onClick={() => {}}
-                  className="w-full flex justify-between items-center px-4 py-2 text-black hover:bg-opacity-[0.08]"
+                  variant="text"
+                  customStyles={{
+                    width: "100%",
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    px: "16px",
+                    py: "8px",
+                    color: "black",
+                    "&:hover": {
+                      backgroundColor: "rgba(0, 0, 0, 0.08)",
+                    },
+                  }}
                 >
-                  <div className="text-base md:text-lg lg:text-xl">Message</div>
+                  <Typography variant="subtitle1" className="!text-black">
+                    Message
+                  </Typography>
                   <MessageSquare size={24} />
-                </button>
+                </Button>
               </div>
               <div className="py-2">
-                <button
-                  type="button"
+                <Button
                   onClick={() => router.push(`/contacts/${contact.id}/edit`)}
-                  className="w-full flex justify-between items-center px-4 py-2 text-black hover:bg-opacity-[0.08]"
+                  variant="text"
+                  customStyles={{
+                    width: "100%",
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    px: "16px",
+                    py: "8px",
+                    color: "black",
+                    "&:hover": {
+                      backgroundColor: "rgba(0, 0, 0, 0.08)",
+                    },
+                  }}
                 >
-                  <div className="text-base md:text-lg lg:text-xl">Edit</div>
+                  <Typography variant="subtitle1" className="!text-black">
+                    Edit
+                  </Typography>
                   <Edit size={24} />
-                </button>
+                </Button>
               </div>
               <div className="py-2">
-                <button
-                  type="button"
-                  onClick={handleStatusChange}
-                  className="w-full flex justify-between items-center px-4 py-2 text-black hover:bg-opacity-[0.08]"
+                <Button
+                  onClick={() => handleStatusChange(!contact.isArchived)}
+                  variant="text"
+                  customStyles={{
+                    width: "100%",
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    px: "16px",
+                    py: "8px",
+                    color: "black",
+                    "&:hover": {
+                      backgroundColor: "rgba(0, 0, 0, 0.08)",
+                    },
+                  }}
                 >
-                  <div className="text-base md:text-lg lg:text-xl">
+                  <Typography variant="subtitle1" className="!text-black">
                     {contact.isArchived ? "Activate" : "Archive"}
-                  </div>
+                  </Typography>
                   <Archive size={24} />
-                </button>
+                </Button>
               </div>
               <div className="py-2">
-                <button
-                  type="button"
+                <Button
                   onClick={handleDelete}
-                  className="w-full flex justify-between items-center px-4 py-2 text-black hover:bg-opacity-[0.08]"
+                  variant="text"
+                  customStyles={{
+                    width: "100%",
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    px: "16px",
+                    py: "8px",
+                    color: "black",
+                    "&:hover": {
+                      backgroundColor: "rgba(0, 0, 0, 0.08)",
+                    },
+                  }}
                 >
-                  <div className="text-base md:text-lg lg:text-xl">Delete</div>
+                  <Typography variant="subtitle1" className="!text-black">
+                    Delete
+                  </Typography>
                   <Trash2 size={24} />
-                </button>
+                </Button>
               </div>
             </div>
           )}
         </div>
       </div>
+      <AlertDialog
+        isOpen={isAlertOpen}
+        setIsOpen={setIsAlertOpen}
+        title={`Are you sure to you want to ${action} this contact?`}
+        description={alertDescription}
+        actionButton={
+          <Button
+            variant="contained"
+            onClick={handleClick}
+            customStyles={{
+              zIndex: 10,
+              width: "221px",
+              ...(action === "delete"
+                ? {
+                    color: "white !important",
+                    backgroundColor: "#F42010 !important",
+                  }
+                : {
+                    color: "#0F1A24 !important",
+                    backgroundColor: "#38ACE2 !important",
+                  }),
+            }}
+          >
+            {action === "delete" ? "Delete" : "Allow"}
+          </Button>
+        }
+      />
     </div>
   );
 };
