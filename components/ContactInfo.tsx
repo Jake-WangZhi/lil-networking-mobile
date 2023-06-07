@@ -36,7 +36,10 @@ export const ContactInfo = ({ contact }: Props) => {
           />
           <Typography
             variant="subtitle1"
-            className="overflow-hidden break-words"
+            sx={{
+              overflow: "hidden",
+              overflowWrap: "break-words",
+            }}
           >
             {email}
           </Typography>
@@ -50,7 +53,10 @@ export const ContactInfo = ({ contact }: Props) => {
           />
           <Typography
             variant="subtitle1"
-            className="overflow-hidden break-words"
+            sx={{
+              overflow: "hidden",
+              overflowWrap: "break-words",
+            }}
           >
             {formatPhoneNumber(phone)}
           </Typography>
@@ -64,7 +70,10 @@ export const ContactInfo = ({ contact }: Props) => {
           />
           <Typography
             variant="subtitle1"
-            className="overflow-hidden break-words"
+            sx={{
+              overflow: "hidden",
+              overflowWrap: "break-words",
+            }}
           >
             {link}
           </Typography>
@@ -72,7 +81,7 @@ export const ContactInfo = ({ contact }: Props) => {
       ))}
       <Typography variant="subtitle1">
         Cadence: Every {goalDays} days
-      </Typography>{" "}
+      </Typography>
     </div>
   );
 };

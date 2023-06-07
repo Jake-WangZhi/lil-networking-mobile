@@ -103,7 +103,14 @@ export const ContactForm = ({ contact, userEmail }: Props) => {
       {/* @ts-expect-error Async Server Component */}
       <form action={upsertContact}>
         <Grid container spacing={2} alignItems="center">
-          <Grid item xs={2} className="flex justify-start">
+          <Grid
+            item
+            xs={2}
+            sx={{
+              display: "flex",
+              justifyContent: "flex-start",
+            }}
+          >
             <Button
               variant="text"
               onClick={() => router.back()}
@@ -117,7 +124,12 @@ export const ContactForm = ({ contact, userEmail }: Props) => {
             </Button>
           </Grid>
           <Grid item xs={8} className="flex justify-center">
-            <Typography variant="h3" className="font-semibold">
+            <Typography
+              variant="h3"
+              sx={{
+                fontWeight: 600,
+              }}
+            >
               {contact ? "Edit contact" : "Create contact"}
             </Typography>
           </Grid>
@@ -272,7 +284,14 @@ export const ContactForm = ({ contact, userEmail }: Props) => {
           <Grid item xs={3}>
             <Typography variant="subtitle1">Cadence *</Typography>
           </Grid>
-          <Grid item xs={9} className="flex justify-between">
+          <Grid
+            item
+            xs={9}
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+            }}
+          >
             <Button
               variant="outlined"
               customStyles={{
@@ -405,7 +424,15 @@ export const ContactForm = ({ contact, userEmail }: Props) => {
             </Button>
           </Grid>
 
-          <Grid item xs={12} className="mt-2 relative -mb-2">
+          <Grid
+            item
+            xs={12}
+            sx={{
+              marginTop: "8px",
+              position: "relative",
+              marginBottom: "-8px",
+            }}
+          >
             <Typography variant="subtitle1">Interests</Typography>
           </Grid>
 

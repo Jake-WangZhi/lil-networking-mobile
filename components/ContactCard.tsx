@@ -21,7 +21,11 @@ export const ContactCard = ({ contact }: Props) => {
             <div className="flex justify-between text-white">
               <Typography
                 variant="subtitle1"
-                className="font-semibold overflow-hidden break-words"
+                sx={{
+                  fontWeight: 600,
+                  overflow: "hidden",
+                  overflowWrap: "break-word",
+                }}
               >
                 {contact.firstName} {contact.lastName}
               </Typography>
@@ -29,7 +33,11 @@ export const ContactCard = ({ contact }: Props) => {
             </div>
             <Typography
               variant="body1"
-              className="text-white text-opacity-70 overflow-hidden break-words"
+              sx={{
+                opacity: 0.7,
+                overflow: "hidden",
+                overflowWrap: "break-word",
+              }}
             >
               {`${contact?.industry}${
                 contact?.isArchived ? " • Archived" : ""
@@ -37,7 +45,12 @@ export const ContactCard = ({ contact }: Props) => {
             </Typography>
             <Typography
               variant="body1"
-              className="line-clamp-2 overflow-hidden"
+              sx={{
+                overflow: "hidden",
+                display: "-webkit-box",
+                WebkitBoxOrient: "vertical",
+                WebkitLineClamp: 2,
+              }}
             >
               {contact?.activities[0]?.description}
             </Typography>

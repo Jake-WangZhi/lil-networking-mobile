@@ -14,7 +14,13 @@ export const ContactList = ({ contacts, isLoading, isError }: Props) => {
     return (
       <Typography
         variant="h2"
-        className="flex items-center justify-center p-8 !text-error"
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          padding: "32px",
+          color: "#F42010",
+        }}
       >
         Something went wrong, please try again later
       </Typography>
@@ -33,7 +39,13 @@ export const ContactList = ({ contacts, isLoading, isError }: Props) => {
     return (
       <Typography
         variant="h2"
-        className="flex items-center justify-center p-8 !text-error"
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          padding: "32px",
+          color: "#F42010",
+        }}
       >
         No contacts available
       </Typography>
@@ -45,7 +57,9 @@ export const ContactList = ({ contacts, isLoading, isError }: Props) => {
       <div className="flex items-center space-x-2 mb-2">
         <Typography
           variant="subtitle1"
-          className="font-semibold"
+          sx={{
+            fontWeight: 600,
+          }}
         >{`All Contacts (${contacts.length})`}</Typography>
       </div>
       <div className="space-y-4">

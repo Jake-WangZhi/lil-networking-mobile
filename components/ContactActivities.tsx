@@ -40,7 +40,10 @@ export const ContactActivites = ({
   return (
     <div>
       {errorMessage && (
-        <Typography variant="subtitle2" className="flex justify-center">
+        <Typography
+          variant="subtitle2"
+          sx={{ display: "flex", justifyContent: "center" }}
+        >
           {errorMessage}
         </Typography>
       )}
@@ -60,7 +63,7 @@ export const ContactActivites = ({
           }}
         >
           <PlusCircle size={24} />
-          <Typography variant="body1" className="font-semibold">
+          <Typography variant="body1" sx={{ fontWeight: 600 }}>
             Log Activity
           </Typography>
         </Button>
@@ -81,7 +84,7 @@ export const ContactActivites = ({
           >
             <div className="bg-white bg-opacity-5 w-full ml-6 p-4 text-white rounded-lg overflow-hidden break-words">
               <div className="flex justify-between">
-                <Typography variant="subtitle1" className="font-semibold">
+                <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
                   {activity.title}
                 </Typography>
                 {activity.type === ActivityType.USER && (
@@ -90,7 +93,10 @@ export const ContactActivites = ({
                   </Button>
                 )}
               </div>
-              <Typography variant="body1" className="opacity-[0.7] mb-2">
+              <Typography
+                variant="body1"
+                sx={{ opacity: 0.7, marginBottom: "8px" }}
+              >
                 {activity.date}
               </Typography>
               <Typography variant="body1">{activity.description}</Typography>

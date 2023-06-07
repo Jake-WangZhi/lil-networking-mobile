@@ -18,7 +18,13 @@ export const ActionList = ({ actions, isLoading, isError }: Props) => {
     return (
       <Typography
         variant="h2"
-        className="flex items-center justify-center p-8 !text-error"
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          padding: "32px",
+          color: "#F42010",
+        }}
       >
         Something went wrong, please try again later
       </Typography>
@@ -37,7 +43,13 @@ export const ActionList = ({ actions, isLoading, isError }: Props) => {
     return (
       <Typography
         variant="h2"
-        className="flex items-center justify-center p-8 !text-error"
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          padding: "32px",
+          color: "#F42010",
+        }}
       >
         No actions available
       </Typography>
@@ -52,7 +64,9 @@ export const ActionList = ({ actions, isLoading, isError }: Props) => {
             <div className="w-1 h-4 border-l-4 border-magenta md:border-l-5 md:h-5 lg:border-l-6 lg:h-6"></div>
             <Typography
               variant="subtitle1"
-              className="font-semibold"
+              sx={{
+                fontWeight: 600,
+              }}
             >{`Past Due (${actions.pastActions.length})`}</Typography>
           </div>
         }
@@ -74,7 +88,9 @@ export const ActionList = ({ actions, isLoading, isError }: Props) => {
             <div className="w-1 h-4 border-l-4 border-light-yellow md:border-l-5 md:h-5 lg:border-l-6 lg:h-6"></div>
             <Typography
               variant="subtitle1"
-              className="font-semibold"
+              sx={{
+                fontWeight: 600,
+              }}
             >{`New Action Items (${actions.upcomingActions?.length})`}</Typography>
           </div>
         }

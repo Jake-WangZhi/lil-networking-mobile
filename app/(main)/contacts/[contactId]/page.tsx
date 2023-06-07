@@ -24,7 +24,14 @@ export default function ContactPage({
     return (
       <Typography
         variant="h2"
-        className="min-h-screen flex items-center justify-center p-8 !text-error"
+        sx={{
+          minHeight: "100vh",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          padding: "32px",
+          color: "#F42010",
+        }}
       >
         Something went wrong, please try again later
       </Typography>
@@ -43,7 +50,14 @@ export default function ContactPage({
     return (
       <Typography
         variant="h2"
-        className="min-h-screen flex items-center justify-center p-8"
+        sx={{
+          minHeight: "100vh",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          padding: "32px",
+          color: "#F42010",
+        }}
       >
         No contact available
       </Typography>

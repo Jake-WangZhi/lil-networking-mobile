@@ -34,18 +34,21 @@ export const AlertDialog = ({
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
-      <DialogTitle id="alert-dialog-title" className="text-white text-center">
+      <DialogTitle
+        id="alert-dialog-title"
+        sx={{ color: "white", textAlign: "center" }}
+      >
         {title}
       </DialogTitle>
       <DialogContent>
         <DialogContentText
           id="alert-dialog-description"
-          className="text-white text-center"
+          sx={{ color: "white", textAlign: "center" }}
         >
           {description}
         </DialogContentText>
       </DialogContent>
-      <DialogActions className="justify-center">
+      <DialogActions sx={{ justifyContent: "center" }}>
         <div className="flex flex-col items-center justify-center space-y-4">
           {actionButton}
           <Button

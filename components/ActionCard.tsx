@@ -20,7 +20,11 @@ export const ActionCard = ({ action, actionType }: Props) => {
           <div className="flex justify-between text-white">
             <Typography
               variant="subtitle1"
-              className="font-semibold overflow-hidden break-words"
+              sx={{
+                fontWeight: 600,
+                overflow: "hidden",
+                overflowWrap: "break-word",
+              }}
             >
               {action.contactFirstName} {action.contactLastName}
             </Typography>
@@ -31,20 +35,33 @@ export const ActionCard = ({ action, actionType }: Props) => {
           </div>
           <Typography
             variant="body1"
-            className="opacity-70 overflow-hidden break-words"
+            sx={{
+              opacity: 0.7,
+              overflow: "hidden",
+              overflowWrap: "break-word",
+            }}
           >
             {action.contactIndustry && <>{action.contactIndustry} • </>}
             Goal: {action.goalDays} days
           </Typography>
           <Typography
             variant="body1"
-            className={`!font-semibold ${
-              actionType === "past" ? "!text-magenta" : "!text-light-yellow"
-            }`}
+            sx={{
+              fontWeight: 600,
+              color: actionType === "past" ? "#ED3293" : "#FFCF79",
+            }}
           >
             {action.days} Days ago
           </Typography>
-          <Typography variant="body1" className="line-clamp-2 overflow-hidden">
+          <Typography
+            variant="body1"
+            sx={{
+              overflow: "hidden",
+              display: "-webkit-box",
+              WebkitBoxOrient: "vertical",
+              WebkitLineClamp: 2,
+            }}
+          >
             {action.description}
           </Typography>
         </CardContent>

@@ -97,7 +97,13 @@ export const ContactHeader = ({ contact }: Props) => {
   return (
     <div className="mb-2">
       {errorMessage && (
-        <Typography variant="subtitle2" className="flex justify-center">
+        <Typography
+          variant="subtitle2"
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
           {errorMessage}
         </Typography>
       )}
@@ -148,7 +154,7 @@ export const ContactHeader = ({ contact }: Props) => {
                     },
                   }}
                 >
-                  <Typography variant="subtitle1" className="!text-black">
+                  <Typography variant="subtitle1" sx={{ color: "black" }}>
                     Message
                   </Typography>
                   <MessageSquare size={24} />
@@ -171,7 +177,7 @@ export const ContactHeader = ({ contact }: Props) => {
                     },
                   }}
                 >
-                  <Typography variant="subtitle1" className="!text-black">
+                  <Typography variant="subtitle1" sx={{ color: "black" }}>
                     Edit
                   </Typography>
                   <Edit size={24} />
@@ -194,7 +200,7 @@ export const ContactHeader = ({ contact }: Props) => {
                     },
                   }}
                 >
-                  <Typography variant="subtitle1" className="!text-black">
+                  <Typography variant="subtitle1" sx={{ color: "black" }}>
                     {contact.isArchived ? "Activate" : "Archive"}
                   </Typography>
                   <Archive size={24} />
@@ -217,7 +223,7 @@ export const ContactHeader = ({ contact }: Props) => {
                     },
                   }}
                 >
-                  <Typography variant="subtitle1" className="!text-black">
+                  <Typography variant="subtitle1" sx={{ color: "black" }}>
                     Delete
                   </Typography>
                   <Trash2 size={24} />
