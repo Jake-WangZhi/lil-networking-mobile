@@ -97,7 +97,7 @@ export const ActivityForm = ({
           </Grid>
 
           <Grid item xs={12}>
-            <Grid container alignItems="center">
+            <Grid container alignItems="center" rowSpacing={"4px"}>
               <Grid item xs={3}>
                 <Typography variant="subtitle1">Title *</Typography>
               </Grid>
@@ -129,7 +129,7 @@ export const ActivityForm = ({
           </Grid>
 
           <Grid item xs={12}>
-            <Grid container alignItems="center">
+            <Grid container alignItems="center" rowSpacing={"4px"}>
               <Grid item xs={3}>
                 <Typography variant="subtitle1">Date *</Typography>
               </Grid>

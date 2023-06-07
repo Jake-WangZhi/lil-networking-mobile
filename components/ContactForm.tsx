@@ -158,7 +158,7 @@ export const ContactForm = ({ contact, userEmail }: Props) => {
           </Grid>
 
           <Grid item xs={12}>
-            <Grid container alignItems="center">
+            <Grid container alignItems="center" rowSpacing={"4px"}>
               <Grid item xs={3}>
                 <Typography variant="subtitle1">First *</Typography>
               </Grid>
@@ -192,7 +192,7 @@ export const ContactForm = ({ contact, userEmail }: Props) => {
           </Grid>
 
           <Grid item xs={12}>
-            <Grid container alignItems="center">
+            <Grid container alignItems="center" rowSpacing={"4px"}>
               <Grid item xs={3}>
                 <Typography variant="subtitle1">Last *</Typography>
               </Grid>
@@ -224,7 +224,7 @@ export const ContactForm = ({ contact, userEmail }: Props) => {
           </Grid>
 
           <Grid item xs={12}>
-            <Grid container alignItems="center">
+            <Grid container alignItems="center" rowSpacing={"4px"}>
               <Grid item xs={3}>
                 <Typography variant="subtitle1">Industry *</Typography>
               </Grid>
@@ -325,7 +325,7 @@ export const ContactForm = ({ contact, userEmail }: Props) => {
           </Grid>
 
           <Grid item xs={12}>
-            <Grid container alignItems="center">
+            <Grid container alignItems="center" rowSpacing={"4px"}>
               <Grid item xs={3}>
                 <Typography variant="subtitle1">Email</Typography>
               </Grid>
@@ -357,7 +357,7 @@ export const ContactForm = ({ contact, userEmail }: Props) => {
           </Grid>
 
           <Grid item xs={12}>
-            <Grid container alignItems="center">
+            <Grid container alignItems="center" rowSpacing={"4px"}>
               <Grid item xs={3}>
                 <Typography variant="subtitle1">Phone</Typography>
               </Grid>
