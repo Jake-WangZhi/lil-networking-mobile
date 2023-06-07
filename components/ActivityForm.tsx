@@ -143,7 +143,6 @@ export const ActivityForm = ({
                   style={{
                     colorScheme: "dark",
                   }}
-                  className="!text-left"
                 />
               </Grid>
 
