@@ -7,14 +7,17 @@ import { useContacts } from "@/hooks/useContacts";
 import { Typography } from "@mui/material";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { PlusSquare } from "react-feather";
 
 export default function ContactsPage() {
   const { data: session } = useSession();
   const router = useRouter();
+  const [name, setName] = useState("");
 
   const { contacts, isLoading, isError } = useContacts({
-    email: session?.user?.email,
+    userEmail: session?.user?.email,
+    name,
   });
 
   return (
@@ -35,7 +38,7 @@ export default function ContactsPage() {
             </Button>
           </div>
         </div>
-        <SearchBar />
+        <SearchBar name={name} setName={setName} />
       </div>
       <ContactList
         contacts={contacts}
