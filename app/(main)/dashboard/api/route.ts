@@ -51,7 +51,7 @@ export async function GET(request: Request) {
 
   const actions = parseActions(contacts, activities);
 
-  return NextResponse.json(actions);
+  return NextResponse.json({ ...actions, hasContacts: !!contacts.length });
 }
 
 const parseActions = (contacts: Contact[], activities: Activity[]) => {

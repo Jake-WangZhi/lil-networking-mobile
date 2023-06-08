@@ -1,6 +1,6 @@
 {
-  "name": "postgres-prisma",
-  "repository": "https://github.com/vercel/examples.git",
+  "name": "lil-networking",
+  "repository": "https://github.com/FoundryMakes/lil-networking",
   "license": "MIT",
   "version": "0.0.0",
   "private": true,
@@ -36,6 +36,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-feather": "^2.0.10",
+    "react-lottie": "^1.2.3",
     "react-spinners": "^0.13.8",
     "react-swipeable": "^7.0.0",
     "react-tagsinput": "^3.20.1",
@@ -46,7 +47,9 @@
     "validator": "^13.9.0"
   },
   "devDependencies": {
-    "@types/ms": "^0.7.31",
+    "@types/react-lottie": "^1.2.6",
+    "@types/react-tagsinput": "^3.20.0",
+    "@types/validator": "^13.7.17",
     "prisma": "^4.13.0",
     "turbo": "^1.9.3"
   }

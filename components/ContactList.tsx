@@ -29,7 +29,7 @@ export const ContactList = ({ contacts, isLoading, isError }: Props) => {
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center mt-5">
+      <div className="h-[50vh] flex items-center justify-center mt-5">
         <ClipLoader color="#38ACE2" size={150} />
       </div>
     );

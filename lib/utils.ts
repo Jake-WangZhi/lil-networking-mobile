@@ -1,5 +1,4 @@
 import { formatDistanceToNow, differenceInDays } from "date-fns";
-/* @ts-expect-error Server Component */
 import validator from "validator";
 
 export const timeAgo = (timestamp: Date, timeOnly?: boolean): string => {

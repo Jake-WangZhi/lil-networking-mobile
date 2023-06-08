@@ -2,11 +2,9 @@ import { Typography, Grid } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { useState, useCallback } from "react";
 import { ChevronLeft, AlertTriangle, PlusCircle } from "react-feather";
-/* @ts-expect-error Server Component */
 import validator from "validator";
 import { Button } from "./Button";
 import { Contact } from "@/types";
-// @ts-ignore
 import TagsInput from "react-tagsinput";
 import { upsertContact } from "@/app/_actions";
 

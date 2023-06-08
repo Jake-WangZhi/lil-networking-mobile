@@ -3,7 +3,7 @@
 import { ActionList } from "@/components/ActionList";
 import { GoalSummary } from "@/components/GoalSummary";
 import { useSession } from "next-auth/react";
-import { useAction } from "@/hooks/useAction";
+import { useActions } from "@/hooks/useActions";
 import { Typography } from "@mui/material";
 import { PlusSquare } from "react-feather";
 import { Button } from "@/components/Button";
@@ -15,7 +15,7 @@ export default function DashboardPage() {
   const { data: session } = useSession();
   const router = useRouter();
 
-  const { actions, isLoading, isError } = useAction({
+  const { actions, isLoading, isError } = useActions({
     email: session?.user?.email,
   });
 
