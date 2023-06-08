@@ -69,9 +69,8 @@ export const ActivityForm = ({
       className={`bg-dark-blue absolute z-10 inset-0 w-full h-full px-4 transition-transform duration-500 ${
         isOpen ? "translate-y-0" : "translate-y-full"
       }`}
-      {...handlers}
     >
-      <div className="flex justify-center">
+      <div className="flex justify-center" {...handlers}>
         <Minus size={56} />
       </div>
 
