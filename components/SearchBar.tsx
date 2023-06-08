@@ -45,7 +45,7 @@ export const SearchBar = ({ name, setName }: Props) => {
           onChange={(e) => setName(e.target.value)}
           onFocus={handleInputFocus}
           onBlur={handleInputBlur}
-          className="flex-grow bg-transparent focus:outline-none text-base md:text-lg lg:text-xl"
+          className="flex-grow bg-transparent text-white caret-white focus:outline-none text-base md:text-lg lg:text-xl"
         />
       </div>
       {showCancel && (

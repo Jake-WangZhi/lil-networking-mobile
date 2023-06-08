@@ -29,7 +29,7 @@ export const ContactList = ({ contacts, isLoading, isError }: Props) => {
 
   if (isLoading) {
     return (
-      <div className="h-[50vh] flex items-center justify-center mt-5">
+      <div className="h-[70vh] flex items-center justify-center mt-5">
         <ClipLoader color="#38ACE2" size={150} />
       </div>
     );
@@ -49,6 +49,20 @@ export const ContactList = ({ contacts, isLoading, isError }: Props) => {
       >
         No contacts available
       </Typography>
+    );
+  }
+
+  if (!contacts.length) {
+    return (
+      <div className="h-[80vh] flex flex-col items-center justify-center px-8">
+        <Typography variant="h2">You have no contacts</Typography>
+        <Typography
+          variant="subtitle1"
+          sx={{ fontWeight: 600, textAlign: "center" }}
+        >
+          Add contacts and build your network
+        </Typography>
+      </div>
     );
   }
 

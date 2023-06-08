@@ -38,7 +38,9 @@ export default function ContactsPage() {
             </Button>
           </div>
         </div>
-        <SearchBar name={name} setName={setName} />
+        {!isError && !isLoading && contacts?.length !== 0 && (
+          <SearchBar name={name} setName={setName} />
+        )}
       </div>
       <ContactList
         contacts={contacts}
