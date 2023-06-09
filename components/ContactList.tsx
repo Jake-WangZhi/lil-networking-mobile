@@ -7,9 +7,10 @@ interface Props {
   contacts?: Array<Contact>;
   isLoading: boolean;
   isError: boolean;
+  name: string;
 }
 
-export const ContactList = ({ contacts, isLoading, isError }: Props) => {
+export const ContactList = ({ contacts, isLoading, isError, name }: Props) => {
   if (isError) {
     return (
       <Typography
@@ -52,7 +53,7 @@ export const ContactList = ({ contacts, isLoading, isError }: Props) => {
     );
   }
 
-  if (!contacts.length) {
+  if (!name && !contacts.length) {
     return (
       <div className="h-[80vh] flex flex-col items-center justify-center px-8">
         <Typography variant="h2">You have no contacts</Typography>

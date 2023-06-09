@@ -33,7 +33,7 @@ export default function ContactsPage() {
             <PlusSquare size={32} className="md:w-10 md:h-10 lg:w-12 lg:h-12" />
           </Button>
         </div>
-        {!isError && !isLoading && contacts?.length !== 0 && (
+        {(name || (!isError && !isLoading && contacts?.length !== 0)) && (
           <SearchBar name={name} setName={setName} />
         )}
       </div>
@@ -41,6 +41,7 @@ export default function ContactsPage() {
         contacts={contacts}
         isLoading={isLoading}
         isError={isError}
+        name={name}
       />
     </main>
   );
