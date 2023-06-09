@@ -31,7 +31,7 @@ export default function DashboardPage() {
             <Button
               variant="text"
               onClick={() => router.push("/contacts/create")}
-              customStyles={{ p: "8px" }}
+              sx={{ p: "8px" }}
             >
               <PlusSquare
                 size={32}

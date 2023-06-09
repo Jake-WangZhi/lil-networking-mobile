@@ -84,7 +84,7 @@ export const ActivityForm = ({
             <Button
               variant="text"
               onClick={() => setIsActivityPageOpen(false)}
-              customStyles={{
+              sx={{
                 py: "8px",
               }}
             >

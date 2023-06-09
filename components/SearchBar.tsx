@@ -51,7 +51,7 @@ export const SearchBar = ({ name, setName }: Props) => {
       {showCancel && (
         <Button
           variant="text"
-          customStyles={{
+          sx={{
             py: "14px",
             color: "#0A84FF",
             "&:hover": {

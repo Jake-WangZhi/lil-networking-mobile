@@ -44,7 +44,7 @@ const SwiperButtonNext = ({ children }: { children: ReactNode }) => {
     <Button
       variant="text"
       onClick={() => swiper.slideNext()}
-      customStyles={{
+      sx={{
         width: "172px",
         height: "48px",
         py: "12px",
@@ -63,7 +63,7 @@ export default function Page() {
       <Button
         variant="text"
         onClick={() => router.push("/dashboard")}
-        customStyles={{
+        sx={{
           position: "absolute",
           top: "16px",
           right: "16px",
@@ -110,7 +110,7 @@ export default function Page() {
               <Button
                 variant="contained"
                 onClick={() => {}}
-                customStyles={{ width: "172px" }}
+                sx={{ width: "172px" }}
               >
                 {"I'm ready"}
               </Button>
@@ -119,7 +119,7 @@ export default function Page() {
               <Button
                 variant="text"
                 onClick={() => router.push("/dashboard")}
-                customStyles={{
+                sx={{
                   width: "172px",
                   height: "48px",
                   py: "12px",

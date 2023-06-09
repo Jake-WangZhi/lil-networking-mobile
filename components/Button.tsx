@@ -8,7 +8,7 @@ type Props = {
   children: ReactNode;
   disabled?: boolean;
   onClick?: (event: MouseEvent<HTMLButtonElement>) => void;
-  customStyles?: {};
+  sx?: {};
   type?: "button" | "submit" | "reset";
 };
 
@@ -75,7 +75,7 @@ export const Button = ({
   disabled = false,
   variant = "contained",
   onClick,
-  customStyles = {},
+  sx = {},
   type = "button",
 }: Props) => {
   return (
@@ -95,7 +95,7 @@ export const Button = ({
           color: variant === "outlined" ? "#38ACE2" : "white",
         },
         ...VARIANTS[variant],
-        ...customStyles,
+        ...sx,
       }}
     >
       {children}

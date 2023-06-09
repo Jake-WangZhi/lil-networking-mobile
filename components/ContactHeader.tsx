@@ -111,7 +111,7 @@ export const ContactHeader = ({ contact }: Props) => {
         <Button
           variant="text"
           onClick={() => router.push(currentPath)}
-          customStyles={{ py: "6px" }}
+          sx={{ py: "6px" }}
         >
           <ChevronLeft
             size={36}
@@ -126,7 +126,7 @@ export const ContactHeader = ({ contact }: Props) => {
             )}
             <Button
               variant="text"
-              customStyles={{ display: "flex", alignItems: "center" }}
+              sx={{ display: "flex", alignItems: "center" }}
               onClick={() => setShowDropdown(!showDropdown)}
             >
               <DotsThreeCircleVertical
@@ -141,7 +141,7 @@ export const ContactHeader = ({ contact }: Props) => {
                 <Button
                   onClick={() => {}}
                   variant="text"
-                  customStyles={{
+                  sx={{
                     width: "100%",
                     display: "flex",
                     justifyContent: "space-between",
@@ -164,7 +164,7 @@ export const ContactHeader = ({ contact }: Props) => {
                 <Button
                   onClick={() => router.push(`/contacts/${contact.id}/edit`)}
                   variant="text"
-                  customStyles={{
+                  sx={{
                     width: "100%",
                     display: "flex",
                     justifyContent: "space-between",
@@ -187,7 +187,7 @@ export const ContactHeader = ({ contact }: Props) => {
                 <Button
                   onClick={() => handleStatusChange(!contact.isArchived)}
                   variant="text"
-                  customStyles={{
+                  sx={{
                     width: "100%",
                     display: "flex",
                     justifyContent: "space-between",
@@ -210,7 +210,7 @@ export const ContactHeader = ({ contact }: Props) => {
                 <Button
                   onClick={handleDelete}
                   variant="text"
-                  customStyles={{
+                  sx={{
                     width: "100%",
                     display: "flex",
                     justifyContent: "space-between",
@@ -242,7 +242,7 @@ export const ContactHeader = ({ contact }: Props) => {
           <Button
             variant="contained"
             onClick={handleClick}
-            customStyles={{
+            sx={{
               zIndex: 10,
               width: "221px",
               ...(action === "delete"

@@ -28,7 +28,7 @@ export default function ContactsPage() {
           <Button
             variant="text"
             onClick={() => router.push("/contacts/create")}
-            customStyles={{ p: "8px" }}
+            sx={{ p: "8px" }}
           >
             <PlusSquare size={32} className="md:w-10 md:h-10 lg:w-12 lg:h-12" />
           </Button>

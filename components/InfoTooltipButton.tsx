@@ -42,11 +42,7 @@ export const InfoTooltipButton = () => {
         </Typography>
       </div>
       <div className="flex items-start">
-        <Button
-          variant="text"
-          onClick={handleClose}
-          customStyles={{ zIndex: 10 }}
-        >
+        <Button variant="text" onClick={handleClose} sx={{ zIndex: 10 }}>
           <X size={24} className="md:w-7 md:h-7 lg:w-8 lg:h-8" />
         </Button>
       </div>
@@ -54,7 +50,7 @@ export const InfoTooltipButton = () => {
   );
 
   return (
-    <Button variant="text" onClick={handleClick} customStyles={{ p: "8px" }}>
+    <Button variant="text" onClick={handleClick} sx={{ p: "8px" }}>
       <Tooltip
         open={open}
         title={tooltipContent}

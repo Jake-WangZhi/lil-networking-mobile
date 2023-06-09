@@ -55,7 +55,7 @@ export const ContactActivites = ({
             window.scrollTo({ top: 0, behavior: "smooth" });
           }}
           variant="text"
-          customStyles={{
+          sx={{
             display: "flex",
             alignItems: "center",
             gap: "4px",

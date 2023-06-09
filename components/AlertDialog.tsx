@@ -54,7 +54,7 @@ export const AlertDialog = ({
           <Button
             variant="text"
             onClick={handleClose}
-            customStyles={{ zIndex: 10, py: "14px", width: "221px" }}
+            sx={{ zIndex: 10, py: "14px", width: "221px" }}
           >
             Cancel
           </Button>

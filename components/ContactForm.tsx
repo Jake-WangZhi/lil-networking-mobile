@@ -112,7 +112,7 @@ export const ContactForm = ({ contact, userEmail }: Props) => {
             <Button
               variant="text"
               onClick={() => router.back()}
-              customStyles={{ py: "6px" }}
+              sx={{ py: "6px" }}
             >
               <ChevronLeft
                 size={36}
@@ -135,7 +135,7 @@ export const ContactForm = ({ contact, userEmail }: Props) => {
             <Button
               variant="text"
               onClick={validateFields}
-              customStyles={{
+              sx={{
                 color: "#38ACE2",
                 fontSize: "16px",
                 fontWeight: 400,
@@ -292,7 +292,7 @@ export const ContactForm = ({ contact, userEmail }: Props) => {
           >
             <Button
               variant="outlined"
-              customStyles={{
+              sx={{
                 border: selectedGoalDays === 30 ? "1px solid #38ACE2" : "none",
                 color: selectedGoalDays === 30 ? "#38ACE2" : "white",
               }}
@@ -302,7 +302,7 @@ export const ContactForm = ({ contact, userEmail }: Props) => {
             </Button>
             <Button
               variant="outlined"
-              customStyles={{
+              sx={{
                 border: selectedGoalDays === 60 ? "1px solid #38ACE2" : "none",
                 color: selectedGoalDays === 60 ? "#38ACE2" : "white",
               }}
@@ -312,7 +312,7 @@ export const ContactForm = ({ contact, userEmail }: Props) => {
             </Button>
             <Button
               variant="outlined"
-              customStyles={{
+              sx={{
                 border: selectedGoalDays === 90 ? "1px solid #38ACE2" : "none",
                 color: selectedGoalDays === 90 ? "#38ACE2" : "white",
               }}
@@ -409,7 +409,7 @@ export const ContactForm = ({ contact, userEmail }: Props) => {
           <Grid item xs={12} className="flex justify-end relative -mt-2">
             <Button
               variant="text"
-              customStyles={{
+              sx={{
                 display: "flex",
                 gap: "4px",
                 alignItems: "center",
