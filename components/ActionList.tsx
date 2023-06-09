@@ -103,7 +103,7 @@ export const ActionList = ({ actions, isLoading, isError }: Props) => {
     );
 
   return (
-    <div className="w-full mb-20 mt-5">
+    <div className="w-full mb-20 mt-5 space-y-6">
       <FoldableComponent
         title={
           <div className="flex items-center space-x-2">

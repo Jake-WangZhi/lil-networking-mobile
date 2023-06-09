@@ -17,7 +17,7 @@ export const FoldableComponent = ({ title, content }: Props) => {
   };
 
   return (
-    <div className="mb-6">
+    <>
       <div className="flex justify-between py-3">
         {title}
         <button type="button" onClick={toggleFold} className="text-white">
@@ -29,6 +29,6 @@ export const FoldableComponent = ({ title, content }: Props) => {
         </button>
       </div>
       {!isFolded && <div className="mt-2">{content}</div>}
-    </div>
+    </>
   );
 };

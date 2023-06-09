@@ -15,13 +15,13 @@ export const ContactDetails = ({ contact, setIsActivityPageOpen }: Props) => {
   const { interests, activities } = contact;
 
   return (
-    <div>
+    <>
       <ContactInfo contact={contact} />
       {interests.length !== 0 && <ContactInterests interests={interests} />}
       <ContactActivites
         activities={activities}
         setIsActivityPageOpen={setIsActivityPageOpen}
       />
-    </div>
+    </>
   );
 };

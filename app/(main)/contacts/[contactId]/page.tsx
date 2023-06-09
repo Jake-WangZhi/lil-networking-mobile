@@ -1,12 +1,12 @@
 "use client";
 
+import "../styles.css";
 import { ContactDetails } from "@/components/ContactDetails";
 import { useContact } from "@/hooks/useContact";
 import { ActivityForm } from "@/components/ActivityForm";
 import { useState } from "react";
 import { ClipLoader } from "react-spinners";
 import { ContactHeader } from "@/components/ContactHeader";
-import "../styles.css";
 import { Typography } from "@mui/material";
 
 export default function ContactPage({
@@ -65,7 +65,7 @@ export default function ContactPage({
   }
 
   return (
-    <main className="relative min-h-screen text-white px-4 pt-8 pb-20 overflow-hidden">
+    <main className="relative min-h-screen text-white px-4 py-8 overflow-hidden">
       <ContactHeader contact={contact} />
       <ContactDetails
         contact={contact}

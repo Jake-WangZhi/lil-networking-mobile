@@ -38,7 +38,7 @@ export const ContactActivites = ({
   );
 
   return (
-    <div>
+    <div className="mb-12">
       {errorMessage && (
         <Typography
           variant="subtitle2"
