@@ -80,6 +80,20 @@ model User {
   image         String?
   accounts      Account[]
   Contacts      Contact[]
+  goals         Goals?
+}
+
+model Goals {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  networkingComfortLevel Int
+  goalContacts           Int
+  goalContactsToReach    Int
+  userId                 String @unique
+
+  user User @relation(fields: [userId], references: [id])
 }
 
 model VerificationToken {

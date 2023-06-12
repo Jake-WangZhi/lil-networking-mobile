@@ -14,7 +14,8 @@ export const NavFooter = () => {
 
   const shouldShowFooter =
     pathname !== "/contacts/create" &&
-    !pathname?.match(/^\/contacts\/.*\/edit$/);
+    !pathname?.match(/^\/contacts\/.*\/edit$/) &&
+    pathname !== "/settings/goals";
 
   return (
     <>

@@ -109,7 +109,7 @@ export default function Page() {
             actionButton={
               <Button
                 variant="contained"
-                onClick={() => {}}
+                onClick={() => router.push("/settings/goals")}
                 sx={{ width: "172px" }}
               >
                 {"I'm ready"}

@@ -44,10 +44,11 @@ const VARIANTS: Record<string, {}> = {
     color: "white",
     backgroundColor: "rgba(255, 255, 255, 0.05) !important",
     borderRadius: "41px",
+    border: "0px",
     fontWeight: 600,
     fontSize: "14px",
     lineHeight: "20px",
-    p: "12px",
+    p: "13px",
     textAlign: "center",
     "@media (min-width: 768px)": {
       fontSize: "16px",

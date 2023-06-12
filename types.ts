@@ -41,3 +41,9 @@ export enum ActivityType {
   USER = "USER",
   SYSTEM = "SYSTEM",
 }
+
+export interface Goals {
+  networkingComfortLevel: number;
+  goalContacts: number;
+  goalContactsToReach: number;
+}
