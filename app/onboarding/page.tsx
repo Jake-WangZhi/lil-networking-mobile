@@ -7,10 +7,7 @@ import pic2 from "@/public/images/onboarding_pic2.svg";
 import pic3 from "@/public/images/onboarding_pic3.svg";
 
 import { Swiper, SwiperSlide, useSwiper } from "swiper/react";
-import { Pagination } from "swiper";
 import "swiper/css";
-import "swiper/css/pagination";
-import "./styles.css";
 
 import { Button } from "@/components/Button";
 import { ReactNode } from "react";
@@ -60,28 +57,7 @@ export default function Page() {
 
   return (
     <main className="relative min-h-screen">
-      <Button
-        variant="text"
-        onClick={() => router.push("/dashboard")}
-        sx={{
-          position: "absolute",
-          top: "16px",
-          right: "16px",
-          zIndex: "10",
-          color: "white",
-          fontSize: "19px",
-          fontWeight: 400,
-          "@media (min-width: 768px)": {
-            fontSize: "22px",
-          },
-          "@media (min-width: 1024px)": {
-            fontSize: "24px",
-          },
-        }}
-      >
-        Skip
-      </Button>
-      <Swiper pagination={{ clickable: true }} modules={[Pagination]}>
+      <Swiper allowTouchMove={false}>
         {ONBOARDING_INTRO_PAGES.map((page, index) => (
           <SwiperSlide key={index}>
             <OnboardingIntroPage

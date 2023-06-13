@@ -35,6 +35,7 @@ export default function DashboardPage() {
             >
               <PlusSquare
                 size={32}
+                color={"#38ACE2"}
                 className="md:w-10 md:h-10 lg:w-12 lg:h-12"
               />
             </Button>

@@ -66,7 +66,7 @@ export const ActionList = ({ actions, isLoading, isError }: Props) => {
       <div className="h-[50vh] flex flex-col items-center justify-center px-8">
         <Lottie
           options={{
-            loop: true,
+            loop: false,
             autoplay: true,
             animationData: animationData,
             rendererSettings: {

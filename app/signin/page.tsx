@@ -17,7 +17,7 @@ export default function SignInPage() {
         Build networking habits & <br />
         reach your goals
       </Typography>
-      <div className="flex justify-center !mt-32">
+      <div className="flex justify-center !mt-24">
         <Button
           variant="contained"
           onClick={() => signIn("linkedin", { callbackUrl: "/dashboard" })}

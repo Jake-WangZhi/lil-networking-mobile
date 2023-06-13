@@ -187,12 +187,12 @@ export default function GoalsPage() {
               )}
               <div className="mb-6 space-y-2">
                 <Typography
-                  variant="h3"
+                  variant="h2"
                   sx={{ fontWeight: 600, textAlign: "center" }}
                 >
                   You’re all set to connect!
                 </Typography>
-                <Typography variant="body1">
+                <Typography variant="body1" sx={{ textAlign: "center" }}>
                   you can edit your goals at any time.
                 </Typography>
               </div>
