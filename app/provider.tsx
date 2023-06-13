@@ -50,6 +50,18 @@ export function MuiCssProvider({ children }: React.PropsWithChildren) {
           fontSize: 23,
         },
       },
+      h4: {
+        fontSize: 40,
+        fontWeight: 600,
+        lineHeight: "40px",
+        color: "#38ACE2",
+        "@media (min-width:768px)": {
+          fontSize: 42,
+        },
+        "@media (min-width:1024px)": {
+          fontSize: 44,
+        },
+      },
       subtitle1: {
         fontSize: 16,
         fontWeight: 400,

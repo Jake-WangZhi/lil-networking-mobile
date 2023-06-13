@@ -4,9 +4,10 @@ import { useState, useCallback } from "react";
 import { ChevronLeft, AlertTriangle, PlusCircle } from "react-feather";
 import validator from "validator";
 import { Button } from "./Button";
-import { Contact } from "@/types";
+import { Contact, GoalProgressType } from "@/types";
 import TagsInput from "react-tagsinput";
 import { upsertContact } from "@/app/_actions";
+import { useGoalsMutation } from "@/hooks/useGoalsMutation";
 
 interface Props {
   contact?: Contact;
@@ -34,6 +35,14 @@ export const ContactForm = ({ contact, userEmail }: Props) => {
   const [industryError, setIndustryError] = useState("");
   const [emailError, setEmailError] = useState("");
   const [phoneError, setPhoneError] = useState("");
+
+  const putGoalsMutation = useGoalsMutation({
+    method: "PUT",
+    onSuccess: () => {},
+    onError: (error) => {
+      console.log(error);
+    },
+  });
 
   const handleChange = useCallback((tags: string[]) => {
     setTags(tags);
@@ -93,8 +102,25 @@ export const ContactForm = ({ contact, userEmail }: Props) => {
       hasError = true;
     }
 
-    if (!hasError) document.getElementById("submitEditForm")?.click();
-  }, [email, firstName, industry, lastName, phone]);
+    if (!hasError) {
+      !contact &&
+        putGoalsMutation.mutate({
+          email: userEmail ?? "",
+          type: GoalProgressType.CONNECTIONS,
+        });
+
+      document.getElementById("submitContactForm")?.click();
+    }
+  }, [
+    contact,
+    email,
+    firstName,
+    putGoalsMutation,
+    industry,
+    lastName,
+    phone,
+    userEmail,
+  ]);
 
   return (
     <main className="relative min-h-screen flex flex-col items-center text-white px-4 py-8">
@@ -468,7 +494,11 @@ export const ContactForm = ({ contact, userEmail }: Props) => {
           type="hidden"
           defaultValue={tags}
         />
-        <button id="submitEditForm" className="hidden" type="submit"></button>
+        <button
+          id="submitContactForm"
+          className="hidden"
+          type="submit"
+        ></button>
       </form>
     </main>
   );

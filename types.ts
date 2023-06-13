@@ -44,6 +44,14 @@ export enum ActivityType {
 
 export interface Goals {
   networkingComfortLevel: number;
-  goalContacts: number;
-  goalContactsToReach: number;
+  goalConnections: number;
+  goalMessages: number;
+  connections?: number;
+  messages?: number;
+  streak?: number;
+}
+
+export enum GoalProgressType {
+  CONNECTIONS = "connections",
+  MESSAGES = "messages",
 }

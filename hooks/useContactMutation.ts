@@ -1,13 +1,13 @@
 import { Contact } from "@/types";
 import { useMutation } from "@tanstack/react-query";
 
-type Props = {
+type Args = {
   onSuccess: () => void;
   onError: (error: unknown) => void;
   method: "PUT" | "DELETE";
 };
 
-export const useContactMutation = ({ onSuccess, onError, method }: Props) =>
+export const useContactMutation = ({ onSuccess, onError, method }: Args) =>
   useMutation({
     mutationFn: async (contact: Contact) => {
       const response = await fetch(`/contacts/${contact.id}/api`, {

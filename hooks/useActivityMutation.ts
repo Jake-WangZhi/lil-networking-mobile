@@ -1,13 +1,13 @@
 import { Activity } from "@/types";
 import { useMutation } from "@tanstack/react-query";
 
-type Props = {
+type Args = {
   onSuccess: () => void;
   onError: (error: unknown) => void;
   method: "DELETE";
 };
 
-export const useActivityMutation = ({ onSuccess, onError, method }: Props) =>
+export const useActivityMutation = ({ onSuccess, onError, method }: Args) =>
   useMutation({
     mutationFn: async (activity: Activity) => {
       let url = `/contacts/${activity.contactId}/activities`;

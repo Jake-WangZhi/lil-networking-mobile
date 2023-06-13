@@ -89,9 +89,13 @@ model Goals {
   updatedAt DateTime @updatedAt
 
   networkingComfortLevel Int
-  goalContacts           Int
-  goalContactsToReach    Int
-  userId                 String @unique
+  goalConnections        Int
+  goalMessages           Int
+  connections            Int @default(0)
+  messages               Int @default(0)
+  streak                 Int @default(0)
+
+  userId String @unique
 
   user User @relation(fields: [userId], references: [id])
 }

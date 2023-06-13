@@ -10,6 +10,9 @@ import { Button } from "./Button";
 import { createActivity } from "@/app/_actions";
 import { useSwipeable } from "react-swipeable";
 import { Grid, Typography } from "@mui/material";
+import { useGoalsMutation } from "@/hooks/useGoalsMutation";
+import { useSession } from "next-auth/react";
+import { GoalProgressType } from "@/types";
 
 const characterLimit = 300;
 
@@ -24,12 +27,22 @@ export const ActivityForm = ({
   setIsActivityPageOpen,
   contactId,
 }: Props) => {
+  const { data: session } = useSession();
+
   const [description, setDescription] = useState("");
   const [title, setTitle] = useState("");
   const [date, setDate] = useState("");
 
   const [titleError, setTitleError] = useState("");
   const [dateError, setDateError] = useState("");
+
+  const putGoalsMutation = useGoalsMutation({
+    method: "PUT",
+    onSuccess: () => {},
+    onError: (error) => {
+      console.log(error);
+    },
+  });
 
   const handleDescriptionChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     setDescription(event.target.value);
@@ -61,8 +74,15 @@ export const ActivityForm = ({
       hasError = true;
     }
 
-    if (!hasError) document.getElementById("submitActivityForm")?.click();
-  }, [date, title]);
+    if (!hasError) {
+      putGoalsMutation.mutate({
+        email: session?.user?.email ?? "",
+        type: GoalProgressType.MESSAGES,
+      });
+
+      document.getElementById("submitActivityForm")?.click();
+    }
+  }, [date, putGoalsMutation, session?.user?.email, title]);
 
   return (
     <div

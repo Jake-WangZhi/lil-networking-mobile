@@ -6,7 +6,7 @@ type Args = {
   email?: string | null;
 };
 
-export type ActionType = {
+type ActionType = {
   pastActions: Array<Action>;
   upcomingActions: Array<Action>;
   hasContacts: boolean;

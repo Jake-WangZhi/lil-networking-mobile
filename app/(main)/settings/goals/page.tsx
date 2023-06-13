@@ -63,8 +63,8 @@ export default function GoalsPage() {
 
   const [progress, setProgress] = useState(0);
   const [networkingComfortLevel, setNetworkingComfortLevel] = useState(1);
-  const [goalContacts, setGoalContacts] = useState(2);
-  const [goalContactsToReach, setGoalContactsToReach] = useState(2);
+  const [goalConnections, setGoalConnections] = useState(2);
+  const [goalMessages, setGoalMessages] = useState(2);
   const [errorMessage, setErrorMessage] = useState("");
 
   const postGoalsMutation = useGoalsMutation({
@@ -84,14 +84,14 @@ export default function GoalsPage() {
       postGoalsMutation.mutate({
         goals: {
           networkingComfortLevel,
-          goalContacts,
-          goalContactsToReach,
+          goalConnections,
+          goalMessages,
         },
         email: session?.user?.email || "",
       }),
     [
-      goalContacts,
-      goalContactsToReach,
+      goalConnections,
+      goalMessages,
       networkingComfortLevel,
       postGoalsMutation,
       session?.user?.email,
@@ -121,8 +121,8 @@ export default function GoalsPage() {
       },
       {
         title: "How many new contacts do you want to make per month?",
-        setValue: setGoalContacts,
-        selectedValue: goalContacts,
+        setValue: setGoalConnections,
+        selectedValue: goalConnections,
         buttonContents: [
           {
             label: "2",
@@ -140,8 +140,8 @@ export default function GoalsPage() {
       },
       {
         title: "How many contacts do you want to reach out to per month?",
-        setValue: setGoalContactsToReach,
-        selectedValue: goalContactsToReach,
+        setValue: setGoalMessages,
+        selectedValue: goalMessages,
         buttonContents: [
           {
             label: "2",
@@ -158,7 +158,7 @@ export default function GoalsPage() {
         ],
       },
     ],
-    [goalContacts, goalContactsToReach, networkingComfortLevel]
+    [goalConnections, goalMessages, networkingComfortLevel]
   );
 
   return (
