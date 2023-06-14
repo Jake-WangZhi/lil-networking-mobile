@@ -56,7 +56,7 @@ export default function Page() {
   const router = useRouter();
 
   return (
-    <main className="relative min-h-screen">
+    <main className="relative">
       <Swiper allowTouchMove={false}>
         {ONBOARDING_INTRO_PAGES.map((page, index) => (
           <SwiperSlide key={index}>

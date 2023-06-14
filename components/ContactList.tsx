@@ -14,7 +14,7 @@ export const ContactList = ({ contacts, isLoading, isError, name }: Props) => {
   if (isError) {
     return (
       <Typography
-        variant="h2"
+        variant="h3"
         sx={{
           display: "flex",
           alignItems: "center",
@@ -30,7 +30,7 @@ export const ContactList = ({ contacts, isLoading, isError, name }: Props) => {
 
   if (isLoading) {
     return (
-      <div className="h-[70vh] flex items-center justify-center mt-5">
+      <div className="h-[78vh] flex items-center justify-center mt-5">
         <ClipLoader color="#38ACE2" size={150} />
       </div>
     );
@@ -39,7 +39,7 @@ export const ContactList = ({ contacts, isLoading, isError, name }: Props) => {
   if (!contacts) {
     return (
       <Typography
-        variant="h2"
+        variant="h3"
         sx={{
           display: "flex",
           alignItems: "center",
@@ -55,7 +55,7 @@ export const ContactList = ({ contacts, isLoading, isError, name }: Props) => {
 
   if (!name && !contacts.length) {
     return (
-      <div className="h-[80vh] flex flex-col items-center justify-center px-8">
+      <div className="h-[78vh] flex flex-col items-center justify-center px-8">
         <Typography variant="h2">You have no contacts</Typography>
         <Typography
           variant="subtitle1"

@@ -32,9 +32,9 @@ export const ActivityForm = ({
   const [description, setDescription] = useState("");
   const [title, setTitle] = useState("");
   const [date, setDate] = useState("");
-
   const [titleError, setTitleError] = useState("");
   const [dateError, setDateError] = useState("");
+  const [isLogging, setIsLogging] = useState(false);
 
   const putGoalsMutation = useGoalsMutation({
     method: "PUT",
@@ -59,6 +59,7 @@ export const ActivityForm = ({
   });
 
   const validateFields = useCallback(() => {
+    setIsLogging(true);
     let hasError = false;
 
     setTitleError("");
@@ -81,6 +82,8 @@ export const ActivityForm = ({
       });
 
       document.getElementById("submitActivityForm")?.click();
+    } else {
+      setIsLogging(false);
     }
   }, [date, putGoalsMutation, session?.user?.email, title]);
 
@@ -203,8 +206,17 @@ export const ActivityForm = ({
           </Grid>
 
           <Grid item xs={12} className="flex justify-center mt-2">
-            <Button variant="contained" onClick={validateFields}>
-              Log Activity
+            <Button
+              variant="contained"
+              onClick={validateFields}
+              disabled={isLogging}
+              sx={{
+                "&:disabled": {
+                  color: "#0F1A24",
+                },
+              }}
+            >
+              {isLogging ? "Logging..." : "Log Activity"}
             </Button>
           </Grid>
         </Grid>

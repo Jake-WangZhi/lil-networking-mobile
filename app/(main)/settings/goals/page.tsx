@@ -162,7 +162,7 @@ export default function GoalsPage() {
   );
 
   return (
-    <main className="relative min-h-screen px-8 py-8">
+    <main className="relative px-8 py-8">
       <ProgressBar title={"Goal"} progress={progress} />
       <div className="px-4">
         <Swiper allowTouchMove={false} spaceBetween={48}>
@@ -181,7 +181,7 @@ export default function GoalsPage() {
             }
           )}
           <SwiperSlide>
-            <div className="h-[70vh] flex flex-col justify-center items-center">
+            <div className="mt-60 flex flex-col justify-center items-center">
               {errorMessage && (
                 <Typography variant="subtitle2">{errorMessage}</Typography>
               )}

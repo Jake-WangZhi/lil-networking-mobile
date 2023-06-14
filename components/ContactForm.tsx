@@ -35,6 +35,7 @@ export const ContactForm = ({ contact, userEmail }: Props) => {
   const [industryError, setIndustryError] = useState("");
   const [emailError, setEmailError] = useState("");
   const [phoneError, setPhoneError] = useState("");
+  const [isSaving, setIsSaving] = useState(false);
 
   const putGoalsMutation = useGoalsMutation({
     method: "PUT",
@@ -65,6 +66,7 @@ export const ContactForm = ({ contact, userEmail }: Props) => {
   }, []);
 
   const validateFields = useCallback(() => {
+    setIsSaving(true);
     let hasError = false;
 
     setFirstNameError("");
@@ -108,8 +110,9 @@ export const ContactForm = ({ contact, userEmail }: Props) => {
           email: userEmail ?? "",
           type: GoalProgressType.CONNECTIONS,
         });
-
       document.getElementById("submitContactForm")?.click();
+    } else {
+      setIsSaving(false);
     }
   }, [
     contact,
@@ -123,7 +126,7 @@ export const ContactForm = ({ contact, userEmail }: Props) => {
   ]);
 
   return (
-    <main className="relative min-h-screen flex flex-col items-center text-white px-4 pb-8">
+    <main className="relative flex flex-col items-center text-white px-4 pb-8">
       {/* @ts-expect-error Async Server Component */}
       <form action={upsertContact}>
         <div className="flex justify-between items-center sticky top-0 w-full bg-dark-blue z-10 pt-8 mb-6">
@@ -163,9 +166,13 @@ export const ContactForm = ({ contact, userEmail }: Props) => {
               "@media (min-width: 1024px)": {
                 fontSize: "20px",
               },
+              "&:disabled": {
+                color: "#38ACE2",
+              },
             }}
+            disabled={isSaving}
           >
-            Save
+            {isSaving ? "Saving..." : "Save"}
           </Button>
         </div>
         <Grid container spacing={2} alignItems="center">

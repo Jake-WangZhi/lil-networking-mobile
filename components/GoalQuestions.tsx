@@ -1,5 +1,5 @@
 import { Typography } from "@mui/material";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Button } from "./Button";
 
 interface ButtonContent {
@@ -20,6 +20,15 @@ export const GoalQuestions = ({
   selectedValue,
   buttonContents,
 }: Props) => {
+  const [isDisabled, setIsDisabled] = useState(true);
+
+  useEffect(() => {
+    //Use setTimeout to create a short delay to prevent accidental button triggering
+    setTimeout(() => {
+      setIsDisabled(false);
+    }, 0);
+  }, []);
+
   return (
     <div className="h-[70vh] flex flex-col justify-center items-center">
       <Typography
@@ -39,8 +48,12 @@ export const GoalQuestions = ({
                   border:
                     selectedValue === value ? "1px solid #38ACE2" : "none",
                   color: selectedValue === value ? "#38ACE2" : "white",
+                  "&:disabled": {
+                    color: "white",
+                  },
                 }}
                 onClick={() => setValue(value)}
+                disabled={isDisabled}
               >
                 {label}
               </Button>

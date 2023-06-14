@@ -22,7 +22,7 @@ export const ActionList = ({ actions, isLoading, isError }: Props) => {
   if (isError) {
     return (
       <Typography
-        variant="h2"
+        variant="h3"
         sx={{
           display: "flex",
           alignItems: "center",
@@ -47,7 +47,7 @@ export const ActionList = ({ actions, isLoading, isError }: Props) => {
   if (!actions) {
     return (
       <Typography
-        variant="h2"
+        variant="h3"
         sx={{
           display: "flex",
           alignItems: "center",

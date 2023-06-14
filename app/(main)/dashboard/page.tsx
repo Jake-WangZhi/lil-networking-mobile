@@ -20,7 +20,7 @@ export default function DashboardPage() {
   });
 
   return (
-    <main className="relative min-h-screen flex flex-col items-center text-white px-4">
+    <main className="relative flex flex-col items-center text-white px-4">
       <div className="sticky top-0 w-full bg-dark-blue z-10 pt-8">
         <div className="flex justify-between items-center">
           <Typography variant="h1">

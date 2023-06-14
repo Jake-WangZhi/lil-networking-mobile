@@ -6,7 +6,7 @@ import { signIn } from "next-auth/react";
 
 export default function SignInPage() {
   return (
-    <main className="relative flex min-h-screen flex-col justify-center px-8 space-y-4">
+    <main className="relative flex flex-col justify-center px-8 space-y-4 pt-20">
       <h1 className="flex flex-col text-light-blue text-start text-5xl font-bold tracking-tight leading-72 md:text-7xl">
         <span className="text-3xl md:text-5xl leading-48">Lil</span>
         <span className="text-white">Networking</span>

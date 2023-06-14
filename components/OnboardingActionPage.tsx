@@ -13,7 +13,7 @@ export const OnboardingActionPage = ({
   textButton,
 }: Props) => {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-dark-blue space-y-6">
+    <div className="flex flex-col items-center justify-center bg-dark-blue space-y-6 mt-[291px]">
       <Typography variant="h2">{title}</Typography>
       <div className="flex flex-col items-center space-y-4">
         {actionButton}

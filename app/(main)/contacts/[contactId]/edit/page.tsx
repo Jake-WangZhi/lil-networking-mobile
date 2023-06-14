@@ -21,7 +21,7 @@ export default function EditPage({
   if (isError) {
     return (
       <Typography
-        variant="h2"
+        variant="h3"
         sx={{
           minHeight: "100vh",
           display: "flex",
@@ -47,7 +47,7 @@ export default function EditPage({
   if (!contact) {
     return (
       <Typography
-        variant="h2"
+        variant="h3"
         sx={{
           minHeight: "100vh",
           display: "flex",

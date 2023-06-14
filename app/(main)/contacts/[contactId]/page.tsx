@@ -23,7 +23,7 @@ export default function ContactPage({
   if (isError) {
     return (
       <Typography
-        variant="h2"
+        variant="h3"
         sx={{
           minHeight: "100vh",
           display: "flex",
@@ -49,7 +49,7 @@ export default function ContactPage({
   if (!contact) {
     return (
       <Typography
-        variant="h2"
+        variant="h3"
         sx={{
           minHeight: "100vh",
           display: "flex",
@@ -65,7 +65,7 @@ export default function ContactPage({
   }
 
   return (
-    <main className="relative min-h-screen text-white px-4 py-8 overflow-hidden">
+    <main className="relative text-white px-4 py-8 overflow-hidden">
       <ContactHeader contact={contact} />
       <ContactDetails
         contact={contact}

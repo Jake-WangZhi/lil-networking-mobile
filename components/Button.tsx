@@ -31,11 +31,6 @@ const VARIANTS: Record<string, {}> = {
     "@media (min-width: 1024px)": {
       fontSize: "20px",
     },
-    "&:disabled": {
-      color: "white",
-      cursor: "not-allowed",
-      backgroundColor: "gray400",
-    },
     "&:hover": {
       color: "#0F1A24",
     },
