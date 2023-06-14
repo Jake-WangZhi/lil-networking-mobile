@@ -47,7 +47,7 @@ export const ContactCard = ({ contact }: Props) => {
                 <Archive
                   size={16}
                   color="white"
-                  className="opacity-70 md:w-6 md:h-6 lg:w-8 lg:h-8 flex-shrink-0"
+                  className="opacity-70 flex-shrink-0"
                 />
               )}
             </div>
