@@ -76,17 +76,17 @@ export const ContactForm = ({ contact, userEmail }: Props) => {
     setPhoneError("");
 
     if (!firstName) {
-      setFirstNameError("First name is required");
+      setFirstNameError("Required field");
       hasError = true;
     }
 
     if (!lastName) {
-      setLastNameError("Last name is required");
+      setLastNameError("Required field");
       hasError = true;
     }
 
     if (!industry) {
-      setIndustryError("Industry is required");
+      setIndustryError("Required field");
       hasError = true;
     }
 
@@ -129,11 +129,15 @@ export const ContactForm = ({ contact, userEmail }: Props) => {
     <main className="relative flex flex-col items-center text-white px-4 pb-8">
       {/* @ts-expect-error Async Server Component */}
       <form action={upsertContact}>
-        <div className="flex justify-between items-center sticky top-0 w-full bg-dark-blue z-10 pt-8 mb-6">
+        <div className="flex items-center sticky top-0 w-full bg-dark-blue z-10 py-6">
           <Button
             variant="text"
             onClick={() => router.back()}
-            sx={{ py: "6px" }}
+            sx={{
+              py: "6px",
+              flexBasis: "25%",
+              justifyContent: "flex-start",
+            }}
           >
             <ChevronLeft
               size={36}
@@ -145,6 +149,8 @@ export const ContactForm = ({ contact, userEmail }: Props) => {
             variant="h3"
             sx={{
               fontWeight: 600,
+              textAlign: "center",
+              flexBasis: "50%",
             }}
           >
             {contact ? "Edit contact" : "Create contact"}
@@ -157,6 +163,8 @@ export const ContactForm = ({ contact, userEmail }: Props) => {
               fontSize: "16px",
               fontWeight: 400,
               py: "14px",
+              flexBasis: "25%",
+              justifyContent: "flex-end",
               "&:hover": {
                 color: "#38ACE2",
               },
