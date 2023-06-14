@@ -129,7 +129,7 @@ export const ContactForm = ({ contact, userEmail }: Props) => {
     <main className="relative flex flex-col items-center text-white px-4 pb-8">
       {/* @ts-expect-error Async Server Component */}
       <form action={upsertContact}>
-        <div className="flex items-center sticky top-0 w-full bg-dark-blue z-10 py-6">
+        <div className="flex items-center sticky top-0 w-full bg-dark-blue z-10 my-6">
           <Button
             variant="text"
             onClick={() => router.back()}
