@@ -24,6 +24,7 @@ export const GoalQuestions = ({
 
   useEffect(() => {
     //Use setTimeout to create a short delay to prevent accidental button triggering
+    //when redirected from the onboarding
     setTimeout(() => {
       setIsDisabled(false);
     }, 0);
