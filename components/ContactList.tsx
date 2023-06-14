@@ -2,6 +2,8 @@ import { ClipLoader } from "react-spinners";
 import { ContactCard } from "./ContactCard";
 import { Contact } from "@/types";
 import { Typography } from "@mui/material";
+import Lottie from "react-lottie";
+import animationData from "../lottie/908-add-and-save.json";
 
 interface Props {
   contacts?: Array<Contact>;
@@ -56,6 +58,18 @@ export const ContactList = ({ contacts, isLoading, isError, name }: Props) => {
   if (!name && !contacts.length) {
     return (
       <div className="h-[78vh] flex flex-col items-center justify-center px-8">
+        <Lottie
+          options={{
+            loop: false,
+            autoplay: true,
+            animationData: animationData,
+            rendererSettings: {
+              preserveAspectRatio: "xMidYMid slice",
+            },
+          }}
+          width={130}
+          height={130}
+        />
         <Typography variant="h2">You have no contacts</Typography>
         <Typography
           variant="subtitle1"
