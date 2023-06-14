@@ -11,8 +11,10 @@ interface Props {
 export const ContactInterests = ({ interests }: Props) => {
   return (
     <div className="space-y-3 mb-8">
-      <Typography variant="subtitle1">Interests</Typography>
-      <div className="text-base rounded-xl">
+      <Typography variant="subtitle1" sx={{ mx: "16px" }}>
+        Interests
+      </Typography>
+      <div className="text-base rounded-xl ml-4">
         <Swiper
           slidesPerView={"auto"}
           spaceBetween={8}

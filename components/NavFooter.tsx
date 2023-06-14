@@ -27,6 +27,7 @@ export const NavFooter = () => {
             left: 0,
             right: 0,
             backgroundColor: "transparent",
+            pb: "4px",
           }}
           elevation={3}
         >

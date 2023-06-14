@@ -141,7 +141,6 @@ export const ContactForm = ({ contact, userEmail }: Props) => {
           >
             <ChevronLeft
               size={36}
-              color="#737373"
               className="md:w-11 md:h-11 lg:w-13 lg:h-13"
             />
           </Button>
@@ -421,7 +420,7 @@ export const ContactForm = ({ contact, userEmail }: Props) => {
               <Grid container alignItems="center">
                 <Grid item xs={3}>
                   <Typography variant="subtitle1">
-                    {index === 0 && "Link"}
+                    {index === 0 && "LinkedIn"}
                   </Typography>
                 </Grid>
                 <Grid item xs={9}>

@@ -95,7 +95,7 @@ export const ContactHeader = ({ contact }: Props) => {
   }, [action, contact, deleteContactMutation, updateContactMutation]);
 
   return (
-    <div className="mb-2">
+    <div className="mb-2 mx-4">
       {errorMessage && (
         <Typography
           variant="subtitle2"
@@ -113,11 +113,7 @@ export const ContactHeader = ({ contact }: Props) => {
           onClick={() => router.push(currentPath)}
           sx={{ py: "6px" }}
         >
-          <ChevronLeft
-            size={36}
-            color="#737373"
-            className="md:w-11 md:h-11 lg:w-13 lg:h-13"
-          />
+          <ChevronLeft size={36} className="md:w-11 md:h-11 lg:w-13 lg:h-13" />
         </Button>
         <div className="relative">
           <div className="flex items-center space-x-5">

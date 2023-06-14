@@ -65,7 +65,7 @@ export default function ContactPage({
   }
 
   return (
-    <main className="relative min-h-screen text-white px-4 py-8 overflow-hidden">
+    <main className="relative min-h-screen py-8 overflow-hidden">
       <ContactHeader contact={contact} />
       <ContactDetails
         contact={contact}

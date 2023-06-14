@@ -1,5 +1,5 @@
 import { Contact } from "@/types";
-import { ArrowRight } from "react-feather";
+import { ArrowRight, Archive } from "react-feather";
 import Link from "next/link";
 import { Card, CardActionArea, CardContent, Typography } from "@mui/material";
 
@@ -13,6 +13,7 @@ export const ContactCard = ({ contact }: Props) => {
       sx={{
         backgroundColor: "rgba(255, 255, 255, 0.05)",
         borderRadius: "8px",
+        boxShadow: "none",
       }}
     >
       <CardActionArea>
@@ -31,18 +32,25 @@ export const ContactCard = ({ contact }: Props) => {
               </Typography>
               <ArrowRight className="md:w-6 md:h-6 lg:w-8 lg:h-8 flex-shrink-0" />
             </div>
-            <Typography
-              variant="body1"
-              sx={{
-                opacity: 0.7,
-                overflow: "hidden",
-                overflowWrap: "break-word",
-              }}
-            >
-              {`${contact?.industry}${
-                contact?.isArchived ? " • Archived" : ""
-              }`}
-            </Typography>
+            <div className="flex items-center space-x-2">
+              <Typography
+                variant="body1"
+                sx={{
+                  opacity: 0.7,
+                  overflow: "hidden",
+                  overflowWrap: "break-word",
+                }}
+              >
+                {contact?.industry}
+              </Typography>
+              {contact?.isArchived && (
+                <Archive
+                  size={16}
+                  color="white"
+                  className="opacity-70 md:w-6 md:h-6 lg:w-8 lg:h-8 flex-shrink-0"
+                />
+              )}
+            </div>
             <Typography
               variant="body1"
               sx={{
