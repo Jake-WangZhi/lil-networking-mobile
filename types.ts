@@ -1,4 +1,5 @@
 export interface Action {
+  contactId: string;
   contactFirstName: string;
   contactLastName: string;
   days: number;

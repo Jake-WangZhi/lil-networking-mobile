@@ -150,6 +150,15 @@ export function MuiCssProvider({ children }: React.PropsWithChildren) {
           },
         },
       },
+      MuiCardContent: {
+        styleOverrides: {
+          root: {
+            "&:last-child": {
+              paddingBottom: "16px",
+            },
+          },
+        },
+      },
     },
   });
 
