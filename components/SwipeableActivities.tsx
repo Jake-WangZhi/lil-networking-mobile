@@ -29,9 +29,6 @@ export const SwipeableActivities = ({ activities }: Props) => {
           <SwiperSlide key={`interest-${index}`} className="!w-[342px]">
             <Card
               sx={{
-                backgroundColor: "rgba(255, 255, 255, 0.05)",
-                borderRadius: "8px",
-                boxShadow: "none",
                 height: "124px",
               }}
             >

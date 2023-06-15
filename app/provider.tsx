@@ -150,6 +150,15 @@ export function MuiCssProvider({ children }: React.PropsWithChildren) {
           },
         },
       },
+      MuiCard: {
+        styleOverrides: {
+          root: {
+            backgroundColor: "rgba(255, 255, 255, 0.05)",
+            borderRadius: "8px",
+            boxShadow: "none",
+          },
+        },
+      },
       MuiCardContent: {
         styleOverrides: {
           root: {

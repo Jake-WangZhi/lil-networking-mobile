@@ -9,13 +9,7 @@ interface Props {
 
 export const ContactCard = ({ contact }: Props) => {
   return (
-    <Card
-      sx={{
-        backgroundColor: "rgba(255, 255, 255, 0.05)",
-        borderRadius: "8px",
-        boxShadow: "none",
-      }}
-    >
+    <Card>
       <CardActionArea>
         <CardContent>
           <Link href={`/contacts/${contact.id}`} className="text-white">

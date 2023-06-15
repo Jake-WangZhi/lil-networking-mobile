@@ -10,13 +10,7 @@ interface Props {
 
 export const ActionCard = ({ action, actionType }: Props) => {
   return (
-    <Card
-      sx={{
-        backgroundColor: "rgba(255, 255, 255, 0.05)",
-        borderRadius: "8px",
-        boxShadow: "none",
-      }}
-    >
+    <Card>
       <CardActionArea>
         <CardContent>
           <Link href={`/contacts/${action.contactId}/message`}>

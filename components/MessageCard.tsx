@@ -23,13 +23,7 @@ export const MessageCard = ({ contact }: Props) => {
   }, [contact.email]);
 
   return (
-    <Card
-      sx={{
-        backgroundColor: "rgba(255, 255, 255, 0.05)",
-        borderRadius: "8px",
-        boxShadow: "none",
-      }}
-    >
+    <Card>
       <CardContent>
         <div className="space-y-2">
           <div className="flex justify-between items-center">
