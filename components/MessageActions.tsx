@@ -5,6 +5,7 @@ import { useCallback, useState } from "react";
 import { Check, Archive } from "react-feather";
 import { useContactMutation } from "@/hooks/useContactMutation";
 import { Contact } from "@/types";
+import { AlertDialog } from "./AlertDialog";
 
 interface Props {
   contact: Contact;
@@ -13,6 +14,7 @@ interface Props {
 export const MessageActions = ({ contact }: Props) => {
   const router = useRouter();
 
+  const [isAlertOpen, setIsAlertOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
   const updateContactMutation = useContactMutation({
@@ -27,11 +29,17 @@ export const MessageActions = ({ contact }: Props) => {
     },
   });
 
-  const handleArchive = useCallback(() => {
+  const handleArchiveClick = useCallback(() => {
+    setIsAlertOpen(true);
+  }, []);
+
+  const handleClick = useCallback(() => {
     updateContactMutation.mutate({
       ...contact,
       isArchived: true,
     });
+
+    setIsAlertOpen(false);
   }, [contact, updateContactMutation]);
 
   return (
@@ -66,7 +74,7 @@ export const MessageActions = ({ contact }: Props) => {
             px: "24px",
             py: "10px",
           }}
-          onClick={handleArchive}
+          onClick={handleArchiveClick}
         >
           <div className="w-12 h-12 bg-white bg-opacity-5 rounded-full flex justify-center items-center mb-1">
             <Archive size={24} />
@@ -76,6 +84,26 @@ export const MessageActions = ({ contact }: Props) => {
           </Typography>
         </Button>
       </div>
+      <AlertDialog
+        isOpen={isAlertOpen}
+        setIsOpen={setIsAlertOpen}
+        title={`Are you sure to you want to archive this contact?`}
+        description={"Archiving this contact will remove them the dashboard."}
+        actionButton={
+          <Button
+            variant="contained"
+            onClick={handleClick}
+            sx={{
+              zIndex: 10,
+              width: "221px",
+              color: "#0F1A24 !important",
+              backgroundColor: "#38ACE2 !important",
+            }}
+          >
+            Allow
+          </Button>
+        }
+      />
     </>
   );
 };
