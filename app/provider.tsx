@@ -13,6 +13,10 @@ export function QCProvider({ children }: React.PropsWithChildren) {
 export function MuiCssProvider({ children }: React.PropsWithChildren) {
   let theme = createTheme({
     typography: {
+      allVariants: {
+        overflow: "hidden",
+        overflowWrap: "break-word",
+      },
       fontFamily: "Metropolis, sans-serif",
       h1: {
         fontSize: 33,
@@ -156,6 +160,7 @@ export function MuiCssProvider({ children }: React.PropsWithChildren) {
             backgroundColor: "rgba(255, 255, 255, 0.05)",
             borderRadius: "8px",
             boxShadow: "none",
+            width: "100%",
           },
         },
       },
