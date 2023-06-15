@@ -85,3 +85,10 @@ input:not([id="tagsInput"]):not([id="searchBarInput"]):focus {
 input::-webkit-date-and-time-value {
   text-align: left;
 }
+
+.swiper-pagination-bullet {
+  width: 10px;
+  height: 10px;
+  background-color: #38ACE2;
+  margin: 0 9px !important;
+}

@@ -3,7 +3,7 @@ import { Activity, ActivityType } from "@/types";
 import { Circle, PlusCircle, Trash2 } from "react-feather";
 import { Dispatch, SetStateAction, useCallback, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
-import { Typography } from "@mui/material";
+import { Card, CardContent, Typography } from "@mui/material";
 import { Button } from "./Button";
 
 interface Props {
@@ -82,25 +82,37 @@ export const ContactActivites = ({
               "border-l-2 border-light-blue border-dashed"
             }`}
           >
-            <div className="bg-white bg-opacity-5 w-full ml-6 p-4 text-white rounded-lg overflow-hidden break-words">
-              <div className="flex justify-between">
-                <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
-                  {activity.title}
+            <Card sx={{ ml: "24px" }}>
+              <CardContent>
+                <div className="flex justify-between">
+                  <Typography
+                    variant="subtitle1"
+                    sx={{
+                      fontWeight: 600,
+                    }}
+                  >
+                    {activity.title}
+                  </Typography>
+                  {activity.type === ActivityType.USER && (
+                    <div className="flex items-start">
+                      <Button
+                        variant="text"
+                        onClick={() => handleDelete(activity)}
+                      >
+                        <Trash2 size={24} />
+                      </Button>
+                    </div>
+                  )}
+                </div>
+                <Typography
+                  variant="body1"
+                  sx={{ opacity: 0.7, marginBottom: "8px" }}
+                >
+                  {activity.date}
                 </Typography>
-                {activity.type === ActivityType.USER && (
-                  <Button variant="text" onClick={() => handleDelete(activity)}>
-                    <Trash2 size={24} />
-                  </Button>
-                )}
-              </div>
-              <Typography
-                variant="body1"
-                sx={{ opacity: 0.7, marginBottom: "8px" }}
-              >
-                {activity.date}
-              </Typography>
-              <Typography variant="body1">{activity.description}</Typography>
-            </div>
+                <Typography variant="body1">{activity.description}</Typography>
+              </CardContent>
+            </Card>
           </div>
         </div>
       ))}

@@ -13,6 +13,10 @@ export function QCProvider({ children }: React.PropsWithChildren) {
 export function MuiCssProvider({ children }: React.PropsWithChildren) {
   let theme = createTheme({
     typography: {
+      allVariants: {
+        overflow: "hidden",
+        overflowWrap: "break-word",
+      },
       fontFamily: "Metropolis, sans-serif",
       h1: {
         fontSize: 33,
@@ -146,6 +150,25 @@ export function MuiCssProvider({ children }: React.PropsWithChildren) {
               width: "100%",
               height: "100%",
               backgroundColor: "rgba(255, 255, 255, 0.16)",
+            },
+          },
+        },
+      },
+      MuiCard: {
+        styleOverrides: {
+          root: {
+            backgroundColor: "rgba(255, 255, 255, 0.05)",
+            borderRadius: "8px",
+            boxShadow: "none",
+            width: "100%",
+          },
+        },
+      },
+      MuiCardContent: {
+        styleOverrides: {
+          root: {
+            "&:last-child": {
+              paddingBottom: "16px",
             },
           },
         },
