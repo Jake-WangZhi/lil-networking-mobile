@@ -29,7 +29,7 @@ export const SwipeableActivities = ({ activities }: Props) => {
           <SwiperSlide key={`interest-${index}`} className="!w-[342px]">
             <Card
               sx={{
-                height: "124px",
+                height: "184px",
               }}
             >
               <CardContent>
@@ -50,7 +50,7 @@ export const SwipeableActivities = ({ activities }: Props) => {
                     overflow: "hidden",
                     display: "-webkit-box",
                     WebkitBoxOrient: "vertical",
-                    WebkitLineClamp: 2,
+                    WebkitLineClamp: 5,
                   }}
                 >
                   {activity.description}
