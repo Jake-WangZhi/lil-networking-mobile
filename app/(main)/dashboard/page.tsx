@@ -8,6 +8,7 @@ import { Typography } from "@mui/material";
 import { PlusSquare } from "react-feather";
 import { Button } from "@/components/Button";
 import { InfoTooltipButton } from "@/components/InfoTooltipButton";
+import { NavFooter } from "@/components/NavFooter";
 
 import { useRouter } from "next/navigation";
 
@@ -44,6 +45,7 @@ export default function DashboardPage() {
         <GoalSummary />
       </div>
       <ActionList actions={actions} isLoading={isLoading} isError={isError} />
+      <NavFooter />
     </main>
   );
 }

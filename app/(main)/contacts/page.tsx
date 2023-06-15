@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/Button";
 import { ContactList } from "@/components/ContactList";
+import { NavFooter } from "@/components/NavFooter";
 import { SearchBar } from "@/components/SearchBar";
 import { useContacts } from "@/hooks/useContacts";
 import { Typography } from "@mui/material";
@@ -47,6 +48,7 @@ export default function ContactsPage() {
         isError={isError}
         name={name}
       />
+      <NavFooter />
     </main>
   );
 }

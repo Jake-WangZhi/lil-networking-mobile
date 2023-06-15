@@ -8,6 +8,7 @@ import { useState } from "react";
 import { ClipLoader } from "react-spinners";
 import { ContactHeader } from "@/components/ContactHeader";
 import { Typography } from "@mui/material";
+import { NavFooter } from "@/components/NavFooter";
 
 export default function ContactPage({
   params,
@@ -78,6 +79,7 @@ export default function ContactPage({
         setIsActivityPageOpen={setIsActivityPageOpen}
         contactId={params.contactId}
       />
+      <NavFooter />
     </main>
   );
 }

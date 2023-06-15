@@ -1,4 +1,4 @@
-import { useCurrentPath } from "@/contexts/CurrentPathContext";
+import { useBackPath } from "@/contexts/BackPathContext";
 import { useContactMutation } from "@/hooks/useContactMutation";
 import { DotsThreeCircleVertical } from "@phosphor-icons/react";
 import { useRouter } from "next/navigation";
@@ -22,7 +22,7 @@ interface Props {
 
 export const ContactHeader = ({ contact }: Props) => {
   const router = useRouter();
-  const { currentPath } = useCurrentPath();
+  const { backPath } = useBackPath();
   const queryClient = useQueryClient();
   const [showDropdown, setShowDropdown] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -34,7 +34,7 @@ export const ContactHeader = ({ contact }: Props) => {
     method: "DELETE",
     onSuccess: () => {
       setErrorMessage("");
-      router.push(currentPath);
+      router.push(backPath);
     },
     onError: (error) => {
       setErrorMessage("An error occurred. Please try again.");
@@ -110,7 +110,7 @@ export const ContactHeader = ({ contact }: Props) => {
       <div className="flex justify-between items-center">
         <Button
           variant="text"
-          onClick={() => router.push(currentPath)}
+          onClick={() => router.push(backPath)}
           sx={{ py: "6px" }}
         >
           <ChevronLeft size={36} className="md:w-11 md:h-11 lg:w-13 lg:h-13" />

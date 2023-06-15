@@ -1,7 +1,6 @@
 "use client";
 
-import { NavFooter } from "@/components/NavFooter";
-import { CurrentPathContext } from "@/contexts/CurrentPathContext";
+import { BackPathContext } from "@/contexts/BackPathContext";
 import { usePathname } from "next/navigation";
 import React from "react";
 import { useState } from "react";
@@ -12,14 +11,13 @@ export default function MainLayout({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
-  const [currentPath, setCurrentPath] = useState(pathname);
+  const [backPath, setBackPath] = useState(`/${pathname?.split("/")[1]}`);
 
   return (
     <section>
-      <CurrentPathContext.Provider value={{ currentPath, setCurrentPath }}>
+      <BackPathContext.Provider value={{ backPath, setBackPath }}>
         {children}
-        <NavFooter />
-      </CurrentPathContext.Provider>
+      </BackPathContext.Provider>
     </section>
   );
 }

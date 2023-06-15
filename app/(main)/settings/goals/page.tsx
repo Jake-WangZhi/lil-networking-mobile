@@ -11,6 +11,7 @@ import { useGoalsMutation } from "@/hooks/useGoalsMutation";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { GoalQuestions } from "@/components/GoalQuestions";
+import { useBackPath } from "@/contexts/BackPathContext";
 
 const SwiperButtonNext = ({
   children,
@@ -60,6 +61,7 @@ const SwiperButtonBefore = ({
 export default function GoalsPage() {
   const router = useRouter();
   const { data: session } = useSession();
+  const { setBackPath } = useBackPath();
 
   const [progress, setProgress] = useState(0);
   const [networkingComfortLevel, setNetworkingComfortLevel] = useState(1);
@@ -71,6 +73,7 @@ export default function GoalsPage() {
     method: "POST",
     onSuccess: () => {
       setErrorMessage("");
+      setBackPath("/dashboard");
       router.push("/dashboard");
     },
     onError: (error) => {
