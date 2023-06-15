@@ -126,63 +126,67 @@ export const ContactForm = ({ contact, userEmail }: Props) => {
   ]);
 
   return (
-    <main className="relative flex flex-col items-center text-white px-4 pb-8">
+    <main className="relative flex flex-col items-center text-white pb-8">
       {/* @ts-expect-error Async Server Component */}
       <form action={upsertContact}>
-        <div className="flex items-center sticky top-0 w-full bg-dark-blue z-10 my-6">
-          <Button
-            variant="text"
-            onClick={() => router.back()}
-            sx={{
-              py: "6px",
-              flexBasis: "25%",
-              justifyContent: "flex-start",
-            }}
-          >
-            <ChevronLeft
-              size={36}
-              className="md:w-11 md:h-11 lg:w-13 lg:h-13"
-            />
-          </Button>
-          <Typography
-            variant="h3"
-            sx={{
-              fontWeight: 600,
-              textAlign: "center",
-              flexBasis: "50%",
-            }}
-          >
-            {contact ? "Edit contact" : "Create contact"}
-          </Typography>
-          <Button
-            variant="text"
-            onClick={validateFields}
-            sx={{
-              color: "#38ACE2",
-              fontSize: "16px",
-              fontWeight: 400,
-              py: "14px",
-              flexBasis: "25%",
-              justifyContent: "flex-end",
-              "&:hover": {
-                color: "#38ACE2",
-              },
-              "@media (min-width: 768px)": {
-                fontSize: "18px",
-              },
-              "@media (min-width: 1024px)": {
-                fontSize: "20px",
-              },
-              "&:disabled": {
-                color: "#38ACE2",
-              },
-            }}
-            disabled={isSaving}
-          >
-            {isSaving ? "Saving..." : "Save"}
-          </Button>
+        <div className="flex items-center sticky top-0 w-full bg-dark-blue z-10 pt-8 mb-6 px-4">
+          <Grid container alignItems="center">
+            <Grid item xs={2}>
+              <Button
+                variant="text"
+                onClick={() => router.back()}
+                sx={{
+                  py: "6px",
+                }}
+              >
+                <ChevronLeft
+                  size={36}
+                  className="md:w-11 md:h-11 lg:w-13 lg:h-13"
+                />
+              </Button>
+            </Grid>
+            <Grid item xs={8}>
+              <Typography
+                variant="h3"
+                sx={{
+                  fontWeight: 600,
+                  textAlign: "center",
+                }}
+              >
+                {contact ? "Edit contact" : "Create contact"}
+              </Typography>
+            </Grid>
+            <Grid item xs={2} sx={{ display: "flex", justifyContent: "end" }}>
+              <Button
+                variant="text"
+                onClick={validateFields}
+                sx={{
+                  color: "#38ACE2",
+                  fontSize: "16px",
+                  fontWeight: 400,
+                  py: "14px",
+                  "&:hover": {
+                    color: "#38ACE2",
+                  },
+                  "@media (min-width: 768px)": {
+                    fontSize: "18px",
+                  },
+                  "@media (min-width: 1024px)": {
+                    fontSize: "20px",
+                  },
+                  "&:disabled": {
+                    color: "#38ACE2",
+                  },
+                }}
+                disabled={isSaving}
+              >
+                {isSaving ? "Saving..." : "Save"}
+              </Button>
+            </Grid>
+          </Grid>
         </div>
-        <Grid container spacing={2} alignItems="center">
+
+        <Grid container spacing={2} alignItems="center" sx={{ px: "16px" }}>
           <Grid item xs={12}>
             <Grid container alignItems="center" rowSpacing={"4px"}>
               <Grid item xs={3}>

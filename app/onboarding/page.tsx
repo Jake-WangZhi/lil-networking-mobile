@@ -72,7 +72,15 @@ export default function Page() {
           <OnboardingActionPage
             title="Stay Informed"
             actionButton={
-              <Button variant="contained" onClick={() => {}}>
+              <Button
+                variant="contained"
+                onClick={() => {}}
+                sx={{
+                  backgroundColor: "gray !important",
+                  cursor: "not-allowed",
+                  pointerEvents: "none",
+                }}
+              >
                 Allow notifications
               </Button>
             }
