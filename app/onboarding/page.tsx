@@ -7,14 +7,11 @@ import pic2 from "@/public/images/onboarding_pic2.svg";
 import pic3 from "@/public/images/onboarding_pic3.svg";
 
 import { Swiper, SwiperSlide, useSwiper } from "swiper/react";
-import { Pagination } from "swiper";
 import "swiper/css";
-import "swiper/css/pagination";
-import "./styles.css";
 
-import { useRouter } from "next/navigation";
 import { Button } from "@/components/Button";
 import { ReactNode } from "react";
+import { useRouter } from "next/navigation";
 
 const ONBOARDING_INTRO_PAGES = [
   {
@@ -39,8 +36,17 @@ const ONBOARDING_INTRO_PAGES = [
 
 const SwiperButtonNext = ({ children }: { children: ReactNode }) => {
   const swiper = useSwiper();
+
   return (
-    <Button variant="text" onClick={() => swiper.slideNext()}>
+    <Button
+      variant="text"
+      onClick={() => swiper.slideNext()}
+      sx={{
+        width: "172px",
+        height: "48px",
+        py: "12px",
+      }}
+    >
       {children}
     </Button>
   );
@@ -50,15 +56,8 @@ export default function Page() {
   const router = useRouter();
 
   return (
-    <main className="relative min-h-screen">
-      <Button
-        onClick={() => router.push("/dashboard")}
-        variant="text"
-        className="absolute right-4 top-4 z-10"
-      >
-        Skip
-      </Button>
-      <Swiper pagination={{ clickable: true }} modules={[Pagination]}>
+    <main className="relative">
+      <Swiper allowTouchMove={false}>
         {ONBOARDING_INTRO_PAGES.map((page, index) => (
           <SwiperSlide key={index}>
             <OnboardingIntroPage
@@ -73,7 +72,15 @@ export default function Page() {
           <OnboardingActionPage
             title="Stay Informed"
             actionButton={
-              <Button onClick={() => {}} className="mb-5">
+              <Button
+                variant="contained"
+                onClick={() => {}}
+                sx={{
+                  backgroundColor: "gray !important",
+                  cursor: "not-allowed",
+                  pointerEvents: "none",
+                }}
+              >
                 Allow notifications
               </Button>
             }
@@ -84,12 +91,24 @@ export default function Page() {
           <OnboardingActionPage
             title="Ready to set a goal?"
             actionButton={
-              <Button onClick={() => {}} className="mb-5">
+              <Button
+                variant="contained"
+                onClick={() => router.push("/settings/goals")}
+                sx={{ width: "172px" }}
+              >
                 {"I'm ready"}
               </Button>
             }
             textButton={
-              <Button onClick={() => router.push("/dashboard")} variant="text">
+              <Button
+                variant="text"
+                onClick={() => router.push("/dashboard")}
+                sx={{
+                  width: "172px",
+                  height: "48px",
+                  py: "12px",
+                }}
+              >
                 Go to Dashboard
               </Button>
             }

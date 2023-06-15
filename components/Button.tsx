@@ -1,41 +1,100 @@
 "use client";
 
-import { classNames } from "@/lib/utils";
 import { MouseEvent, ReactNode } from "react";
+import { Button as MuiButton } from "@mui/material";
 
 type Props = {
-  variant?: "primary" | "secondary" | "text";
+  variant?: "contained" | "outlined" | "text";
   children: ReactNode;
   disabled?: boolean;
   onClick?: (event: MouseEvent<HTMLButtonElement>) => void;
-  className?: string;
+  sx?: {};
   type?: "button" | "submit" | "reset";
 };
 
-const VARIANTS: Record<string, string> = {
-  primary:
-    "text-white bg-light-blue hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-base px-5 py-2.5 text-center w-[200px] md:w-[258px] md:text-lg lg:w-[300px] lg:text-xl disabled:text-white disabled:cursor-not-allowed disabled:bg-gray-400",
-  secondary:
-    "w-full flex items-center justify-center py-2 bg-transparent border rounded text-tertiary border-tertiary hover:bg-tertiary hover:bg-opacity-5 focus:border-2 active:bg-tertiary active:bg-opacity-5 active:border disabled:text-white disabled:cursor-not-allowed disabled:bg-gray-400",
-  text: "disabled:pointer-events-none disabled:text-opacity-25 text-white text-base md:text-lg lg:text-xl",
+const VARIANTS: Record<string, {}> = {
+  contained: {
+    mx: "auto",
+    color: "#0F1A24",
+    backgroundColor: "#38ACE2 !important",
+    fontWeight: "600",
+    lineHeight: "24px",
+    borderRadius: "28px",
+    fontSize: "16px",
+    px: "16px",
+    py: "12px",
+    textAlign: "center",
+    height: "48px",
+    "@media (min-width: 768px)": {
+      fontSize: "18px",
+    },
+    "@media (min-width: 1024px)": {
+      fontSize: "20px",
+    },
+    "&:hover": {
+      color: "#0F1A24",
+    },
+  },
+  outlined: {
+    color: "white",
+    backgroundColor: "rgba(255, 255, 255, 0.05) !important",
+    borderRadius: "41px",
+    border: "0px",
+    fontWeight: 600,
+    fontSize: "14px",
+    lineHeight: "20px",
+    p: "13px",
+    textAlign: "center",
+    "@media (min-width: 768px)": {
+      fontSize: "16px",
+    },
+    "@media (min-width: 1024px)": {
+      fontSize: "18px",
+    },
+  },
+  text: {
+    color: "white !important",
+    fontSize: "14px",
+    fontWeight: 600,
+    lineHeight: "20px",
+    "@media (min-width: 768px)": {
+      fontSize: "16px",
+    },
+    "@media (min-width: 1024px)": {
+      fontSize: "18px",
+    },
+  },
 };
 
 export const Button = ({
   children,
   disabled = false,
-  variant = "primary",
+  variant = "contained",
   onClick,
-  className = "",
+  sx = {},
   type = "button",
 }: Props) => {
   return (
-    <button
+    <MuiButton
       onClick={onClick}
       disabled={disabled}
-      className={classNames(VARIANTS[variant], className)}
       type={type}
+      variant={variant}
+      sx={{
+        textTransform: "none",
+        padding: "0px",
+        minWidth: "unset",
+        lineHeight: "24px",
+        "&:hover": {
+          backgroundColor: variant === "contained" ? "#38ACE2" : "transparent",
+          border: variant === "outlined" ? "1px solid #38ACE2" : "none",
+          color: variant === "outlined" ? "#38ACE2" : "white",
+        },
+        ...VARIANTS[variant],
+        ...sx,
+      }}
     >
       {children}
-    </button>
+    </MuiButton>
   );
 };

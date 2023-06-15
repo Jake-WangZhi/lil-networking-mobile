@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { Button } from "./Button";
 import { ChevronUp, ChevronDown } from "react-feather";
 import { ReactNode } from "react";
 
@@ -10,7 +9,7 @@ interface Props {
   content: ReactNode;
 }
 
-const FoldableComponent = ({ title, content }: Props) => {
+export const FoldableComponent = ({ title, content }: Props) => {
   const [isFolded, setIsFolded] = useState(false);
 
   const toggleFold = () => {
@@ -18,20 +17,18 @@ const FoldableComponent = ({ title, content }: Props) => {
   };
 
   return (
-    <div className="mb-8">
-      <div className="flex justify-between">
+    <div>
+      <div className="flex justify-between py-3">
         {title}
-        <Button onClick={toggleFold} variant="text">
+        <button type="button" onClick={toggleFold} className="text-white">
           {isFolded ? (
             <ChevronDown className="md:w-6 md:h-6 lg:w-8 lg:h-8" />
           ) : (
             <ChevronUp className="md:w-6 md:h-6 lg:w-8 lg:h-8" />
           )}
-        </Button>
+        </button>
       </div>
-      {!isFolded && <div className="mt-4">{content}</div>}
+      {!isFolded && <div className="mt-2">{content}</div>}
     </div>
   );
 };
-
-export default FoldableComponent;

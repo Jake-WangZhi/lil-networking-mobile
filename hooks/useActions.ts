@@ -6,18 +6,19 @@ type Args = {
   email?: string | null;
 };
 
-export type ActionType = {
+type ActionType = {
   pastActions: Array<Action>;
   upcomingActions: Array<Action>;
+  hasContacts: boolean;
 };
 
-export const useAction = ({ email }: Args) => {
+export const useActions = ({ email }: Args) => {
   const {
     isError,
     data: actions,
     isLoading,
   } = useQuery<ActionType>({
-    queryKey: ["action", email],
+    queryKey: ["actions", email],
     queryFn: () => fetcher(`/dashboard/api?email=${email}`),
     enabled: !!email,
   });

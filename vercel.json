@@ -1,4 +1,10 @@
 {
   "buildCommand": "yarn build",
-  "installCommand": "yarn install"
+  "installCommand": "yarn install",
+  "crons": [
+    {
+      "path": "/pages/api/cron",
+      "schedule": "0 0 1 * *"
+    }
+  ]
 }

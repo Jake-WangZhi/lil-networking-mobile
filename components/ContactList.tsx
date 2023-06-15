@@ -1,27 +1,82 @@
 import { ClipLoader } from "react-spinners";
 import { ContactCard } from "./ContactCard";
 import { Contact } from "@/types";
-import { Info } from "react-feather";
+import { Typography } from "@mui/material";
+import Lottie from "react-lottie";
+import animationData from "../lottie/908-add-and-save.json";
 
 interface Props {
   contacts?: Array<Contact>;
   isLoading: boolean;
   isError: boolean;
+  name: string;
 }
 
-export const ContactList = ({ contacts, isLoading, isError }: Props) => {
+export const ContactList = ({ contacts, isLoading, isError, name }: Props) => {
   if (isError) {
     return (
-      <div className="flex items-center justify-center text-base text-red-400 mt-5 md:text-lg lg:text-xl">
+      <Typography
+        variant="h3"
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          padding: "32px",
+          color: "#F42010",
+        }}
+      >
         Something went wrong, please try again later
-      </div>
+      </Typography>
     );
   }
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center mt-5">
+      <div className="h-[78vh] flex items-center justify-center mt-5">
         <ClipLoader color="#38ACE2" size={150} />
+      </div>
+    );
+  }
+
+  if (!contacts) {
+    return (
+      <Typography
+        variant="h3"
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          padding: "32px",
+          color: "#F42010",
+        }}
+      >
+        No contacts available
+      </Typography>
+    );
+  }
+
+  if (!name && !contacts.length) {
+    return (
+      <div className="h-[78vh] flex flex-col items-center justify-center px-8">
+        <Lottie
+          options={{
+            loop: false,
+            autoplay: true,
+            animationData: animationData,
+            rendererSettings: {
+              preserveAspectRatio: "xMidYMid slice",
+            },
+          }}
+          width={130}
+          height={130}
+        />
+        <Typography variant="h2">You have no contacts</Typography>
+        <Typography
+          variant="subtitle1"
+          sx={{ fontWeight: 600, textAlign: "center" }}
+        >
+          Add contacts and build your network
+        </Typography>
       </div>
     );
   }
@@ -29,12 +84,18 @@ export const ContactList = ({ contacts, isLoading, isError }: Props) => {
   return (
     <div className="w-full mb-20 mt-5">
       <div className="flex items-center space-x-2 mb-2">
-        <div className="text-base md:text-xl lg:text-2xl">{`All Contacts (${contacts?.length})`}</div>
-        <Info size={18} opacity={0.7} className="md:w-5 md:h-5 lg:w-6 lg:h-6" />
+        <Typography
+          variant="subtitle1"
+          sx={{
+            fontWeight: 600,
+          }}
+        >{`All Contacts (${contacts.length})`}</Typography>
       </div>
-      {contacts?.map((contact, index) => (
-        <ContactCard key={index} contact={contact} />
-      ))}
+      <div className="space-y-4">
+        {contacts.map((contact, index) => (
+          <ContactCard key={index} contact={contact} />
+        ))}
+      </div>
     </div>
   );
 };

@@ -10,6 +10,7 @@ module.exports = {
       fontSize: {
         xs: "11px",
         xl: "19px",
+        "2xl": "23px",
         "3xl": "32px",
       },
       lineHeight: {
@@ -25,6 +26,9 @@ module.exports = {
         "light-black": "#2E2E2E",
         "light-yellow": "#FFCF79",
         grey: "#EBEBF5",
+        "grey-30": "#C5C6C7",
+        magenta: "#ED3293",
+        error: "#F42010",
       },
       screens: {
         xs: "400px",
