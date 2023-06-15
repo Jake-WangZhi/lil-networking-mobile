@@ -18,8 +18,8 @@ export const ContactCard = ({ contact }: Props) => {
     >
       <CardActionArea>
         <CardContent>
-          <Link href={`/contacts/${contact.id}`}>
-            <div className="flex justify-between text-white">
+          <Link href={`/contacts/${contact.id}`} className="text-white">
+            <div className="flex justify-between">
               <Typography
                 variant="subtitle1"
                 sx={{
@@ -44,11 +44,7 @@ export const ContactCard = ({ contact }: Props) => {
                 {contact?.industry}
               </Typography>
               {contact?.isArchived && (
-                <Archive
-                  size={16}
-                  color="white"
-                  className="opacity-70 flex-shrink-0"
-                />
+                <Archive size={16} className="opacity-70 flex-shrink-0" />
               )}
             </div>
             <Typography
