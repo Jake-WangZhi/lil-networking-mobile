@@ -118,7 +118,9 @@ export const ContactHeader = ({ contact }: Props) => {
         <div className="relative">
           <div className="flex items-center space-x-5">
             {contact.isArchived && (
-              <Typography variant="body1">Archived</Typography>
+              <div className="bg-white bg-opacity-5 rounded-2xl px-4 py-[6px]">
+                <Typography variant="body1">Archived</Typography>
+              </div>
             )}
             <Button
               variant="text"

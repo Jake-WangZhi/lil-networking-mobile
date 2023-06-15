@@ -24,9 +24,9 @@ export const ContactInterests = ({ interests }: Props) => {
           {interests?.map((interest, index) => (
             <SwiperSlide
               key={`interest-${index}`}
-              className="!w-auto inline-block bg-white bg-opacity-[0.12] text-white rounded-2xl px-4 py-[6px] text-sm md:text-base lg:text-lg"
+              className="!w-auto bg-white bg-opacity-[0.12] rounded-2xl px-4 py-[6px]"
             >
-              {interest}
+              <Typography variant="body1">{interest}</Typography>
             </SwiperSlide>
           ))}
         </Swiper>
