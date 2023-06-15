@@ -7,13 +7,13 @@ import { Grid, Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { useCallback, useState } from "react";
 import { ChevronLeft, Check, Archive } from "react-feather";
-
-import "../../styles.css";
 import { ContactInterests } from "@/components/ContactInterests";
 import { useContactMutation } from "@/hooks/useContactMutation";
 import { SwipeableActivities } from "@/components/SwipeableActivities";
 import { ClipLoader } from "react-spinners";
 import { MessageCard } from "@/components/MessageCard";
+
+import "../../styles.css";
 
 export default function MessagePage({
   params,
@@ -147,6 +147,11 @@ export default function MessagePage({
         </div>
         <ContactInterests interests={contact.interests} />
       </div>
+      {errorMessage && (
+        <Typography variant="subtitle2" sx={{ textAlign: "center" }}>
+          {errorMessage}
+        </Typography>
+      )}
       <div className="flex justify-center space-x-12">
         <Button
           variant="text"
