@@ -47,7 +47,7 @@ const SwiperButtonBefore = ({
   return (
     <Button
       variant="text"
-      sx={{ p: "12px" }}
+      sx={{ p: "12px !important" }}
       onClick={() => {
         swiper.slidePrev();
         onPrev();

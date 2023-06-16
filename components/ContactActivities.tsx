@@ -1,21 +1,19 @@
 import { useActivityMutation } from "@/hooks/useActivityMutation";
 import { Activity, ActivityType } from "@/types";
 import { Circle, PlusCircle, Trash2 } from "react-feather";
-import { Dispatch, SetStateAction, useCallback, useState } from "react";
+import { useCallback, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { Card, CardContent, Typography } from "@mui/material";
 import { Button } from "./Button";
+import { useRouter } from "next/navigation";
 
 interface Props {
   activities: Activity[];
-  setIsActivityPageOpen: Dispatch<SetStateAction<boolean>>;
 }
 
-export const ContactActivites = ({
-  activities,
-  setIsActivityPageOpen,
-}: Props) => {
+export const ContactActivites = ({ activities }: Props) => {
   const queryClient = useQueryClient();
+  const router = useRouter();
   const [errorMessage, setErrorMessage] = useState("");
 
   const deleteActivityMutation = useActivityMutation({
@@ -50,16 +48,16 @@ export const ContactActivites = ({
       <div className="flex items-center justify-between mb-3">
         <Typography variant="subtitle1">Activites</Typography>
         <Button
-          onClick={() => {
-            setIsActivityPageOpen(true);
-            window.scrollTo({ top: 0, behavior: "smooth" });
-          }}
+          onClick={() =>
+            router.push(`/contacts/${activities[0].contactId}/activities/log`)
+          }
           variant="text"
           sx={{
             display: "flex",
             alignItems: "center",
             gap: "4px",
             py: "12px",
+            px: "8px",
           }}
         >
           <PlusCircle size={24} />

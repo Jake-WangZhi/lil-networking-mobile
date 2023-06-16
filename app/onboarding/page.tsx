@@ -105,8 +105,6 @@ export default function Page() {
                 onClick={() => router.push("/dashboard")}
                 sx={{
                   width: "172px",
-                  height: "48px",
-                  py: "12px",
                 }}
               >
                 Go to Dashboard

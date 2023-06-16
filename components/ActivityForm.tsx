@@ -1,33 +1,24 @@
-import {
-  Dispatch,
-  SetStateAction,
-  useState,
-  ChangeEvent,
-  useCallback,
-} from "react";
-import { X, Minus, AlertTriangle } from "react-feather";
+"use client";
+
+import { useState, ChangeEvent, useCallback } from "react";
+import { AlertTriangle } from "react-feather";
 import { Button } from "./Button";
 import { createActivity } from "@/app/_actions";
-import { useSwipeable } from "react-swipeable";
 import { Grid, Typography } from "@mui/material";
 import { useGoalsMutation } from "@/hooks/useGoalsMutation";
 import { useSession } from "next-auth/react";
 import { GoalProgressType } from "@/types";
+import { useRouter } from "next/navigation";
 
 const characterLimit = 300;
 
 interface Props {
-  isOpen: boolean;
-  setIsActivityPageOpen: Dispatch<SetStateAction<boolean>>;
   contactId: string;
 }
 
-export const ActivityForm = ({
-  isOpen,
-  setIsActivityPageOpen,
-  contactId,
-}: Props) => {
+export const ActivityForm = ({ contactId }: Props) => {
   const { data: session } = useSession();
+  const router = useRouter();
 
   const [description, setDescription] = useState("");
   const [title, setTitle] = useState("");
@@ -47,16 +38,6 @@ export const ActivityForm = ({
   const handleDescriptionChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     setDescription(event.target.value);
   };
-
-  const handlers = useSwipeable({
-    onSwipedDown: () => {
-      setIsActivityPageOpen(false);
-    },
-    swipeDuration: 500,
-    preventScrollOnSwipe: true,
-    trackMouse: true,
-    trackTouch: true,
-  });
 
   const validateFields = useCallback(() => {
     setIsLogging(true);
@@ -88,34 +69,12 @@ export const ActivityForm = ({
   }, [date, putGoalsMutation, session?.user?.email, title]);
 
   return (
-    <div
-      className={`bg-dark-blue absolute z-10 inset-0 w-full h-full px-4 transition-transform duration-500 ${
-        isOpen ? "translate-y-0" : "translate-y-full"
-      }`}
-    >
-      <div className="flex justify-center" {...handlers}>
-        <Minus size={56} />
-      </div>
-
+    <main className="relative flex flex-col items-center text-white px-4 py-8">
       {/* @ts-expect-error Async Server Component */}
       <form action={createActivity}>
         <Grid container spacing={2} alignItems="center">
-          <Grid item xs={10}>
-            <Typography variant="h2">Log New Activity</Typography>
-          </Grid>
-          <Grid item xs={2} className="flex justify-end">
-            <Button
-              variant="text"
-              onClick={() => setIsActivityPageOpen(false)}
-              sx={{
-                py: "8px",
-              }}
-            >
-              <X size={32} className="md:w-11 md:h-11 lg:w-13 lg:h-13" />
-            </Button>
-          </Grid>
-          <Grid item xs={12} className="-mt-4">
-            <Typography variant="body1">Track interactions</Typography>
+          <Grid item xs={12} sx={{ textAlign: "center" }}>
+            <Typography variant="h2">Log Activity</Typography>
           </Grid>
 
           <Grid item xs={12}>
@@ -219,6 +178,15 @@ export const ActivityForm = ({
               {isLogging ? "Logging..." : "Log Activity"}
             </Button>
           </Grid>
+          <Grid item xs={12} className="flex justify-center mt-2">
+            <Button
+              variant="text"
+              onClick={() => router.back()}
+              sx={{ px: "16px" }}
+            >
+              Cancel
+            </Button>
+          </Grid>
         </Grid>
 
         <input
@@ -233,6 +201,6 @@ export const ActivityForm = ({
           type="submit"
         ></button>
       </form>
-    </div>
+    </main>
   );
 };

@@ -57,6 +57,7 @@ const VARIANTS: Record<string, {}> = {
     fontSize: "14px",
     fontWeight: 600,
     lineHeight: "20px",
+    py: "14px",
     "@media (min-width: 768px)": {
       fontSize: "16px",
     },

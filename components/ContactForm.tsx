@@ -164,7 +164,6 @@ export const ContactForm = ({ contact, userEmail }: Props) => {
                   color: "#38ACE2",
                   fontSize: "16px",
                   fontWeight: 400,
-                  py: "14px",
                   "&:hover": {
                     color: "#38ACE2",
                   },

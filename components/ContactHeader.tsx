@@ -116,7 +116,7 @@ export const ContactHeader = ({ contact }: Props) => {
           <ChevronLeft size={36} className="md:w-11 md:h-11 lg:w-13 lg:h-13" />
         </Button>
         <div className="relative">
-          <div className="flex items-center space-x-5">
+          <div className="flex items-center">
             {contact.isArchived && (
               <div className="bg-white bg-opacity-5 rounded-2xl px-4 py-[6px]">
                 <Typography variant="body1">Archived</Typography>
@@ -124,7 +124,10 @@ export const ContactHeader = ({ contact }: Props) => {
             )}
             <Button
               variant="text"
-              sx={{ display: "flex", alignItems: "center" }}
+              sx={{
+                mr: "-12px !important",
+                p: "12px !important",
+              }}
               onClick={() => setShowDropdown(!showDropdown)}
             >
               <DotsThreeCircleVertical
@@ -135,7 +138,7 @@ export const ContactHeader = ({ contact }: Props) => {
           </div>
           {showDropdown && (
             <div className="absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-[#3C3C43] divide-opacity-[0.36] rounded-md bg-[#EDEDED] shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-              <div className="py-2">
+              <div>
                 <Button
                   onClick={() => {}}
                   variant="text"
@@ -145,7 +148,6 @@ export const ContactHeader = ({ contact }: Props) => {
                     justifyContent: "space-between",
                     alignItems: "center",
                     px: "16px",
-                    py: "8px",
                     color: "black",
                     "&:hover": {
                       backgroundColor: "rgba(0, 0, 0, 0.08)",
@@ -158,7 +160,7 @@ export const ContactHeader = ({ contact }: Props) => {
                   <MessageSquare size={24} />
                 </Button>
               </div>
-              <div className="py-2">
+              <div>
                 <Button
                   onClick={() => router.push(`/contacts/${contact.id}/edit`)}
                   variant="text"
@@ -168,7 +170,6 @@ export const ContactHeader = ({ contact }: Props) => {
                     justifyContent: "space-between",
                     alignItems: "center",
                     px: "16px",
-                    py: "8px",
                     color: "black",
                     "&:hover": {
                       backgroundColor: "rgba(0, 0, 0, 0.08)",
@@ -181,7 +182,7 @@ export const ContactHeader = ({ contact }: Props) => {
                   <Edit size={24} />
                 </Button>
               </div>
-              <div className="py-2">
+              <div>
                 <Button
                   onClick={() => handleStatusChange(!contact.isArchived)}
                   variant="text"
@@ -191,7 +192,6 @@ export const ContactHeader = ({ contact }: Props) => {
                     justifyContent: "space-between",
                     alignItems: "center",
                     px: "16px",
-                    py: "8px",
                     color: "black",
                     "&:hover": {
                       backgroundColor: "rgba(0, 0, 0, 0.08)",
@@ -204,7 +204,7 @@ export const ContactHeader = ({ contact }: Props) => {
                   <Archive size={24} />
                 </Button>
               </div>
-              <div className="py-2">
+              <div>
                 <Button
                   onClick={handleDelete}
                   variant="text"
@@ -214,7 +214,6 @@ export const ContactHeader = ({ contact }: Props) => {
                     justifyContent: "space-between",
                     alignItems: "center",
                     px: "16px",
-                    py: "8px",
                     color: "black",
                     "&:hover": {
                       backgroundColor: "rgba(0, 0, 0, 0.08)",
