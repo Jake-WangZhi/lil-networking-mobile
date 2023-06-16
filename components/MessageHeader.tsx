@@ -1,7 +1,6 @@
 import { Grid, Typography } from "@mui/material";
 import { Button } from "@/components/Button";
 import { ChevronLeft } from "react-feather";
-import { useBackPath } from "@/contexts/BackPathContext";
 import { useRouter } from "next/navigation";
 
 interface Props {
@@ -11,7 +10,6 @@ interface Props {
 
 export const MessageHeader = ({ firstName, contactId }: Props) => {
   const router = useRouter();
-  const { setBackPath } = useBackPath();
 
   return (
     <>
