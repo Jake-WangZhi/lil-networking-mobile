@@ -30,7 +30,7 @@ export interface Contact {
 }
 
 export interface Activity {
-  id: string;
+  id?: string;
   contactId: string;
   title: string;
   description: string;

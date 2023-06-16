@@ -20,8 +20,7 @@ export const MessageHeader = ({ firstName, contactId }: Props) => {
           <Button
             variant="text"
             onClick={() => {
-              setBackPath("/dashboard");
-              router.push("/dashboard");
+              router.back();
             }}
             sx={{ py: "6px" }}
           >
@@ -43,7 +42,6 @@ export const MessageHeader = ({ firstName, contactId }: Props) => {
         <Button
           variant="text"
           onClick={() => {
-            setBackPath(`/contacts/${contactId}/message`);
             router.push(`/contacts/${contactId}`);
           }}
           sx={{

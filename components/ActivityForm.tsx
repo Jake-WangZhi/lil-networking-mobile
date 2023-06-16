@@ -8,7 +8,7 @@ import { Grid, Typography } from "@mui/material";
 import { useGoalsMutation } from "@/hooks/useGoalsMutation";
 import { useSession } from "next-auth/react";
 import { GoalProgressType } from "@/types";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const characterLimit = 300;
 
@@ -19,10 +19,17 @@ interface Props {
 export const ActivityForm = ({ contactId }: Props) => {
   const { data: session } = useSession();
   const router = useRouter();
+  const searchParams = useSearchParams();
 
-  const [description, setDescription] = useState("");
-  const [title, setTitle] = useState("");
-  const [date, setDate] = useState("");
+  const prefilledTitle = searchParams?.get("title") || "";
+  const prefilledDescription = searchParams?.get("description") || "";
+  const isFromMessage = searchParams?.get("isFromMessage") || "";
+
+  const [description, setDescription] = useState(prefilledDescription);
+  const [title, setTitle] = useState(prefilledTitle);
+  const [date, setDate] = useState(
+    isFromMessage ? new Date()?.toISOString().split("T")[0] : ""
+  );
   const [titleError, setTitleError] = useState("");
   const [dateError, setDateError] = useState("");
   const [isLogging, setIsLogging] = useState(false);
@@ -67,6 +74,22 @@ export const ActivityForm = ({ contactId }: Props) => {
       setIsLogging(false);
     }
   }, [date, putGoalsMutation, session?.user?.email, title]);
+
+  const handleCancelClick = useCallback(() => {
+    if (isFromMessage) {
+      setTitle(prefilledTitle);
+      setDescription(prefilledDescription);
+
+      putGoalsMutation.mutate({
+        email: session?.user?.email ?? "",
+        type: GoalProgressType.MESSAGES,
+      });
+
+      document.getElementById("submitActivityForm")?.click();
+    } else {
+      router.back();
+    }
+  }, []);
 
   return (
     <main className="relative flex flex-col items-center text-white px-4 py-8">
@@ -181,7 +204,7 @@ export const ActivityForm = ({ contactId }: Props) => {
           <Grid item xs={12} className="flex justify-center mt-2">
             <Button
               variant="text"
-              onClick={() => router.back()}
+              onClick={handleCancelClick}
               sx={{ px: "16px" }}
             >
               Cancel
@@ -194,6 +217,12 @@ export const ActivityForm = ({ contactId }: Props) => {
           name="contactId"
           type="hidden"
           defaultValue={contactId}
+        />
+        <input
+          id="isFromMessage"
+          name="isFromMessage"
+          type="hidden"
+          defaultValue={isFromMessage}
         />
         <button
           id="submitActivityForm"

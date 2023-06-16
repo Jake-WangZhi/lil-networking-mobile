@@ -20,6 +20,7 @@ interface FormDataOptions {
   date: string;
   description: string;
   contactId: string;
+  isFromMessage: boolean;
 }
 
 interface FormData {
@@ -76,6 +77,7 @@ export async function createActivity(formData: FormData) {
   const date = formData.get("date");
   const description = formData.get("description");
   const contactId = formData.get("contactId");
+  const isFromMessage = formData.get("isFromMessage");
 
   await db.createActivity({
     title,
@@ -84,5 +86,6 @@ export async function createActivity(formData: FormData) {
     contactId,
   });
 
-  redirect(`/contacts/${contactId}`);
+  if (isFromMessage) redirect("/dashboard");
+  else redirect(`/contacts/${contactId}`);
 }

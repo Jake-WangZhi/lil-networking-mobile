@@ -94,6 +94,10 @@ export const ContactHeader = ({ contact }: Props) => {
     setIsAlertOpen(false);
   }, [action, contact, deleteContactMutation, updateContactMutation]);
 
+  const handleCancelClick = useCallback(() => {
+    setIsAlertOpen(false);
+  }, []);
+
   return (
     <div className="mb-2 mx-4">
       {errorMessage && (
@@ -108,11 +112,7 @@ export const ContactHeader = ({ contact }: Props) => {
         </Typography>
       )}
       <div className="flex justify-between items-center">
-        <Button
-          variant="text"
-          onClick={() => router.push(backPath)}
-          sx={{ py: "6px" }}
-        >
+        <Button variant="text" onClick={() => router.back()} sx={{ py: "6px" }}>
           <ChevronLeft size={36} className="md:w-11 md:h-11 lg:w-13 lg:h-13" />
         </Button>
         <div className="relative">
@@ -140,7 +140,7 @@ export const ContactHeader = ({ contact }: Props) => {
             <div className="absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-[#3C3C43] divide-opacity-[0.36] rounded-md bg-[#EDEDED] shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
               <div>
                 <Button
-                  onClick={() => {}}
+                  onClick={() => router.push(`/contacts/${contact.id}/message`)}
                   variant="text"
                   sx={{
                     width: "100%",
@@ -254,6 +254,15 @@ export const ContactHeader = ({ contact }: Props) => {
             }}
           >
             {action === "delete" ? "Delete" : "Allow"}
+          </Button>
+        }
+        cancelButton={
+          <Button
+            variant="text"
+            onClick={handleCancelClick}
+            sx={{ zIndex: 10, width: "221px" }}
+          >
+            Cancel
           </Button>
         }
       />
