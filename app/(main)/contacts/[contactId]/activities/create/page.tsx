@@ -2,7 +2,6 @@
 
 import { ActivityType } from "@/types";
 import { Typography, Grid } from "@mui/material";
-import { useSession } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { useState, ChangeEvent, useCallback } from "react";
@@ -20,7 +19,6 @@ export default function CreateActivityPage({
 }: {
   params: { contactId: string };
 }) {
-  const { data: session } = useSession();
   const router = useRouter();
   const searchParams = useSearchParams();
 

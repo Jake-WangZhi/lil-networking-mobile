@@ -1,7 +1,7 @@
 import { Grid, Typography } from "@mui/material";
 import { Button } from "@/components/Button";
 import { ChevronLeft } from "react-feather";
-import { useRouter, usePathname } from "next/navigation";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { useBackPath } from "@/contexts/BackPathContext";
 import { useCallback } from "react";
 
@@ -14,11 +14,16 @@ export const MessageHeader = ({ firstName, contactId }: Props) => {
   const router = useRouter();
   const pathname = usePathname();
   const { setBackPath } = useBackPath();
+  const searchParams = useSearchParams();
 
   const handleBackClick = useCallback(() => {
-    setBackPath("/dashboard");
-    router.push("/dashboard");
-  }, [router, setBackPath]);
+    if (searchParams?.get("isFromProfile")) {
+      router.back();
+    } else {
+      setBackPath("/dashboard");
+      router.push("/dashboard");
+    }
+  }, [router, searchParams, setBackPath]);
 
   const handleViewProfileClick = useCallback(() => {
     setBackPath(pathname);

@@ -144,5 +144,5 @@ export async function createActivity(formData: FormData) {
   });
 
   if (isFromMessage) redirect("/dashboard");
-  else redirect(`/contacts/${contactId}`);
+  else redirect(`/contacts/${contactId}?isChanged=true`);
 }

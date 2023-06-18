@@ -113,7 +113,7 @@ export const ContactHeader = ({ contact }: Props) => {
   );
 
   const handleMessageClick = useCallback(
-    () => router.push(`/contacts/${contact.id}/message`),
+    () => router.push(`/contacts/${contact.id}/message?isFromProfile=true`),
     [contact.id, router]
   );
 
