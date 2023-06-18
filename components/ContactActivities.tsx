@@ -28,11 +28,16 @@ export const ContactActivites = ({ activities }: Props) => {
     },
   });
 
-  const handleDelete = useCallback(
-    (activity: Activity) => {
+  const handleDeleteClick = useCallback(
+    (activity: Activity) => () => {
       deleteActivityMutation.mutate(activity);
     },
     [deleteActivityMutation]
+  );
+
+  const handlePlusClick = useCallback(
+    () => router.push(`/contacts/${activities[0].contactId}/activities/create`),
+    [activities, router]
   );
 
   return (
@@ -48,11 +53,7 @@ export const ContactActivites = ({ activities }: Props) => {
       <div className="flex items-center justify-between mb-3">
         <Typography variant="subtitle1">Activites</Typography>
         <Button
-          onClick={() =>
-            router.push(
-              `/contacts/${activities[0].contactId}/activities/create`
-            )
-          }
+          onClick={handlePlusClick}
           variant="text"
           sx={{
             display: "flex",
@@ -97,7 +98,7 @@ export const ContactActivites = ({ activities }: Props) => {
                     <div className="flex items-start">
                       <Button
                         variant="text"
-                        onClick={() => handleDelete(activity)}
+                        onClick={handleDeleteClick(activity)}
                       >
                         <Trash2 size={24} />
                       </Button>

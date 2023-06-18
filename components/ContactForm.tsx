@@ -52,9 +52,12 @@ export const ContactForm = ({ contact, userEmail }: Props) => {
     });
   }, []);
 
-  const handleButtonClick = useCallback((goalDays: number) => {
-    setSelectedGoalDays(goalDays);
-  }, []);
+  const handleDaysClick = useCallback(
+    (goalDays: number) => () => {
+      setSelectedGoalDays(goalDays);
+    },
+    []
+  );
 
   const validateFields = useCallback(() => {
     setIsSaving(true);
@@ -102,6 +105,8 @@ export const ContactForm = ({ contact, userEmail }: Props) => {
     }
   }, [email, firstName, industry, lastName, phone]);
 
+  const handleBackClick = useCallback(() => router.back(), [router]);
+
   return (
     <main className="relative flex flex-col items-center text-white pb-8">
       {/* @ts-expect-error Async Server Component */}
@@ -111,7 +116,7 @@ export const ContactForm = ({ contact, userEmail }: Props) => {
             <Grid item xs={2}>
               <Button
                 variant="text"
-                onClick={() => router.back()}
+                onClick={handleBackClick}
                 sx={{
                   py: "6px",
                 }}
@@ -304,7 +309,7 @@ export const ContactForm = ({ contact, userEmail }: Props) => {
                 border: selectedGoalDays === 30 ? "1px solid #38ACE2" : "none",
                 color: selectedGoalDays === 30 ? "#38ACE2" : "white",
               }}
-              onClick={() => handleButtonClick(30)}
+              onClick={handleDaysClick(30)}
             >
               30 days
             </Button>
@@ -314,7 +319,7 @@ export const ContactForm = ({ contact, userEmail }: Props) => {
                 border: selectedGoalDays === 60 ? "1px solid #38ACE2" : "none",
                 color: selectedGoalDays === 60 ? "#38ACE2" : "white",
               }}
-              onClick={() => handleButtonClick(60)}
+              onClick={handleDaysClick(60)}
             >
               60 days
             </Button>
@@ -324,7 +329,7 @@ export const ContactForm = ({ contact, userEmail }: Props) => {
                 border: selectedGoalDays === 90 ? "1px solid #38ACE2" : "none",
                 color: selectedGoalDays === 90 ? "#38ACE2" : "white",
               }}
-              onClick={() => handleButtonClick(90)}
+              onClick={handleDaysClick(90)}
             >
               90 days
             </Button>

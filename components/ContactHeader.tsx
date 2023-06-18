@@ -57,7 +57,7 @@ export const ContactHeader = ({ contact }: Props) => {
     },
   });
 
-  const handleDelete = useCallback(() => {
+  const handleDeleteClick = useCallback(() => {
     setShowDropdown(false);
     setAction("delete");
     setAlertDescription(
@@ -67,7 +67,7 @@ export const ContactHeader = ({ contact }: Props) => {
   }, []);
 
   const handleStatusChange = useCallback(
-    (isActive: boolean) => {
+    (isActive: boolean) => () => {
       setShowDropdown(false);
       if (isActive) {
         setAction("archive");
@@ -101,6 +101,27 @@ export const ContactHeader = ({ contact }: Props) => {
     setIsAlertOpen(false);
   }, []);
 
+  const handleBackClick = useCallback(
+    () =>
+      searchParams?.get("isChanged") ? router.push(backPath) : router.back(),
+    [backPath, router, searchParams]
+  );
+
+  const handleDropdownClick = useCallback(
+    () => setShowDropdown((prev) => !prev),
+    []
+  );
+
+  const handleMessageClick = useCallback(
+    () => router.push(`/contacts/${contact.id}/message`),
+    [contact.id, router]
+  );
+
+  const handleEditClick = useCallback(
+    () => router.push(`/contacts/${contact.id}/edit`),
+    [contact.id, router]
+  );
+
   return (
     <div className="mb-2 mx-4">
       {errorMessage && (
@@ -115,15 +136,7 @@ export const ContactHeader = ({ contact }: Props) => {
         </Typography>
       )}
       <div className="flex justify-between items-center">
-        <Button
-          variant="text"
-          onClick={() =>
-            searchParams?.get("isChanged")
-              ? router.push(backPath)
-              : router.back()
-          }
-          sx={{ py: "6px" }}
-        >
+        <Button variant="text" onClick={handleBackClick} sx={{ py: "6px" }}>
           {searchParams?.get("isChanged") ? (
             <X size={36} className="md:w-11 md:h-11 lg:w-13 lg:h-13" />
           ) : (
@@ -146,7 +159,7 @@ export const ContactHeader = ({ contact }: Props) => {
                 mr: "-12px !important",
                 p: "12px !important",
               }}
-              onClick={() => setShowDropdown(!showDropdown)}
+              onClick={handleDropdownClick}
             >
               <DotsThreeCircleVertical
                 size={24}
@@ -158,7 +171,7 @@ export const ContactHeader = ({ contact }: Props) => {
             <div className="absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-[#3C3C43] divide-opacity-[0.36] rounded-md bg-[#EDEDED] shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
               <div>
                 <Button
-                  onClick={() => router.push(`/contacts/${contact.id}/message`)}
+                  onClick={handleMessageClick}
                   variant="text"
                   sx={{
                     width: "100%",
@@ -180,7 +193,7 @@ export const ContactHeader = ({ contact }: Props) => {
               </div>
               <div>
                 <Button
-                  onClick={() => router.push(`/contacts/${contact.id}/edit`)}
+                  onClick={handleEditClick}
                   variant="text"
                   sx={{
                     width: "100%",
@@ -202,7 +215,7 @@ export const ContactHeader = ({ contact }: Props) => {
               </div>
               <div>
                 <Button
-                  onClick={() => handleStatusChange(!contact.isArchived)}
+                  onClick={handleStatusChange(!contact.isArchived)}
                   variant="text"
                   sx={{
                     width: "100%",
@@ -224,7 +237,7 @@ export const ContactHeader = ({ contact }: Props) => {
               </div>
               <div>
                 <Button
-                  onClick={handleDelete}
+                  onClick={handleDeleteClick}
                   variant="text"
                   sx={{
                     width: "100%",

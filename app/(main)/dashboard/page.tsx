@@ -9,8 +9,8 @@ import { PlusSquare } from "react-feather";
 import { Button } from "@/components/Button";
 import { InfoTooltipButton } from "@/components/InfoTooltipButton";
 import { NavFooter } from "@/components/NavFooter";
-
 import { useRouter } from "next/navigation";
+import { useCallback } from "react";
 
 export default function DashboardPage() {
   const { data: session } = useSession();
@@ -19,6 +19,11 @@ export default function DashboardPage() {
   const { actions, isLoading, isError } = useActions({
     email: session?.user?.email,
   });
+
+  const handlePlusClick = useCallback(
+    () => router.push("/contacts/create"),
+    [router]
+  );
 
   return (
     <main className="relative flex flex-col items-center text-white px-4">
@@ -31,7 +36,7 @@ export default function DashboardPage() {
             <InfoTooltipButton />
             <Button
               variant="text"
-              onClick={() => router.push("/contacts/create")}
+              onClick={handlePlusClick}
               sx={{ p: "8px !important" }}
             >
               <PlusSquare

@@ -3,8 +3,14 @@
 import { Button } from "@/components/Button";
 import { Typography } from "@mui/material";
 import { signIn } from "next-auth/react";
+import { useCallback } from "react";
 
 export default function SignInPage() {
+  const handleClick = useCallback(
+    () => signIn("linkedin", { callbackUrl: "/dashboard" }),
+    []
+  );
+
   return (
     <main className="relative flex flex-col justify-center px-8 space-y-4 pt-20">
       <h1 className="flex flex-col text-light-blue text-start text-5xl font-bold tracking-tight leading-72 md:text-7xl">
@@ -18,10 +24,7 @@ export default function SignInPage() {
         reach your goals
       </Typography>
       <div className="flex justify-center !mt-24">
-        <Button
-          variant="contained"
-          onClick={() => signIn("linkedin", { callbackUrl: "/dashboard" })}
-        >
+        <Button variant="contained" onClick={handleClick}>
           Sign in with LinkedIn
         </Button>
       </div>

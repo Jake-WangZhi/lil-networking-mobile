@@ -1,5 +1,11 @@
 import { Typography } from "@mui/material";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import {
+  Dispatch,
+  SetStateAction,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
 import { Button } from "./Button";
 
 interface ButtonContent {
@@ -21,6 +27,11 @@ export const GoalQuestions = ({
   buttonContents,
 }: Props) => {
   const [isDisabled, setIsDisabled] = useState(true);
+
+  const handleClick = useCallback(
+    (value: number) => () => setValue(value),
+    [setValue]
+  );
 
   useEffect(() => {
     //Use setTimeout to create a short delay to prevent accidental button triggering
@@ -53,7 +64,7 @@ export const GoalQuestions = ({
                     color: "white",
                   },
                 }}
-                onClick={() => setValue(value)}
+                onClick={handleClick(value)}
                 disabled={isDisabled}
               >
                 {label}

@@ -8,7 +8,7 @@ import { useContacts } from "@/hooks/useContacts";
 import { Typography } from "@mui/material";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { PlusSquare } from "react-feather";
 
 export default function ContactsPage() {
@@ -21,6 +21,11 @@ export default function ContactsPage() {
     name,
   });
 
+  const handlePlusClick = useCallback(
+    () => router.push("/contacts/create"),
+    [router]
+  );
+
   return (
     <main className="relative flex flex-col items-center text-white px-4">
       <div className="sticky top-0 w-full bg-dark-blue z-10 pt-8">
@@ -28,7 +33,7 @@ export default function ContactsPage() {
           <Typography variant="h1">All Contacts</Typography>
           <Button
             variant="text"
-            onClick={() => router.push("/contacts/create")}
+            onClick={handlePlusClick}
             sx={{ p: "8px !important" }}
           >
             <PlusSquare

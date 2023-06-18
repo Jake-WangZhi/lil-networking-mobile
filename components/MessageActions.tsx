@@ -91,6 +91,8 @@ export const MessageActions = ({ contact }: Props) => {
     });
   }, [contact.id, postActivityMutation, preFilledFormData]);
 
+  const handleDoneClick = useCallback(() => setIsEditAlertOpen(true), []);
+
   return (
     <>
       {errorMessage && (
@@ -107,7 +109,7 @@ export const MessageActions = ({ contact }: Props) => {
             px: "24px",
             py: "10px",
           }}
-          onClick={() => setIsEditAlertOpen(true)}
+          onClick={handleDoneClick}
         >
           <div className="w-12 h-12 bg-light-blue rounded-full flex justify-center items-center mb-1">
             <Check size={24} color="#0F1A24" />

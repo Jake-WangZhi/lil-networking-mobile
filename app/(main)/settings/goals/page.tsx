@@ -22,14 +22,13 @@ const SwiperButtonNext = ({
 }) => {
   const swiper = useSwiper();
 
+  const handleNextClick = useCallback(() => {
+    swiper.slideNext();
+    onNext();
+  }, [onNext, swiper]);
+
   return (
-    <Button
-      variant="contained"
-      onClick={() => {
-        swiper.slideNext();
-        onNext();
-      }}
-    >
+    <Button variant="contained" onClick={handleNextClick}>
       {children}
     </Button>
   );
@@ -44,14 +43,16 @@ const SwiperButtonBefore = ({
 }) => {
   const swiper = useSwiper();
 
+  const handlePrevClick = useCallback(() => {
+    swiper.slidePrev();
+    onPrev();
+  }, [onPrev, swiper]);
+
   return (
     <Button
       variant="text"
       sx={{ p: "12px !important" }}
-      onClick={() => {
-        swiper.slidePrev();
-        onPrev();
-      }}
+      onClick={handlePrevClick}
     >
       {children}
     </Button>
