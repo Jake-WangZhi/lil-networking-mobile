@@ -197,14 +197,3 @@ export const MessageActions = ({ contact }: Props) => {
     </>
   );
 };
-function UseMemo(
-  arg0: {
-    title: string;
-    date: string;
-    description: string;
-    isFromMessage: string;
-  },
-  arg1: never[]
-) {
-  throw new Error("Function not implemented.");
-}

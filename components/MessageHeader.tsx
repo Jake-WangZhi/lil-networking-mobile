@@ -1,7 +1,8 @@
 import { Grid, Typography } from "@mui/material";
 import { Button } from "@/components/Button";
 import { ChevronLeft } from "react-feather";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
+import { useBackPath } from "@/contexts/BackPathContext";
 
 interface Props {
   firstName: string;
@@ -10,6 +11,8 @@ interface Props {
 
 export const MessageHeader = ({ firstName, contactId }: Props) => {
   const router = useRouter();
+  const pathname = usePathname();
+  const { setBackPath } = useBackPath();
 
   return (
     <>
@@ -18,7 +21,7 @@ export const MessageHeader = ({ firstName, contactId }: Props) => {
           <Button
             variant="text"
             onClick={() => {
-              router.back();
+              router.push("/dashboard");
             }}
             sx={{ py: "6px" }}
           >
@@ -40,6 +43,7 @@ export const MessageHeader = ({ firstName, contactId }: Props) => {
         <Button
           variant="text"
           onClick={() => {
+            setBackPath(pathname);
             router.push(`/contacts/${contactId}`);
           }}
           sx={{

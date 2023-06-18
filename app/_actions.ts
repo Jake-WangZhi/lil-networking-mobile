@@ -108,7 +108,7 @@ export async function upsertContact(formData: FormData) {
     },
   });
 
-  redirect(`/contacts/${contact.id}`);
+  redirect(`/contacts/${contact.id}?isChanged=true`);
 }
 
 export async function createActivity(formData: FormData) {

@@ -1,7 +1,7 @@
 import { useBackPath } from "@/contexts/BackPathContext";
 import { useContactMutation } from "@/hooks/useContactMutation";
 import { DotsThreeCircleVertical } from "@phosphor-icons/react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useState, useCallback } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import {
@@ -10,6 +10,7 @@ import {
   Archive,
   Trash2,
   MessageSquare,
+  X,
 } from "react-feather";
 import { Contact } from "@/types";
 import { Typography } from "@mui/material";
@@ -24,6 +25,8 @@ export const ContactHeader = ({ contact }: Props) => {
   const router = useRouter();
   const { backPath } = useBackPath();
   const queryClient = useQueryClient();
+  const searchParams = useSearchParams();
+
   const [showDropdown, setShowDropdown] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [isAlertOpen, setIsAlertOpen] = useState(false);
@@ -82,7 +85,7 @@ export const ContactHeader = ({ contact }: Props) => {
     [contact, updateContactMutation]
   );
 
-  const handleClick = useCallback(() => {
+  const handleConfirmClick = useCallback(() => {
     if (action === "delete") {
       deleteContactMutation.mutate({ ...contact, id: contact.id });
     } else if (action === "archive") {
@@ -112,8 +115,23 @@ export const ContactHeader = ({ contact }: Props) => {
         </Typography>
       )}
       <div className="flex justify-between items-center">
-        <Button variant="text" onClick={() => router.back()} sx={{ py: "6px" }}>
-          <ChevronLeft size={36} className="md:w-11 md:h-11 lg:w-13 lg:h-13" />
+        <Button
+          variant="text"
+          onClick={() =>
+            searchParams?.get("isChanged")
+              ? router.push(backPath)
+              : router.back()
+          }
+          sx={{ py: "6px" }}
+        >
+          {searchParams?.get("isChanged") ? (
+            <X size={36} className="md:w-11 md:h-11 lg:w-13 lg:h-13" />
+          ) : (
+            <ChevronLeft
+              size={36}
+              className="md:w-11 md:h-11 lg:w-13 lg:h-13"
+            />
+          )}
         </Button>
         <div className="relative">
           <div className="flex items-center">
@@ -238,7 +256,7 @@ export const ContactHeader = ({ contact }: Props) => {
         actionButton={
           <Button
             variant="contained"
-            onClick={handleClick}
+            onClick={handleConfirmClick}
             sx={{
               zIndex: 10,
               width: "221px",
