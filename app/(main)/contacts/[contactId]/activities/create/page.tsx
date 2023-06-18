@@ -1,35 +1,56 @@
 "use client";
 
 import { useGoalsMutation } from "@/hooks/useGoalsMutation";
-import { GoalProgressType } from "@/types";
-import { Typography, Button, Grid } from "@mui/material";
+import { ActivityType, GoalProgressType } from "@/types";
+import { Typography, Grid } from "@mui/material";
 import { useSession } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { useState, ChangeEvent, useCallback } from "react";
 import { AlertTriangle } from "react-feather";
+import { createActivity } from "../../../../../_actions";
+import { Button } from "@/components/Button";
+import { useActivityMutation } from "@/hooks/useActivityMutation";
 
 import "../../../styles.css";
 
 const CHARACTER_LIMIT = 300;
 
-export default function LogPage({ params }: { params: { contactId: string } }) {
+export default function CreateActivityPage({
+  params,
+}: {
+  params: { contactId: string };
+}) {
   const { data: session } = useSession();
   const router = useRouter();
   const searchParams = useSearchParams();
 
   const prefilledTitle = searchParams?.get("title") || "";
+  const prefilledDate = searchParams?.get("date") || "";
   const prefilledDescription = searchParams?.get("description") || "";
   const isFromMessage = searchParams?.get("isFromMessage") || "";
 
   const [description, setDescription] = useState(prefilledDescription);
   const [title, setTitle] = useState(prefilledTitle);
-  const [date, setDate] = useState(
-    isFromMessage ? new Date()?.toISOString().split("T")[0] : ""
-  );
+  const [date, setDate] = useState(prefilledDate);
   const [titleError, setTitleError] = useState("");
   const [dateError, setDateError] = useState("");
   const [isLogging, setIsLogging] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const postActivityMutation = useActivityMutation({
+    method: "POST",
+    onSuccess: () => {
+      setErrorMessage("");
+      router.push("/dashboard");
+    },
+    onError: (error) => {
+      setErrorMessage(
+        "An error occurred. Cannot submit the form. Please try again."
+      );
+      console.log(error);
+    },
+  });
 
   const putGoalsMutation = useGoalsMutation({
     method: "PUT",
@@ -74,19 +95,32 @@ export default function LogPage({ params }: { params: { contactId: string } }) {
 
   const handleCancelClick = useCallback(() => {
     if (isFromMessage) {
-      setTitle(prefilledTitle);
-      setDescription(prefilledDescription);
-
       putGoalsMutation.mutate({
         email: session?.user?.email ?? "",
         type: GoalProgressType.MESSAGES,
       });
 
-      document.getElementById("submitActivityForm")?.click();
+      postActivityMutation.mutate({
+        title: prefilledTitle,
+        date: prefilledDate,
+        description: prefilledDescription,
+        contactId: params.contactId,
+        type: ActivityType.USER,
+      });
     } else {
       router.back();
     }
-  }, []);
+  }, [
+    isFromMessage,
+    params.contactId,
+    postActivityMutation,
+    prefilledDate,
+    prefilledDescription,
+    prefilledTitle,
+    putGoalsMutation,
+    router,
+    session?.user?.email,
+  ]);
 
   return (
     <main className="relative flex flex-col items-center text-white px-4 py-8">
@@ -164,7 +198,7 @@ export default function LogPage({ params }: { params: { contactId: string } }) {
             </Grid>
           </Grid>
 
-          <Grid item xs={12} className="mt-2">
+          <Grid item xs={12} sx={{ mt: "8px" }}>
             <Typography variant="subtitle1">Activity Details</Typography>
           </Grid>
           <Grid item xs={12}>
@@ -227,6 +261,12 @@ export default function LogPage({ params }: { params: { contactId: string } }) {
           type="submit"
         ></button>
       </form>
+
+      {errorMessage && (
+        <Typography variant="subtitle2" sx={{ textAlign: "center" }}>
+          {errorMessage}
+        </Typography>
+      )}
     </main>
   );
 }

@@ -49,7 +49,9 @@ export const ContactActivites = ({ activities }: Props) => {
         <Typography variant="subtitle1">Activites</Typography>
         <Button
           onClick={() =>
-            router.push(`/contacts/${activities[0].contactId}/activities/log`)
+            router.push(
+              `/contacts/${activities[0].contactId}/activities/create`
+            )
           }
           variant="text"
           sx={{

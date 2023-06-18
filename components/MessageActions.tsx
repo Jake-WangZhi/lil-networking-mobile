@@ -1,7 +1,7 @@
 import { Button } from "@/components/Button";
 import { Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { Check, Archive } from "react-feather";
 import { useContactMutation } from "@/hooks/useContactMutation";
 import { ActivityType, Contact } from "@/types";
@@ -21,12 +21,25 @@ export const MessageActions = ({ contact }: Props) => {
   const [isEditAlertOpen, setIsEditAlertOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
+  const preFilledFormData = useMemo(() => {
+    return {
+      title: "Messaged",
+      date: new Date().toISOString().split("T")[0],
+      description: `${session?.user?.name?.split(" ")[0]} reached out to ${
+        contact.firstName
+      }`,
+      isFromMessage: "true",
+    };
+  }, [contact.firstName, session?.user?.name]);
+
   const postActivityMutation = useActivityMutation({
     method: "POST",
     onSuccess: () => {
+      setErrorMessage("");
       router.push("/dashboard");
     },
     onError: (error) => {
+      setErrorMessage("An error occurred. Please try again.");
       console.log(error);
     },
   });
@@ -59,36 +72,24 @@ export const MessageActions = ({ contact }: Props) => {
   const handleConfirmEditClick = useCallback(() => {
     setIsEditAlertOpen(false);
 
-    const preFilledFormData = {
-      title: "Messaged",
-      description: `${session?.user?.name?.split(" ")[0]} reached out to ${
-        contact.firstName
-      }`,
-      isFromMessage: "true",
-    };
-
     const queryParams = new URLSearchParams(preFilledFormData);
 
-    router.push(`/contacts/${contact.id}/activities/log?${queryParams}`);
-  }, [contact, updateContactMutation]);
+    router.push(`/contacts/${contact.id}/activities/create?${queryParams}`);
+  }, [contact.id, preFilledFormData, router]);
 
   const handleCancelArchiveClick = useCallback(() => {
     setIsArchiveAlertOpen(false);
   }, []);
 
   const handleCancelEditClick = useCallback(() => {
+    setIsEditAlertOpen(false);
+
     postActivityMutation.mutate({
-      title: "Messaged",
-      date: new Date().toISOString().split("T")[0],
-      description: `${session?.user?.name?.split(" ")[0]} reached out to ${
-        contact.firstName
-      }`,
+      ...preFilledFormData,
       contactId: contact.id,
       type: ActivityType.USER,
     });
-
-    setIsEditAlertOpen(false);
-  }, []);
+  }, [contact.id, postActivityMutation, preFilledFormData]);
 
   return (
     <>
@@ -196,3 +197,14 @@ export const MessageActions = ({ contact }: Props) => {
     </>
   );
 };
+function UseMemo(
+  arg0: {
+    title: string;
+    date: string;
+    description: string;
+    isFromMessage: string;
+  },
+  arg1: never[]
+) {
+  throw new Error("Function not implemented.");
+}
