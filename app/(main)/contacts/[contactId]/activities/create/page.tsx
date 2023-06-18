@@ -1,7 +1,6 @@
 "use client";
 
-import { useGoalsMutation } from "@/hooks/useGoalsMutation";
-import { ActivityType, GoalProgressType } from "@/types";
+import { ActivityType } from "@/types";
 import { Typography, Grid } from "@mui/material";
 import { useSession } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
@@ -52,14 +51,6 @@ export default function CreateActivityPage({
     },
   });
 
-  const putGoalsMutation = useGoalsMutation({
-    method: "PUT",
-    onSuccess: () => {},
-    onError: (error) => {
-      console.log(error);
-    },
-  });
-
   const handleDescriptionChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     setDescription(event.target.value);
   };
@@ -82,24 +73,14 @@ export default function CreateActivityPage({
     }
 
     if (!hasError) {
-      putGoalsMutation.mutate({
-        email: session?.user?.email ?? "",
-        type: GoalProgressType.MESSAGES,
-      });
-
       document.getElementById("submitActivityForm")?.click();
     } else {
       setIsLogging(false);
     }
-  }, [date, putGoalsMutation, session?.user?.email, title]);
+  }, [date, title]);
 
   const handleCancelClick = useCallback(() => {
     if (isFromMessage) {
-      putGoalsMutation.mutate({
-        email: session?.user?.email ?? "",
-        type: GoalProgressType.MESSAGES,
-      });
-
       postActivityMutation.mutate({
         title: prefilledTitle,
         date: prefilledDate,
@@ -117,9 +98,7 @@ export default function CreateActivityPage({
     prefilledDate,
     prefilledDescription,
     prefilledTitle,
-    putGoalsMutation,
     router,
-    session?.user?.email,
   ]);
 
   return (

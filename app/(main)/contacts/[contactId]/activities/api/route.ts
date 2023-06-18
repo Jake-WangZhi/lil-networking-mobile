@@ -1,5 +1,6 @@
 import { Activity } from "@/types";
 import { NextResponse } from "next/server";
+import prisma from "@/lib/prisma";
 
 export async function POST(
   request: Request,
@@ -9,13 +10,28 @@ export async function POST(
 
   const { title, date, description, type } = activity;
 
-  const newActivity = await prisma?.activity.create({
+  const newActivity = await prisma.activity.create({
     data: {
       contactId: params.contactId,
       title,
       date,
       description,
       type,
+    },
+  });
+
+  const contact = await prisma.contact.findUnique({
+    where: { id: params.contactId },
+  });
+
+  await prisma.goals.update({
+    where: {
+      userId: contact?.userId,
+    },
+    data: {
+      messages: {
+        increment: 1,
+      },
     },
   });
 

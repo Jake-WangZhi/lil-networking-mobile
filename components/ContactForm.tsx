@@ -4,10 +4,9 @@ import { useState, useCallback } from "react";
 import { ChevronLeft, AlertTriangle, PlusCircle } from "react-feather";
 import validator from "validator";
 import { Button } from "./Button";
-import { Contact, GoalProgressType } from "@/types";
+import { Contact } from "@/types";
 import TagsInput from "react-tagsinput";
 import { upsertContact } from "@/app/_actions";
-import { useGoalsMutation } from "@/hooks/useGoalsMutation";
 
 interface Props {
   contact?: Contact;
@@ -36,14 +35,6 @@ export const ContactForm = ({ contact, userEmail }: Props) => {
   const [emailError, setEmailError] = useState("");
   const [phoneError, setPhoneError] = useState("");
   const [isSaving, setIsSaving] = useState(false);
-
-  const putGoalsMutation = useGoalsMutation({
-    method: "PUT",
-    onSuccess: () => {},
-    onError: (error) => {
-      console.log(error);
-    },
-  });
 
   const handleChange = useCallback((tags: string[]) => {
     setTags(tags);
@@ -105,25 +96,11 @@ export const ContactForm = ({ contact, userEmail }: Props) => {
     }
 
     if (!hasError) {
-      !contact &&
-        putGoalsMutation.mutate({
-          email: userEmail ?? "",
-          type: GoalProgressType.CONNECTIONS,
-        });
       document.getElementById("submitContactForm")?.click();
     } else {
       setIsSaving(false);
     }
-  }, [
-    contact,
-    email,
-    firstName,
-    putGoalsMutation,
-    industry,
-    lastName,
-    phone,
-    userEmail,
-  ]);
+  }, [email, firstName, industry, lastName, phone]);
 
   return (
     <main className="relative flex flex-col items-center text-white pb-8">

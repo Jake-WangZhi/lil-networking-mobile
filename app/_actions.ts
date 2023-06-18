@@ -1,6 +1,7 @@
 "use server";
 
-import * as db from "@/lib/prisma";
+import prisma from "@/lib/prisma";
+
 import { validateEmail, validatePhone } from "@/lib/utils";
 import { redirect } from "next/navigation";
 
@@ -48,25 +49,63 @@ export async function upsertContact(formData: FormData) {
     .split(",")
     .filter((link) => link !== "");
 
-  const user = await db.getUserByEmail(userEmail);
+  const user = await prisma.user.findUnique({
+    where: { email: userEmail },
+  });
   if (!user) throw new Error("User not found");
 
   if (email) validateEmail(email);
   if (phone) validatePhone(phone);
 
-  const contact = await db.upsertContact({
-    id,
-    firstName,
-    lastName,
-    title,
-    company,
-    industry,
-    goalDays,
-    email,
-    phone,
-    links,
-    interests,
-    userId: user.id,
+  const contact = await prisma.contact.upsert({
+    where: { id },
+    create: {
+      firstName,
+      lastName,
+      title,
+      company,
+      industry,
+      goalDays,
+      email,
+      phone,
+      links,
+      interests,
+      userId: user.id,
+    },
+    update: {
+      firstName,
+      lastName,
+      title,
+      company,
+      industry,
+      goalDays,
+      email,
+      phone,
+      links,
+      interests,
+    },
+  });
+
+  if (!id)
+    await prisma.activity.create({
+      data: {
+        contactId: contact.id,
+        title: "Contact created",
+        description: "",
+        date: new Date().toISOString().split("T")[0],
+        type: "SYSTEM",
+      },
+    });
+
+  await prisma.goals.update({
+    where: {
+      userId: user.id,
+    },
+    data: {
+      connections: {
+        increment: 1,
+      },
+    },
   });
 
   redirect(`/contacts/${contact.id}`);
@@ -79,11 +118,29 @@ export async function createActivity(formData: FormData) {
   const contactId = formData.get("contactId");
   const isFromMessage = formData.get("isFromMessage");
 
-  await db.createActivity({
-    title,
-    date,
-    description,
-    contactId,
+  await prisma.activity.create({
+    data: {
+      contactId,
+      title,
+      description,
+      date,
+      type: "USER",
+    },
+  });
+
+  const contact = await prisma.contact.findUnique({
+    where: { id: contactId },
+  });
+
+  await prisma.goals.update({
+    where: {
+      userId: contact?.userId,
+    },
+    data: {
+      messages: {
+        increment: 1,
+      },
+    },
   });
 
   if (isFromMessage) redirect("/dashboard");
