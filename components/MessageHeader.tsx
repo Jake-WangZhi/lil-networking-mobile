@@ -3,6 +3,7 @@ import { Button } from "@/components/Button";
 import { ChevronLeft } from "react-feather";
 import { useRouter, usePathname } from "next/navigation";
 import { useBackPath } from "@/contexts/BackPathContext";
+import { useCallback } from "react";
 
 interface Props {
   firstName: string;
@@ -14,17 +15,21 @@ export const MessageHeader = ({ firstName, contactId }: Props) => {
   const pathname = usePathname();
   const { setBackPath } = useBackPath();
 
+  const handleBackClick = useCallback(() => {
+    setBackPath("/dashboard");
+    router.push("/dashboard");
+  }, [router, setBackPath]);
+
+  const handleViewProfileClick = useCallback(() => {
+    setBackPath(pathname);
+    router.push(`/contacts/${contactId}`);
+  }, [contactId, pathname, router, setBackPath]);
+
   return (
     <>
       <Grid container alignItems="center">
         <Grid item xs={2}>
-          <Button
-            variant="text"
-            onClick={() => {
-              router.push("/dashboard");
-            }}
-            sx={{ py: "6px" }}
-          >
+          <Button variant="text" onClick={handleBackClick} sx={{ py: "6px" }}>
             <ChevronLeft
               size={36}
               className="md:w-11 md:h-11 lg:w-13 lg:h-13"
@@ -42,10 +47,7 @@ export const MessageHeader = ({ firstName, contactId }: Props) => {
       <div className="flex justify-center mb-5">
         <Button
           variant="text"
-          onClick={() => {
-            setBackPath(pathname);
-            router.push(`/contacts/${contactId}`);
-          }}
+          onClick={handleViewProfileClick}
           sx={{
             py: "12px",
           }}
