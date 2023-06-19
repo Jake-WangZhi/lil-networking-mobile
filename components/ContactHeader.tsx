@@ -102,9 +102,8 @@ export const ContactHeader = ({ contact }: Props) => {
   }, []);
 
   const handleBackClick = useCallback(
-    () =>
-      searchParams?.get("isChanged") ? router.push(backPath) : router.back(),
-    [backPath, router, searchParams]
+    () => router.push(backPath),
+    [backPath, router]
   );
 
   const handleDropdownClick = useCallback(
@@ -138,7 +137,7 @@ export const ContactHeader = ({ contact }: Props) => {
       <div className="flex justify-between items-center">
         <Button variant="text" onClick={handleBackClick} sx={{ py: "6px" }}>
           {searchParams?.get("isChanged") ? (
-            <X size={36} className="md:w-11 md:h-11 lg:w-13 lg:h-13" />
+            <X size={24} className="md:w-11 md:h-11 lg:w-13 lg:h-13" />
           ) : (
             <ChevronLeft
               size={36}
@@ -146,120 +145,122 @@ export const ContactHeader = ({ contact }: Props) => {
             />
           )}
         </Button>
-        <div className="relative">
-          <div className="flex items-center">
-            {contact.isArchived && (
-              <div className="bg-white bg-opacity-5 rounded-2xl px-4 py-[6px]">
-                <Typography variant="body1">Archived</Typography>
+        {!backPath.includes("/message") && (
+          <div className="relative">
+            <div className="flex items-center">
+              {contact.isArchived && (
+                <div className="bg-white bg-opacity-5 rounded-2xl px-4 py-[6px]">
+                  <Typography variant="body1">Archived</Typography>
+                </div>
+              )}
+              <Button
+                variant="text"
+                sx={{
+                  mr: "-12px !important",
+                  p: "12px !important",
+                }}
+                onClick={handleDropdownClick}
+              >
+                <DotsThreeCircleVertical
+                  size={24}
+                  className="md:w-7 md:h-7 lg:w-8 lg:h-8"
+                />
+              </Button>
+            </div>
+            {showDropdown && (
+              <div className="absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-[#3C3C43] divide-opacity-[0.36] rounded-md bg-[#EDEDED] shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                <div>
+                  <Button
+                    onClick={handleMessageClick}
+                    variant="text"
+                    sx={{
+                      width: "100%",
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                      px: "16px",
+                      color: "black",
+                      "&:hover": {
+                        backgroundColor: "rgba(0, 0, 0, 0.08)",
+                      },
+                    }}
+                  >
+                    <Typography variant="subtitle1" sx={{ color: "black" }}>
+                      Message
+                    </Typography>
+                    <MessageSquare size={24} />
+                  </Button>
+                </div>
+                <div>
+                  <Button
+                    onClick={handleEditClick}
+                    variant="text"
+                    sx={{
+                      width: "100%",
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                      px: "16px",
+                      color: "black",
+                      "&:hover": {
+                        backgroundColor: "rgba(0, 0, 0, 0.08)",
+                      },
+                    }}
+                  >
+                    <Typography variant="subtitle1" sx={{ color: "black" }}>
+                      Edit
+                    </Typography>
+                    <Edit size={24} />
+                  </Button>
+                </div>
+                <div>
+                  <Button
+                    onClick={handleStatusChange(!contact.isArchived)}
+                    variant="text"
+                    sx={{
+                      width: "100%",
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                      px: "16px",
+                      color: "black",
+                      "&:hover": {
+                        backgroundColor: "rgba(0, 0, 0, 0.08)",
+                      },
+                    }}
+                  >
+                    <Typography variant="subtitle1" sx={{ color: "black" }}>
+                      {contact.isArchived ? "Activate" : "Archive"}
+                    </Typography>
+                    <Archive size={24} />
+                  </Button>
+                </div>
+                <div>
+                  <Button
+                    onClick={handleDeleteClick}
+                    variant="text"
+                    sx={{
+                      width: "100%",
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                      px: "16px",
+                      color: "black",
+                      "&:hover": {
+                        backgroundColor: "rgba(0, 0, 0, 0.08)",
+                      },
+                    }}
+                  >
+                    <Typography variant="subtitle1" sx={{ color: "black" }}>
+                      Delete
+                    </Typography>
+                    <Trash2 size={24} />
+                  </Button>
+                </div>
               </div>
             )}
-            <Button
-              variant="text"
-              sx={{
-                mr: "-12px !important",
-                p: "12px !important",
-              }}
-              onClick={handleDropdownClick}
-            >
-              <DotsThreeCircleVertical
-                size={24}
-                className="md:w-7 md:h-7 lg:w-8 lg:h-8"
-              />
-            </Button>
           </div>
-          {showDropdown && (
-            <div className="absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-[#3C3C43] divide-opacity-[0.36] rounded-md bg-[#EDEDED] shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-              <div>
-                <Button
-                  onClick={handleMessageClick}
-                  variant="text"
-                  sx={{
-                    width: "100%",
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    px: "16px",
-                    color: "black",
-                    "&:hover": {
-                      backgroundColor: "rgba(0, 0, 0, 0.08)",
-                    },
-                  }}
-                >
-                  <Typography variant="subtitle1" sx={{ color: "black" }}>
-                    Message
-                  </Typography>
-                  <MessageSquare size={24} />
-                </Button>
-              </div>
-              <div>
-                <Button
-                  onClick={handleEditClick}
-                  variant="text"
-                  sx={{
-                    width: "100%",
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    px: "16px",
-                    color: "black",
-                    "&:hover": {
-                      backgroundColor: "rgba(0, 0, 0, 0.08)",
-                    },
-                  }}
-                >
-                  <Typography variant="subtitle1" sx={{ color: "black" }}>
-                    Edit
-                  </Typography>
-                  <Edit size={24} />
-                </Button>
-              </div>
-              <div>
-                <Button
-                  onClick={handleStatusChange(!contact.isArchived)}
-                  variant="text"
-                  sx={{
-                    width: "100%",
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    px: "16px",
-                    color: "black",
-                    "&:hover": {
-                      backgroundColor: "rgba(0, 0, 0, 0.08)",
-                    },
-                  }}
-                >
-                  <Typography variant="subtitle1" sx={{ color: "black" }}>
-                    {contact.isArchived ? "Activate" : "Archive"}
-                  </Typography>
-                  <Archive size={24} />
-                </Button>
-              </div>
-              <div>
-                <Button
-                  onClick={handleDeleteClick}
-                  variant="text"
-                  sx={{
-                    width: "100%",
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    px: "16px",
-                    color: "black",
-                    "&:hover": {
-                      backgroundColor: "rgba(0, 0, 0, 0.08)",
-                    },
-                  }}
-                >
-                  <Typography variant="subtitle1" sx={{ color: "black" }}>
-                    Delete
-                  </Typography>
-                  <Trash2 size={24} />
-                </Button>
-              </div>
-            </div>
-          )}
-        </div>
+        )}
       </div>
       <AlertDialog
         isOpen={isAlertOpen}

@@ -1,7 +1,7 @@
 import { Typography, Grid } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { useState, useCallback } from "react";
-import { ChevronLeft, AlertTriangle, PlusCircle } from "react-feather";
+import { AlertTriangle, PlusCircle } from "react-feather";
 import validator from "validator";
 import { Button } from "./Button";
 import { Contact } from "@/types";
@@ -114,17 +114,8 @@ export const ContactForm = ({ contact, userEmail }: Props) => {
         <div className="flex items-center sticky top-0 w-full bg-dark-blue z-10 pt-8 mb-6 px-4">
           <Grid container alignItems="center">
             <Grid item xs={2}>
-              <Button
-                variant="text"
-                onClick={handleBackClick}
-                sx={{
-                  py: "6px",
-                }}
-              >
-                <ChevronLeft
-                  size={36}
-                  className="md:w-11 md:h-11 lg:w-13 lg:h-13"
-                />
+              <Button variant="text" onClick={handleBackClick}>
+                Cancel
               </Button>
             </Grid>
             <Grid item xs={8}>

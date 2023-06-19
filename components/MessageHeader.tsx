@@ -49,7 +49,7 @@ export const MessageHeader = ({ firstName, contactId }: Props) => {
         </Grid>
         <Grid item xs={2}></Grid>
       </Grid>
-      <div className="flex justify-center mb-5">
+      <div className="flex justify-center mb-4">
         <Button
           variant="text"
           onClick={handleViewProfileClick}

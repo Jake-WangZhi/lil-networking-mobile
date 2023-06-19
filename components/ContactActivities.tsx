@@ -6,6 +6,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { Card, CardContent, Typography } from "@mui/material";
 import { Button } from "./Button";
 import { useRouter } from "next/navigation";
+import { useBackPath } from "@/contexts/BackPathContext";
 
 interface Props {
   activities: Activity[];
@@ -14,6 +15,8 @@ interface Props {
 export const ContactActivites = ({ activities }: Props) => {
   const queryClient = useQueryClient();
   const router = useRouter();
+  const { backPath } = useBackPath();
+
   const [errorMessage, setErrorMessage] = useState("");
 
   const deleteActivityMutation = useActivityMutation({
@@ -52,22 +55,24 @@ export const ContactActivites = ({ activities }: Props) => {
       )}
       <div className="flex items-center justify-between mb-3">
         <Typography variant="subtitle1">Activites</Typography>
-        <Button
-          onClick={handlePlusClick}
-          variant="text"
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            gap: "4px",
-            py: "12px",
-            px: "8px",
-          }}
-        >
-          <PlusCircle size={24} />
-          <Typography variant="body1" sx={{ fontWeight: 600 }}>
-            Log Activity
-          </Typography>
-        </Button>
+        {!backPath.includes("/message") && (
+          <Button
+            onClick={handlePlusClick}
+            variant="text"
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              gap: "4px",
+              py: "12px",
+              px: "8px",
+            }}
+          >
+            <PlusCircle size={24} />
+            <Typography variant="body1" sx={{ fontWeight: 600 }}>
+              Log Activity
+            </Typography>
+          </Button>
+        )}
       </div>
       {activities?.map((activity, index) => (
         <div key={`activity-${index}`}>
