@@ -8,6 +8,7 @@ import { ActivityType, Contact } from "@/types";
 import { AlertDialog } from "./AlertDialog";
 import { useSession } from "next-auth/react";
 import { useActivityMutation } from "@/hooks/useActivityMutation";
+import { useBackPath } from "@/contexts/BackPathContext";
 
 interface Props {
   contact: Contact;
@@ -16,6 +17,7 @@ interface Props {
 export const MessageActions = ({ contact }: Props) => {
   const router = useRouter();
   const { data: session } = useSession();
+  const { backPath } = useBackPath();
 
   const [isArchiveAlertOpen, setIsArchiveAlertOpen] = useState(false);
   const [isEditAlertOpen, setIsEditAlertOpen] = useState(false);
@@ -48,7 +50,7 @@ export const MessageActions = ({ contact }: Props) => {
     method: "PUT",
     onSuccess: () => {
       setErrorMessage("");
-      router.push("/dashboard");
+      router.push(backPath);
     },
     onError: (error) => {
       setErrorMessage("An error occurred. Please try again.");

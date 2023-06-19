@@ -101,10 +101,13 @@ export const ContactHeader = ({ contact }: Props) => {
     setIsAlertOpen(false);
   }, []);
 
-  const handleBackClick = useCallback(
-    () => router.push(backPath),
-    [backPath, router]
-  );
+  const handleBackClick = useCallback(() => {
+    if (searchParams?.get("isChanged")) {
+      router.push(backPath);
+    } else {
+      router.back();
+    }
+  }, [backPath, router, searchParams]);
 
   const handleDropdownClick = useCallback(
     () => setShowDropdown((prev) => !prev),
@@ -112,7 +115,7 @@ export const ContactHeader = ({ contact }: Props) => {
   );
 
   const handleMessageClick = useCallback(
-    () => router.push(`/contacts/${contact.id}/message?isFromProfile=true`),
+    () => router.push(`/contacts/${contact.id}/message`),
     [contact.id, router]
   );
 
