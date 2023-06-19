@@ -1,13 +1,12 @@
 import { Typography, Grid } from "@mui/material";
 import { useRouter } from "next/navigation";
-import { useState, useCallback } from "react";
-import { ChevronLeft, AlertTriangle, PlusCircle } from "react-feather";
+import { useState, useCallback, useRef } from "react";
+import { AlertTriangle, PlusCircle } from "react-feather";
 import validator from "validator";
 import { Button } from "./Button";
-import { Contact, GoalProgressType } from "@/types";
+import { Contact } from "@/types";
 import TagsInput from "react-tagsinput";
 import { upsertContact } from "@/app/_actions";
-import { useGoalsMutation } from "@/hooks/useGoalsMutation";
 
 interface Props {
   contact?: Contact;
@@ -16,6 +15,7 @@ interface Props {
 
 export const ContactForm = ({ contact, userEmail }: Props) => {
   const router = useRouter();
+  const submitFormRef = useRef<HTMLButtonElement>(null);
 
   const [firstName, setFirstName] = useState(contact?.firstName);
   const [lastName, setLastName] = useState(contact?.lastName);
@@ -37,14 +37,6 @@ export const ContactForm = ({ contact, userEmail }: Props) => {
   const [phoneError, setPhoneError] = useState("");
   const [isSaving, setIsSaving] = useState(false);
 
-  const putGoalsMutation = useGoalsMutation({
-    method: "PUT",
-    onSuccess: () => {},
-    onError: (error) => {
-      console.log(error);
-    },
-  });
-
   const handleChange = useCallback((tags: string[]) => {
     setTags(tags);
   }, []);
@@ -61,9 +53,12 @@ export const ContactForm = ({ contact, userEmail }: Props) => {
     });
   }, []);
 
-  const handleButtonClick = useCallback((goalDays: number) => {
-    setSelectedGoalDays(goalDays);
-  }, []);
+  const handleDaysClick = useCallback(
+    (goalDays: number) => () => {
+      setSelectedGoalDays(goalDays);
+    },
+    []
+  );
 
   const validateFields = useCallback(() => {
     setIsSaving(true);
@@ -105,25 +100,13 @@ export const ContactForm = ({ contact, userEmail }: Props) => {
     }
 
     if (!hasError) {
-      !contact &&
-        putGoalsMutation.mutate({
-          email: userEmail ?? "",
-          type: GoalProgressType.CONNECTIONS,
-        });
-      document.getElementById("submitContactForm")?.click();
+      submitFormRef.current?.click();
     } else {
       setIsSaving(false);
     }
-  }, [
-    contact,
-    email,
-    firstName,
-    putGoalsMutation,
-    industry,
-    lastName,
-    phone,
-    userEmail,
-  ]);
+  }, [email, firstName, industry, lastName, phone]);
+
+  const handleBackClick = useCallback(() => router.back(), [router]);
 
   return (
     <main className="relative flex flex-col items-center text-white pb-8">
@@ -132,17 +115,8 @@ export const ContactForm = ({ contact, userEmail }: Props) => {
         <div className="flex items-center sticky top-0 w-full bg-dark-blue z-10 pt-8 mb-6 px-4">
           <Grid container alignItems="center">
             <Grid item xs={2}>
-              <Button
-                variant="text"
-                onClick={() => router.back()}
-                sx={{
-                  py: "6px",
-                }}
-              >
-                <ChevronLeft
-                  size={36}
-                  className="md:w-11 md:h-11 lg:w-13 lg:h-13"
-                />
+              <Button variant="text" onClick={handleBackClick}>
+                Cancel
               </Button>
             </Grid>
             <Grid item xs={8}>
@@ -164,7 +138,6 @@ export const ContactForm = ({ contact, userEmail }: Props) => {
                   color: "#38ACE2",
                   fontSize: "16px",
                   fontWeight: 400,
-                  py: "14px",
                   "&:hover": {
                     color: "#38ACE2",
                   },
@@ -328,7 +301,7 @@ export const ContactForm = ({ contact, userEmail }: Props) => {
                 border: selectedGoalDays === 30 ? "1px solid #38ACE2" : "none",
                 color: selectedGoalDays === 30 ? "#38ACE2" : "white",
               }}
-              onClick={() => handleButtonClick(30)}
+              onClick={handleDaysClick(30)}
             >
               30 days
             </Button>
@@ -338,7 +311,7 @@ export const ContactForm = ({ contact, userEmail }: Props) => {
                 border: selectedGoalDays === 60 ? "1px solid #38ACE2" : "none",
                 color: selectedGoalDays === 60 ? "#38ACE2" : "white",
               }}
-              onClick={() => handleButtonClick(60)}
+              onClick={handleDaysClick(60)}
             >
               60 days
             </Button>
@@ -348,7 +321,7 @@ export const ContactForm = ({ contact, userEmail }: Props) => {
                 border: selectedGoalDays === 90 ? "1px solid #38ACE2" : "none",
                 color: selectedGoalDays === 90 ? "#38ACE2" : "white",
               }}
-              onClick={() => handleButtonClick(90)}
+              onClick={handleDaysClick(90)}
             >
               90 days
             </Button>
@@ -500,11 +473,7 @@ export const ContactForm = ({ contact, userEmail }: Props) => {
           type="hidden"
           defaultValue={tags}
         />
-        <button
-          id="submitContactForm"
-          className="hidden"
-          type="submit"
-        ></button>
+        <button ref={submitFormRef} className="hidden" type="submit"></button>
       </form>
     </main>
   );

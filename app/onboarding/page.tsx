@@ -10,7 +10,7 @@ import { Swiper, SwiperSlide, useSwiper } from "swiper/react";
 import "swiper/css";
 
 import { Button } from "@/components/Button";
-import { ReactNode } from "react";
+import { ReactNode, useCallback } from "react";
 import { useRouter } from "next/navigation";
 
 const ONBOARDING_INTRO_PAGES = [
@@ -37,10 +37,12 @@ const ONBOARDING_INTRO_PAGES = [
 const SwiperButtonNext = ({ children }: { children: ReactNode }) => {
   const swiper = useSwiper();
 
+  const handleNextClick = useCallback(() => swiper.slideNext(), [swiper]);
+
   return (
     <Button
       variant="text"
-      onClick={() => swiper.slideNext()}
+      onClick={handleNextClick}
       sx={{
         width: "172px",
         height: "48px",
@@ -52,8 +54,18 @@ const SwiperButtonNext = ({ children }: { children: ReactNode }) => {
   );
 };
 
-export default function Page() {
+export default function OnboardingPage() {
   const router = useRouter();
+
+  const handleSetGoalsClick = useCallback(
+    () => router.push("/settings/goals"),
+    [router]
+  );
+
+  const handleSkipClick = useCallback(
+    () => router.push("/dashboard"),
+    [router]
+  );
 
   return (
     <main className="relative">
@@ -93,7 +105,7 @@ export default function Page() {
             actionButton={
               <Button
                 variant="contained"
-                onClick={() => router.push("/settings/goals")}
+                onClick={handleSetGoalsClick}
                 sx={{ width: "172px" }}
               >
                 {"I'm ready"}
@@ -102,11 +114,9 @@ export default function Page() {
             textButton={
               <Button
                 variant="text"
-                onClick={() => router.push("/dashboard")}
+                onClick={handleSkipClick}
                 sx={{
                   width: "172px",
-                  height: "48px",
-                  py: "12px",
                 }}
               >
                 Go to Dashboard

@@ -6,6 +6,7 @@ import { Button } from "./Button";
 import { PlusCircle } from "react-feather";
 import { useRouter } from "next/navigation";
 import { ClipLoader } from "react-spinners";
+import { useCallback } from "react";
 
 export const GoalSummary = () => {
   const { data: session } = useSession();
@@ -14,6 +15,11 @@ export const GoalSummary = () => {
   const { goals, isLoading, isError } = useGoals({
     email: session?.user?.email,
   });
+
+  const handleClick = useCallback(
+    () => router.push("/settings/goals"),
+    [router]
+  );
 
   if (isError) {
     return (
@@ -63,7 +69,7 @@ export const GoalSummary = () => {
       ) : (
         <Button
           variant="text"
-          onClick={() => router.push("/settings/goals")}
+          onClick={handleClick}
           sx={{
             width: "100%",
             gap: "4px",

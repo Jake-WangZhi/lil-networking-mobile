@@ -6,7 +6,6 @@ import {
   DialogContentText,
 } from "@mui/material";
 import { Dispatch, ReactNode, SetStateAction } from "react";
-import { Button } from "./Button";
 
 interface Props {
   isOpen: boolean;
@@ -14,6 +13,7 @@ interface Props {
   title: string;
   description?: string;
   actionButton: ReactNode;
+  cancelButton: ReactNode;
 }
 
 export const AlertDialog = ({
@@ -22,6 +22,7 @@ export const AlertDialog = ({
   title,
   description,
   actionButton,
+  cancelButton,
 }: Props) => {
   const handleClose = () => {
     setIsOpen(false);
@@ -51,13 +52,7 @@ export const AlertDialog = ({
       <DialogActions sx={{ justifyContent: "center" }}>
         <div className="flex flex-col items-center justify-center space-y-4">
           {actionButton}
-          <Button
-            variant="text"
-            onClick={handleClose}
-            sx={{ zIndex: 10, py: "14px", width: "221px" }}
-          >
-            Cancel
-          </Button>
+          {cancelButton}
         </div>
       </DialogActions>
     </Dialog>

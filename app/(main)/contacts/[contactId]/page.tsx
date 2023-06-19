@@ -3,8 +3,6 @@
 import "../styles.css";
 import { ContactDetails } from "@/components/ContactDetails";
 import { useContact } from "@/hooks/useContact";
-import { ActivityForm } from "@/components/ActivityForm";
-import { useState } from "react";
 import { ClipLoader } from "react-spinners";
 import { ContactHeader } from "@/components/ContactHeader";
 import { Typography } from "@mui/material";
@@ -15,8 +13,6 @@ export default function ContactPage({
 }: {
   params: { contactId: string };
 }) {
-  const [isActivityPageOpen, setIsActivityPageOpen] = useState(false);
-
   const { contact, isLoading, isError } = useContact({
     id: params.contactId,
   });
@@ -66,18 +62,12 @@ export default function ContactPage({
   }
 
   return (
-    <main className="relative min-h-screen py-8 text-white overflow-hidden">
+    <main className="relative min-h-screen py-8 text-white">
       <ContactHeader contact={contact} />
       <ContactDetails
         contact={contact}
         isError={isError}
         isLoading={isLoading}
-        setIsActivityPageOpen={setIsActivityPageOpen}
-      />
-      <ActivityForm
-        isOpen={isActivityPageOpen}
-        setIsActivityPageOpen={setIsActivityPageOpen}
-        contactId={params.contactId}
       />
       <NavFooter />
     </main>

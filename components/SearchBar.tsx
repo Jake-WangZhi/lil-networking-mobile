@@ -52,7 +52,6 @@ export const SearchBar = ({ name, setName }: Props) => {
         <Button
           variant="text"
           sx={{
-            py: "14px",
             color: "#0A84FF",
             "&:hover": {
               color: "#0A84FF",

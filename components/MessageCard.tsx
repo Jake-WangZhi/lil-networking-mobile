@@ -34,7 +34,7 @@ export const MessageCard = ({ contact }: Props) => {
               {contact.email && (
                 <Button
                   variant="text"
-                  sx={{ p: "12px" }}
+                  sx={{ p: "12px !important" }}
                   onClick={handleEmailClick}
                 >
                   <Mail size={24} />
@@ -43,7 +43,7 @@ export const MessageCard = ({ contact }: Props) => {
               {contact.links.length > 0 && (
                 <Button
                   variant="text"
-                  sx={{ p: "12px" }}
+                  sx={{ p: "12px !important" }}
                   onClick={handleLinkedInClick}
                 >
                   <Linkedin size={24} />

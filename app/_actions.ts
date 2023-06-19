@@ -1,6 +1,7 @@
 "use server";
 
-import * as db from "@/lib/prisma";
+import prisma from "@/lib/prisma";
+
 import { validateEmail, validatePhone } from "@/lib/utils";
 import { redirect } from "next/navigation";
 
@@ -20,6 +21,7 @@ interface FormDataOptions {
   date: string;
   description: string;
   contactId: string;
+  isFromMessage: boolean;
 }
 
 interface FormData {
@@ -47,28 +49,74 @@ export async function upsertContact(formData: FormData) {
     .split(",")
     .filter((link) => link !== "");
 
-  const user = await db.getUserByEmail(userEmail);
+  const user = await prisma.user.findUnique({
+    where: { email: userEmail },
+  });
   if (!user) throw new Error("User not found");
 
   if (email) validateEmail(email);
   if (phone) validatePhone(phone);
 
-  const contact = await db.upsertContact({
-    id,
-    firstName,
-    lastName,
-    title,
-    company,
-    industry,
-    goalDays,
-    email,
-    phone,
-    links,
-    interests,
-    userId: user.id,
-  });
+  let contact;
 
-  redirect(`/contacts/${contact.id}`);
+  if (!id) {
+    contact = await prisma.contact.create({
+      data: {
+        firstName,
+        lastName,
+        title,
+        company,
+        industry,
+        goalDays,
+        email,
+        phone,
+        links,
+        interests,
+        userId: user.id,
+      },
+    });
+
+    await prisma.activity.create({
+      data: {
+        contactId: contact.id,
+        title: "Contact created",
+        description: "",
+        date: new Date().toISOString().split("T")[0],
+        type: "SYSTEM",
+      },
+    });
+
+    await prisma.goals.update({
+      where: {
+        userId: user.id,
+      },
+      data: {
+        connections: {
+          increment: 1,
+        },
+      },
+    });
+  } else {
+    contact = await prisma.contact.update({
+      where: { id },
+      data: {
+        firstName,
+        lastName,
+        title,
+        company,
+        industry,
+        goalDays,
+        email,
+        phone,
+        links,
+        interests,
+      },
+    });
+
+    if (!contact) throw new Error("Contact not found");
+  }
+
+  redirect(`/contacts/${contact.id}?isChanged=true`);
 }
 
 export async function createActivity(formData: FormData) {
@@ -76,13 +124,33 @@ export async function createActivity(formData: FormData) {
   const date = formData.get("date");
   const description = formData.get("description");
   const contactId = formData.get("contactId");
+  const isFromMessage = formData.get("isFromMessage");
 
-  await db.createActivity({
-    title,
-    date,
-    description,
-    contactId,
+  await prisma.activity.create({
+    data: {
+      contactId,
+      title,
+      description,
+      date,
+      type: "USER",
+    },
   });
 
-  redirect(`/contacts/${contactId}`);
+  const contact = await prisma.contact.findUnique({
+    where: { id: contactId },
+  });
+
+  await prisma.goals.update({
+    where: {
+      userId: contact?.userId,
+    },
+    data: {
+      messages: {
+        increment: 1,
+      },
+    },
+  });
+
+  if (isFromMessage) redirect("/dashboard");
+  else redirect(`/contacts/${contactId}?isChanged=true`);
 }

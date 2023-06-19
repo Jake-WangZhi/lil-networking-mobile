@@ -1,45 +1,51 @@
-import {
-  Dispatch,
-  SetStateAction,
-  useState,
-  ChangeEvent,
-  useCallback,
-} from "react";
-import { X, Minus, AlertTriangle } from "react-feather";
-import { Button } from "./Button";
-import { createActivity } from "@/app/_actions";
-import { useSwipeable } from "react-swipeable";
-import { Grid, Typography } from "@mui/material";
-import { useGoalsMutation } from "@/hooks/useGoalsMutation";
-import { useSession } from "next-auth/react";
-import { GoalProgressType } from "@/types";
+"use client";
 
-const characterLimit = 300;
+import { ActivityType } from "@/types";
+import { Typography, Grid } from "@mui/material";
+import { useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { useState, ChangeEvent, useCallback, useRef } from "react";
+import { AlertTriangle } from "react-feather";
+import { createActivity } from "../../../../../_actions";
+import { Button } from "@/components/Button";
+import { useActivityMutation } from "@/hooks/useActivityMutation";
 
-interface Props {
-  isOpen: boolean;
-  setIsActivityPageOpen: Dispatch<SetStateAction<boolean>>;
-  contactId: string;
-}
+import "../../../styles.css";
 
-export const ActivityForm = ({
-  isOpen,
-  setIsActivityPageOpen,
-  contactId,
-}: Props) => {
-  const { data: session } = useSession();
+const CHARACTER_LIMIT = 300;
 
-  const [description, setDescription] = useState("");
-  const [title, setTitle] = useState("");
-  const [date, setDate] = useState("");
+export default function CreateActivityPage({
+  params,
+}: {
+  params: { contactId: string };
+}) {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const submitFormRef = useRef<HTMLButtonElement>(null);
+
+  const prefilledTitle = searchParams?.get("title") || "";
+  const prefilledDate = searchParams?.get("date") || "";
+  const prefilledDescription = searchParams?.get("description") || "";
+  const isFromMessage = searchParams?.get("isFromMessage") || "";
+
+  const [description, setDescription] = useState(prefilledDescription);
+  const [title, setTitle] = useState(prefilledTitle);
+  const [date, setDate] = useState(prefilledDate);
   const [titleError, setTitleError] = useState("");
   const [dateError, setDateError] = useState("");
   const [isLogging, setIsLogging] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
-  const putGoalsMutation = useGoalsMutation({
-    method: "PUT",
-    onSuccess: () => {},
+  const postActivityMutation = useActivityMutation({
+    method: "POST",
+    onSuccess: () => {
+      setErrorMessage("");
+      router.push("/dashboard");
+    },
     onError: (error) => {
+      setErrorMessage(
+        "An error occurred. Cannot submit the form. Please try again."
+      );
       console.log(error);
     },
   });
@@ -47,16 +53,6 @@ export const ActivityForm = ({
   const handleDescriptionChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     setDescription(event.target.value);
   };
-
-  const handlers = useSwipeable({
-    onSwipedDown: () => {
-      setIsActivityPageOpen(false);
-    },
-    swipeDuration: 500,
-    preventScrollOnSwipe: true,
-    trackMouse: true,
-    trackTouch: true,
-  });
 
   const validateFields = useCallback(() => {
     setIsLogging(true);
@@ -76,46 +72,41 @@ export const ActivityForm = ({
     }
 
     if (!hasError) {
-      putGoalsMutation.mutate({
-        email: session?.user?.email ?? "",
-        type: GoalProgressType.MESSAGES,
-      });
-
-      document.getElementById("submitActivityForm")?.click();
+      submitFormRef.current?.click();
     } else {
       setIsLogging(false);
     }
-  }, [date, putGoalsMutation, session?.user?.email, title]);
+  }, [date, title]);
+
+  const handleCancelClick = useCallback(() => {
+    if (isFromMessage) {
+      postActivityMutation.mutate({
+        title: prefilledTitle,
+        date: prefilledDate,
+        description: prefilledDescription,
+        contactId: params.contactId,
+        type: ActivityType.USER,
+      });
+    } else {
+      router.back();
+    }
+  }, [
+    isFromMessage,
+    params.contactId,
+    postActivityMutation,
+    prefilledDate,
+    prefilledDescription,
+    prefilledTitle,
+    router,
+  ]);
 
   return (
-    <div
-      className={`bg-dark-blue absolute z-10 inset-0 w-full h-full px-4 transition-transform duration-500 ${
-        isOpen ? "translate-y-0" : "translate-y-full"
-      }`}
-    >
-      <div className="flex justify-center" {...handlers}>
-        <Minus size={56} />
-      </div>
-
+    <main className="relative flex flex-col items-center text-white px-4 py-8">
       {/* @ts-expect-error Async Server Component */}
       <form action={createActivity}>
         <Grid container spacing={2} alignItems="center">
-          <Grid item xs={10}>
-            <Typography variant="h2">Log New Activity</Typography>
-          </Grid>
-          <Grid item xs={2} className="flex justify-end">
-            <Button
-              variant="text"
-              onClick={() => setIsActivityPageOpen(false)}
-              sx={{
-                py: "8px",
-              }}
-            >
-              <X size={32} className="md:w-11 md:h-11 lg:w-13 lg:h-13" />
-            </Button>
-          </Grid>
-          <Grid item xs={12} className="-mt-4">
-            <Typography variant="body1">Track interactions</Typography>
+          <Grid item xs={12} sx={{ textAlign: "center" }}>
+            <Typography variant="h2">Log Activity</Typography>
           </Grid>
 
           <Grid item xs={12}>
@@ -185,7 +176,7 @@ export const ActivityForm = ({
             </Grid>
           </Grid>
 
-          <Grid item xs={12} className="mt-2">
+          <Grid item xs={12} sx={{ mt: "8px" }}>
             <Typography variant="subtitle1">Activity Details</Typography>
           </Grid>
           <Grid item xs={12}>
@@ -195,13 +186,13 @@ export const ActivityForm = ({
               value={description}
               onChange={handleDescriptionChange}
               placeholder="Describe this activity here..."
-              maxLength={characterLimit}
+              maxLength={CHARACTER_LIMIT}
               className="text-base rounded-[4px] block p-2.5 w-full h-56 bg-white bg-opacity-5 placeholder-gray-400 text-white md:text-lg lg:text-xl focus:ring-1 focus:ring-white focus:bg-white focus:bg-opacity-[0.12] outline-none appearance-none caret-white"
             />
           </Grid>
           <Grid item xs={12} className="relative -mt-2 flex justify-end">
             <Typography variant="body1">
-              {description.length}/{characterLimit}
+              {description.length}/{CHARACTER_LIMIT}
             </Typography>
           </Grid>
 
@@ -219,20 +210,37 @@ export const ActivityForm = ({
               {isLogging ? "Logging..." : "Log Activity"}
             </Button>
           </Grid>
+          <Grid item xs={12} className="flex justify-center mt-2">
+            <Button
+              variant="text"
+              onClick={handleCancelClick}
+              sx={{ px: "16px" }}
+            >
+              Cancel
+            </Button>
+          </Grid>
         </Grid>
 
         <input
           id="contactId"
           name="contactId"
           type="hidden"
-          defaultValue={contactId}
+          defaultValue={params.contactId}
         />
-        <button
-          id="submitActivityForm"
-          className="hidden"
-          type="submit"
-        ></button>
+        <input
+          id="isFromMessage"
+          name="isFromMessage"
+          type="hidden"
+          defaultValue={isFromMessage}
+        />
+        <button ref={submitFormRef} className="hidden" type="submit"></button>
       </form>
-    </div>
+
+      {errorMessage && (
+        <Typography variant="subtitle2" sx={{ textAlign: "center" }}>
+          {errorMessage}
+        </Typography>
+      )}
+    </main>
   );
-};
+}

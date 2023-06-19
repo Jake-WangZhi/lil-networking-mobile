@@ -1,11 +1,14 @@
 import { Button } from "@/components/Button";
 import { Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { Check, Archive } from "react-feather";
 import { useContactMutation } from "@/hooks/useContactMutation";
-import { Contact } from "@/types";
+import { ActivityType, Contact } from "@/types";
 import { AlertDialog } from "./AlertDialog";
+import { useSession } from "next-auth/react";
+import { useActivityMutation } from "@/hooks/useActivityMutation";
+import { useBackPath } from "@/contexts/BackPathContext";
 
 interface Props {
   contact: Contact;
@@ -13,12 +16,26 @@ interface Props {
 
 export const MessageActions = ({ contact }: Props) => {
   const router = useRouter();
+  const { data: session } = useSession();
+  const { backPath } = useBackPath();
 
-  const [isAlertOpen, setIsAlertOpen] = useState(false);
+  const [isArchiveAlertOpen, setIsArchiveAlertOpen] = useState(false);
+  const [isEditAlertOpen, setIsEditAlertOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
-  const updateContactMutation = useContactMutation({
-    method: "PUT",
+  const preFilledFormData = useMemo(() => {
+    return {
+      title: "Messaged",
+      date: new Date().toISOString().split("T")[0],
+      description: `${session?.user?.name?.split(" ")[0]} reached out to ${
+        contact.firstName
+      }`,
+      isFromMessage: "true",
+    };
+  }, [contact.firstName, session?.user?.name]);
+
+  const postActivityMutation = useActivityMutation({
+    method: "POST",
     onSuccess: () => {
       setErrorMessage("");
       router.push("/dashboard");
@@ -29,18 +46,54 @@ export const MessageActions = ({ contact }: Props) => {
     },
   });
 
+  const updateContactMutation = useContactMutation({
+    method: "PUT",
+    onSuccess: () => {
+      setErrorMessage("");
+      router.push(backPath);
+    },
+    onError: (error) => {
+      setErrorMessage("An error occurred. Please try again.");
+      console.log(error);
+    },
+  });
+
   const handleArchiveClick = useCallback(() => {
-    setIsAlertOpen(true);
+    setIsArchiveAlertOpen(true);
   }, []);
 
-  const handleClick = useCallback(() => {
+  const handleConfirmArchiveClick = useCallback(() => {
     updateContactMutation.mutate({
       ...contact,
       isArchived: true,
     });
 
-    setIsAlertOpen(false);
+    setIsArchiveAlertOpen(false);
   }, [contact, updateContactMutation]);
+
+  const handleConfirmEditClick = useCallback(() => {
+    setIsEditAlertOpen(false);
+
+    const queryParams = new URLSearchParams(preFilledFormData);
+
+    router.push(`/contacts/${contact.id}/activities/create?${queryParams}`);
+  }, [contact.id, preFilledFormData, router]);
+
+  const handleCancelArchiveClick = useCallback(() => {
+    setIsArchiveAlertOpen(false);
+  }, []);
+
+  const handleCancelEditClick = useCallback(() => {
+    setIsEditAlertOpen(false);
+
+    postActivityMutation.mutate({
+      ...preFilledFormData,
+      contactId: contact.id,
+      type: ActivityType.USER,
+    });
+  }, [contact.id, postActivityMutation, preFilledFormData]);
+
+  const handleDoneClick = useCallback(() => setIsEditAlertOpen(true), []);
 
   return (
     <>
@@ -58,6 +111,7 @@ export const MessageActions = ({ contact }: Props) => {
             px: "24px",
             py: "10px",
           }}
+          onClick={handleDoneClick}
         >
           <div className="w-12 h-12 bg-light-blue rounded-full flex justify-center items-center mb-1">
             <Check size={24} color="#0F1A24" />
@@ -85,14 +139,14 @@ export const MessageActions = ({ contact }: Props) => {
         </Button>
       </div>
       <AlertDialog
-        isOpen={isAlertOpen}
-        setIsOpen={setIsAlertOpen}
+        isOpen={isArchiveAlertOpen}
+        setIsOpen={setIsArchiveAlertOpen}
         title={`Are you sure to you want to archive this contact?`}
         description={"Archiving this contact will remove them the dashboard."}
         actionButton={
           <Button
             variant="contained"
-            onClick={handleClick}
+            onClick={handleConfirmArchiveClick}
             sx={{
               zIndex: 10,
               width: "221px",
@@ -101,6 +155,46 @@ export const MessageActions = ({ contact }: Props) => {
             }}
           >
             Allow
+          </Button>
+        }
+        cancelButton={
+          <Button
+            variant="text"
+            onClick={handleCancelArchiveClick}
+            sx={{ zIndex: 10, width: "221px" }}
+          >
+            Cancel
+          </Button>
+        }
+      />
+      <AlertDialog
+        isOpen={isEditAlertOpen}
+        setIsOpen={setIsEditAlertOpen}
+        title={"Edit Activity Log?"}
+        description={
+          "This activity has been logged. Would you like to edit the details"
+        }
+        actionButton={
+          <Button
+            variant="contained"
+            onClick={handleConfirmEditClick}
+            sx={{
+              zIndex: 10,
+              width: "221px",
+              color: "#0F1A24 !important",
+              backgroundColor: "#38ACE2 !important",
+            }}
+          >
+            Edit
+          </Button>
+        }
+        cancelButton={
+          <Button
+            variant="text"
+            onClick={handleCancelEditClick}
+            sx={{ zIndex: 10, width: "221px" }}
+          >
+            Not now
           </Button>
         }
       />

@@ -1,21 +1,22 @@
 import { useActivityMutation } from "@/hooks/useActivityMutation";
 import { Activity, ActivityType } from "@/types";
 import { Circle, PlusCircle, Trash2 } from "react-feather";
-import { Dispatch, SetStateAction, useCallback, useState } from "react";
+import { useCallback, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { Card, CardContent, Typography } from "@mui/material";
 import { Button } from "./Button";
+import { useRouter } from "next/navigation";
+import { useBackPath } from "@/contexts/BackPathContext";
 
 interface Props {
   activities: Activity[];
-  setIsActivityPageOpen: Dispatch<SetStateAction<boolean>>;
 }
 
-export const ContactActivites = ({
-  activities,
-  setIsActivityPageOpen,
-}: Props) => {
+export const ContactActivites = ({ activities }: Props) => {
   const queryClient = useQueryClient();
+  const router = useRouter();
+  const { backPath } = useBackPath();
+
   const [errorMessage, setErrorMessage] = useState("");
 
   const deleteActivityMutation = useActivityMutation({
@@ -30,11 +31,16 @@ export const ContactActivites = ({
     },
   });
 
-  const handleDelete = useCallback(
-    (activity: Activity) => {
+  const handleDeleteClick = useCallback(
+    (activity: Activity) => () => {
       deleteActivityMutation.mutate(activity);
     },
     [deleteActivityMutation]
+  );
+
+  const handlePlusClick = useCallback(
+    () => router.push(`/contacts/${activities[0].contactId}/activities/create`),
+    [activities, router]
   );
 
   return (
@@ -49,24 +55,24 @@ export const ContactActivites = ({
       )}
       <div className="flex items-center justify-between mb-3">
         <Typography variant="subtitle1">Activites</Typography>
-        <Button
-          onClick={() => {
-            setIsActivityPageOpen(true);
-            window.scrollTo({ top: 0, behavior: "smooth" });
-          }}
-          variant="text"
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            gap: "4px",
-            py: "12px",
-          }}
-        >
-          <PlusCircle size={24} />
-          <Typography variant="body1" sx={{ fontWeight: 600 }}>
-            Log Activity
-          </Typography>
-        </Button>
+        {!backPath.includes("/message") && (
+          <Button
+            onClick={handlePlusClick}
+            variant="text"
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              gap: "4px",
+              py: "12px",
+              px: "8px",
+            }}
+          >
+            <PlusCircle size={24} />
+            <Typography variant="body1" sx={{ fontWeight: 600 }}>
+              Log Activity
+            </Typography>
+          </Button>
+        )}
       </div>
       {activities?.map((activity, index) => (
         <div key={`activity-${index}`}>
@@ -97,7 +103,7 @@ export const ContactActivites = ({
                     <div className="flex items-start">
                       <Button
                         variant="text"
-                        onClick={() => handleDelete(activity)}
+                        onClick={handleDeleteClick(activity)}
                       >
                         <Trash2 size={24} />
                       </Button>

@@ -4,13 +4,13 @@ import { useMutation } from "@tanstack/react-query";
 type Args = {
   onSuccess: () => void;
   onError: (error: unknown) => void;
-  method: "DELETE";
+  method: "DELETE" | "POST";
 };
 
 export const useActivityMutation = ({ onSuccess, onError, method }: Args) =>
   useMutation({
     mutationFn: async (activity: Activity) => {
-      let url = `/contacts/${activity.contactId}/activities`;
+      let url = `/contacts/${activity.contactId}/activities/api`;
 
       if (method === "DELETE") {
         url = `/contacts/${activity.contactId}/activities/${activity.id}`;
