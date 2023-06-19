@@ -4,7 +4,7 @@ import { ActivityType } from "@/types";
 import { Typography, Grid } from "@mui/material";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
-import { useState, ChangeEvent, useCallback } from "react";
+import { useState, ChangeEvent, useCallback, useRef } from "react";
 import { AlertTriangle } from "react-feather";
 import { createActivity } from "../../../../../_actions";
 import { Button } from "@/components/Button";
@@ -21,6 +21,7 @@ export default function CreateActivityPage({
 }) {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const submitFormRef = useRef<HTMLButtonElement>(null);
 
   const prefilledTitle = searchParams?.get("title") || "";
   const prefilledDate = searchParams?.get("date") || "";
@@ -71,7 +72,7 @@ export default function CreateActivityPage({
     }
 
     if (!hasError) {
-      document.getElementById("submitActivityForm")?.click();
+      submitFormRef.current?.click();
     } else {
       setIsLogging(false);
     }
@@ -232,11 +233,7 @@ export default function CreateActivityPage({
           type="hidden"
           defaultValue={isFromMessage}
         />
-        <button
-          id="submitActivityForm"
-          className="hidden"
-          type="submit"
-        ></button>
+        <button ref={submitFormRef} className="hidden" type="submit"></button>
       </form>
 
       {errorMessage && (

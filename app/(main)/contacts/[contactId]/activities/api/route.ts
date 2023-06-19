@@ -10,6 +10,16 @@ export async function POST(
 
   const { title, date, description, type } = activity;
 
+  const contact = await prisma.contact.findUnique({
+    where: { id: params.contactId },
+  });
+
+  if (!contact)
+    return new NextResponse(
+      JSON.stringify({ success: false, message: "No Contact Found" }),
+      { status: 404, headers: { "content-type": "application/json" } }
+    );
+
   const newActivity = await prisma.activity.create({
     data: {
       contactId: params.contactId,
@@ -20,13 +30,9 @@ export async function POST(
     },
   });
 
-  const contact = await prisma.contact.findUnique({
-    where: { id: params.contactId },
-  });
-
   await prisma.goals.update({
     where: {
-      userId: contact?.userId,
+      userId: contact.userId,
     },
     data: {
       messages: {

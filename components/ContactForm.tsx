@@ -1,6 +1,6 @@
 import { Typography, Grid } from "@mui/material";
 import { useRouter } from "next/navigation";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef } from "react";
 import { AlertTriangle, PlusCircle } from "react-feather";
 import validator from "validator";
 import { Button } from "./Button";
@@ -15,6 +15,7 @@ interface Props {
 
 export const ContactForm = ({ contact, userEmail }: Props) => {
   const router = useRouter();
+  const submitFormRef = useRef<HTMLButtonElement>(null);
 
   const [firstName, setFirstName] = useState(contact?.firstName);
   const [lastName, setLastName] = useState(contact?.lastName);
@@ -99,7 +100,7 @@ export const ContactForm = ({ contact, userEmail }: Props) => {
     }
 
     if (!hasError) {
-      document.getElementById("submitContactForm")?.click();
+      submitFormRef.current?.click();
     } else {
       setIsSaving(false);
     }
@@ -472,11 +473,7 @@ export const ContactForm = ({ contact, userEmail }: Props) => {
           type="hidden"
           defaultValue={tags}
         />
-        <button
-          id="submitContactForm"
-          className="hidden"
-          type="submit"
-        ></button>
+        <button ref={submitFormRef} className="hidden" type="submit"></button>
       </form>
     </main>
   );
