@@ -140,11 +140,11 @@ export const ContactHeader = ({ contact }: Props) => {
       <div className="flex justify-between items-center">
         <Button variant="text" onClick={handleBackClick} sx={{ py: "6px" }}>
           {searchParams?.get("isChanged") ? (
-            <X size={24} className="md:w-11 md:h-11 lg:w-13 lg:h-13" />
+            <X size={24} className="md:w-7 md:h-7 lg:w-8 lg:h-8" />
           ) : (
             <ChevronLeft
               size={36}
-              className="md:w-11 md:h-11 lg:w-13 lg:h-13"
+              className="md:w-10 md:h-10 lg:w-11 lg:h-11"
             />
           )}
         </Button>

@@ -86,7 +86,7 @@ export async function upsertContact(formData: FormData) {
     },
   });
 
-  if (!id)
+  if (!id) {
     await prisma.activity.create({
       data: {
         contactId: contact.id,
@@ -97,16 +97,17 @@ export async function upsertContact(formData: FormData) {
       },
     });
 
-  await prisma.goals.update({
-    where: {
-      userId: user.id,
-    },
-    data: {
-      connections: {
-        increment: 1,
+    await prisma.goals.update({
+      where: {
+        userId: user.id,
       },
-    },
-  });
+      data: {
+        connections: {
+          increment: 1,
+        },
+      },
+    });
+  }
 
   redirect(`/contacts/${contact.id}?isChanged=true`);
 }
