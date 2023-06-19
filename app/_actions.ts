@@ -57,36 +57,25 @@ export async function upsertContact(formData: FormData) {
   if (email) validateEmail(email);
   if (phone) validatePhone(phone);
 
-  const contact = await prisma.contact.upsert({
-    where: { id },
-    create: {
-      firstName,
-      lastName,
-      title,
-      company,
-      industry,
-      goalDays,
-      email,
-      phone,
-      links,
-      interests,
-      userId: user.id,
-    },
-    update: {
-      firstName,
-      lastName,
-      title,
-      company,
-      industry,
-      goalDays,
-      email,
-      phone,
-      links,
-      interests,
-    },
-  });
+  let contact;
 
   if (!id) {
+    contact = await prisma.contact.create({
+      data: {
+        firstName,
+        lastName,
+        title,
+        company,
+        industry,
+        goalDays,
+        email,
+        phone,
+        links,
+        interests,
+        userId: user.id,
+      },
+    });
+
     await prisma.activity.create({
       data: {
         contactId: contact.id,
@@ -107,6 +96,24 @@ export async function upsertContact(formData: FormData) {
         },
       },
     });
+  } else {
+    contact = await prisma.contact.update({
+      where: { id },
+      data: {
+        firstName,
+        lastName,
+        title,
+        company,
+        industry,
+        goalDays,
+        email,
+        phone,
+        links,
+        interests,
+      },
+    });
+
+    if (!contact) throw new Error("Contact not found");
   }
 
   redirect(`/contacts/${contact.id}?isChanged=true`);
