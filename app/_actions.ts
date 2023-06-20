@@ -87,7 +87,7 @@ export async function upsertContact(formData: FormData) {
       },
     });
 
-    await prisma.goals.update({
+    await prisma.goals.updateMany({
       where: {
         userId: user.id,
       },
@@ -143,7 +143,7 @@ export async function createActivity(formData: FormData) {
 
   if (!contact) throw new Error("Contact not found");
 
-  await prisma.goals.update({
+  await prisma.goals.updateMany({
     where: {
       userId: contact.userId,
     },

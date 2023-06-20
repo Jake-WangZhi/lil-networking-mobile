@@ -30,7 +30,7 @@ export async function POST(
     },
   });
 
-  await prisma.goals.update({
+  await prisma.goals.updateMany({
     where: {
       userId: contact.userId,
     },
