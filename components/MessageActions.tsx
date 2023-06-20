@@ -38,8 +38,8 @@ export const MessageActions = ({ contact }: Props) => {
     method: "POST",
     onSuccess: ({ showQuote }) => {
       setErrorMessage("");
-      if (showQuote) router.push("/quote?redirect_path=/dashboard");
-      else router.push("/dashboard");
+      if (showQuote) return router.push("/quote?redirect_path=/dashboard");
+      router.push("/dashboard");
     },
     onError: (error) => {
       setErrorMessage("An error occurred. Please try again.");

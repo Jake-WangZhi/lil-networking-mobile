@@ -40,8 +40,8 @@ export default function CreateActivityPage({
     method: "POST",
     onSuccess: ({ showQuote }) => {
       setErrorMessage("");
-      if (showQuote) router.push("/quote?redirect_path=/dashboard");
-      else router.push("/dashboard");
+      if (showQuote) return router.push("/quote?redirect_path=/dashboard");
+      router.push("/dashboard");
     },
     onError: (error) => {
       setErrorMessage(
