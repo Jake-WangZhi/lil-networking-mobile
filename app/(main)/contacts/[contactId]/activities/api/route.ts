@@ -41,20 +41,9 @@ export async function POST(
     },
   });
 
-  const contacts = await prisma.contact.findMany({
-    where: { userId: contact.userId },
-    select: {
-      id: true,
-    },
-  });
-
-  const contactIds = contacts.map((c) => c.id);
-
   const count = await prisma.activity.count({
     where: {
-      contactId: {
-        in: contactIds,
-      },
+      Contact: { userId: contact.userId },
       type: "USER",
     },
   });
