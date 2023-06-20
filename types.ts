@@ -60,5 +60,5 @@ export enum GoalProgressType {
 export interface Quote {
   text: string;
   author?: string;
-  titles?: string;
+  titles: string[];
 }

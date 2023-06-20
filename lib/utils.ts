@@ -73,3 +73,9 @@ export const formatDate = (dateStr: string) => {
   const formattedDate = `${monthName} ${parseInt(day, 10)}, ${year}`;
   return formattedDate;
 };
+
+export const formatTitles = (titles: string[]) => {
+  return titles
+    .join(titles.length === 2 ? " and " : ", ")
+    .replace(/,([^,]*)$/, ", and$1");
+};

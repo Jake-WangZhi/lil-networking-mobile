@@ -5,7 +5,7 @@ CREATE TABLE "Quote" (
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "text" TEXT NOT NULL,
     "author" TEXT,
-    "titles" TEXT,
+    "titles" TEXT[],
 
     CONSTRAINT "Quote_pkey" PRIMARY KEY ("id")
 );

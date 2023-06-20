@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/Button";
 import { useQuote } from "@/hooks/useQuote";
+import { formatTitles } from "@/lib/utils";
 import { Typography } from "@mui/material";
 import { useRouter, useSearchParams } from "next/navigation";
 import { ClipLoader } from "react-spinners";
@@ -54,9 +55,9 @@ export default function QuotePage() {
               {`-${quote.author}`}
             </Typography>
           )}
-          {quote.titles && (
+          {quote.titles.length !== 0 && (
             <Typography variant="h3" sx={{ color: "#38ACE2", mt: "16px" }}>
-              {quote.titles}
+              {formatTitles(quote.titles)}
             </Typography>
           )}
         </>
