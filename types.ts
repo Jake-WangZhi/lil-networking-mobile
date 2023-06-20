@@ -56,3 +56,9 @@ export enum GoalProgressType {
   CONNECTIONS = "connections",
   MESSAGES = "messages",
 }
+
+export interface Quote {
+  text: string;
+  author?: string;
+  titles?: string;
+}

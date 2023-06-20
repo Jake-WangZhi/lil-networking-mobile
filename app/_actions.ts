@@ -116,7 +116,7 @@ export async function upsertContact(formData: FormData) {
     if (!contact) throw new Error("Contact not found");
   }
 
-  redirect(`/contacts/${contact.id}?isChanged=true`);
+  redirect(`/contacts/${contact.id}?is_changed=true`);
 }
 
 export async function createActivity(formData: FormData) {
@@ -140,9 +140,11 @@ export async function createActivity(formData: FormData) {
     where: { id: contactId },
   });
 
+  if (!contact) throw new Error("Contact not found");
+
   await prisma.goals.update({
     where: {
-      userId: contact?.userId,
+      userId: contact.userId,
     },
     data: {
       messages: {
@@ -151,6 +153,32 @@ export async function createActivity(formData: FormData) {
     },
   });
 
-  if (isFromMessage) redirect("/dashboard");
-  else redirect(`/contacts/${contactId}?isChanged=true`);
+  const contacts = await prisma.contact.findMany({
+    where: { userId: contact.userId },
+    select: {
+      id: true,
+    },
+  });
+
+  const contactIds = contacts.map((c) => c.id);
+
+  const count = await prisma.activity.count({
+    where: {
+      contactId: {
+        in: contactIds,
+      },
+      type: "USER",
+    },
+  });
+
+  if (isFromMessage) {
+    if (count % 10 === 0) redirect("/quote?redirect_path=/dashboard");
+
+    redirect("/dashboard");
+  } else {
+    if (count % 10 === 0)
+      redirect(`/quote?redirect_path=/contacts/${contactId}?is_changed=true`);
+
+    redirect(`/contacts/${contactId}?is_changed=true`);
+  }
 }

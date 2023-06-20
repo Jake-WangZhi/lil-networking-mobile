@@ -102,7 +102,7 @@ export const ContactHeader = ({ contact }: Props) => {
   }, []);
 
   const handleBackClick = useCallback(() => {
-    if (searchParams?.get("isChanged")) {
+    if (searchParams?.get("is_changed")) {
       router.push(backPath);
     } else {
       router.back();
@@ -139,7 +139,7 @@ export const ContactHeader = ({ contact }: Props) => {
       )}
       <div className="flex justify-between items-center">
         <Button variant="text" onClick={handleBackClick} sx={{ py: "6px" }}>
-          {searchParams?.get("isChanged") ? (
+          {searchParams?.get("is_changed") ? (
             <X size={24} className="md:w-7 md:h-7 lg:w-8 lg:h-8" />
           ) : (
             <ChevronLeft

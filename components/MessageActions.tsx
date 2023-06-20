@@ -36,9 +36,10 @@ export const MessageActions = ({ contact }: Props) => {
 
   const postActivityMutation = useActivityMutation({
     method: "POST",
-    onSuccess: () => {
+    onSuccess: ({ showQuote }) => {
       setErrorMessage("");
-      router.push("/dashboard");
+      if (showQuote) router.push("/quote?redirect_path=/dashboard");
+      else router.push("/dashboard");
     },
     onError: (error) => {
       setErrorMessage("An error occurred. Please try again.");
