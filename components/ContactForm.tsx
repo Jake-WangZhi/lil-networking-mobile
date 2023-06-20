@@ -116,7 +116,7 @@ export const ContactForm = ({ contact, userEmail }: Props) => {
           <Grid container alignItems="center">
             <Grid item xs={2}>
               <Button variant="text" onClick={handleBackClick}>
-                Cancel
+                <Typography variant="subtitle1">Cancel</Typography>
               </Button>
             </Grid>
             <Grid item xs={8}>

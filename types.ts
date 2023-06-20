@@ -52,7 +52,20 @@ export interface Goals {
   streak?: number;
 }
 
-export enum GoalProgressType {
-  CONNECTIONS = "connections",
-  MESSAGES = "messages",
+export interface Quote {
+  text: string;
+  author?: string;
+  titles: string[];
+}
+
+export enum SearchParams {
+  UserEmail = "user_email",
+  Email = "email",
+  Name = "name",
+  IsChanged = "is_changed",
+  RedirectPath = "redirect_path",
+  Title = "title",
+  Date = "date",
+  Description = "description",
+  IsFromMessage = "is_from_message",
 }

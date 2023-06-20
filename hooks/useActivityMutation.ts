@@ -1,8 +1,12 @@
 import { Activity } from "@/types";
 import { useMutation } from "@tanstack/react-query";
 
+type ActivityResponse = {
+  showQuote: boolean;
+};
+
 type Args = {
-  onSuccess: () => void;
+  onSuccess: (data: ActivityResponse) => void;
   onError: (error: unknown) => void;
   method: "DELETE" | "POST";
 };
@@ -24,9 +28,13 @@ export const useActivityMutation = ({ onSuccess, onError, method }: Args) =>
         method,
       });
 
+      const json = await response.json();
+
       if (!response.ok) {
         throw new Error("Unable to update");
       }
+
+      return json;
     },
     onSuccess,
     onError,

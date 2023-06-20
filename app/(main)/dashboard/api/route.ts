@@ -2,14 +2,14 @@ import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { Activity, Contact } from "@prisma/client";
 import { calculateDaysSinceCreatedAt } from "@/lib/utils";
-import { Action } from "@/types";
+import { Action, SearchParams } from "@/types";
 
 const DEFAUL_REACH_OUT_PERIOD = 30;
 const DAYS_BEFORE_PAST_DUE = 10;
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
-  const email = searchParams.get("email");
+  const email = searchParams.get(SearchParams.Email);
 
   if (!email)
     return new NextResponse(

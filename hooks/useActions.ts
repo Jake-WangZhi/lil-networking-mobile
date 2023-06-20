@@ -1,5 +1,5 @@
 import { fetcher } from "@/lib/utils";
-import { Action } from "@/types";
+import { Action, SearchParams } from "@/types";
 import { useQuery } from "@tanstack/react-query";
 
 type Args = {
@@ -19,7 +19,7 @@ export const useActions = ({ email }: Args) => {
     isLoading,
   } = useQuery<ActionType>({
     queryKey: ["actions", email],
-    queryFn: () => fetcher(`/dashboard/api?email=${email}`),
+    queryFn: () => fetcher(`/dashboard/api?${SearchParams.Email}=${email}`),
     enabled: !!email,
   });
 

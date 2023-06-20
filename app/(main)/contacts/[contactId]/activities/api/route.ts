@@ -20,7 +20,7 @@ export async function POST(
       { status: 404, headers: { "content-type": "application/json" } }
     );
 
-  const newActivity = await prisma.activity.create({
+  await prisma.activity.create({
     data: {
       contactId: params.contactId,
       title,
@@ -30,7 +30,7 @@ export async function POST(
     },
   });
 
-  await prisma.goals.update({
+  await prisma.goals.updateMany({
     where: {
       userId: contact.userId,
     },
@@ -41,5 +41,12 @@ export async function POST(
     },
   });
 
-  return NextResponse.json(newActivity);
+  const count = await prisma.activity.count({
+    where: {
+      Contact: { userId: contact.userId },
+      type: "USER",
+    },
+  });
+
+  return NextResponse.json({ showQuote: count % 10 === 0 });
 }
