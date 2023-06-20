@@ -2,11 +2,12 @@ import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { Activity, Contact, Prisma } from "@prisma/client";
 import { formatDate } from "@/lib/utils";
+import { SearchParams } from "@/types";
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
-  const userEmail = searchParams.get("userEmail");
-  const name = searchParams.get("name");
+  const userEmail = searchParams.get(SearchParams.UserEmail);
+  const name = searchParams.get(SearchParams.Name);
 
   if (!userEmail)
     return new NextResponse(

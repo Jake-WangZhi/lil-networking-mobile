@@ -3,6 +3,7 @@
 import prisma from "@/lib/prisma";
 
 import { validateEmail, validatePhone } from "@/lib/utils";
+import { SearchParams } from "@/types";
 import { redirect } from "next/navigation";
 
 interface FormDataOptions {
@@ -116,7 +117,7 @@ export async function upsertContact(formData: FormData) {
     if (!contact) throw new Error("Contact not found");
   }
 
-  redirect(`/contacts/${contact.id}?is_changed=true`);
+  redirect(`/contacts/${contact.id}?${SearchParams.IsChanged}=true`);
 }
 
 export async function createActivity(formData: FormData) {
@@ -161,13 +162,16 @@ export async function createActivity(formData: FormData) {
   });
 
   if (isFromMessage) {
-    if (count % 10 === 0) redirect("/quote?redirect_path=/dashboard");
+    if (count % 10 === 0)
+      return redirect(`/quote?${SearchParams.RedirectPath}=/dashboard`);
 
     redirect("/dashboard");
   } else {
     if (count % 10 === 0)
-      redirect(`/quote?redirect_path=/contacts/${contactId}?is_changed=true`);
+      return redirect(
+        `/quote?${SearchParams.RedirectPath}=/contacts/${contactId}?${SearchParams.IsChanged}=true`
+      );
 
-    redirect(`/contacts/${contactId}?is_changed=true`);
+    redirect(`/contacts/${contactId}?${SearchParams.IsChanged}=true`);
   }
 }

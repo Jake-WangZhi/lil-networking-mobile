@@ -1,6 +1,6 @@
 "use client";
 
-import { ActivityType } from "@/types";
+import { ActivityType, SearchParams } from "@/types";
 import { Typography, Grid } from "@mui/material";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
@@ -23,10 +23,11 @@ export default function CreateActivityPage({
   const searchParams = useSearchParams();
   const submitFormRef = useRef<HTMLButtonElement>(null);
 
-  const prefilledTitle = searchParams?.get("title") || "";
-  const prefilledDate = searchParams?.get("date") || "";
-  const prefilledDescription = searchParams?.get("description") || "";
-  const isFromMessage = searchParams?.get("isFromMessage") || "";
+  const prefilledTitle = searchParams?.get(SearchParams.Title) || "";
+  const prefilledDate = searchParams?.get(SearchParams.Date) || "";
+  const prefilledDescription =
+    searchParams?.get(SearchParams.Description) || "";
+  const isFromMessage = searchParams?.get(SearchParams.IsFromMessage) || "";
 
   const [description, setDescription] = useState(prefilledDescription);
   const [title, setTitle] = useState(prefilledTitle);
@@ -40,7 +41,8 @@ export default function CreateActivityPage({
     method: "POST",
     onSuccess: ({ showQuote }) => {
       setErrorMessage("");
-      if (showQuote) return router.push("/quote?redirect_path=/dashboard");
+      if (showQuote)
+        return router.push(`/quote?${SearchParams.RedirectPath}=/dashboard`);
       router.push("/dashboard");
     },
     onError: (error) => {

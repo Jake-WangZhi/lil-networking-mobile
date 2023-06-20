@@ -1,5 +1,5 @@
 import { fetcher } from "@/lib/utils";
-import { Goals } from "@/types";
+import { Goals, SearchParams } from "@/types";
 import { useQuery } from "@tanstack/react-query";
 
 type Args = {
@@ -13,7 +13,8 @@ export const useGoals = ({ email }: Args) => {
     isLoading,
   } = useQuery<Goals>({
     queryKey: ["goals", email],
-    queryFn: () => fetcher(`/settings/goals/api?email=${email}`),
+    queryFn: () =>
+      fetcher(`/settings/goals/api?${SearchParams.Email}=${email}`),
     enabled: !!email,
   });
 

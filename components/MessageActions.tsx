@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { useCallback, useMemo, useState } from "react";
 import { Check, Archive } from "react-feather";
 import { useContactMutation } from "@/hooks/useContactMutation";
-import { ActivityType, Contact } from "@/types";
+import { ActivityType, Contact, SearchParams } from "@/types";
 import { AlertDialog } from "./AlertDialog";
 import { useSession } from "next-auth/react";
 import { useActivityMutation } from "@/hooks/useActivityMutation";
@@ -25,12 +25,12 @@ export const MessageActions = ({ contact }: Props) => {
 
   const preFilledFormData = useMemo(() => {
     return {
-      title: "Messaged",
-      date: new Date().toISOString().split("T")[0],
-      description: `${session?.user?.name?.split(" ")[0]} reached out to ${
-        contact.firstName
-      }`,
-      isFromMessage: "true",
+      [SearchParams.Title]: "Messaged",
+      [SearchParams.Date]: new Date().toISOString().split("T")[0],
+      [SearchParams.Description]: `${
+        session?.user?.name?.split(" ")[0]
+      } reached out to ${contact.firstName}`,
+      [SearchParams.IsFromMessage]: "true",
     };
   }, [contact.firstName, session?.user?.name]);
 
@@ -38,7 +38,8 @@ export const MessageActions = ({ contact }: Props) => {
     method: "POST",
     onSuccess: ({ showQuote }) => {
       setErrorMessage("");
-      if (showQuote) return router.push("/quote?redirect_path=/dashboard");
+      if (showQuote)
+        return router.push(`/quote?${SearchParams.RedirectPath}=/dashboard`);
       router.push("/dashboard");
     },
     onError: (error) => {

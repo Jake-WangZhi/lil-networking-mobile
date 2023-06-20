@@ -1,4 +1,4 @@
-import { Goals } from "@/types";
+import { Goals, SearchParams } from "@/types";
 import { useMutation } from "@tanstack/react-query";
 
 type Args = {
@@ -15,13 +15,16 @@ type HandleSetGoalsArgs = {
 export const useGoalsMutation = ({ onSuccess, onError, method }: Args) =>
   useMutation({
     mutationFn: async ({ email, goals }: HandleSetGoalsArgs) => {
-      const response = await fetch(`/settings/goals/api?email=${email}`, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(goals),
-        method,
-      });
+      const response = await fetch(
+        `/settings/goals/api?${SearchParams.Email}=${email}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(goals),
+          method,
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Unable to set goals");

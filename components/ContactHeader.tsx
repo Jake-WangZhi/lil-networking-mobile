@@ -12,7 +12,7 @@ import {
   MessageSquare,
   X,
 } from "react-feather";
-import { Contact } from "@/types";
+import { Contact, SearchParams } from "@/types";
 import { Typography } from "@mui/material";
 import { Button } from "./Button";
 import { AlertDialog } from "./AlertDialog";
@@ -102,7 +102,7 @@ export const ContactHeader = ({ contact }: Props) => {
   }, []);
 
   const handleBackClick = useCallback(() => {
-    if (searchParams?.get("is_changed")) {
+    if (searchParams?.get(SearchParams.IsChanged)) {
       router.push(backPath);
     } else {
       router.back();
@@ -139,7 +139,7 @@ export const ContactHeader = ({ contact }: Props) => {
       )}
       <div className="flex justify-between items-center">
         <Button variant="text" onClick={handleBackClick} sx={{ py: "6px" }}>
-          {searchParams?.get("is_changed") ? (
+          {searchParams?.get(SearchParams.IsChanged) ? (
             <X size={24} className="md:w-7 md:h-7 lg:w-8 lg:h-8" />
           ) : (
             <ChevronLeft

@@ -3,6 +3,7 @@
 import { Button } from "@/components/Button";
 import { useQuote } from "@/hooks/useQuote";
 import { formatTitles } from "@/lib/utils";
+import { SearchParams } from "@/types";
 import { Typography } from "@mui/material";
 import { useRouter, useSearchParams } from "next/navigation";
 import { ClipLoader } from "react-spinners";
@@ -23,7 +24,7 @@ export default function QuotePage() {
             variant="contained"
             sx={{ width: "100%" }}
             onClick={() =>
-              router.push(searchParams?.get("redirect_path") || "")
+              router.push(searchParams?.get(SearchParams.RedirectPath) || "")
             }
           >
             Next
@@ -66,7 +67,9 @@ export default function QuotePage() {
         <Button
           variant="contained"
           sx={{ width: "100%" }}
-          onClick={() => router.push(searchParams?.get("redirect_path") || "")}
+          onClick={() =>
+            router.push(searchParams?.get(SearchParams.RedirectPath) || "")
+          }
         >
           Next
         </Button>
