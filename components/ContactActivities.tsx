@@ -104,6 +104,10 @@ export const ContactActivites = ({ activities }: Props) => {
                       <Button
                         variant="text"
                         onClick={handleDeleteClick(activity)}
+                        sx={{
+                          mr: "-12px !important",
+                          p: "12px !important",
+                        }}
                       >
                         <Trash2 size={24} />
                       </Button>

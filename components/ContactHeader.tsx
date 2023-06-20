@@ -26,6 +26,7 @@ export const ContactHeader = ({ contact }: Props) => {
   const { backPath } = useBackPath();
   const queryClient = useQueryClient();
   const searchParams = useSearchParams();
+  const isChanged = searchParams?.get(SearchParams.IsChanged);
 
   const [showDropdown, setShowDropdown] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -102,12 +103,12 @@ export const ContactHeader = ({ contact }: Props) => {
   }, []);
 
   const handleBackClick = useCallback(() => {
-    if (searchParams?.get(SearchParams.IsChanged)) {
+    if (isChanged) {
       router.push(backPath);
     } else {
       router.back();
     }
-  }, [backPath, router, searchParams]);
+  }, [backPath, isChanged, router]);
 
   const handleDropdownClick = useCallback(
     () => setShowDropdown((prev) => !prev),
@@ -138,8 +139,16 @@ export const ContactHeader = ({ contact }: Props) => {
         </Typography>
       )}
       <div className="flex justify-between items-center">
-        <Button variant="text" onClick={handleBackClick} sx={{ py: "6px" }}>
-          {searchParams?.get(SearchParams.IsChanged) ? (
+        <Button
+          variant="text"
+          onClick={handleBackClick}
+          sx={{
+            py: isChanged ? "12px" : "6px",
+            px: isChanged ? "12px" : "6px",
+            ml: isChanged ? "-12px" : "-6px",
+          }}
+        >
+          {isChanged ? (
             <X size={24} className="md:w-7 md:h-7 lg:w-8 lg:h-8" />
           ) : (
             <ChevronLeft
@@ -172,28 +181,30 @@ export const ContactHeader = ({ contact }: Props) => {
             </div>
             {showDropdown && (
               <div className="absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-[#3C3C43] divide-opacity-[0.36] rounded-md bg-[#EDEDED] shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                <div>
-                  <Button
-                    onClick={handleMessageClick}
-                    variant="text"
-                    sx={{
-                      width: "100%",
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      px: "16px",
-                      color: "black",
-                      "&:hover": {
-                        backgroundColor: "rgba(0, 0, 0, 0.08)",
-                      },
-                    }}
-                  >
-                    <Typography variant="subtitle1" sx={{ color: "black" }}>
-                      Message
-                    </Typography>
-                    <MessageSquare size={24} />
-                  </Button>
-                </div>
+                {!contact.isArchived && (
+                  <div>
+                    <Button
+                      onClick={handleMessageClick}
+                      variant="text"
+                      sx={{
+                        width: "100%",
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        px: "16px",
+                        color: "black",
+                        "&:hover": {
+                          backgroundColor: "rgba(0, 0, 0, 0.08)",
+                        },
+                      }}
+                    >
+                      <Typography variant="subtitle1" sx={{ color: "black" }}>
+                        Message
+                      </Typography>
+                      <MessageSquare size={24} />
+                    </Button>
+                  </div>
+                )}
                 <div>
                   <Button
                     onClick={handleEditClick}
