@@ -142,30 +142,52 @@ export default function GoalSettingPage() {
 
   if (!goals) {
     return (
-      <div className="relative min-h-screen flex flex-col justify-center items-center space-y-6 px-7">
-        <Lottie
-          options={{
-            loop: false,
-            autoplay: true,
-            animationData: animationData,
-            rendererSettings: {
-              preserveAspectRatio: "xMidYMid slice",
-            },
-          }}
-          width={178}
-          height={178}
-        />
-        <div className="space-y-4 text-center">
-          <Typography variant="h2">No Goals</Typography>
-          <Typography variant="subtitle1">
-            Set up your goals to build habits and track your growth as a
-            networker
-          </Typography>
-        </div>
-        <div className="text-center">
-          <Button variant="contained" onClick={handleSetGoalsClick}>
-            Set up goals
-          </Button>
+      <div className="relative py-8">
+        <Grid container alignItems="center" sx={{ px: "16px" }}>
+          <Grid item xs={2}>
+            <Button
+              variant="text"
+              onClick={handleBackClick}
+              sx={{ p: "6px !important", ml: "-6px" }}
+            >
+              <ChevronLeft
+                size={36}
+                className="md:w-11 md:h-11 lg:w-13 lg:h-13"
+              />
+            </Button>
+          </Grid>
+          <Grid item xs={8} sx={{ display: "flex", justifyContent: "center" }}>
+            <Typography variant="h3" sx={{ fontWeight: 600 }}>
+              Goals
+            </Typography>
+          </Grid>
+          <Grid item xs={2}></Grid>
+        </Grid>
+        <div className="h-[80vh] flex flex-col justify-center items-center space-y-6 px-7">
+          <Lottie
+            options={{
+              loop: false,
+              autoplay: true,
+              animationData: animationData,
+              rendererSettings: {
+                preserveAspectRatio: "xMidYMid slice",
+              },
+            }}
+            width={178}
+            height={178}
+          />
+          <div className="space-y-4 text-center">
+            <Typography variant="h2">No Goals</Typography>
+            <Typography variant="subtitle1">
+              Set up your goals to build habits and track your growth as a
+              networker
+            </Typography>
+          </div>
+          <div className="text-center">
+            <Button variant="contained" onClick={handleSetGoalsClick}>
+              Set up goals
+            </Button>
+          </div>
         </div>
       </div>
     );
