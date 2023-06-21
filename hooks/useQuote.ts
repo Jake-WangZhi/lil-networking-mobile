@@ -1,3 +1,4 @@
+import { fetcher } from "@/lib/utils";
 import { Quote } from "@/types";
 import { useQuery } from "@tanstack/react-query";
 
@@ -8,15 +9,7 @@ export const useQuote = () => {
     isLoading,
   } = useQuery<Quote>({
     queryKey: ["quote"],
-    queryFn: () =>
-      fetch("/quote/api", {
-        headers: {
-          "Cache-Control": "no-cache",
-        },
-      }).then((response) => {
-        if (response.ok) return response.json();
-        else throw new Error(response.statusText);
-      }),
+    queryFn: () => fetcher(`/quote/api`),
   });
 
   return {
