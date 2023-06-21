@@ -58,7 +58,7 @@ export default function OnboardingPage() {
   const router = useRouter();
 
   const handleSetGoalsClick = useCallback(
-    () => router.push("/settings/goals"),
+    () => router.push("/goals"),
     [router]
   );
 
