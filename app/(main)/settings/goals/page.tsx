@@ -27,9 +27,9 @@ export default function GoalSettingPage() {
   });
 
   const [goalConnections, setGoalConnections] = useState(
-    goals?.goalConnections || 2
+    goals?.goalConnections ?? 2
   );
-  const [goalMessages, setGoalMessages] = useState(goals?.goalMessages || 2);
+  const [goalMessages, setGoalMessages] = useState(goals?.goalMessages ?? 2);
   const [errorMessage, setErrorMessage] = useState("");
 
   const postGoalsMutation = useGoalsMutation({
@@ -43,18 +43,6 @@ export default function GoalSettingPage() {
       console.log(error);
     },
   });
-
-  const handleSaveClick = useCallback(
-    () =>
-      postGoalsMutation.mutate({
-        goals: {
-          goalConnections,
-          goalMessages,
-        },
-        email: session?.user?.email || "",
-      }),
-    [goalConnections, goalMessages, postGoalsMutation, session?.user?.email]
-  );
 
   const GOAL_QUESTIONS = useMemo(
     () => [
@@ -98,6 +86,18 @@ export default function GoalSettingPage() {
       },
     ],
     [goalConnections, goalMessages]
+  );
+
+  const handleSaveClick = useCallback(
+    () =>
+      postGoalsMutation.mutate({
+        goals: {
+          goalConnections,
+          goalMessages,
+        },
+        email: session?.user?.email || "",
+      }),
+    [goalConnections, goalMessages, postGoalsMutation, session?.user?.email]
   );
 
   const handleBackClick = useCallback(() => {
@@ -172,8 +172,8 @@ export default function GoalSettingPage() {
   }
 
   return (
-    <main className="relative min-h-screen py-8 space-y-6 flex flex-col justify-between">
-      <div>
+    <main className="relative min-h-screen py-8 flex flex-col justify-between">
+      <div className="space-y-6">
         <Grid container alignItems="center" sx={{ px: "16px" }}>
           <Grid item xs={2}>
             <Button

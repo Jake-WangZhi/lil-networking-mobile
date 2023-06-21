@@ -4,7 +4,6 @@ import { Activity, Contact } from "@prisma/client";
 import { calculateDaysSinceCreatedAt } from "@/lib/utils";
 import { Action, SearchParams } from "@/types";
 
-const DEFAUL_REACH_OUT_PERIOD = 30;
 const DAYS_BEFORE_PAST_DUE = 10;
 
 export async function GET(request: Request) {
@@ -68,7 +67,7 @@ const parseActions = (contacts: Contact[], activities: Activity[]) => {
 
     if (contact) {
       const days = calculateDaysSinceCreatedAt(new Date(activity.date));
-      const goalDays = contact.goalDays || DEFAUL_REACH_OUT_PERIOD;
+      const goalDays = contact.goalDays;
 
       const action = {
         contactFirstName: contact.firstName,
