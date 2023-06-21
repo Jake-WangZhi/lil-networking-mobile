@@ -37,7 +37,7 @@ export default function ContactPage({
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center pt-8">
+      <div className="min-h-screen flex items-center justify-center">
         <ClipLoader color="#38ACE2" size={150} />
       </div>
     );

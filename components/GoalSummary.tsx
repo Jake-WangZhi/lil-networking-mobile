@@ -16,10 +16,7 @@ export const GoalSummary = () => {
     email: session?.user?.email,
   });
 
-  const handleClick = useCallback(
-    () => router.push("/settings/goals"),
-    [router]
-  );
+  const handleClick = useCallback(() => router.push("/goals"), [router]);
 
   if (isError) {
     return (

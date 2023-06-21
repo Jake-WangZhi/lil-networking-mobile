@@ -47,9 +47,9 @@ export interface Goals {
   networkingComfortLevel: number;
   goalConnections: number;
   goalMessages: number;
-  connections?: number;
-  messages?: number;
-  streak?: number;
+  connections: number;
+  messages: number;
+  streak: number;
 }
 
 export interface Quote {
@@ -68,4 +68,5 @@ export enum SearchParams {
   Date = "date",
   Description = "description",
   IsFromMessage = "is_from_message",
+  IsFromSettings = "is_from_settings",
 }

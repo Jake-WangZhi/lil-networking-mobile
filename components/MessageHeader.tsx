@@ -30,7 +30,11 @@ export const MessageHeader = ({ firstName, contactId }: Props) => {
     <div className="mb-4">
       <Grid container alignItems="center">
         <Grid item xs={2}>
-          <Button variant="text" onClick={handleBackClick} sx={{ py: "6px" }}>
+          <Button
+            variant="text"
+            onClick={handleBackClick}
+            sx={{ p: "6px !important", ml: "-6px" }}
+          >
             <ChevronLeft
               size={36}
               className="md:w-11 md:h-11 lg:w-13 lg:h-13"

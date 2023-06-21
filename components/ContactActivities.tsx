@@ -90,7 +90,7 @@ export const ContactActivites = ({ activities }: Props) => {
           >
             <Card sx={{ ml: "24px" }}>
               <CardContent>
-                <div className="flex justify-between">
+                <div className="flex justify-between items-center">
                   <Typography
                     variant="subtitle1"
                     sx={{
@@ -105,8 +105,7 @@ export const ContactActivites = ({ activities }: Props) => {
                         variant="text"
                         onClick={handleDeleteClick(activity)}
                         sx={{
-                          mr: "-12px !important",
-                          p: "12px !important",
+                          p: "0px !important",
                         }}
                       >
                         <Trash2 size={24} />

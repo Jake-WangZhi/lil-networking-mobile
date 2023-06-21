@@ -1,81 +1,42 @@
 "use client";
 
-import { Typography } from "@mui/material";
-import { ReactNode, useCallback, useMemo, useState } from "react";
-import { Swiper, SwiperSlide, useSwiper } from "swiper/react";
-import "swiper/css";
-import { Button } from "@/components/Button";
-import { ChevronRight, ChevronLeft } from "react-feather";
-import { ProgressBar } from "@/components/ProgressBar";
+import {
+  Dispatch,
+  SetStateAction,
+  useCallback,
+  useMemo,
+  useState,
+} from "react";
 import { useGoalsMutation } from "@/hooks/useGoalsMutation";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { GoalQuestions } from "@/components/GoalQuestions";
-import { useBackPath } from "@/contexts/BackPathContext";
+import { Grid, Typography } from "@mui/material";
+import { Button } from "@/components/Button";
+import { ChevronLeft } from "react-feather";
+import { ClipLoader } from "react-spinners";
+import { useGoals } from "@/hooks/useGoals";
+import { SearchParams } from "@/types";
+import Lottie from "react-lottie";
+import animationData from "../../../../lottie/106770-empty-box.json";
 
-const SwiperButtonNext = ({
-  children,
-  onNext,
-}: {
-  children: ReactNode;
-  onNext: () => void;
-}) => {
-  const swiper = useSwiper();
-
-  const handleNextClick = useCallback(() => {
-    swiper.slideNext();
-    onNext();
-  }, [onNext, swiper]);
-
-  return (
-    <Button variant="contained" onClick={handleNextClick}>
-      {children}
-    </Button>
-  );
-};
-
-const SwiperButtonBefore = ({
-  children,
-  onPrev,
-}: {
-  children: ReactNode;
-  onPrev: () => void;
-}) => {
-  const swiper = useSwiper();
-
-  const handlePrevClick = useCallback(() => {
-    swiper.slidePrev();
-    onPrev();
-  }, [onPrev, swiper]);
-
-  return (
-    <Button
-      variant="text"
-      sx={{ p: "12px !important" }}
-      onClick={handlePrevClick}
-    >
-      {children}
-    </Button>
-  );
-};
-
-export default function GoalsPage() {
+export default function GoalSettingPage() {
   const router = useRouter();
   const { data: session } = useSession();
-  const { setBackPath } = useBackPath();
+  const { goals, isLoading, isError } = useGoals({
+    email: session?.user?.email,
+  });
 
-  const [progress, setProgress] = useState(0);
-  const [networkingComfortLevel, setNetworkingComfortLevel] = useState(1);
-  const [goalConnections, setGoalConnections] = useState(2);
-  const [goalMessages, setGoalMessages] = useState(2);
+  const [goalConnections, setGoalConnections] = useState(
+    goals?.goalConnections ?? 2
+  );
+  const [goalMessages, setGoalMessages] = useState(goals?.goalMessages ?? 2);
   const [errorMessage, setErrorMessage] = useState("");
 
   const postGoalsMutation = useGoalsMutation({
-    method: "POST",
+    method: "PUT",
     onSuccess: () => {
       setErrorMessage("");
-      setBackPath("/dashboard");
-      router.push("/dashboard");
+      router.push("/settings");
     },
     onError: (error) => {
       setErrorMessage("An error occurred. Please try again.");
@@ -83,46 +44,8 @@ export default function GoalsPage() {
     },
   });
 
-  const handleClick = useCallback(
-    () =>
-      postGoalsMutation.mutate({
-        goals: {
-          networkingComfortLevel,
-          goalConnections,
-          goalMessages,
-        },
-        email: session?.user?.email || "",
-      }),
-    [
-      goalConnections,
-      goalMessages,
-      networkingComfortLevel,
-      postGoalsMutation,
-      session?.user?.email,
-    ]
-  );
-
   const GOAL_QUESTIONS = useMemo(
     () => [
-      {
-        title: "How comfortable are you with networking?",
-        setValue: setNetworkingComfortLevel,
-        selectedValue: networkingComfortLevel,
-        buttonContents: [
-          {
-            label: "Beginner",
-            value: 1,
-          },
-          {
-            label: "Advanced",
-            value: 2,
-          },
-          {
-            label: "Power networker",
-            value: 3,
-          },
-        ],
-      },
       {
         title: "How many new contacts do you want to make per month?",
         setValue: setGoalConnections,
@@ -162,77 +85,170 @@ export default function GoalsPage() {
         ],
       },
     ],
-    [goalConnections, goalMessages, networkingComfortLevel]
+    [goalConnections, goalMessages]
   );
 
+  const handleSaveClick = useCallback(
+    () =>
+      postGoalsMutation.mutate({
+        goals: {
+          goalConnections,
+          goalMessages,
+        },
+        email: session?.user?.email || "",
+      }),
+    [goalConnections, goalMessages, postGoalsMutation, session?.user?.email]
+  );
+
+  const handleBackClick = useCallback(() => {
+    router.back();
+  }, [router]);
+
+  const handleSetGoalsClick = useCallback(() => {
+    router.push(`/goals?${SearchParams.IsFromSettings}=true`);
+  }, [router]);
+
+  const handleOptionClick = useCallback(
+    (value: number, setValue: Dispatch<SetStateAction<number>>) => () =>
+      setValue(value),
+    []
+  );
+
+  if (isError) {
+    return (
+      <Typography
+        variant="h3"
+        sx={{
+          minHeight: "100vh",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          padding: "32px",
+          color: "#F42010",
+        }}
+      >
+        Something went wrong, please try again later
+      </Typography>
+    );
+  }
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <ClipLoader color="#38ACE2" size={150} />
+      </div>
+    );
+  }
+
+  if (!goals) {
+    return (
+      <div className="relative min-h-screen flex flex-col justify-center items-center space-y-6">
+        <Lottie
+          options={{
+            loop: false,
+            autoplay: true,
+            animationData: animationData,
+            rendererSettings: {
+              preserveAspectRatio: "xMidYMid slice",
+            },
+          }}
+          width={178}
+          height={178}
+        />
+        <div className="space-y-4 text-center">
+          <Typography variant="h2">No Goals</Typography>
+          <Typography variant="subtitle1">
+            Set up your goals to build habits and track your growth as a
+            networker
+          </Typography>
+        </div>
+        <div className="text-center">
+          <Button variant="contained" onClick={handleSetGoalsClick}>
+            Set up goals
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <main className="relative px-8 py-8">
-      <ProgressBar title={"Goal"} progress={progress} />
-      <div className="px-4">
-        <Swiper allowTouchMove={false} spaceBetween={48}>
+    <main className="relative min-h-screen py-8 flex flex-col justify-between">
+      <div className="space-y-6">
+        <Grid container alignItems="center" sx={{ px: "16px" }}>
+          <Grid item xs={2}>
+            <Button
+              variant="text"
+              onClick={handleBackClick}
+              sx={{ p: "6px !important", ml: "-6px" }}
+            >
+              <ChevronLeft
+                size={36}
+                className="md:w-11 md:h-11 lg:w-13 lg:h-13"
+              />
+            </Button>
+          </Grid>
+          <Grid item xs={8} sx={{ display: "flex", justifyContent: "center" }}>
+            <Typography variant="h3" sx={{ fontWeight: 600 }}>
+              Goals
+            </Typography>
+          </Grid>
+          <Grid item xs={2}></Grid>
+        </Grid>
+        <div className="px-12 space-y-8">
           {GOAL_QUESTIONS.map(
             ({ title, selectedValue, setValue, buttonContents }, index) => {
               return (
-                <SwiperSlide key={`question-${index}`}>
-                  <GoalQuestions
-                    title={title}
-                    setValue={setValue}
-                    selectedValue={selectedValue}
-                    buttonContents={buttonContents}
-                  />
-                </SwiperSlide>
+                <div key={`question-${index}`} className="space-y-6">
+                  <div>
+                    <Typography variant="h3" sx={{ fontWeight: 600 }}>
+                      {title}
+                    </Typography>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    {buttonContents.map(({ label, value }, index) => {
+                      return (
+                        <Button
+                          key={`answer-${index}`}
+                          variant="outlined"
+                          sx={{
+                            px: "32px",
+                            py: "12px",
+                            border:
+                              selectedValue === value
+                                ? "1px solid #38ACE2"
+                                : "none",
+                            color:
+                              selectedValue === value ? "#38ACE2" : "white",
+                          }}
+                          onClick={handleOptionClick(value, setValue)}
+                        >
+                          {label}
+                        </Button>
+                      );
+                    })}
+                  </div>
+                </div>
               );
             }
           )}
-          <SwiperSlide>
-            <div className="mt-60 flex flex-col justify-center items-center">
-              {errorMessage && (
-                <Typography variant="subtitle2">{errorMessage}</Typography>
-              )}
-              <div className="mb-6 space-y-2">
-                <Typography
-                  variant="h2"
-                  sx={{ fontWeight: 600, textAlign: "center" }}
-                >
-                  You’re all set to connect!
-                </Typography>
-                <Typography variant="body1" sx={{ textAlign: "center" }}>
-                  you can edit your goals at any time.
-                </Typography>
-              </div>
-              <div className="space-y-4">
-                <div className="flex justify-center">
-                  <Button variant="contained" onClick={handleClick}>
-                    Go to dashboard
-                  </Button>
-                </div>
-                <div className="flex justify-center">
-                  <SwiperButtonBefore onPrev={() => setProgress(progress - 1)}>
-                    Back
-                  </SwiperButtonBefore>
-                </div>
-              </div>
-            </div>
-          </SwiperSlide>
-          {progress !== 3 && (
-            <div className="flex justify-between items-center">
-              <div>
-                {progress !== 0 && (
-                  <SwiperButtonBefore onPrev={() => setProgress(progress - 1)}>
-                    <ChevronLeft />
-                    Back
-                  </SwiperButtonBefore>
-                )}
-              </div>
-              <div>
-                <SwiperButtonNext onNext={() => setProgress(progress + 1)}>
-                  Next
-                  <ChevronRight />
-                </SwiperButtonNext>
-              </div>
-            </div>
-          )}
-        </Swiper>
+        </div>
+      </div>
+
+      <div>
+        {errorMessage && (
+          <Typography variant="subtitle2" sx={{ textAlign: "center" }}>
+            {errorMessage}
+          </Typography>
+        )}
+        <div className="text-center">
+          <Button
+            variant="contained"
+            sx={{ width: "163px" }}
+            onClick={handleSaveClick}
+          >
+            Save
+          </Button>
+        </div>
       </div>
     </main>
   );
