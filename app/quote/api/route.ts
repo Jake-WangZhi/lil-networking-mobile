@@ -2,12 +2,12 @@ import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 
 export async function GET(request: Request) {
-  const quotes = await prisma.quote.findMany();
-  console.log("quotes", quotes);
-  const randomIndex = Math.floor(Math.random() * quotes.length);
-  console.log("randomIndex", randomIndex);
+  const count = await prisma.quote.count();
+  const skip = Math.floor(Math.random() * count);
 
-  const randomQuote = quotes[randomIndex];
+  const quote = await prisma.quote.findFirst({
+    skip,
+  });
 
-  return NextResponse.json(randomQuote);
+  return NextResponse.json(quote);
 }
