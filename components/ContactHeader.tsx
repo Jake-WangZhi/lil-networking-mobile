@@ -143,8 +143,7 @@ export const ContactHeader = ({ contact }: Props) => {
           variant="text"
           onClick={handleBackClick}
           sx={{
-            py: isChanged ? "12px" : "6px",
-            px: isChanged ? "12px" : "6px",
+            p: isChanged ? "12px !important" : "6px !important",
             ml: isChanged ? "-12px" : "-6px",
           }}
         >

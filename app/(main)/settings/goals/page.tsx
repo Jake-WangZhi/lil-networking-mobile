@@ -1,0 +1,235 @@
+"use client";
+
+import {
+  Dispatch,
+  SetStateAction,
+  useCallback,
+  useMemo,
+  useState,
+} from "react";
+import { useGoalsMutation } from "@/hooks/useGoalsMutation";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { Grid, Typography } from "@mui/material";
+import { Button } from "@/components/Button";
+import { ChevronLeft } from "react-feather";
+import { ClipLoader } from "react-spinners";
+import { useGoals } from "@/hooks/useGoals";
+
+export default function GoalSettingPage() {
+  const router = useRouter();
+  const { data: session } = useSession();
+  const { goals, isLoading, isError } = useGoals({
+    email: session?.user?.email,
+  });
+
+  const [goalConnections, setGoalConnections] = useState(
+    goals?.goalConnections || 2
+  );
+  const [goalMessages, setGoalMessages] = useState(goals?.goalMessages || 2);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const postGoalsMutation = useGoalsMutation({
+    method: "PUT",
+    onSuccess: () => {
+      setErrorMessage("");
+      router.push("/settings");
+    },
+    onError: (error) => {
+      setErrorMessage("An error occurred. Please try again.");
+      console.log(error);
+    },
+  });
+
+  const handleSaveClick = useCallback(
+    () =>
+      postGoalsMutation.mutate({
+        goals: {
+          goalConnections,
+          goalMessages,
+        },
+        email: session?.user?.email || "",
+      }),
+    [goalConnections, goalMessages, postGoalsMutation, session?.user?.email]
+  );
+
+  const GOAL_QUESTIONS = useMemo(
+    () => [
+      {
+        title: "How many new contacts do you want to make per month?",
+        setValue: setGoalConnections,
+        selectedValue: goalConnections,
+        buttonContents: [
+          {
+            label: "2",
+            value: 2,
+          },
+          {
+            label: "5",
+            value: 5,
+          },
+          {
+            label: "10",
+            value: 10,
+          },
+        ],
+      },
+      {
+        title: "How many contacts do you want to reach out to per month?",
+        setValue: setGoalMessages,
+        selectedValue: goalMessages,
+        buttonContents: [
+          {
+            label: "2",
+            value: 2,
+          },
+          {
+            label: "5",
+            value: 5,
+          },
+          {
+            label: "10",
+            value: 10,
+          },
+        ],
+      },
+    ],
+    [goalConnections, goalMessages]
+  );
+
+  const handleBackClick = useCallback(() => {
+    router.back();
+  }, [router]);
+
+  const handleOptionClick = useCallback(
+    (value: number, setValue: Dispatch<SetStateAction<number>>) => () =>
+      setValue(value),
+    []
+  );
+
+  if (isError) {
+    return (
+      <Typography
+        variant="h3"
+        sx={{
+          minHeight: "100vh",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          padding: "32px",
+          color: "#F42010",
+        }}
+      >
+        Something went wrong, please try again later
+      </Typography>
+    );
+  }
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <ClipLoader color="#38ACE2" size={150} />
+      </div>
+    );
+  }
+
+  if (!goals) {
+    return (
+      <Typography
+        variant="h3"
+        sx={{
+          minHeight: "100vh",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          padding: "32px",
+          color: "#F42010",
+        }}
+      >
+        No goals available
+      </Typography>
+    );
+  }
+
+  return (
+    <main className="relative min-h-screen py-8 space-y-6 flex flex-col justify-between">
+      <div>
+        <Grid container alignItems="center" sx={{ px: "16px" }}>
+          <Grid item xs={2}>
+            <Button
+              variant="text"
+              onClick={handleBackClick}
+              sx={{ p: "6px !important", ml: "-6px" }}
+            >
+              <ChevronLeft
+                size={36}
+                className="md:w-11 md:h-11 lg:w-13 lg:h-13"
+              />
+            </Button>
+          </Grid>
+          <Grid item xs={8} sx={{ display: "flex", justifyContent: "center" }}>
+            <Typography variant="h3" sx={{ fontWeight: 600 }}>
+              Goals
+            </Typography>
+          </Grid>
+          <Grid item xs={2}></Grid>
+        </Grid>
+        <div className="px-12 space-y-8">
+          {GOAL_QUESTIONS.map(
+            ({ title, selectedValue, setValue, buttonContents }, index) => {
+              return (
+                <div key={`question-${index}`} className="space-y-6">
+                  <div>
+                    <Typography variant="h3" sx={{ fontWeight: 600 }}>
+                      {title}
+                    </Typography>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    {buttonContents.map(({ label, value }, index) => {
+                      return (
+                        <Button
+                          key={`answer-${index}`}
+                          variant="outlined"
+                          sx={{
+                            px: "32px",
+                            py: "12px",
+                            border:
+                              selectedValue === value
+                                ? "1px solid #38ACE2"
+                                : "none",
+                            color:
+                              selectedValue === value ? "#38ACE2" : "white",
+                          }}
+                          onClick={handleOptionClick(value, setValue)}
+                        >
+                          {label}
+                        </Button>
+                      );
+                    })}
+                  </div>
+                </div>
+              );
+            }
+          )}
+        </div>
+      </div>
+
+      <div>
+        {errorMessage && (
+          <Typography variant="subtitle2" sx={{ textAlign: "center" }}>
+            {errorMessage}
+          </Typography>
+        )}
+        <div className="text-center">
+          <Button
+            variant="contained"
+            sx={{ width: "163px" }}
+            onClick={handleSaveClick}
+          >
+            Save
+          </Button>
+        </div>
+      </div>
+    </main>
+  );
+}

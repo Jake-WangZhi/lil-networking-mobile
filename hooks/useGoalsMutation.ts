@@ -4,12 +4,16 @@ import { useMutation } from "@tanstack/react-query";
 type Args = {
   onSuccess: () => void;
   onError: (error: unknown) => void;
-  method: "POST";
+  method: "POST" | "PUT";
 };
 
 type HandleSetGoalsArgs = {
   email: string;
-  goals?: Goals;
+  goals: {
+    networkingComfortLevel?: number;
+    goalConnections: number;
+    goalMessages: number;
+  };
 };
 
 export const useGoalsMutation = ({ onSuccess, onError, method }: Args) =>

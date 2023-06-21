@@ -23,8 +23,12 @@ export default function SettingsPage() {
         Settings
       </Typography>
       <div className="flex items-center px-4 space-x-2">
-        <div className="w-10 h-10 bg-white bg-opacity-[0.12] rounded-full flex justify-center items-center">
-          <UserCircle color="white" size={24} />
+        <div className="w-10 h-10 bg-white bg-opacity-[0.12] rounded-full flex justify-center items-center md:w-11 md:h-11 lg:w-12 lg:h-12">
+          <UserCircle
+            color="white"
+            size={24}
+            className="md:w-7 md:h-7 lg:w-8 lg:h-8"
+          />
         </div>
         <Typography variant="h3" sx={{ fontWeight: 600 }}>
           {session?.user?.name}
@@ -38,7 +42,7 @@ export default function SettingsPage() {
         >
           <div className="flex justify-between px-4 w-full">
             <Typography variant="subtitle1">Goals</Typography>
-            <ChevronRight size={24} />
+            <ChevronRight size={24} className="md:w-7 md:h-7 lg:w-8 lg:h-8" />
           </div>
         </Button>
         <Button
@@ -49,7 +53,7 @@ export default function SettingsPage() {
         >
           <div className="flex justify-between px-4 w-full">
             <Typography variant="subtitle1">Notifications</Typography>
-            <ChevronRight size={24} />
+            <ChevronRight size={24} className="md:w-7 md:h-7 lg:w-8 lg:h-8" />
           </div>
         </Button>
       </div>

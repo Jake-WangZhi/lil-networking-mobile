@@ -47,9 +47,9 @@ export interface Goals {
   networkingComfortLevel: number;
   goalConnections: number;
   goalMessages: number;
-  connections?: number;
-  messages?: number;
-  streak?: number;
+  connections: number;
+  messages: number;
+  streak: number;
 }
 
 export interface Quote {
