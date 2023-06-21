@@ -142,7 +142,7 @@ export default function GoalSettingPage() {
 
   if (!goals) {
     return (
-      <div className="relative min-h-screen flex flex-col justify-center items-center space-y-6">
+      <div className="relative min-h-screen flex flex-col justify-center items-center space-y-6 px-7">
         <Lottie
           options={{
             loop: false,
