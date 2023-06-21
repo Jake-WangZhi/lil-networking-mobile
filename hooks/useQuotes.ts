@@ -2,18 +2,18 @@ import { fetcher } from "@/lib/utils";
 import { Quote } from "@/types";
 import { useQuery } from "@tanstack/react-query";
 
-export const useQuote = () => {
+export const useQuotes = () => {
   const {
     isError,
-    data: quote,
+    data: quotes,
     isLoading,
-  } = useQuery<Quote>({
+  } = useQuery<Quote[]>({
     queryKey: ["quote"],
     queryFn: () => fetcher(`/quote/api`),
   });
 
   return {
-    quote,
+    quotes,
     isLoading,
     isError,
   };
