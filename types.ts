@@ -68,4 +68,5 @@ export enum SearchParams {
   Date = "date",
   Description = "description",
   IsFromMessage = "is_from_message",
+  IsFromSettings = "is_from_settings",
 }

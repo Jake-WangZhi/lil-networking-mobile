@@ -8,8 +8,9 @@ import { ChevronRight, ChevronLeft } from "react-feather";
 import { ProgressBar } from "@/components/ProgressBar";
 import { useGoalsMutation } from "@/hooks/useGoalsMutation";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { GoalQuestions } from "@/components/GoalQuestions";
+import { SearchParams } from "@/types";
 
 import "swiper/css";
 
@@ -62,6 +63,8 @@ const SwiperButtonBefore = ({
 export default function GoalsPage() {
   const router = useRouter();
   const { data: session } = useSession();
+  const searchParams = useSearchParams();
+  const isFromSettings = searchParams?.get(SearchParams.IsFromSettings);
 
   const [progress, setProgress] = useState(0);
   const [networkingComfortLevel, setNetworkingComfortLevel] = useState(1);
@@ -73,6 +76,7 @@ export default function GoalsPage() {
     method: "POST",
     onSuccess: () => {
       setErrorMessage("");
+      if (isFromSettings) return router.push("/settings");
       router.push("/dashboard");
     },
     onError: (error) => {
@@ -200,8 +204,14 @@ export default function GoalsPage() {
               </div>
               <div className="space-y-4">
                 <div className="flex justify-center">
-                  <Button variant="contained" onClick={handleClick}>
-                    Go to dashboard
+                  <Button
+                    variant="contained"
+                    onClick={handleClick}
+                    sx={{
+                      width: isFromSettings && "124px",
+                    }}
+                  >
+                    {isFromSettings ? "Done" : "Go to dashboard"}
                   </Button>
                 </div>
                 <div className="flex justify-center">

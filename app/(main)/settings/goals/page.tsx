@@ -15,6 +15,9 @@ import { Button } from "@/components/Button";
 import { ChevronLeft } from "react-feather";
 import { ClipLoader } from "react-spinners";
 import { useGoals } from "@/hooks/useGoals";
+import { SearchParams } from "@/types";
+import Lottie from "react-lottie";
+import animationData from "../../../../lottie/106770-empty-box.json";
 
 export default function GoalSettingPage() {
   const router = useRouter();
@@ -101,6 +104,10 @@ export default function GoalSettingPage() {
     router.back();
   }, [router]);
 
+  const handleSetGoalsClick = useCallback(() => {
+    router.push(`/goals?${SearchParams.IsFromSettings}=true`);
+  }, [router]);
+
   const handleOptionClick = useCallback(
     (value: number, setValue: Dispatch<SetStateAction<number>>) => () =>
       setValue(value),
@@ -135,19 +142,32 @@ export default function GoalSettingPage() {
 
   if (!goals) {
     return (
-      <Typography
-        variant="h3"
-        sx={{
-          minHeight: "100vh",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          padding: "32px",
-          color: "#F42010",
-        }}
-      >
-        No goals available
-      </Typography>
+      <div className="relative min-h-screen flex flex-col justify-center items-center space-y-6">
+        <Lottie
+          options={{
+            loop: false,
+            autoplay: true,
+            animationData: animationData,
+            rendererSettings: {
+              preserveAspectRatio: "xMidYMid slice",
+            },
+          }}
+          width={178}
+          height={178}
+        />
+        <div className="space-y-4 text-center">
+          <Typography variant="h2">No Goals</Typography>
+          <Typography variant="subtitle1">
+            Set up your goals to build habits and track your growth as a
+            networker
+          </Typography>
+        </div>
+        <div className="text-center">
+          <Button variant="contained" onClick={handleSetGoalsClick}>
+            Set up goals
+          </Button>
+        </div>
+      </div>
     );
   }
 
