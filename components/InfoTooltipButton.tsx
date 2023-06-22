@@ -5,33 +5,17 @@ import { Button } from "./Button";
 
 export const InfoTooltipButton = () => {
   const [open, setOpen] = useState(false);
-  const tooltipRef = useRef<HTMLDivElement>(null);
 
   const handleClick = useCallback(() => {
-    setOpen(true);
+    setOpen((prev) => !prev);
   }, []);
 
-  const handleClose = useCallback((event: React.MouseEvent) => {
-    event.stopPropagation();
+  const handleClose = useCallback(() => {
     setOpen(false);
   }, []);
 
-  useEffect(() => {
-    const handleOutsideClick = (event: any) => {
-      if (tooltipRef.current && !tooltipRef.current.contains(event.target)) {
-        setOpen(false);
-      }
-    };
-
-    document.body.addEventListener("click", handleOutsideClick);
-
-    return () => {
-      document.body.removeEventListener("click", handleOutsideClick);
-    };
-  }, []);
-
   const tooltipContent = (
-    <div ref={tooltipRef} className="flex justify-between px-2 py-3">
+    <div className="flex justify-between px-2 py-3">
       <div>
         <Typography variant="body1">
           Past due: Items that have been actionable for 10+ days
@@ -57,6 +41,7 @@ export const InfoTooltipButton = () => {
     <Button variant="text" onClick={handleClick} sx={{ px: "8px" }}>
       <Tooltip
         open={open}
+        onClose={handleClose}
         title={tooltipContent}
         arrow
         placement="bottom-start"

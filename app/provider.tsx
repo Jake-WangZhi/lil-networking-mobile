@@ -182,6 +182,35 @@ export function MuiCssProvider({ children }: React.PropsWithChildren) {
       MuiAccordionDetails: {
         styleOverrides: { root: { padding: "0px", marginTop: "8px" } },
       },
+      MuiMenu: {
+        styleOverrides: {
+          root: { backgroundColor: "none" },
+          list: { padding: "0px" },
+          paper: {
+            background: "#EDEDED",
+            borderRadius: "12px",
+            width: "254px",
+          },
+        },
+      },
+      MuiMenuItem: {
+        styleOverrides: { root: { padding: "0px" } },
+      },
+      MuiDivider: {
+        styleOverrides: {
+          root: { margin: "0px !important" },
+        },
+      },
+      MuiButtonBase: {
+        styleOverrides: {
+          root: { margin: "0px" },
+        },
+      },
+      MuiModal: {
+        styleOverrides: {
+          backdrop: { backgroundColor: "transparent" },
+        },
+      },
     },
   });
 

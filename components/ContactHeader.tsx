@@ -2,7 +2,7 @@ import { useBackPath } from "@/contexts/BackPathContext";
 import { useContactMutation } from "@/hooks/useContactMutation";
 import { DotsThreeCircleVertical } from "@phosphor-icons/react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useState, useCallback, useEffect, useRef } from "react";
+import { useState, useCallback } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import {
   ChevronLeft,
@@ -13,7 +13,7 @@ import {
   X,
 } from "react-feather";
 import { Contact, SearchParams } from "@/types";
-import { Typography } from "@mui/material";
+import { Divider, Menu, MenuItem, Typography } from "@mui/material";
 import { Button } from "./Button";
 import { AlertDialog } from "./AlertDialog";
 
@@ -28,9 +28,9 @@ export const ContactHeader = ({ contact }: Props) => {
   const searchParams = useSearchParams();
   const isChanged = searchParams?.get(SearchParams.IsChanged);
   const isFromMessage = searchParams?.get(SearchParams.IsFromMessage);
-  const dropdownRef = useRef<HTMLDivElement>(null);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
 
-  const [showDropdown, setShowDropdown] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [isAlertOpen, setIsAlertOpen] = useState(false);
   const [action, setAction] = useState<"delete" | "archive">();
@@ -60,22 +60,18 @@ export const ContactHeader = ({ contact }: Props) => {
     },
   });
 
-  useEffect(() => {
-    const handleOutsideClick = (event: any) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setShowDropdown(false);
-      }
-    };
+  const handleDropdownClick = useCallback(
+    (event: React.MouseEvent<HTMLButtonElement>) => {
+      setAnchorEl(event.currentTarget);
+    },
+    []
+  );
 
-    document.body.addEventListener("click", handleOutsideClick);
-
-    return () => {
-      document.body.removeEventListener("click", handleOutsideClick);
-    };
+  const handleDropdownClose = useCallback(() => {
+    setAnchorEl(null);
   }, []);
 
   const handleDeleteClick = useCallback(() => {
-    setShowDropdown(false);
     setAction("delete");
     setAlertDescription(
       "Deleting this contact will remove them from the app. This contact will need to be reentered."
@@ -85,7 +81,6 @@ export const ContactHeader = ({ contact }: Props) => {
 
   const handleStatusChange = useCallback(
     (isActive: boolean) => () => {
-      setShowDropdown(false);
       if (isActive) {
         setAction("archive");
         setAlertDescription(
@@ -125,8 +120,6 @@ export const ContactHeader = ({ contact }: Props) => {
       router.back();
     }
   }, [backPath, isChanged, router]);
-
-  const handleDropdownClick = useCallback(() => setShowDropdown(true), []);
 
   const handleMessageClick = useCallback(
     () =>
@@ -194,103 +187,106 @@ export const ContactHeader = ({ contact }: Props) => {
                 />
               </Button>
             </div>
-            {showDropdown && (
-              <div
-                ref={dropdownRef}
-                className="absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-[#3C3C43] divide-opacity-[0.36] rounded-md bg-[#EDEDED] shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
-              >
-                {!contact.isArchived && (
-                  <div>
-                    <Button
-                      onClick={handleMessageClick}
-                      variant="text"
-                      sx={{
-                        width: "100%",
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                        px: "16px",
-                        color: "black",
-                        "&:hover": {
-                          backgroundColor: "rgba(0, 0, 0, 0.08)",
-                        },
-                      }}
-                    >
-                      <Typography variant="subtitle1" sx={{ color: "black" }}>
-                        Message
-                      </Typography>
-                      <MessageSquare size={24} />
-                    </Button>
-                  </div>
-                )}
-                <div>
-                  <Button
-                    onClick={handleEditClick}
-                    variant="text"
-                    sx={{
-                      width: "100%",
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      px: "16px",
-                      color: "black",
-                      "&:hover": {
-                        backgroundColor: "rgba(0, 0, 0, 0.08)",
-                      },
-                    }}
-                  >
-                    <Typography variant="subtitle1" sx={{ color: "black" }}>
-                      Edit
-                    </Typography>
-                    <Edit size={24} />
-                  </Button>
-                </div>
-                <div>
-                  <Button
-                    onClick={handleStatusChange(!contact.isArchived)}
-                    variant="text"
-                    sx={{
-                      width: "100%",
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      px: "16px",
-                      color: "black",
-                      "&:hover": {
-                        backgroundColor: "rgba(0, 0, 0, 0.08)",
-                      },
-                    }}
-                  >
-                    <Typography variant="subtitle1" sx={{ color: "black" }}>
-                      {contact.isArchived ? "Activate" : "Archive"}
-                    </Typography>
-                    <Archive size={24} />
-                  </Button>
-                </div>
-                <div>
-                  <Button
-                    onClick={handleDeleteClick}
-                    variant="text"
-                    sx={{
-                      width: "100%",
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      px: "16px",
-                      color: "black",
-                      "&:hover": {
-                        backgroundColor: "rgba(0, 0, 0, 0.08)",
-                      },
-                    }}
-                  >
-                    <Typography variant="subtitle1" sx={{ color: "black" }}>
-                      Delete
-                    </Typography>
-                    <Trash2 size={24} />
-                  </Button>
-                </div>
-              </div>
-            )}
+            <Menu
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleDropdownClose}
+              MenuListProps={{
+                "aria-labelledby": "basic-button",
+              }}
+            >
+              <MenuItem onClick={handleDropdownClose}>
+                <Button
+                  onClick={handleMessageClick}
+                  variant="text"
+                  sx={{
+                    width: "100%",
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    px: "16px",
+                    color: "black",
+                    "&:hover": {
+                      backgroundColor: "rgba(0, 0, 0, 0.08)",
+                    },
+                  }}
+                >
+                  <Typography variant="subtitle1" sx={{ color: "black" }}>
+                    Message
+                  </Typography>
+                  <MessageSquare size={24} />
+                </Button>
+              </MenuItem>
+              <Divider />
+              <MenuItem onClick={handleDropdownClose}>
+                <Button
+                  onClick={handleEditClick}
+                  variant="text"
+                  sx={{
+                    width: "100%",
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    px: "16px",
+                    color: "black",
+                    "&:hover": {
+                      backgroundColor: "rgba(0, 0, 0, 0.08)",
+                    },
+                  }}
+                >
+                  <Typography variant="subtitle1" sx={{ color: "black" }}>
+                    Edit
+                  </Typography>
+                  <Edit size={24} />
+                </Button>
+              </MenuItem>
+              <Divider />
+              <MenuItem onClick={handleDropdownClose}>
+                <Button
+                  onClick={handleStatusChange(!contact.isArchived)}
+                  variant="text"
+                  sx={{
+                    width: "100%",
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    px: "16px",
+                    color: "black",
+                    "&:hover": {
+                      backgroundColor: "rgba(0, 0, 0, 0.08)",
+                    },
+                  }}
+                >
+                  <Typography variant="subtitle1" sx={{ color: "black" }}>
+                    {contact.isArchived ? "Activate" : "Archive"}
+                  </Typography>
+                  <Archive size={24} />
+                </Button>
+              </MenuItem>
+              <Divider />
+              <MenuItem onClick={handleDropdownClose}>
+                <Button
+                  onClick={handleDeleteClick}
+                  variant="text"
+                  sx={{
+                    width: "100%",
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    px: "16px",
+                    color: "black",
+                    "&:hover": {
+                      backgroundColor: "rgba(0, 0, 0, 0.08)",
+                    },
+                  }}
+                >
+                  <Typography variant="subtitle1" sx={{ color: "black" }}>
+                    Delete
+                  </Typography>
+                  <Trash2 size={24} />
+                </Button>
+              </MenuItem>
+            </Menu>
           </div>
         )}
       </div>

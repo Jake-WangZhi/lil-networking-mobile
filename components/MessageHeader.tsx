@@ -30,7 +30,7 @@ export const MessageHeader = ({ firstName, contactId }: Props) => {
   }, [contactId, router]);
 
   return (
-    <div className="sticky top-0 w-full bg-dark-blue z-10 py-6 px-4">
+    <div className="sticky top-0 w-full bg-dark-blue z-10 pt-8 pb-6 px-4">
       <Grid container alignItems="center">
         <Grid item xs={2}>
           <Button
