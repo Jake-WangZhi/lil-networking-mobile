@@ -27,7 +27,7 @@ export const SearchBar = ({ name, setName }: Props) => {
   }, [setName]);
 
   return (
-    <div className="flex items-center mt-6 mb-1 space-x-4">
+    <div className="flex items-center mt-6 mb-1 space-x-3">
       <div
         className={`w-full h-12 bg-white bg-opacity-5 rounded-lg flex ${
           isInputFocused ? "ring-1 ring-white bg-opacity-[0.12]" : ""
@@ -49,18 +49,20 @@ export const SearchBar = ({ name, setName }: Props) => {
         />
       </div>
       {showCancel && (
-        <Button
-          variant="text"
-          sx={{
-            color: "#0A84FF",
-            "&:hover": {
+        <div>
+          <Button
+            variant="text"
+            sx={{
               color: "#0A84FF",
-            },
-          }}
-          onClick={handleCancel}
-        >
-          Cancel
-        </Button>
+              "&:hover": {
+                color: "#0A84FF",
+              },
+            }}
+            onClick={handleCancel}
+          >
+            Cancel
+          </Button>
+        </div>
       )}
     </div>
   );
