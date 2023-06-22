@@ -2,7 +2,7 @@ import { useBackPath } from "@/contexts/BackPathContext";
 import { useContactMutation } from "@/hooks/useContactMutation";
 import { DotsThreeCircleVertical } from "@phosphor-icons/react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import {
   ChevronLeft,
@@ -28,6 +28,7 @@ export const ContactHeader = ({ contact }: Props) => {
   const searchParams = useSearchParams();
   const isChanged = searchParams?.get(SearchParams.IsChanged);
   const isFromMessage = searchParams?.get(SearchParams.IsFromMessage);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   const [showDropdown, setShowDropdown] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -58,6 +59,20 @@ export const ContactHeader = ({ contact }: Props) => {
       console.log(error);
     },
   });
+
+  useEffect(() => {
+    const handleOutsideClick = (event: any) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setShowDropdown(false);
+      }
+    };
+
+    document.body.addEventListener("click", handleOutsideClick);
+
+    return () => {
+      document.body.removeEventListener("click", handleOutsideClick);
+    };
+  }, []);
 
   const handleDeleteClick = useCallback(() => {
     setShowDropdown(false);
@@ -111,10 +126,7 @@ export const ContactHeader = ({ contact }: Props) => {
     }
   }, [backPath, isChanged, router]);
 
-  const handleDropdownClick = useCallback(
-    () => setShowDropdown((prev) => !prev),
-    []
-  );
+  const handleDropdownClick = useCallback(() => setShowDropdown(true), []);
 
   const handleMessageClick = useCallback(
     () =>
@@ -183,7 +195,10 @@ export const ContactHeader = ({ contact }: Props) => {
               </Button>
             </div>
             {showDropdown && (
-              <div className="absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-[#3C3C43] divide-opacity-[0.36] rounded-md bg-[#EDEDED] shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+              <div
+                ref={dropdownRef}
+                className="absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-[#3C3C43] divide-opacity-[0.36] rounded-md bg-[#EDEDED] shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+              >
                 {!contact.isArchived && (
                   <div>
                     <Button

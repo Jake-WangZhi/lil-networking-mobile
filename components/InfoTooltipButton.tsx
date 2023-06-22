@@ -5,7 +5,7 @@ import { Button } from "./Button";
 
 export const InfoTooltipButton = () => {
   const [open, setOpen] = useState(false);
-  const tooltipRef = useRef<HTMLButtonElement>(null);
+  const tooltipRef = useRef<HTMLDivElement>(null);
 
   const handleClick = useCallback(() => {
     setOpen(true);
@@ -31,7 +31,7 @@ export const InfoTooltipButton = () => {
   }, []);
 
   const tooltipContent = (
-    <div className="flex justify-between px-2 py-3">
+    <div ref={tooltipRef} className="flex justify-between px-2 py-3">
       <div>
         <Typography variant="body1">
           Past due: Items that have been actionable for 10+ days
@@ -60,7 +60,6 @@ export const InfoTooltipButton = () => {
         title={tooltipContent}
         arrow
         placement="bottom-start"
-        ref={tooltipRef}
       >
         <Info
           size={32}

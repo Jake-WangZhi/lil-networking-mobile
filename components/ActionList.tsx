@@ -1,12 +1,17 @@
-import { FoldableComponent } from "./FoldableComponent";
 import { Action, ActionType } from "@/types";
 import { ClipLoader } from "react-spinners";
 import { ActionCard } from "./ActionCard";
-import { Typography } from "@mui/material";
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Typography,
+} from "@mui/material";
 import Image from "next/image";
 import icon from "@/public/images/empty_state_icon.svg";
 import Lottie from "react-lottie";
 import animationData from "../lottie/908-add-and-save.json";
+import { ChevronDown } from "react-feather";
 
 interface Props {
   actions?: {
@@ -104,8 +109,16 @@ export const ActionList = ({ actions, isLoading, isError }: Props) => {
 
   return (
     <div className="w-full mb-20 mt-5 space-y-6">
-      <FoldableComponent
-        title={
+      <Accordion disableGutters defaultExpanded={true}>
+        <AccordionSummary
+          expandIcon={
+            <ChevronDown
+              color="white"
+              size={24}
+              className="md:w-7 md:h-7 lg:w-8 lg:h-8"
+            />
+          }
+        >
           <div className="flex items-center space-x-2">
             <div className="w-1 h-4 border-l-4 border-magenta md:border-l-5 md:h-5 lg:border-l-6 lg:h-6"></div>
             <Typography
@@ -115,8 +128,8 @@ export const ActionList = ({ actions, isLoading, isError }: Props) => {
               }}
             >{`Past Due (${actions.pastActions.length})`}</Typography>
           </div>
-        }
-        content={
+        </AccordionSummary>
+        <AccordionDetails>
           <div className="space-y-4">
             {actions.pastActions?.map((action, index) => (
               <ActionCard
@@ -126,10 +139,18 @@ export const ActionList = ({ actions, isLoading, isError }: Props) => {
               />
             ))}
           </div>
-        }
-      />
-      <FoldableComponent
-        title={
+        </AccordionDetails>
+      </Accordion>
+      <Accordion disableGutters defaultExpanded={true}>
+        <AccordionSummary
+          expandIcon={
+            <ChevronDown
+              color="white"
+              size={24}
+              className="md:w-7 md:h-7 lg:w-8 lg:h-8"
+            />
+          }
+        >
           <div className="flex items-center space-x-2">
             <div className="w-1 h-4 border-l-4 border-light-yellow md:border-l-5 md:h-5 lg:border-l-6 lg:h-6"></div>
             <Typography
@@ -139,8 +160,8 @@ export const ActionList = ({ actions, isLoading, isError }: Props) => {
               }}
             >{`New Action Items (${actions.upcomingActions?.length})`}</Typography>
           </div>
-        }
-        content={
+        </AccordionSummary>
+        <AccordionDetails>
           <div className="space-y-4">
             {actions.upcomingActions?.map((action, index) => (
               <ActionCard
@@ -150,8 +171,8 @@ export const ActionList = ({ actions, isLoading, isError }: Props) => {
               />
             ))}
           </div>
-        }
-      />
+        </AccordionDetails>
+      </Accordion>
     </div>
   );
 };

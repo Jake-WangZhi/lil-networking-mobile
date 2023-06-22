@@ -173,6 +173,15 @@ export function MuiCssProvider({ children }: React.PropsWithChildren) {
           },
         },
       },
+      MuiAccordion: {
+        styleOverrides: { root: { backgroundColor: "#0F1A24" } },
+      },
+      MuiAccordionSummary: {
+        styleOverrides: { root: { padding: "0px" } },
+      },
+      MuiAccordionDetails: {
+        styleOverrides: { root: { padding: "0px", marginTop: "8px" } },
+      },
     },
   });
 
