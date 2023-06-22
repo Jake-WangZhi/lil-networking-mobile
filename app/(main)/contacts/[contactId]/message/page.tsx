@@ -64,20 +64,15 @@ export default function MessagePage({
     );
   }
 
+  const { firstName, activities, interests } = contact;
+
   return (
-    <main className="relative min-h-screen text-white py-8 flex flex-col justify-between">
+    <main className="relative min-h-screen text-white pb-8 flex flex-col justify-between">
       <div>
-        <div className="px-4">
-          <MessageHeader
-            firstName={contact.firstName}
-            contactId={params.contactId}
-          />
-          <MessageCard contact={contact} />
-        </div>
-        <div className="my-6">
-          <SwipeableActivities activities={contact.activities.slice(0, 3)} />
-        </div>
-        <ContactInterests interests={contact.interests} />
+        <MessageHeader firstName={firstName} contactId={params.contactId} />
+        <MessageCard contact={contact} />
+        <SwipeableActivities activities={activities.slice(0, 3)} />
+        {interests.length !== 0 && <ContactInterests interests={interests} />}
       </div>
       <MessageActions contact={contact} />
     </main>

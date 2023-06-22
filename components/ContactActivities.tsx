@@ -1,12 +1,11 @@
 import { useActivityMutation } from "@/hooks/useActivityMutation";
-import { Activity, ActivityType } from "@/types";
+import { Activity, ActivityType, SearchParams } from "@/types";
 import { Circle, PlusCircle, Trash2 } from "react-feather";
 import { useCallback, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { Card, CardContent, Typography } from "@mui/material";
 import { Button } from "./Button";
-import { useRouter } from "next/navigation";
-import { useBackPath } from "@/contexts/BackPathContext";
+import { useRouter, useSearchParams } from "next/navigation";
 
 interface Props {
   activities: Activity[];
@@ -15,7 +14,8 @@ interface Props {
 export const ContactActivites = ({ activities }: Props) => {
   const queryClient = useQueryClient();
   const router = useRouter();
-  const { backPath } = useBackPath();
+  const searchParams = useSearchParams();
+  const isFromMessage = searchParams?.get(SearchParams.IsFromMessage);
 
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -55,7 +55,7 @@ export const ContactActivites = ({ activities }: Props) => {
       )}
       <div className="flex items-center justify-between mb-3">
         <Typography variant="subtitle1">Activites</Typography>
-        {!backPath.includes("/message") && (
+        {!isFromMessage && (
           <Button
             onClick={handlePlusClick}
             variant="text"

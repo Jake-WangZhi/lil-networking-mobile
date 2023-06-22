@@ -1,12 +1,14 @@
 "use client";
 
 import "../styles.css";
-import { ContactDetails } from "@/components/ContactDetails";
 import { useContact } from "@/hooks/useContact";
 import { ClipLoader } from "react-spinners";
 import { ContactHeader } from "@/components/ContactHeader";
 import { Typography } from "@mui/material";
 import { NavFooter } from "@/components/NavFooter";
+import { ContactActivites } from "@/components/ContactActivities";
+import { ContactInfo } from "@/components/ContactInfo";
+import { ContactInterests } from "@/components/ContactInterests";
 
 export default function ContactPage({
   params,
@@ -61,14 +63,14 @@ export default function ContactPage({
     );
   }
 
+  const { interests, activities } = contact;
+
   return (
-    <main className="relative min-h-screen py-8 text-white">
+    <main className="relative min-h-screen pb-8 text-white">
       <ContactHeader contact={contact} />
-      <ContactDetails
-        contact={contact}
-        isError={isError}
-        isLoading={isLoading}
-      />
+      <ContactInfo contact={contact} />
+      {interests.length !== 0 && <ContactInterests interests={interests} />}
+      <ContactActivites activities={activities} />
       <NavFooter />
     </main>
   );

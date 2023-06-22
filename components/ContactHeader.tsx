@@ -27,6 +27,7 @@ export const ContactHeader = ({ contact }: Props) => {
   const queryClient = useQueryClient();
   const searchParams = useSearchParams();
   const isChanged = searchParams?.get(SearchParams.IsChanged);
+  const isFromMessage = searchParams?.get(SearchParams.IsFromMessage);
 
   const [showDropdown, setShowDropdown] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -116,7 +117,10 @@ export const ContactHeader = ({ contact }: Props) => {
   );
 
   const handleMessageClick = useCallback(
-    () => router.push(`/contacts/${contact.id}/message`),
+    () =>
+      router.push(
+        `/contacts/${contact.id}/message?${SearchParams.IsFromProfile}=true`
+      ),
     [contact.id, router]
   );
 
@@ -126,7 +130,7 @@ export const ContactHeader = ({ contact }: Props) => {
   );
 
   return (
-    <div className="mb-2 mx-4">
+    <div className="flex items-center sticky top-0 w-full bg-dark-blue z-10 pt-8 pb-2 px-4">
       {errorMessage && (
         <Typography
           variant="subtitle2"
@@ -138,7 +142,7 @@ export const ContactHeader = ({ contact }: Props) => {
           {errorMessage}
         </Typography>
       )}
-      <div className="flex justify-between items-center">
+      <div className="w-full flex justify-between items-center">
         <Button
           variant="text"
           onClick={handleBackClick}
@@ -156,7 +160,7 @@ export const ContactHeader = ({ contact }: Props) => {
             />
           )}
         </Button>
-        {!backPath.includes("/message") && (
+        {!isFromMessage && (
           <div className="relative">
             <div className="flex items-center">
               {contact.isArchived && (

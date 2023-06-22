@@ -13,7 +13,7 @@ interface Props {
 
 export const SwipeableActivities = ({ activities }: Props) => {
   return (
-    <div className="space-y-4 ml-4">
+    <div className="space-y-4 ml-4 my-6">
       <Typography variant="subtitle1">Most recent Activity</Typography>
       <Swiper
         slidesPerView={"auto"}

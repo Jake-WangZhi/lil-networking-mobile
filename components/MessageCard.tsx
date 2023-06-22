@@ -23,39 +23,41 @@ export const MessageCard = ({ contact }: Props) => {
   }, [contact.email]);
 
   return (
-    <Card>
-      <CardContent>
-        <div className="space-y-2">
-          <div className="flex justify-between items-center">
-            <Typography variant="h2">
-              {contact.firstName} {contact.lastName}
-            </Typography>
-            <div className="flex items-start">
-              {contact.email && (
-                <Button
-                  variant="text"
-                  sx={{ p: "12px !important" }}
-                  onClick={handleEmailClick}
-                >
-                  <Mail size={24} />
-                </Button>
-              )}
-              {contact.links.length > 0 && (
-                <Button
-                  variant="text"
-                  sx={{ p: "12px !important" }}
-                  onClick={handleLinkedInClick}
-                >
-                  <Linkedin size={24} />
-                </Button>
-              )}
+    <div className="px-4">
+      <Card>
+        <CardContent>
+          <div className="space-y-2">
+            <div className="flex justify-between items-center">
+              <Typography variant="h2">
+                {contact.firstName} {contact.lastName}
+              </Typography>
+              <div className="flex items-start">
+                {contact.email && (
+                  <Button
+                    variant="text"
+                    sx={{ p: "12px !important" }}
+                    onClick={handleEmailClick}
+                  >
+                    <Mail size={24} />
+                  </Button>
+                )}
+                {contact.links.length > 0 && (
+                  <Button
+                    variant="text"
+                    sx={{ p: "12px !important" }}
+                    onClick={handleLinkedInClick}
+                  >
+                    <Linkedin size={24} />
+                  </Button>
+                )}
+              </div>
             </div>
+            <Typography variant="subtitle1">{contact.title}</Typography>
+            <Typography variant="subtitle1">{contact.company}</Typography>
+            <Typography variant="subtitle1">{contact.industry}</Typography>
           </div>
-          <Typography variant="subtitle1">{contact.title}</Typography>
-          <Typography variant="subtitle1">{contact.company}</Typography>
-          <Typography variant="subtitle1">{contact.industry}</Typography>
-        </div>
-      </CardContent>
-    </Card>
+        </CardContent>
+      </Card>
+    </div>
   );
 };

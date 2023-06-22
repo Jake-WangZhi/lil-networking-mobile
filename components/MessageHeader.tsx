@@ -1,9 +1,10 @@
 import { Grid, Typography } from "@mui/material";
 import { Button } from "@/components/Button";
 import { ChevronLeft } from "react-feather";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useBackPath } from "@/contexts/BackPathContext";
 import { useCallback } from "react";
+import { SearchParams } from "@/types";
 
 interface Props {
   firstName: string;
@@ -13,6 +14,8 @@ interface Props {
 export const MessageHeader = ({ firstName, contactId }: Props) => {
   const router = useRouter();
   const { backPath } = useBackPath();
+  const searchParams = useSearchParams();
+  const isFromProfile = searchParams?.get(SearchParams.IsFromProfile);
 
   const handleBackClick = useCallback(() => {
     if (backPath === "/contacts") {
@@ -23,11 +26,11 @@ export const MessageHeader = ({ firstName, contactId }: Props) => {
   }, [router, backPath]);
 
   const handleViewProfileClick = useCallback(() => {
-    router.push(`/contacts/${contactId}`);
+    router.push(`/contacts/${contactId}?${SearchParams.IsFromMessage}=true`);
   }, [contactId, router]);
 
   return (
-    <div className="mb-4">
+    <div className="sticky top-0 w-full bg-dark-blue z-10 py-6 px-4">
       <Grid container alignItems="center">
         <Grid item xs={2}>
           <Button
@@ -49,7 +52,7 @@ export const MessageHeader = ({ firstName, contactId }: Props) => {
         </Grid>
         <Grid item xs={2}></Grid>
       </Grid>
-      {backPath !== "/contacts" && (
+      {!isFromProfile && (
         <div className="flex justify-center">
           <Button
             variant="text"

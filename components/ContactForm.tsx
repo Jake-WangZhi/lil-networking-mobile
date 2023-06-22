@@ -112,7 +112,7 @@ export const ContactForm = ({ contact, userEmail }: Props) => {
     <main className="relative flex flex-col items-center text-white pb-8">
       {/* @ts-expect-error Async Server Component */}
       <form action={upsertContact}>
-        <div className="flex items-center sticky top-0 w-full bg-dark-blue z-10 pt-8 mb-6 px-4">
+        <div className="flex items-center sticky top-0 w-full bg-dark-blue z-10 pt-8 pb-6 px-4">
           <Grid container alignItems="center">
             <Grid item xs={2}>
               <Button variant="text" onClick={handleBackClick}>
@@ -159,7 +159,12 @@ export const ContactForm = ({ contact, userEmail }: Props) => {
           </Grid>
         </div>
 
-        <Grid container spacing={2} alignItems="center" sx={{ px: "16px" }}>
+        <Grid
+          container
+          spacing={2}
+          alignItems="center"
+          sx={{ px: "16px", pt: "1px" }}
+        >
           <Grid item xs={12}>
             <Grid container alignItems="center" rowSpacing={"4px"}>
               <Grid item xs={3}>
