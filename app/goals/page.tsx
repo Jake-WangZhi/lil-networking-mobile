@@ -72,7 +72,7 @@ export default function GoalsPage() {
     method: "POST",
     onSuccess: () => {
       setErrorMessage("");
-      if (isFromSettings) return router.push("/settings");
+      if (isFromSettings) return router.push("/settings/goals");
       router.push("/dashboard");
     },
     onError: (error) => {

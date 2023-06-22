@@ -233,7 +233,7 @@ export default function GoalSettingPage() {
                           key={`answer-${index}`}
                           variant="outlined"
                           sx={{
-                            px: "32px",
+                            px: "38px",
                             py: "12px",
                             border:
                               selectedValue === value
