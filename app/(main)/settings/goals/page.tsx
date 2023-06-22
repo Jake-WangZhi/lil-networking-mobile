@@ -4,6 +4,7 @@ import {
   Dispatch,
   SetStateAction,
   useCallback,
+  useEffect,
   useMemo,
   useState,
 } from "react";
@@ -31,6 +32,15 @@ export default function GoalSettingPage() {
   );
   const [goalMessages, setGoalMessages] = useState(goals?.goalMessages ?? 2);
   const [errorMessage, setErrorMessage] = useState("");
+  const [isDisabled, setIsDisabled] = useState(true);
+
+  useEffect(() => {
+    //Use setTimeout to create a short delay to prevent accidental button triggering
+    //when redirected from the onboarding
+    setTimeout(() => {
+      setIsDisabled(false);
+    }, 0);
+  }, []);
 
   const postGoalsMutation = useGoalsMutation({
     method: "PUT",
@@ -243,6 +253,7 @@ export default function GoalSettingPage() {
                               selectedValue === value ? "#38ACE2" : "white",
                           }}
                           onClick={handleOptionClick(value, setValue)}
+                          disabled={isDisabled}
                         >
                           {label}
                         </Button>
