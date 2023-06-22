@@ -31,11 +31,7 @@ export default function ContactsPage() {
       <div className="sticky top-0 w-full bg-dark-blue z-10 pt-8">
         <div className="flex justify-between items-center">
           <Typography variant="h1">All Contacts</Typography>
-          <Button
-            variant="text"
-            onClick={handlePlusClick}
-            sx={{ p: "8px !important" }}
-          >
+          <Button variant="text" onClick={handlePlusClick} sx={{ px: "8px" }}>
             <PlusSquare
               size={32}
               color={"#38ACE2"}

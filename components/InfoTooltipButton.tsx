@@ -45,7 +45,7 @@ export const InfoTooltipButton = () => {
         <Button
           variant="text"
           onClick={handleClose}
-          sx={{ zIndex: 10, py: "0px" }}
+          sx={{ zIndex: 10, height: "auto" }}
         >
           <X size={16} className="md:w-5 md:h-5 lg:w-6 lg:h-6" />
         </Button>
@@ -54,7 +54,7 @@ export const InfoTooltipButton = () => {
   );
 
   return (
-    <Button variant="text" onClick={handleClick} sx={{ p: "8px !important" }}>
+    <Button variant="text" onClick={handleClick} sx={{ px: "8px" }}>
       <Tooltip
         open={open}
         title={tooltipContent}

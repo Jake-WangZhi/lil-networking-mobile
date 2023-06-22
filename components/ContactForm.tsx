@@ -423,7 +423,7 @@ export const ContactForm = ({ contact, userEmail }: Props) => {
                 display: "flex",
                 gap: "4px",
                 alignItems: "center",
-                py: "12px",
+                px: "8px",
               }}
               onClick={handleAddLink}
             >

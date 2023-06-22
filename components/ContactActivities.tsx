@@ -63,7 +63,6 @@ export const ContactActivites = ({ activities }: Props) => {
               display: "flex",
               alignItems: "center",
               gap: "4px",
-              py: "12px",
               px: "8px",
             }}
           >
@@ -104,9 +103,7 @@ export const ContactActivites = ({ activities }: Props) => {
                       <Button
                         variant="text"
                         onClick={handleDeleteClick(activity)}
-                        sx={{
-                          p: "0px !important",
-                        }}
+                        sx={{ height: "auto" }}
                       >
                         <Trash2 size={24} />
                       </Button>

@@ -148,7 +148,7 @@ export default function GoalSettingPage() {
             <Button
               variant="text"
               onClick={handleBackClick}
-              sx={{ p: "6px !important", ml: "-6px" }}
+              sx={{ px: "6px", ml: "-6px" }}
             >
               <ChevronLeft
                 size={36}
@@ -201,7 +201,7 @@ export default function GoalSettingPage() {
             <Button
               variant="text"
               onClick={handleBackClick}
-              sx={{ p: "6px !important", ml: "-6px" }}
+              sx={{ px: "6px", ml: "-6px" }}
             >
               <ChevronLeft
                 size={36}

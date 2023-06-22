@@ -45,8 +45,6 @@ const SwiperButtonNext = ({ children }: { children: ReactNode }) => {
       onClick={handleNextClick}
       sx={{
         width: "172px",
-        height: "48px",
-        py: "12px",
       }}
     >
       {children}

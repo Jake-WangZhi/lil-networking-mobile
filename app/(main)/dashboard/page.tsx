@@ -34,11 +34,7 @@ export default function DashboardPage() {
           </Typography>
           <div className="flex items-center space-x-2">
             <InfoTooltipButton />
-            <Button
-              variant="text"
-              onClick={handlePlusClick}
-              sx={{ p: "8px !important" }}
-            >
+            <Button variant="text" onClick={handlePlusClick} sx={{ px: "8px" }}>
               <PlusSquare
                 size={32}
                 color={"#38ACE2"}

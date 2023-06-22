@@ -50,11 +50,7 @@ const SwiperButtonBefore = ({
   }, [onPrev, swiper]);
 
   return (
-    <Button
-      variant="text"
-      sx={{ p: "12px !important" }}
-      onClick={handlePrevClick}
-    >
+    <Button variant="text" sx={{ px: "12px" }} onClick={handlePrevClick}>
       {children}
     </Button>
   );
@@ -227,7 +223,10 @@ export default function GoalsPage() {
               <div>
                 {progress !== 0 && (
                   <SwiperButtonBefore onPrev={() => setProgress(progress - 1)}>
-                    <ChevronLeft />
+                    <ChevronLeft
+                      size={16}
+                      className="md:w-5 md:h-5 lg:w-6 lg:h-6"
+                    />
                     Back
                   </SwiperButtonBefore>
                 )}
@@ -235,7 +234,10 @@ export default function GoalsPage() {
               <div>
                 <SwiperButtonNext onNext={() => setProgress(progress + 1)}>
                   Next
-                  <ChevronRight />
+                  <ChevronRight
+                    size={16}
+                    className="md:w-5 md:h-5 lg:w-6 lg:h-6"
+                  />
                 </SwiperButtonNext>
               </div>
             </div>

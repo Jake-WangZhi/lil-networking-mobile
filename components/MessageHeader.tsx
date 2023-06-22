@@ -36,7 +36,7 @@ export const MessageHeader = ({ firstName, contactId }: Props) => {
           <Button
             variant="text"
             onClick={handleBackClick}
-            sx={{ p: "6px !important", ml: "-6px" }}
+            sx={{ px: "6px", ml: "-6px" }}
           >
             <ChevronLeft
               size={36}
@@ -54,13 +54,7 @@ export const MessageHeader = ({ firstName, contactId }: Props) => {
       </Grid>
       {!isFromProfile && (
         <div className="flex justify-center">
-          <Button
-            variant="text"
-            onClick={handleViewProfileClick}
-            sx={{
-              py: "12px",
-            }}
-          >
+          <Button variant="text" onClick={handleViewProfileClick}>
             <Typography variant="subtitle1" sx={{ opacity: 0.7 }}>
               View profile
             </Typography>

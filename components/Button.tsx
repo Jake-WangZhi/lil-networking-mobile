@@ -22,7 +22,6 @@ const VARIANTS: Record<string, {}> = {
     borderRadius: "28px",
     fontSize: "16px",
     px: "16px",
-    py: "12px",
     textAlign: "center",
     height: "48px",
     "@media (min-width: 768px)": {
@@ -57,7 +56,7 @@ const VARIANTS: Record<string, {}> = {
     fontSize: "14px",
     fontWeight: 600,
     lineHeight: "20px",
-    py: "14px",
+    height: "48px",
     "@media (min-width: 768px)": {
       fontSize: "16px",
     },

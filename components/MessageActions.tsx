@@ -111,7 +111,8 @@ export const MessageActions = ({ contact }: Props) => {
             flexDirection: "column",
             alignItems: "center",
             px: "24px",
-            py: "10px",
+            height: "92px",
+            width: "92px",
           }}
           onClick={handleDoneClick}
         >
@@ -128,7 +129,8 @@ export const MessageActions = ({ contact }: Props) => {
             flexDirection: "column",
             alignItems: "center",
             px: "24px",
-            py: "10px",
+            height: "92px",
+            width: "92px",
           }}
           onClick={handleArchiveClick}
         >
