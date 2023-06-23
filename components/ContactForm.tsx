@@ -166,6 +166,12 @@ export const ContactForm = ({ contact, userEmail }: Props) => {
           sx={{ px: "16px", pt: "1px" }}
         >
           <Grid item xs={12}>
+            <Typography variant="h3" sx={{ fontWeight: 600 }}>
+              Primary Information
+            </Typography>
+          </Grid>
+
+          <Grid item xs={12}>
             <Grid container alignItems="center" rowSpacing={"4px"}>
               <Grid item xs={3}>
                 <Typography variant="subtitle1">First *</Typography>
@@ -333,6 +339,12 @@ export const ContactForm = ({ contact, userEmail }: Props) => {
           </Grid>
 
           <Grid item xs={12}>
+            <Typography variant="h3" sx={{ fontWeight: 600, mt: "16px" }}>
+              Contact Information
+            </Typography>
+          </Grid>
+
+          <Grid item xs={12}>
             <Grid container alignItems="center" rowSpacing={"4px"}>
               <Grid item xs={3}>
                 <Typography variant="subtitle1">Email</Typography>
@@ -436,12 +448,25 @@ export const ContactForm = ({ contact, userEmail }: Props) => {
             item
             xs={12}
             sx={{
-              marginTop: "8px",
+              marginTop: "16px",
               position: "relative",
-              marginBottom: "-8px",
             }}
           >
-            <Typography variant="subtitle1">Interests</Typography>
+            <Typography variant="h3" sx={{ fontWeight: 600 }}>
+              Interests
+            </Typography>
+          </Grid>
+
+          <Grid item xs={12}>
+            <div className="space-y-1">
+              <Typography variant="subtitle1">
+                What are their interests?
+              </Typography>
+              <Typography variant="body1">
+                Taking note of your contacts interests will help you build more
+                impactful conversations
+              </Typography>
+            </div>
           </Grid>
 
           <Grid item xs={12}>
@@ -450,7 +475,7 @@ export const ContactForm = ({ contact, userEmail }: Props) => {
               onChange={handleChange}
               inputProps={{
                 id: "tagsInput",
-                placeholder: "Type interest here...",
+                placeholder: tags.length ? "" : "Type interest here...",
               }}
               focusedClassName="ring-1 ring-white outline-none appearance-none caret-white"
               className="rounded-[4px] block w-full min-h-12 h-auto p-4 bg-white bg-opacity-5"
