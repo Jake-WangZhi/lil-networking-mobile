@@ -11,6 +11,8 @@ import { InfoTooltipButton } from "@/components/InfoTooltipButton";
 import { NavFooter } from "@/components/NavFooter";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect } from "react";
+import { useSubscriptionMutation } from "@/hooks/useSubscription";
+import { Subscription } from "@/types";
 
 export default function DashboardPage() {
   const { data: session } = useSession();
@@ -52,6 +54,12 @@ export default function DashboardPage() {
   //     "/serviceworker.js"
   //   );
   // }
+
+  const postSubscriptionMutation = useSubscriptionMutation({
+    method: "POST",
+    onSuccess: () => {},
+    onError: () => {},
+  });
 
   function urlBase64ToUint8Array(base64String: string) {
     const padding = "=".repeat((4 - (base64String.length % 4)) % 4);
@@ -114,14 +122,12 @@ export default function DashboardPage() {
             .then((pushSubscription) => {
               console.log(
                 "Received PushSubscription: ",
-                JSON.stringify(pushSubscription)
+                pushSubscription.toJSON()
               );
-              return fetch("/api/notification", {
-                method: "post",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify(pushSubscription),
+
+              return postSubscriptionMutation.mutate({
+                email: session?.user?.email || "",
+                subscription: pushSubscription.toJSON() as Subscription,
               });
             });
         }

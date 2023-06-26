@@ -71,3 +71,8 @@ export enum SearchParams {
   IsFromProfile = "is_from_profile",
   IsFromSettings = "is_from_settings",
 }
+
+export interface Subscription {
+  endpoint: string;
+  keys: {};
+}
