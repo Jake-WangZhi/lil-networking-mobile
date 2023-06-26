@@ -111,7 +111,7 @@ export default function GoalSettingPage() {
   );
 
   const handleBackClick = useCallback(() => {
-    router.back();
+    router.push("/settings");
   }, [router]);
 
   const handleSetGoalsClick = useCallback(() => {
@@ -176,7 +176,7 @@ export default function GoalSettingPage() {
         <div className="h-[80vh] flex flex-col justify-center items-center space-y-6 px-7">
           <Lottie
             options={{
-              loop: false,
+              loop: 1,
               autoplay: true,
               animationData: animationData,
               rendererSettings: {
