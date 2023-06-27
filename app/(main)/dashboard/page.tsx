@@ -29,6 +29,9 @@ export default function DashboardPage() {
     <main className="relative flex flex-col items-center text-white px-4">
       <div className="sticky top-0 w-full bg-dark-blue z-10 pt-8">
         <div className="flex justify-between items-center">
+          <Button variant="text" onClick={() => router.push("/onboarding")}>
+            Onboarding
+          </Button>
           <Typography variant="h1">
             Hi, {session?.user?.name?.split(" ")[0]}!
           </Typography>
