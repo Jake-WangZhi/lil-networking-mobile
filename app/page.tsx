@@ -15,6 +15,12 @@ export default function Home() {
   const router = useRouter();
 
   useEffect(() => {
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("serviceworker.js", {
+        scope: "./",
+      });
+    }
+
     if (session) {
       router.push("/dashboard");
     } else {

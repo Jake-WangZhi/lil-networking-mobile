@@ -1,8 +1,9 @@
 "use client";
 
 import { Typography } from "@mui/material";
-import { ReactNode, useCallback, useMemo, useState } from "react";
-import { Swiper, SwiperSlide, useSwiper } from "swiper/react";
+import { useCallback, useMemo, useRef, useState } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Swiper as SwiperRef } from "swiper";
 import { Button } from "@/components/Button";
 import { ChevronRight, ChevronLeft } from "react-feather";
 import { ProgressBar } from "@/components/ProgressBar";
@@ -14,53 +15,12 @@ import { SearchParams } from "@/types";
 
 import "swiper/css";
 
-const SwiperButtonNext = ({
-  children,
-  onNext,
-}: {
-  children: ReactNode;
-  onNext: () => void;
-}) => {
-  const swiper = useSwiper();
-
-  const handleNextClick = useCallback(() => {
-    swiper.slideNext();
-    onNext();
-  }, [onNext, swiper]);
-
-  return (
-    <Button variant="contained" onClick={handleNextClick}>
-      {children}
-    </Button>
-  );
-};
-
-const SwiperButtonBefore = ({
-  children,
-  onPrev,
-}: {
-  children: ReactNode;
-  onPrev: () => void;
-}) => {
-  const swiper = useSwiper();
-
-  const handlePrevClick = useCallback(() => {
-    swiper.slidePrev();
-    onPrev();
-  }, [onPrev, swiper]);
-
-  return (
-    <Button variant="text" sx={{ px: "12px" }} onClick={handlePrevClick}>
-      {children}
-    </Button>
-  );
-};
-
 export default function GoalsPage() {
   const router = useRouter();
   const { data: session } = useSession();
   const searchParams = useSearchParams();
   const isFromSettings = searchParams?.get(SearchParams.IsFromSettings);
+  const swiperRef = useRef<SwiperRef>();
 
   const [progress, setProgress] = useState(0);
   const [networkingComfortLevel, setNetworkingComfortLevel] = useState(1);
@@ -81,7 +41,7 @@ export default function GoalsPage() {
     },
   });
 
-  const handleClick = useCallback(
+  const handleDoneClick = useCallback(
     () =>
       postGoalsMutation.mutate({
         goals: {
@@ -163,11 +123,25 @@ export default function GoalsPage() {
     [goalConnections, goalMessages, networkingComfortLevel]
   );
 
+  const handleNextClick = useCallback(() => {
+    swiperRef.current?.slideNext();
+    setProgress((prev) => prev + 1);
+  }, []);
+
+  const handlePrevClick = useCallback(() => {
+    swiperRef.current?.slidePrev();
+    setProgress((prev) => prev - 1);
+  }, []);
+
   return (
     <main className="relative px-8 py-8">
       <ProgressBar title={"Goal"} progress={progress} />
       <div className="px-4">
-        <Swiper allowTouchMove={false} spaceBetween={48}>
+        <Swiper
+          allowTouchMove={false}
+          spaceBetween={48}
+          onSwiper={(swiper) => (swiperRef.current = swiper)}
+        >
           {GOAL_QUESTIONS.map(
             ({ title, selectedValue, setValue, buttonContents }, index) => {
               return (
@@ -202,7 +176,7 @@ export default function GoalsPage() {
                 <div className="flex justify-center">
                   <Button
                     variant="contained"
-                    onClick={handleClick}
+                    onClick={handleDoneClick}
                     sx={{
                       width: isFromSettings && "124px",
                     }}
@@ -211,9 +185,13 @@ export default function GoalsPage() {
                   </Button>
                 </div>
                 <div className="flex justify-center">
-                  <SwiperButtonBefore onPrev={() => setProgress(progress - 1)}>
+                  <Button
+                    variant="text"
+                    sx={{ px: "12px" }}
+                    onClick={handlePrevClick}
+                  >
                     Back
-                  </SwiperButtonBefore>
+                  </Button>
                 </div>
               </div>
             </div>
@@ -222,23 +200,27 @@ export default function GoalsPage() {
             <div className="flex justify-between items-center">
               <div>
                 {progress !== 0 && (
-                  <SwiperButtonBefore onPrev={() => setProgress(progress - 1)}>
+                  <Button
+                    variant="text"
+                    sx={{ px: "12px" }}
+                    onClick={handlePrevClick}
+                  >
                     <ChevronLeft
                       size={16}
                       className="md:w-5 md:h-5 lg:w-6 lg:h-6"
                     />
                     Back
-                  </SwiperButtonBefore>
+                  </Button>
                 )}
               </div>
               <div>
-                <SwiperButtonNext onNext={() => setProgress(progress + 1)}>
+                <Button variant="contained" onClick={handleNextClick}>
                   Next
                   <ChevronRight
                     size={16}
                     className="md:w-5 md:h-5 lg:w-6 lg:h-6"
                   />
-                </SwiperButtonNext>
+                </Button>
               </div>
             </div>
           )}

@@ -1,7 +1,5 @@
 import { Typography } from "@mui/material";
 import Image, { StaticImageData } from "next/image";
-import { ReactNode } from "react";
-import { useSwiper } from "swiper/react";
 import { Button } from "./Button";
 
 interface Props {
@@ -9,31 +7,15 @@ interface Props {
   description?: string;
   image: StaticImageData;
   addImgPadding?: boolean;
+  handleNextClick: () => void | undefined;
 }
-
-const SwiperButtonNext = ({ children }: { children: ReactNode }) => {
-  const swiper = useSwiper();
-
-  return (
-    <Button
-      variant="contained"
-      onClick={() => swiper.slideNext()}
-      sx={{
-        width: "172px",
-        height: "48px",
-        py: "12px",
-      }}
-    >
-      {children}
-    </Button>
-  );
-};
 
 export const OnboardingIntroPage = ({
   title,
   description,
   image,
   addImgPadding,
+  handleNextClick,
 }: Props) => {
   return (
     <div className="bg-dark-blue">
@@ -49,7 +31,17 @@ export const OnboardingIntroPage = ({
         <Typography variant="h3">{description}</Typography>
       </div>
       <div className="flex justify-center mt-6">
-        <SwiperButtonNext>Next</SwiperButtonNext>
+        <Button
+          variant="contained"
+          onClick={handleNextClick}
+          sx={{
+            width: "172px",
+            height: "48px",
+            py: "12px",
+          }}
+        >
+          Next
+        </Button>
       </div>
     </div>
   );
