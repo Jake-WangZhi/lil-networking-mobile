@@ -26,8 +26,8 @@ export default async function handler(
 
     response
       .status(200)
-      .json({ message: "Push notifications scheduled successfully" });
+      .json({ message: "Push notifications sent successfully" });
   } catch (error) {
-    response.status(500).json({ error: "Error scheduling push notifications" });
+    response.status(500).json({ error: "Error sending push notifications" });
   }
 }
