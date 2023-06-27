@@ -6,12 +6,18 @@ import pic1 from "@/public/images/onboarding_pic1.svg";
 import pic2 from "@/public/images/onboarding_pic2.svg";
 import pic3 from "@/public/images/onboarding_pic3.svg";
 
-import { Swiper, SwiperSlide, useSwiper } from "swiper/react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Swiper as SwiperRef } from "swiper";
+
 import "swiper/css";
 
 import { Button } from "@/components/Button";
-import { ReactNode, useCallback } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
+import { urlBase64ToUint8Array } from "@/lib/utils";
+import { useSubscriptionMutation } from "@/hooks/useSubscription";
+import { useSession } from "next-auth/react";
+import { Subscription } from "@/types";
 
 const ONBOARDING_INTRO_PAGES = [
   {
@@ -34,26 +40,34 @@ const ONBOARDING_INTRO_PAGES = [
   },
 ];
 
-const SwiperButtonNext = ({ children }: { children: ReactNode }) => {
-  const swiper = useSwiper();
-
-  const handleNextClick = useCallback(() => swiper.slideNext(), [swiper]);
-
-  return (
-    <Button
-      variant="text"
-      onClick={handleNextClick}
-      sx={{
-        width: "172px",
-      }}
-    >
-      {children}
-    </Button>
-  );
-};
-
 export default function OnboardingPage() {
+  const { data: session } = useSession();
   const router = useRouter();
+  const swiperRef = useRef<SwiperRef>();
+  const nextButtonRef = useRef<HTMLButtonElement>(null);
+
+  const postSubscriptionMutation = useSubscriptionMutation({
+    method: "POST",
+    onSuccess: () => {},
+    onError: () => {},
+  });
+
+  let registration: ServiceWorkerRegistration;
+
+  useEffect(() => {
+    const requestPermission = async () => {
+      if ("serviceWorker" in navigator) {
+        registration = await navigator.serviceWorker.register(
+          "serviceworker.js",
+          {
+            scope: "./",
+          }
+        );
+      }
+    };
+
+    requestPermission();
+  }, []);
 
   const handleSetGoalsClick = useCallback(
     () => router.push("/goals"),
@@ -65,9 +79,47 @@ export default function OnboardingPage() {
     [router]
   );
 
+  const handleNextClick = useCallback(() => swiperRef.current?.slideNext(), []);
+
+  const handleNotificationClick = useCallback(async () => {
+    if ("Notification" in window) {
+      // Triggers popup to request access to send notifications
+      const result = await window.Notification.requestPermission();
+
+      // If the user rejects the permission result will be "denied"
+      if (result === "granted") {
+        const subscribeOptions = {
+          userVisibleOnly: true,
+          applicationServerKey: urlBase64ToUint8Array(
+            "BJwry9RH4YFm5VlomSOFS0hsKswCGGvOlvdvZRfNHv-UEjwk3lmJDPKdlKSPxwWvEgnkHPlH680563ppCeXQSBs"
+          ),
+        };
+
+        registration.pushManager
+          .subscribe(subscribeOptions)
+          .then((pushSubscription) => {
+            console.log(
+              "Received PushSubscription: ",
+              pushSubscription.toJSON()
+            );
+
+            postSubscriptionMutation.mutate({
+              email: session?.user?.email || "",
+              subscription: pushSubscription.toJSON() as Subscription,
+            });
+          });
+      }
+
+      nextButtonRef.current?.click();
+    }
+  }, []);
+
   return (
     <main className="relative">
-      <Swiper allowTouchMove={false}>
+      <Swiper
+        allowTouchMove={false}
+        onSwiper={(swiper) => (swiperRef.current = swiper)}
+      >
         {ONBOARDING_INTRO_PAGES.map((page, index) => (
           <SwiperSlide key={index}>
             <OnboardingIntroPage
@@ -75,6 +127,7 @@ export default function OnboardingPage() {
               description={page.description}
               image={page.image}
               addImgPadding={index === 1}
+              handleNextClick={handleNextClick}
             />
           </SwiperSlide>
         ))}
@@ -82,20 +135,29 @@ export default function OnboardingPage() {
           <OnboardingActionPage
             title="Stay Informed"
             actionButton={
+              <>
+                <Button
+                  variant="contained"
+                  id="notifications"
+                  onClick={handleNotificationClick}
+                >
+                  Allow notifications
+                </Button>
+              </>
+            }
+            textButton={
               <Button
-                variant="contained"
-                onClick={() => {}}
+                variant="text"
+                onClick={handleNextClick}
                 sx={{
-                  backgroundColor: "gray !important",
-                  cursor: "not-allowed",
-                  pointerEvents: "none",
+                  width: "172px",
                 }}
               >
-                Allow notifications
+                Not now
               </Button>
             }
-            textButton={<SwiperButtonNext>Not now</SwiperButtonNext>}
           />
+          <button ref={nextButtonRef} onClick={handleNextClick} />;
         </SwiperSlide>
         <SwiperSlide>
           <OnboardingActionPage

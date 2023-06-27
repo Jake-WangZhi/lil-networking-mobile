@@ -3,7 +3,7 @@ import webpush from "web-push";
 import prisma from "@/lib/prisma";
 
 webpush.setVapidDetails(
-  `mailto:${process.env.VAPID_MAILTO}`,
+  process.env.VAPID_MAILTO ?? "",
   process.env.VAPID_PUBLIC_KEY ?? "",
   process.env.VAPID_PRIVATE_KEY ?? ""
 );
