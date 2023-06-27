@@ -111,15 +111,9 @@ export default function OnboardingPage() {
           <OnboardingActionPage
             title="Stay Informed"
             actionButton={
-              <>
-                <Button
-                  variant="contained"
-                  id="notifications"
-                  onClick={handleNotificationClick}
-                >
-                  Allow notifications
-                </Button>
-              </>
+              <Button variant="contained" onClick={handleNotificationClick}>
+                Allow notifications
+              </Button>
             }
             textButton={
               <Button
