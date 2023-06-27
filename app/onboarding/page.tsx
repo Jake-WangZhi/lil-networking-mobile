@@ -88,7 +88,7 @@ export default function OnboardingPage() {
 
       nextButtonRef.current?.click();
     }
-  }, []);
+  }, [postSubscriptionMutation, session?.user?.email]);
 
   return (
     <main className="relative">
