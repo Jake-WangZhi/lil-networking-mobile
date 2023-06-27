@@ -4,7 +4,6 @@ import { MouseEvent, ReactNode } from "react";
 import { Button as MuiButton } from "@mui/material";
 
 type Props = {
-  id?: string;
   variant?: "contained" | "outlined" | "text";
   children: ReactNode;
   disabled?: boolean;
