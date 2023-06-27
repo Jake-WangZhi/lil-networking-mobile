@@ -5,19 +5,17 @@ import { OnboardingActionPage } from "@/components/OnboardingActionPage";
 import pic1 from "@/public/images/onboarding_pic1.svg";
 import pic2 from "@/public/images/onboarding_pic2.svg";
 import pic3 from "@/public/images/onboarding_pic3.svg";
-
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Swiper as SwiperRef } from "swiper";
-
-import "swiper/css";
-
 import { Button } from "@/components/Button";
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { urlBase64ToUint8Array } from "@/lib/utils";
 import { useSubscriptionMutation } from "@/hooks/useSubscription";
 import { useSession } from "next-auth/react";
 import { Subscription } from "@/types";
+
+import "swiper/css";
 
 const ONBOARDING_INTRO_PAGES = [
   {
@@ -52,23 +50,6 @@ export default function OnboardingPage() {
     onError: () => {},
   });
 
-  let registration: ServiceWorkerRegistration;
-
-  useEffect(() => {
-    const requestPermission = async () => {
-      if ("serviceWorker" in navigator) {
-        registration = await navigator.serviceWorker.register(
-          "serviceworker.js",
-          {
-            scope: "./",
-          }
-        );
-      }
-    };
-
-    requestPermission();
-  }, []);
-
   const handleSetGoalsClick = useCallback(
     () => router.push("/goals"),
     [router]
@@ -83,31 +64,26 @@ export default function OnboardingPage() {
 
   const handleNotificationClick = useCallback(async () => {
     if ("Notification" in window) {
-      // Triggers popup to request access to send notifications
       const result = await window.Notification.requestPermission();
 
-      // If the user rejects the permission result will be "denied"
       if (result === "granted") {
         const subscribeOptions = {
           userVisibleOnly: true,
           applicationServerKey: urlBase64ToUint8Array(
-            "BJwry9RH4YFm5VlomSOFS0hsKswCGGvOlvdvZRfNHv-UEjwk3lmJDPKdlKSPxwWvEgnkHPlH680563ppCeXQSBs"
+            process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY ?? ""
           ),
         };
 
-        registration.pushManager
-          .subscribe(subscribeOptions)
-          .then((pushSubscription) => {
-            console.log(
-              "Received PushSubscription: ",
-              pushSubscription.toJSON()
-            );
+        const registration = await navigator.serviceWorker.getRegistration();
 
-            postSubscriptionMutation.mutate({
-              email: session?.user?.email || "",
-              subscription: pushSubscription.toJSON() as Subscription,
-            });
-          });
+        const pushSubscription = await registration?.pushManager.subscribe(
+          subscribeOptions
+        );
+
+        postSubscriptionMutation.mutate({
+          email: session?.user?.email || "",
+          subscription: pushSubscription?.toJSON() as Subscription,
+        });
       }
 
       nextButtonRef.current?.click();
