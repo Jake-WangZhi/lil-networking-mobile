@@ -14,15 +14,23 @@ export default async function handler(
     );
 
     const subscriptionData: any[] = await prisma.subscription.findMany();
-
+    console.log("subscriptionData", subscriptionData);
     const notificationData = {
       title: "Push Notification Title",
       body: "This is a push notification",
     };
 
-    for await (const data of subscriptionData) {
-      webpush.sendNotification(data, JSON.stringify(notificationData));
-    }
+    const sendNotifications = async () => {
+      for (const data of subscriptionData) {
+        const notification = await webpush.sendNotification(
+          data,
+          JSON.stringify(notificationData)
+        );
+        console.log("notification", notification);
+      }
+    };
+
+    await sendNotifications();
 
     response
       .status(200)
