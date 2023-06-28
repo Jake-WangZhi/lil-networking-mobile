@@ -43,13 +43,10 @@ export enum ActivityType {
   SYSTEM = "SYSTEM",
 }
 
-export interface Goals {
+export interface GoalsArgs {
   networkingComfortLevel: number;
   goalConnections: number;
   goalMessages: number;
-  connections: number;
-  messages: number;
-  streak: number;
 }
 
 export interface Quote {

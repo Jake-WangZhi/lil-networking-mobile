@@ -1,5 +1,5 @@
-import { Goals } from "@/types";
 import { Grid, Typography } from "@mui/material";
+import { Goals } from "@prisma/client";
 
 interface Props {
   goals: Goals;

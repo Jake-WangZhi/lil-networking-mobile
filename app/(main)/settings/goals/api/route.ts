@@ -1,11 +1,11 @@
 import prisma from "@/lib/prisma";
-import { Goals, SearchParams } from "@/types";
+import { GoalsArgs, SearchParams } from "@/types";
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
   const { searchParams } = new URL(request.url);
   const email = searchParams.get(SearchParams.Email);
-  const goals: Goals = await request.json();
+  const goals: GoalsArgs = await request.json();
 
   if (!email)
     return new NextResponse(
@@ -38,7 +38,7 @@ export async function POST(request: Request) {
 export async function PUT(request: Request) {
   const { searchParams } = new URL(request.url);
   const email = searchParams.get(SearchParams.Email);
-  const goals: Goals = await request.json();
+  const goals: GoalsArgs = await request.json();
 
   if (!email)
     return new NextResponse(

@@ -1,4 +1,4 @@
-import { SearchParams } from "@/types";
+import { GoalsArgs, SearchParams } from "@/types";
 import { useMutation } from "@tanstack/react-query";
 
 type Args = {
@@ -9,23 +9,19 @@ type Args = {
 
 type HandleSetGoalsArgs = {
   email: string;
-  goals: {
-    networkingComfortLevel?: number;
-    goalConnections: number;
-    goalMessages: number;
-  };
+  goalsArgs: GoalsArgs;
 };
 
 export const useGoalsMutation = ({ onSuccess, onError, method }: Args) =>
   useMutation({
-    mutationFn: async ({ email, goals }: HandleSetGoalsArgs) => {
+    mutationFn: async ({ email, goalsArgs }: HandleSetGoalsArgs) => {
       const response = await fetch(
         `/settings/goals/api?${SearchParams.Email}=${email}`,
         {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(goals),
+          body: JSON.stringify(goalsArgs),
           method,
         }
       );

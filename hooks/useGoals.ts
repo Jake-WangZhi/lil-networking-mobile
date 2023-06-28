@@ -1,5 +1,6 @@
 import { fetcher } from "@/lib/utils";
-import { Goals, SearchParams } from "@/types";
+import { SearchParams } from "@/types";
+import { Goals } from "@prisma/client";
 import { useQuery } from "@tanstack/react-query";
 
 type Args = {
