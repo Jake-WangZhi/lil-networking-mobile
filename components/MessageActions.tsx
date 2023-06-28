@@ -1,6 +1,6 @@
 import { Button } from "@/components/Button";
 import { Typography } from "@mui/material";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useMemo, useState } from "react";
 import { Check, Archive } from "react-feather";
 import { useContactMutation } from "@/hooks/useContactMutation";
@@ -18,6 +18,8 @@ export const MessageActions = ({ contact }: Props) => {
   const router = useRouter();
   const { data: session } = useSession();
   const { backPath } = useBackPath();
+  const searchParams = useSearchParams();
+  const isFromProfile = searchParams?.get(SearchParams.IsFromProfile);
 
   const [isArchiveAlertOpen, setIsArchiveAlertOpen] = useState(false);
   const [isEditAlertOpen, setIsEditAlertOpen] = useState(false);
@@ -38,9 +40,13 @@ export const MessageActions = ({ contact }: Props) => {
     method: "POST",
     onSuccess: ({ showQuote }) => {
       setErrorMessage("");
-      if (showQuote)
-        return router.push(`/quote?${SearchParams.RedirectPath}=/dashboard`);
-      router.push("/dashboard");
+      const redirectPath = SearchParams.RedirectPath;
+      const destinationPath = isFromProfile ? "/contacts" : "/dashboard";
+
+      const path = showQuote
+        ? `/quote?${redirectPath}=${destinationPath}`
+        : destinationPath;
+      router.push(path);
     },
     onError: (error) => {
       setErrorMessage("An error occurred. Please try again.");
@@ -76,7 +82,10 @@ export const MessageActions = ({ contact }: Props) => {
   const handleConfirmEditClick = useCallback(() => {
     setIsEditAlertOpen(false);
 
-    const queryParams = new URLSearchParams(preFilledFormData);
+    const queryParams = new URLSearchParams({
+      ...preFilledFormData,
+      ...(isFromProfile && { [SearchParams.IsFromProfile]: "true" }),
+    });
 
     router.push(`/contacts/${contact.id}/activities/create?${queryParams}`);
   }, [contact.id, preFilledFormData, router]);

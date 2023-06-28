@@ -1,4 +1,4 @@
-import { Activity } from "@/types";
+import { ActivityArgs } from "@/types";
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 
@@ -6,7 +6,7 @@ export async function POST(
   request: Request,
   { params }: { params: { contactId: string } }
 ) {
-  const activity: Activity = await request.json();
+  const activity: ActivityArgs = await request.json();
 
   const { title, date, description, type } = activity;
 
@@ -20,15 +20,16 @@ export async function POST(
       { status: 404, headers: { "content-type": "application/json" } }
     );
 
-  await prisma.activity.create({
-    data: {
-      contactId: params.contactId,
-      title,
-      date,
-      description,
-      type,
-    },
-  });
+  if (title && date && description && type)
+    await prisma.activity.create({
+      data: {
+        contactId: params.contactId,
+        title,
+        date,
+        description,
+        type,
+      },
+    });
 
   await prisma.goals.updateMany({
     where: {

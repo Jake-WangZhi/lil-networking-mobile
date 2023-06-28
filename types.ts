@@ -1,3 +1,5 @@
+import { Activity } from "@prisma/client";
+
 export interface Action {
   contactId: string;
   contactFirstName: string;
@@ -34,13 +36,13 @@ export interface ContactArgs {
   isArchived?: boolean;
 }
 
-export interface Activity {
+export interface ActivityArgs {
   id?: string;
-  contactId: string;
-  title: string;
-  description: string;
-  date: string;
-  type: ActivityType;
+  contactId?: string;
+  title?: string;
+  description?: string;
+  date?: string;
+  type?: ActivityType;
 }
 
 export enum ActivityType {
