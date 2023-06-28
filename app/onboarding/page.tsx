@@ -13,7 +13,7 @@ import { useRouter } from "next/navigation";
 import { urlBase64ToUint8Array } from "@/lib/utils";
 import { useSubscriptionMutation } from "@/hooks/useSubscription";
 import { useSession } from "next-auth/react";
-import { Subscription } from "@/types";
+import { SubscriptionArgs } from "@/types";
 import { useNotificationSettingsMutation } from "@/hooks/useNotificationSettingsMutation";
 
 import "swiper/css";
@@ -91,7 +91,7 @@ export default function OnboardingPage() {
 
         postSubscriptionMutation.mutate({
           email: session?.user?.email || "",
-          subscription: pushSubscription?.toJSON() as Subscription,
+          subscription: pushSubscription?.toJSON() as SubscriptionArgs,
         });
 
         postNotificationSettingsMutation.mutate({

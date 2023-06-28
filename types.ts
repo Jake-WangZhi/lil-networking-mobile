@@ -49,12 +49,6 @@ export interface GoalsArgs {
   goalMessages: number;
 }
 
-export interface Quote {
-  text: string;
-  author?: string;
-  titles: string[];
-}
-
 export enum SearchParams {
   UserEmail = "user_email",
   Email = "email",
@@ -69,7 +63,7 @@ export enum SearchParams {
   IsFromSettings = "is_from_settings",
 }
 
-export interface Subscription {
+export interface SubscriptionArgs {
   endpoint: string;
   keys: {};
 }

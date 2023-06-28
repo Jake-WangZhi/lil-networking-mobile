@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
-import { SearchParams, Subscription } from "@/types";
+import { SearchParams, SubscriptionArgs } from "@/types";
 
 export async function POST(request: Request) {
-  const subscription: Subscription = await request.json();
+  const subscription: SubscriptionArgs = await request.json();
   const { searchParams } = new URL(request.url);
   const email = searchParams.get(SearchParams.Email);
 

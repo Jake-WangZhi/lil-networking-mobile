@@ -1,4 +1,4 @@
-import { SearchParams, Subscription } from "@/types";
+import { SearchParams, SubscriptionArgs } from "@/types";
 import { useMutation } from "@tanstack/react-query";
 
 type Args = {
@@ -9,7 +9,7 @@ type Args = {
 
 type HandleSetSubscriptionArgs = {
   email: string;
-  subscription: Subscription;
+  subscription: SubscriptionArgs;
 };
 
 export const useSubscriptionMutation = ({ onSuccess, onError, method }: Args) =>
