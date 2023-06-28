@@ -1,5 +1,6 @@
 import { fetcher } from "@/lib/utils";
 import { SearchParams } from "@/types";
+import { NotificationSettings } from "@prisma/client";
 import { useQuery } from "@tanstack/react-query";
 
 type Args = {
@@ -11,7 +12,7 @@ export const useNotificationSettings = ({ email }: Args) => {
     isError,
     data: notificationSettings,
     isLoading,
-  } = useQuery<any>({
+  } = useQuery<NotificationSettings>({
     queryKey: ["notificationSettings", email],
     queryFn: () =>
       fetcher(`/settings/notifications/api?${SearchParams.Email}=${email}`),

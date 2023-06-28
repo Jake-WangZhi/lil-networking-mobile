@@ -9,20 +9,43 @@ import { urlBase64ToUint8Array } from "@/lib/utils";
 import { Subscription } from "@/types";
 import { useSubscriptionMutation } from "@/hooks/useSubscription";
 import { useSession } from "next-auth/react";
+import { useNotificationSettings } from "@/hooks/useNotificationSettings";
+import { useNotificationSettingsMutation } from "@/hooks/useNotificationSettingsMutation";
 
 const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+const isGranted =
+  "Notification" in window && window.Notification.permission === "granted";
 
 export default function NotificationSettingPage() {
   const { data: session } = useSession();
   const router = useRouter();
+  const { notificationSettings } = useNotificationSettings({
+    email: session?.user?.email,
+  });
 
   const [allNotificationsChecked, setAllNotificationsChecked] = useState(false);
   const [newActionChecked, setNewActionChecked] = useState(false);
   const [streakChecked, setStreakChecked] = useState(false);
   const [meetGoalChecked, setMeetGoalChecked] = useState(false);
 
+  useEffect(() => {
+    if (notificationSettings) {
+      const { newAction, streak, meetGoal } = notificationSettings;
+
+      setNewActionChecked(newAction);
+      setStreakChecked(streak);
+      setMeetGoalChecked(meetGoal);
+    }
+  }, [notificationSettings]);
+
   const postSubscriptionMutation = useSubscriptionMutation({
     method: "POST",
+    onSuccess: () => {},
+    onError: () => {},
+  });
+
+  const putNotificationSettingsMutation = useNotificationSettingsMutation({
+    method: "PUT",
     onSuccess: () => {},
     onError: () => {},
   });
@@ -37,77 +60,94 @@ export default function NotificationSettingPage() {
     }
   }, [newActionChecked, streakChecked, meetGoalChecked]);
 
-  const requestPermission = async () => {
-    if ("Notification" in window) {
-      const permission = window.Notification.permission;
-      if (permission === "granted") {
+  const isNotificationModificationAllowed = useCallback(async () => {
+    if (isGranted) return true;
+    if (window.Notification.permission !== "denied") {
+      const result = await window.Notification.requestPermission();
+
+      if (result === "granted") {
+        const subscribeOptions = {
+          userVisibleOnly: true,
+          applicationServerKey: urlBase64ToUint8Array(
+            process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY ?? ""
+          ),
+        };
+
+        const registration = await navigator.serviceWorker.getRegistration();
+
+        const pushSubscription = await registration?.pushManager.subscribe(
+          subscribeOptions
+        );
+
+        postSubscriptionMutation.mutate({
+          email: session?.user?.email || "",
+          subscription: pushSubscription?.toJSON() as Subscription,
+        });
+
         return true;
-      } else if (permission !== "denied") {
-        const result = await window.Notification.requestPermission();
-
-        if (result === "granted") {
-          const subscribeOptions = {
-            userVisibleOnly: true,
-            applicationServerKey: urlBase64ToUint8Array(
-              process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY ?? ""
-            ),
-          };
-
-          const registration = await navigator.serviceWorker.getRegistration();
-
-          const pushSubscription = await registration?.pushManager.subscribe(
-            subscribeOptions
-          );
-
-          postSubscriptionMutation.mutate({
-            email: session?.user?.email || "",
-            subscription: pushSubscription?.toJSON() as Subscription,
-          });
-
-          return true;
-        }
       }
     }
 
     return false;
-  };
+  }, [postSubscriptionMutation, session?.user?.email]);
 
   const switchAllNotifications = useCallback(
     async (event: ChangeEvent<HTMLInputElement>, checked: boolean) => {
-      if (await requestPermission()) {
+      if (await isNotificationModificationAllowed()) {
         setAllNotificationsChecked(checked);
         setNewActionChecked(checked);
         setStreakChecked(checked);
         setMeetGoalChecked(checked);
       }
     },
-    []
+    [isNotificationModificationAllowed]
   );
 
   const switchNewAction = useCallback(
     async (event: ChangeEvent<HTMLInputElement>, checked: boolean) => {
-      if (await requestPermission()) setNewActionChecked(checked);
+      if (await isNotificationModificationAllowed())
+        setNewActionChecked(checked);
     },
-    []
+    [isNotificationModificationAllowed]
   );
 
   const switchStreak = useCallback(
     async (event: ChangeEvent<HTMLInputElement>, checked: boolean) => {
-      if (await requestPermission()) setStreakChecked(checked);
+      if (await isNotificationModificationAllowed()) setStreakChecked(checked);
     },
-    []
+    [isNotificationModificationAllowed]
   );
 
   const switchMeetGoal = useCallback(
     async (event: ChangeEvent<HTMLInputElement>, checked: boolean) => {
-      if (await requestPermission()) setMeetGoalChecked(checked);
+      if (await isNotificationModificationAllowed())
+        setMeetGoalChecked(checked);
     },
-    []
+    [isNotificationModificationAllowed]
   );
 
   const handleBackClick = useCallback(() => {
+    if (isGranted)
+      putNotificationSettingsMutation.mutate({
+        email: session?.user?.email ?? "",
+        notificationSettings: {
+          newAction: newActionChecked,
+          streak: streakChecked,
+          meetGoal: meetGoalChecked,
+          updateTime: "18:00",
+          timeZone,
+        },
+      });
+
     router.push("/settings");
-  }, [router]);
+  }, [
+    router,
+    meetGoalChecked,
+    newActionChecked,
+    streakChecked,
+    putNotificationSettingsMutation,
+    session?.user?.email,
+  ]);
 
   return (
     <main className="relative min-h-screen py-8 px-4">

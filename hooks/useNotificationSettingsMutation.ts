@@ -1,4 +1,4 @@
-import { NotificationSettings, SearchParams } from "@/types";
+import { NotificationSettingsArgs, SearchParams } from "@/types";
 import { useMutation } from "@tanstack/react-query";
 
 type Args = {
@@ -9,7 +9,7 @@ type Args = {
 
 type HandleSetNotificationsArgs = {
   email: string;
-  notificationSettings: NotificationSettings;
+  notificationSettings: NotificationSettingsArgs;
 };
 
 export const useNotificationSettingsMutation = ({

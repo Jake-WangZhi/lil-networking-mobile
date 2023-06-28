@@ -1,4 +1,4 @@
-import { NotificationSettings, SearchParams } from "@/types";
+import { NotificationSettingsArgs, SearchParams } from "@/types";
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 
@@ -32,7 +32,7 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
   const { searchParams } = new URL(request.url);
   const email = searchParams.get(SearchParams.Email);
-  const notificationSettings: NotificationSettings = await request.json();
+  const notificationSettings: NotificationSettingsArgs = await request.json();
 
   if (!email)
     return new NextResponse(
@@ -68,7 +68,7 @@ export async function POST(request: Request) {
 export async function PUT(request: Request) {
   const { searchParams } = new URL(request.url);
   const email = searchParams.get(SearchParams.Email);
-  const notificationSettings: NotificationSettings = await request.json();
+  const notificationSettings: NotificationSettingsArgs = await request.json();
 
   if (!email)
     return new NextResponse(
@@ -87,11 +87,19 @@ export async function PUT(request: Request) {
   const { newAction, streak, meetGoal, updateTime, timeZone } =
     notificationSettings;
 
-  const newNotificationSettings = await prisma.notificationSettings.update({
+  const newNotificationSettings = await prisma.notificationSettings.upsert({
     where: {
       userId: user.id,
     },
-    data: {
+    create: {
+      userId: user.id,
+      newAction,
+      streak,
+      meetGoal,
+      updateTime,
+      timeZone,
+    },
+    update: {
       newAction,
       streak,
       meetGoal,

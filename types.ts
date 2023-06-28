@@ -77,7 +77,7 @@ export interface Subscription {
   keys: {};
 }
 
-export interface NotificationSettings {
+export interface NotificationSettingsArgs {
   newAction: boolean;
   streak: boolean;
   meetGoal: boolean;

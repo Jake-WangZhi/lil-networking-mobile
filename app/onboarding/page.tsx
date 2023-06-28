@@ -108,7 +108,11 @@ export default function OnboardingPage() {
 
       nextButtonRef.current?.click();
     }
-  }, [postSubscriptionMutation, session?.user?.email]);
+  }, [
+    postSubscriptionMutation,
+    postNotificationSettingsMutation,
+    session?.user?.email,
+  ]);
 
   return (
     <main className="relative">
