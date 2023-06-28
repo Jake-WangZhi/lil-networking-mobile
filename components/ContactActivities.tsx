@@ -98,7 +98,7 @@ export const ContactActivites = ({ activities }: Props) => {
                   >
                     {activity.title}
                   </Typography>
-                  {activity.type === ActivityType.USER && (
+                  {activity.type === ActivityType.USER && !isFromMessage && (
                     <div className="flex items-start">
                       <Button
                         variant="text"
