@@ -213,6 +213,40 @@ export function MuiCssProvider({ children }: React.PropsWithChildren) {
           backdrop: { backgroundColor: "transparent" },
         },
       },
+      MuiSwitch: {
+        styleOverrides: {
+          root: {
+            width: "52px",
+            height: "32px",
+            padding: "0px",
+          },
+          switchBase: {
+            padding: "0px",
+            margin: "4px",
+            transitionDuration: "300ms",
+            color: "#938F99",
+            "&.Mui-checked": {
+              color: "#38ACE2",
+            },
+          },
+          track: {
+            borderColor: "red",
+            backgroundColor: "#36343B",
+            opacity: 1,
+            border: "2px solid #938F99",
+            borderRadius: "100px",
+            ".Mui-checked+ &": {
+              backgroundColor: "white !important",
+              opacity: "1 !important",
+              border: "0px",
+            },
+          },
+          thumb: {
+            width: "24px",
+            height: "24px",
+          },
+        },
+      },
     },
   });
 

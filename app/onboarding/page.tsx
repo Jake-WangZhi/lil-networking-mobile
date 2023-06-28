@@ -14,8 +14,11 @@ import { urlBase64ToUint8Array } from "@/lib/utils";
 import { useSubscriptionMutation } from "@/hooks/useSubscription";
 import { useSession } from "next-auth/react";
 import { Subscription } from "@/types";
+import { useNotificationSettingsMutation } from "@/hooks/useNotificationSettingsMutation";
 
 import "swiper/css";
+
+const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
 const ONBOARDING_INTRO_PAGES = [
   {
@@ -45,6 +48,12 @@ export default function OnboardingPage() {
   const nextButtonRef = useRef<HTMLButtonElement>(null);
 
   const postSubscriptionMutation = useSubscriptionMutation({
+    method: "POST",
+    onSuccess: () => {},
+    onError: () => {},
+  });
+
+  const postNotificationSettingsMutation = useNotificationSettingsMutation({
     method: "POST",
     onSuccess: () => {},
     onError: () => {},
@@ -83,6 +92,17 @@ export default function OnboardingPage() {
         postSubscriptionMutation.mutate({
           email: session?.user?.email || "",
           subscription: pushSubscription?.toJSON() as Subscription,
+        });
+
+        postNotificationSettingsMutation.mutate({
+          email: session?.user?.email || "",
+          notificationSettings: {
+            newAction: true,
+            streak: true,
+            meetGoal: true,
+            updateTime: "18:00",
+            timeZone,
+          },
         });
       }
 

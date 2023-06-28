@@ -76,3 +76,11 @@ export interface Subscription {
   endpoint: string;
   keys: {};
 }
+
+export interface NotificationSettings {
+  newAction: boolean;
+  streak: boolean;
+  meetGoal: boolean;
+  updateTime: string;
+  timeZone: string;
+}
