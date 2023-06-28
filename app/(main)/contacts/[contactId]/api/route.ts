@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { Activity, Contact } from "@prisma/client";
 import { formatDate } from "@/lib/utils";
+import { ContactArgs } from "@/types";
 
 export async function GET(
   request: Request,
@@ -49,35 +50,13 @@ export async function PUT(
   request: Request,
   { params }: { params: { contactId: string } }
 ) {
-  const contact: Contact = await request.json();
+  const contact: ContactArgs = await request.json();
 
-  const {
-    firstName,
-    lastName,
-    title,
-    company,
-    industry,
-    goalDays,
-    email,
-    phone,
-    links,
-    interests,
-    isArchived,
-  } = contact;
+  const { isArchived } = contact;
 
   const updatedContact = await prisma.contact.update({
     where: { id: params.contactId },
     data: {
-      firstName,
-      lastName,
-      title,
-      company,
-      industry,
-      goalDays,
-      email,
-      phone,
-      links,
-      interests,
       isArchived,
     },
   });

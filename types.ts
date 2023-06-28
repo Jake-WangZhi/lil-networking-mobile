@@ -29,6 +29,11 @@ export interface Contact {
   isArchived: boolean;
 }
 
+export interface ContactArgs {
+  id: string;
+  isArchived?: boolean;
+}
+
 export interface Activity {
   id?: string;
   contactId: string;

@@ -66,7 +66,7 @@ export const MessageActions = ({ contact }: Props) => {
 
   const handleConfirmArchiveClick = useCallback(() => {
     updateContactMutation.mutate({
-      ...contact,
+      id: contact.id,
       isArchived: true,
     });
 
