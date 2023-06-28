@@ -12,25 +12,21 @@ export default async function handler(
   request: NextApiRequest,
   response: NextApiResponse
 ) {
-  try {
-    const subscriptionData: any[] = await prisma.subscription.findMany();
+  const subscriptionData: any[] = await prisma.subscription.findMany();
 
-    const notificationData = {
-      title: "Push Notification Title",
-      body: "This is a push notification",
-    };
+  const notificationData = {
+    title: "Push Notification Title",
+    body: "This is a push notification",
+  };
 
-    for (const { endpoint, keys } of subscriptionData) {
-      await webpush.sendNotification(
-        { endpoint, keys },
-        JSON.stringify(notificationData)
-      );
-    }
-
-    response
-      .status(200)
-      .json({ message: "Push notifications sent successfully" });
-  } catch (error) {
-    response.status(500).json({ error: "Error sending push notifications" });
+  for (const { endpoint, keys } of subscriptionData) {
+    webpush.sendNotification(
+      { endpoint, keys },
+      JSON.stringify(notificationData)
+    );
   }
+
+  response
+    .status(200)
+    .json({ message: "Push notifications sent successfully" });
 }
