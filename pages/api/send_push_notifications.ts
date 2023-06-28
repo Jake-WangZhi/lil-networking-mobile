@@ -20,9 +20,9 @@ export default async function handler(
       body: "This is a push notification",
     };
 
-    subscriptionData.map((data) =>
-      webpush.sendNotification(data, JSON.stringify(notificationData))
-    );
+    for (const data of subscriptionData) {
+      await webpush.sendNotification(data, JSON.stringify(notificationData));
+    }
 
     response
       .status(200)
