@@ -21,7 +21,7 @@ export default async function handler(
     };
 
     for (const { endpoint, keys } of subscriptionData) {
-      await webpush.sendNotification(
+      webpush.sendNotification(
         { endpoint, keys },
         JSON.stringify(notificationData)
       );
