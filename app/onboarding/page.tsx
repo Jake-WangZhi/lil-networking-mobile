@@ -18,8 +18,6 @@ import { useNotificationSettingsMutation } from "@/hooks/useNotificationSettings
 
 import "swiper/css";
 
-const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-
 const ONBOARDING_INTRO_PAGES = [
   {
     title: "Set Goals",
@@ -100,8 +98,6 @@ export default function OnboardingPage() {
             newAction: true,
             streak: true,
             meetGoal: true,
-            updateTime: "18:00",
-            timeZone,
           },
         });
       }

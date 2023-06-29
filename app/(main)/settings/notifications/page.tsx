@@ -12,7 +12,6 @@ import { useSession } from "next-auth/react";
 import { useNotificationSettings } from "@/hooks/useNotificationSettings";
 import { useNotificationSettingsMutation } from "@/hooks/useNotificationSettingsMutation";
 
-const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 const isGranted =
   "Notification" in window && window.Notification.permission === "granted";
 
@@ -134,8 +133,6 @@ export default function NotificationSettingPage() {
           newAction: newActionChecked,
           streak: streakChecked,
           meetGoal: meetGoalChecked,
-          updateTime: "18:00",
-          timeZone,
         },
       });
 
@@ -217,31 +214,6 @@ export default function NotificationSettingPage() {
             </div>
             <Switch onChange={switchMeetGoal} checked={meetGoalChecked} />
           </div>
-        </div>
-      </div>
-      <div className="mt-6 space-y-2">
-        <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
-          General
-        </Typography>
-        <div className="flex justify-between">
-          <div>
-            <Typography variant="subtitle1">Update time</Typography>
-            <Typography variant="body1">
-              Set time to receive nofitications
-            </Typography>
-          </div>
-          {/* <input
-            type="time"
-            id="updateTime"
-            name="updateTime"
-            value={"18:00"}
-          /> */}
-          <Typography
-            variant="subtitle1"
-            sx={{ fontWeight: 600, color: "#38ACE2" }}
-          >
-            6:00 PM
-          </Typography>
         </div>
       </div>
     </main>

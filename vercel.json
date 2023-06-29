@@ -3,7 +3,7 @@
   "installCommand": "yarn install",
   "crons": [
     {
-      "path": "/api/cron",
+      "path": "/api/streak_calculation_cron",
       "schedule": "0 0 1 * *"
     }
   ]

@@ -48,8 +48,7 @@ export async function POST(request: Request) {
       { status: 404, headers: { "content-type": "application/json" } }
     );
 
-  const { newAction, streak, meetGoal, updateTime, timeZone } =
-    notificationSettings;
+  const { newAction, streak, meetGoal } = notificationSettings;
 
   const newNotificationSettings = await prisma.notificationSettings.create({
     data: {
@@ -57,8 +56,6 @@ export async function POST(request: Request) {
       newAction,
       streak,
       meetGoal,
-      updateTime,
-      timeZone,
     },
   });
 
@@ -84,8 +81,7 @@ export async function PUT(request: Request) {
       { status: 404, headers: { "content-type": "application/json" } }
     );
 
-  const { newAction, streak, meetGoal, updateTime, timeZone } =
-    notificationSettings;
+  const { newAction, streak, meetGoal } = notificationSettings;
 
   const newNotificationSettings = await prisma.notificationSettings.upsert({
     where: {
@@ -96,15 +92,11 @@ export async function PUT(request: Request) {
       newAction,
       streak,
       meetGoal,
-      updateTime,
-      timeZone,
     },
     update: {
       newAction,
       streak,
       meetGoal,
-      updateTime,
-      timeZone,
     },
   });
 

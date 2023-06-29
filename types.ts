@@ -79,6 +79,4 @@ export interface NotificationSettingsArgs {
   newAction: boolean;
   streak: boolean;
   meetGoal: boolean;
-  updateTime: string;
-  timeZone: string;
 }
