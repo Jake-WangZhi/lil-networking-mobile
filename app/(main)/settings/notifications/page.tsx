@@ -12,9 +12,6 @@ import { useSession } from "next-auth/react";
 import { useNotificationSettings } from "@/hooks/useNotificationSettings";
 import { useNotificationSettingsMutation } from "@/hooks/useNotificationSettingsMutation";
 
-const isGranted =
-  "Notification" in window && window.Notification.permission === "granted";
-
 export default function NotificationSettingPage() {
   const { data: session } = useSession();
   const router = useRouter();
@@ -59,6 +56,8 @@ export default function NotificationSettingPage() {
   const postSubscriptionMutation = useSubscriptionMutation({
     method: "POST",
     onSuccess: ({ id }) => {
+      setSubscriptionId(id);
+
       putNotificationSettingsMutation.mutate({
         newAction: newActionChecked,
         streak: streakChecked,
@@ -86,7 +85,11 @@ export default function NotificationSettingPage() {
   }, [newActionChecked, streakChecked, meetGoalChecked]);
 
   const isNotificationModificationAllowed = useCallback(async () => {
-    if (isGranted) return true;
+    if (
+      "Notification" in window &&
+      window.Notification.permission === "granted"
+    )
+      return true;
     if (window.Notification.permission !== "denied") {
       const result = await window.Notification.requestPermission();
 
@@ -154,7 +157,10 @@ export default function NotificationSettingPage() {
   const handleBackClick = useCallback(async () => {
     router.push("/settings");
 
-    if (isGranted) {
+    if (
+      "Notification" in window &&
+      window.Notification.permission === "granted"
+    ) {
       if (subscriptionId)
         return putNotificationSettingsMutation.mutate({
           newAction: newActionChecked,

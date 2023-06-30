@@ -6,9 +6,9 @@ export async function POST(
   request: Request,
   { params }: { params: { contactId: string } }
 ) {
-  const activity: ActivityArgs = await request.json();
+  const activityArgs: ActivityArgs = await request.json();
 
-  const { title, date, description, type } = activity;
+  const { title, date, description, type } = activityArgs;
 
   const contact = await prisma.contact.findUnique({
     where: { id: params.contactId },

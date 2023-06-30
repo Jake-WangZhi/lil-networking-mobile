@@ -31,42 +31,12 @@ export async function GET(request: Request) {
   return NextResponse.json(notificationSettings);
 }
 
-// export async function POST(request: Request) {
-//   const { searchParams } = new URL(request.url);
-//   const email = searchParams.get(SearchParams.Email);
-//   const notificationSettings: NotificationSettingsArgs = await request.json();
-
-//   if (!email)
-//     return new NextResponse(
-//       JSON.stringify({ success: false, message: "Missing Email" }),
-//       { status: 400, headers: { "content-type": "application/json" } }
-//     );
-
-//   const user = await prisma.user.findUnique({ where: { email } });
-
-//   if (!user)
-//     return new NextResponse(
-//       JSON.stringify({ success: false, message: "No User Found" }),
-//       { status: 404, headers: { "content-type": "application/json" } }
-//     );
-
-//   const { newAction, streak, meetGoal } = notificationSettings;
-
-//   const newNotificationSettings = await prisma.notificationSettings.create({
-//     data: {
-//       newAction,
-//       streak,
-//       meetGoal,
-//     },
-//   });
-
-//   return NextResponse.json(newNotificationSettings);
-// }
-
 export async function PUT(request: Request) {
-  const notificationSettings: NotificationSettingsArgs = await request.json();
+  const notificationSettingsArgs: NotificationSettingsArgs =
+    await request.json();
 
-  const { newAction, streak, meetGoal, subscriptionId } = notificationSettings;
+  const { newAction, streak, meetGoal, subscriptionId } =
+    notificationSettingsArgs;
 
   const newNotificationSettings = await prisma.notificationSettings.update({
     where: { subscriptionId },

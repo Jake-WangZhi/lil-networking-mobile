@@ -7,8 +7,12 @@
       "schedule": "0 6 1 * *"
     },
     {
-      "path": "/api/push_notifications_cron",
+      "path": "/api/new_action_push_notifications_cron",
       "schedule": "0 13 * * *"
+    },
+    {
+      "path": "/api/streak_push_notifications_cron",
+      "schedule": "0 13 L-7 * *"
     }
   ]
 }
