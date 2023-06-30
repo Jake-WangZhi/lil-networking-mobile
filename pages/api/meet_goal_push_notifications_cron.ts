@@ -17,6 +17,9 @@ export default async function handler(
     const meetGoalNotificationsCollection =
       await prisma.notificationSettings.findMany({
         where: { meetGoal: true },
+        select: {
+          subscriptionId: true,
+        },
       });
 
     for (const notifications of meetGoalNotificationsCollection) {
@@ -36,6 +39,24 @@ export default async function handler(
 
       const contactIds = contacts.map((c) => c.id);
 
+      const user = await prisma.user.findUnique({
+        where: { id: subscription.userId },
+        select: {
+          name: true,
+        },
+      });
+
+      if (!user) continue;
+
+      const notificationData = {
+        title: `Meet Goal Reminder`,
+        body: `Hey, ${
+          user.name?.split(" ")[0]
+        }! You haven't been active in a week. Get back on the app and build those habits!`,
+      };
+
+      const { endpoint, p256dh, auth } = subscription;
+
       const activity = await prisma.activity.findFirst({
         where: {
           contactId: { in: contactIds },
@@ -48,31 +69,13 @@ export default async function handler(
       });
 
       if (!activity) {
-        const user = await prisma.user.findUnique({
-          where: { id: subscription.userId },
-          select: {
-            name: true,
-          },
-        });
-
-        if (!user) continue;
-
-        const notificationData = {
-          title: `Meet Goal Reminder`,
-          body: `Hey, ${
-            user.name?.split(" ")[0]
-          }! You haven't been active in a week. Get back on the app and build those habits!`,
-        };
-
-        const { endpoint, p256dh, auth } = subscription;
-
         try {
           await webpush.sendNotification(
             { endpoint, keys: { p256dh, auth } },
             JSON.stringify(notificationData)
           );
         } catch (error: any) {
-          console.error("Error sending push notification:", error);
+          console.error("Error sending meet goal push notification:", error);
           if (error.statusCode === 410) {
             // Clean out unsubscribed or expired push subscriptions.
             await prisma.notificationSettings.delete({
@@ -93,31 +96,13 @@ export default async function handler(
       const dayDiff = differenceInDays(new Date(), activityDate);
 
       if (dayDiff > 7) {
-        const user = await prisma.user.findUnique({
-          where: { id: subscription.userId },
-          select: {
-            name: true,
-          },
-        });
-
-        if (!user) continue;
-
-        const notificationData = {
-          title: `Meet Goal Reminder`,
-          body: `Hey, ${
-            user.name?.split(" ")[0]
-          }! You haven't been active in a week. Get back on the app and build those habits!`,
-        };
-
-        const { endpoint, p256dh, auth } = subscription;
-
         try {
           await webpush.sendNotification(
             { endpoint, keys: { p256dh, auth } },
             JSON.stringify(notificationData)
           );
         } catch (error: any) {
-          console.error("Error sending push notification:", error);
+          console.error("Error sending meet goal push notification:", error);
           if (error.statusCode === 410) {
             // Clean out unsubscribed or expired push subscriptions.
             await prisma.notificationSettings.delete({

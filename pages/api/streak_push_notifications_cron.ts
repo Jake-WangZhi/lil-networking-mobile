@@ -16,6 +16,9 @@ export default async function handler(
     const streakNotificationsCollection =
       await prisma.notificationSettings.findMany({
         where: { streak: true },
+        select: {
+          subscriptionId: true,
+        },
       });
 
     for (const notifications of streakNotificationsCollection) {
@@ -31,12 +34,17 @@ export default async function handler(
         where: {
           userId: subscription.userId,
         },
+        select: {
+          messages: true,
+          connections: true,
+          goalConnections: true,
+          goalMessages: true,
+        },
       });
 
       if (!goals) continue;
 
-      const { connections, goalConnections, messages, goalMessages, streak } =
-        goals;
+      const { connections, goalConnections, messages, goalMessages } = goals;
 
       if (connections < goalConnections || messages < goalMessages) {
         const user = await prisma.user.findUnique({
@@ -63,7 +71,7 @@ export default async function handler(
             JSON.stringify(notificationData)
           );
         } catch (error: any) {
-          console.error("Error sending push notification:", error);
+          console.error("Error sending streak push notification:", error);
           if (error.statusCode === 410) {
             // Clean out unsubscribed or expired push subscriptions.
             await prisma.notificationSettings.delete({

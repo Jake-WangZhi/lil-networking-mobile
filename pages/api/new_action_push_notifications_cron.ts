@@ -17,6 +17,9 @@ export default async function handler(
     const newActionNotificationsCollection =
       await prisma.notificationSettings.findMany({
         where: { newAction: true },
+        select: {
+          subscriptionId: true,
+        },
       });
 
     for (const notifications of newActionNotificationsCollection) {
@@ -32,6 +35,10 @@ export default async function handler(
         where: {
           userId: subscription.userId,
           isArchived: false,
+        },
+        select: {
+          id: true,
+          firstName: true,
         },
       });
 
@@ -65,7 +72,10 @@ export default async function handler(
                 JSON.stringify(notificationData)
               );
             } catch (error: any) {
-              console.error("Error sending push notification:", error);
+              console.error(
+                "Error sending new action push notification:",
+                error
+              );
               if (error.statusCode === 410) {
                 // Clean out unsubscribed or expired push subscriptions.
                 await prisma.notificationSettings.delete({
