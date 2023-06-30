@@ -14,7 +14,6 @@ import { urlBase64ToUint8Array } from "@/lib/utils";
 import { useSubscriptionMutation } from "@/hooks/useSubscription";
 import { useSession } from "next-auth/react";
 import { SubscriptionArgs } from "@/types";
-import { useNotificationSettingsMutation } from "@/hooks/useNotificationSettingsMutation";
 
 import "swiper/css";
 
@@ -67,6 +66,8 @@ export default function OnboardingPage() {
     if ("Notification" in window) {
       const result = await window.Notification.requestPermission();
 
+      nextButtonRef.current?.click();
+
       if (result === "granted") {
         const subscribeOptions = {
           userVisibleOnly: true,
@@ -86,8 +87,6 @@ export default function OnboardingPage() {
           subscription: pushSubscription?.toJSON() as SubscriptionArgs,
         });
       }
-
-      nextButtonRef.current?.click();
     }
   }, [postSubscriptionMutation, session?.user?.email]);
 

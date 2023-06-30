@@ -14,14 +14,6 @@ export default async function handler(
   response: NextApiResponse
 ) {
   try {
-    // const usersWithEnabledNotifications = await prisma.user.findMany({
-    //   where: {
-    //     notificationSettings: {
-    //       OR: [{ newAction: true }, { streak: true }, { meetGoal: true }],
-    //     },
-    //   },
-    // });
-
     const enabledNotifications = await prisma.notificationSettings.findMany({
       where: {
         OR: [{ newAction: true }, { streak: true }, { meetGoal: true }],
@@ -40,6 +32,7 @@ export default async function handler(
         const contacts = await prisma.contact.findMany({
           where: {
             userId: subscription.userId,
+            isArchived: false,
           },
         });
 
@@ -47,6 +40,7 @@ export default async function handler(
           const activity = await prisma.activity.findFirst({
             where: {
               contactId: contact.id,
+              type: "USER",
             },
             orderBy: { date: "desc" },
             select: {

@@ -115,7 +115,13 @@ export default function GoalSettingPage() {
         },
         email: session?.user?.email || "",
       }),
-    [goalConnections, goalMessages, postGoalsMutation, session?.user?.email]
+    [
+      goalConnections,
+      goalMessages,
+      postGoalsMutation,
+      session?.user?.email,
+      goals?.networkingComfortLevel,
+    ]
   );
 
   const handleBackClick = useCallback(() => {

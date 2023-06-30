@@ -1,8 +1,9 @@
 import { SearchParams, SubscriptionArgs } from "@/types";
+import { Subscription } from "@prisma/client";
 import { useMutation } from "@tanstack/react-query";
 
 type Args = {
-  onSuccess: () => void;
+  onSuccess: (data: Subscription) => void;
   onError: (error: unknown) => void;
   method: "POST";
 };
@@ -29,6 +30,8 @@ export const useSubscriptionMutation = ({ onSuccess, onError, method }: Args) =>
       if (!response.ok) {
         throw new Error("Unable to set subscription");
       }
+
+      return response.json();
     },
     onSuccess,
     onError,

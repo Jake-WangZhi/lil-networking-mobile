@@ -50,9 +50,9 @@ export async function PUT(
   request: Request,
   { params }: { params: { contactId: string } }
 ) {
-  const contact: ContactArgs = await request.json();
+  const contactArgs: ContactArgs = await request.json();
 
-  const { isArchived } = contact;
+  const { isArchived } = contactArgs;
 
   const updatedContact = await prisma.contact.update({
     where: { id: params.contactId },

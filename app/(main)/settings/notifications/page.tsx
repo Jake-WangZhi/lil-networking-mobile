@@ -19,7 +19,9 @@ export default function NotificationSettingPage() {
   const { data: session } = useSession();
   const router = useRouter();
   const [endpoint, setEndpoint] = useState(""); // State to hold the endpoint value
-  const { notificationSettings } = useNotificationSettings({ endpoint }); // Pass the endpoint
+  const { notificationSettings } = useNotificationSettings({
+    endpoint,
+  });
 
   const [allNotificationsChecked, setAllNotificationsChecked] = useState(false);
   const [newActionChecked, setNewActionChecked] = useState(false);
@@ -39,25 +41,31 @@ export default function NotificationSettingPage() {
     }
   }, [notificationSettings]);
 
-  // Fetch notification settings and update state
-  const fetchNotificationSettings = useCallback(async () => {
-    const registration = await navigator.serviceWorker.getRegistration();
-    if (registration) {
-      const subscription = await registration.pushManager.getSubscription();
-      if (subscription) {
-        const endpoint = subscription.endpoint;
-        setEndpoint(endpoint); // Set the endpoint value in state
-      }
-    }
-  }, []);
-
   useEffect(() => {
+    const fetchNotificationSettings = async () => {
+      const registration = await navigator.serviceWorker.getRegistration();
+      if (registration) {
+        const subscription = await registration.pushManager.getSubscription();
+        if (subscription) {
+          const endpoint = subscription.endpoint;
+          setEndpoint(endpoint);
+        }
+      }
+    };
+
     fetchNotificationSettings();
-  }, [fetchNotificationSettings]);
+  }, []);
 
   const postSubscriptionMutation = useSubscriptionMutation({
     method: "POST",
-    onSuccess: () => {},
+    onSuccess: ({ id }) => {
+      putNotificationSettingsMutation.mutate({
+        newAction: newActionChecked,
+        streak: streakChecked,
+        meetGoal: meetGoalChecked,
+        subscriptionId: id,
+      });
+    },
     onError: () => {},
   });
 
@@ -144,23 +152,42 @@ export default function NotificationSettingPage() {
   );
 
   const handleBackClick = useCallback(async () => {
+    router.push("/settings");
+
     if (isGranted) {
-      putNotificationSettingsMutation.mutate({
-        newAction: newActionChecked,
-        streak: streakChecked,
-        meetGoal: meetGoalChecked,
-        subscriptionId,
+      if (subscriptionId)
+        return putNotificationSettingsMutation.mutate({
+          newAction: newActionChecked,
+          streak: streakChecked,
+          meetGoal: meetGoalChecked,
+          subscriptionId,
+        });
+
+      const subscribeOptions = {
+        userVisibleOnly: true,
+        applicationServerKey: urlBase64ToUint8Array(
+          process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY ?? ""
+        ),
+      };
+
+      const registration = await navigator.serviceWorker.getRegistration();
+
+      const pushSubscription = await registration?.pushManager.subscribe(
+        subscribeOptions
+      );
+
+      postSubscriptionMutation.mutate({
+        email: session?.user?.email || "",
+        subscription: pushSubscription?.toJSON() as SubscriptionArgs,
       });
     }
-
-    router.push("/settings");
   }, [
     router,
     meetGoalChecked,
     newActionChecked,
     streakChecked,
     putNotificationSettingsMutation,
-    session?.user?.email,
+    subscriptionId,
   ]);
 
   return (

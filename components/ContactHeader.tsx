@@ -89,7 +89,7 @@ export const ContactHeader = ({ contact }: Props) => {
         setIsAlertOpen(true);
       } else {
         updateContactMutation.mutate({
-          ...contact,
+          id: contact.id,
           isArchived: !contact.isArchived,
         });
       }

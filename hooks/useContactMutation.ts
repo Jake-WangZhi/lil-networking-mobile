@@ -14,9 +14,7 @@ export const useContactMutation = ({ onSuccess, onError, method }: Args) =>
         headers: {
           "Content-Type": "application/json",
         },
-        ...(method === "DELETE"
-          ? {}
-          : { body: JSON.stringify(contactArgs.isArchived) }),
+        ...(method === "DELETE" ? {} : { body: JSON.stringify(contactArgs) }),
         method,
       });
 

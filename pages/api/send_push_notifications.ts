@@ -20,11 +20,24 @@ export default async function handler(
       body: "This is a push notification",
     };
 
-    for (const { endpoint, p256dh, auth } of subscriptionData) {
-      await webpush.sendNotification(
-        { endpoint, keys: { p256dh, auth } },
-        JSON.stringify(notificationData)
-      );
+    for (const { endpoint, p256dh, auth, id } of subscriptionData) {
+      try {
+        await webpush.sendNotification(
+          { endpoint, keys: { p256dh, auth } },
+          JSON.stringify(notificationData)
+        );
+      } catch (error: any) {
+        console.error("Error sending push notification:", error);
+        if (error.statusCode === 410) {
+          // Clean out unsubscribed or expired push subscriptions.
+          await prisma.notificationSettings.delete({
+            where: { subscriptionId: id },
+          });
+          await prisma.subscription.delete({ where: { id } });
+        }
+
+        continue;
+      }
     }
 
     response

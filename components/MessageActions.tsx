@@ -88,7 +88,7 @@ export const MessageActions = ({ contact }: Props) => {
     });
 
     router.push(`/contacts/${contact.id}/activities/create?${queryParams}`);
-  }, [contact.id, preFilledFormData, router]);
+  }, [contact.id, preFilledFormData, router, isFromProfile]);
 
   const handleCancelArchiveClick = useCallback(() => {
     setIsArchiveAlertOpen(false);
