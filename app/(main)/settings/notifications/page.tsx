@@ -15,7 +15,7 @@ import { useNotificationSettingsMutation } from "@/hooks/useNotificationSettings
 export default function NotificationSettingPage() {
   const { data: session } = useSession();
   const router = useRouter();
-  const [endpoint, setEndpoint] = useState(""); // State to hold the endpoint value
+  const [endpoint, setEndpoint] = useState("");
   const { notificationSettings } = useNotificationSettings({
     endpoint,
   });
@@ -25,6 +25,27 @@ export default function NotificationSettingPage() {
   const [streakChecked, setStreakChecked] = useState(false);
   const [meetGoalChecked, setMeetGoalChecked] = useState(false);
   const [subscriptionId, setSubscriptionId] = useState("");
+
+  const postSubscriptionMutation = useSubscriptionMutation({
+    method: "POST",
+    onSuccess: ({ id }) => {
+      setSubscriptionId(id);
+
+      putNotificationSettingsMutation.mutate({
+        newAction: newActionChecked,
+        streak: streakChecked,
+        meetGoal: meetGoalChecked,
+        subscriptionId: id,
+      });
+    },
+    onError: () => {},
+  });
+
+  const putNotificationSettingsMutation = useNotificationSettingsMutation({
+    method: "PUT",
+    onSuccess: () => {},
+    onError: () => {},
+  });
 
   useEffect(() => {
     if (notificationSettings) {
@@ -53,35 +74,10 @@ export default function NotificationSettingPage() {
     fetchNotificationSettings();
   }, []);
 
-  const postSubscriptionMutation = useSubscriptionMutation({
-    method: "POST",
-    onSuccess: ({ id }) => {
-      setSubscriptionId(id);
-
-      putNotificationSettingsMutation.mutate({
-        newAction: newActionChecked,
-        streak: streakChecked,
-        meetGoal: meetGoalChecked,
-        subscriptionId: id,
-      });
-    },
-    onError: () => {},
-  });
-
-  const putNotificationSettingsMutation = useNotificationSettingsMutation({
-    method: "PUT",
-    onSuccess: () => {},
-    onError: () => {},
-  });
-
   useEffect(() => {
-    if (newActionChecked && streakChecked && meetGoalChecked) {
-      setAllNotificationsChecked(true);
-    }
-
-    if (!(newActionChecked && streakChecked && meetGoalChecked)) {
-      setAllNotificationsChecked(false);
-    }
+    setAllNotificationsChecked(
+      newActionChecked && streakChecked && meetGoalChecked
+    );
   }, [newActionChecked, streakChecked, meetGoalChecked]);
 
   const isNotificationModificationAllowed = useCallback(async () => {
@@ -90,6 +86,8 @@ export default function NotificationSettingPage() {
       window.Notification.permission === "granted"
     )
       return true;
+
+    //If the permission is default, we ask for permission
     if (window.Notification.permission !== "denied") {
       const result = await window.Notification.requestPermission();
 
@@ -158,35 +156,38 @@ export default function NotificationSettingPage() {
     router.push("/settings");
 
     if (
-      "Notification" in window &&
-      window.Notification.permission === "granted"
+      !("Notification" in window) ||
+      window.Notification.permission !== "granted"
     ) {
-      if (subscriptionId)
-        return putNotificationSettingsMutation.mutate({
-          newAction: newActionChecked,
-          streak: streakChecked,
-          meetGoal: meetGoalChecked,
-          subscriptionId,
-        });
-
-      const subscribeOptions = {
-        userVisibleOnly: true,
-        applicationServerKey: urlBase64ToUint8Array(
-          process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY ?? ""
-        ),
-      };
-
-      const registration = await navigator.serviceWorker.getRegistration();
-
-      const pushSubscription = await registration?.pushManager.subscribe(
-        subscribeOptions
-      );
-
-      postSubscriptionMutation.mutate({
-        email: session?.user?.email || "",
-        subscription: pushSubscription?.toJSON() as SubscriptionArgs,
-      });
+      return;
     }
+
+    if (subscriptionId)
+      return putNotificationSettingsMutation.mutate({
+        newAction: newActionChecked,
+        streak: streakChecked,
+        meetGoal: meetGoalChecked,
+        subscriptionId,
+      });
+
+    //If the permission is granted, but the subscription is not recorded in db, we save the subscription.
+    const subscribeOptions = {
+      userVisibleOnly: true,
+      applicationServerKey: urlBase64ToUint8Array(
+        process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY ?? ""
+      ),
+    };
+
+    const registration = await navigator.serviceWorker.getRegistration();
+
+    const pushSubscription = await registration?.pushManager.subscribe(
+      subscribeOptions
+    );
+
+    postSubscriptionMutation.mutate({
+      email: session?.user?.email || "",
+      subscription: pushSubscription?.toJSON() as SubscriptionArgs,
+    });
   }, [
     router,
     meetGoalChecked,
