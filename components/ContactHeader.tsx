@@ -258,7 +258,7 @@ export const ContactHeader = ({ contact }: Props) => {
                   }}
                 >
                   <Typography variant="subtitle1" sx={{ color: "black" }}>
-                    {contact.isArchived ? "Activate" : "Archive"}
+                    {contact.isArchived ? "Unarchive" : "Archive"}
                   </Typography>
                   <Archive size={24} />
                 </Button>

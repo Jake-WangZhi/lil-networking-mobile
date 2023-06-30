@@ -51,7 +51,7 @@ export const GoalSummary = () => {
   return (
     <div className="mt-6 mb-1">
       {goals ? (
-        <div className="w-full bg-white bg-opacity-5 rounded-xl p-[10px]">
+        <div className="w-full bg-white bg-opacity-5 rounded-xl p-4 space-y-4">
           <Typography
             variant="subtitle2"
             sx={{ color: "white", fontWeight: 600 }}
@@ -59,9 +59,7 @@ export const GoalSummary = () => {
             {new Date().toLocaleString("default", { month: "long" })}{" "}
             {new Date().getFullYear()}
           </Typography>
-          <div className="px-[6px] pt-[14px] pb-6">
-            <GoalStats goals={goals} />
-          </div>
+          <GoalStats goals={goals} />
         </div>
       ) : (
         <Button
