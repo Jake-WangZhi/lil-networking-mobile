@@ -1,11 +1,11 @@
 import prisma from "@/lib/prisma";
-import { Goals, SearchParams } from "@/types";
+import { GoalsArgs, SearchParams } from "@/types";
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
   const { searchParams } = new URL(request.url);
   const email = searchParams.get(SearchParams.Email);
-  const goals: Goals = await request.json();
+  const goalsArgs: GoalsArgs = await request.json();
 
   if (!email)
     return new NextResponse(
@@ -21,12 +21,12 @@ export async function POST(request: Request) {
       { status: 404, headers: { "content-type": "application/json" } }
     );
 
-  const { networkingComfortLevel, goalConnections, goalMessages } = goals;
+  const { networkingComfortLevel, goalConnections, goalMessages } = goalsArgs;
 
   const newGoals = await prisma.goals.create({
     data: {
       userId: user.id,
-      networkingComfortLevel,
+      networkingComfortLevel: networkingComfortLevel ?? 1,
       goalConnections,
       goalMessages,
     },
@@ -38,7 +38,7 @@ export async function POST(request: Request) {
 export async function PUT(request: Request) {
   const { searchParams } = new URL(request.url);
   const email = searchParams.get(SearchParams.Email);
-  const goals: Goals = await request.json();
+  const goalsArgs: GoalsArgs = await request.json();
 
   if (!email)
     return new NextResponse(
@@ -54,13 +54,15 @@ export async function PUT(request: Request) {
       { status: 404, headers: { "content-type": "application/json" } }
     );
 
+  const { goalConnections, goalMessages } = goalsArgs;
+
   const newGoals = await prisma.goals.update({
     where: {
       userId: user.id,
     },
     data: {
-      goalConnections: goals.goalConnections,
-      goalMessages: goals.goalMessages,
+      goalConnections,
+      goalMessages,
     },
   });
 

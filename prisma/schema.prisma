@@ -124,8 +124,24 @@ model Subscription {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   endpoint  String   @unique
-  keys      Json
+  auth      String   @unique
+  p256dh    String   @unique
 
   User   User   @relation(fields: [userId], references: [id])
   userId String
+
+  notificationSettings NotificationSettings?
+}
+
+model NotificationSettings {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  newAction Boolean
+  streak    Boolean
+  meetGoal  Boolean
+
+  subscription   Subscription @relation(fields: [subscriptionId], references: [id])
+  subscriptionId String       @unique
 }

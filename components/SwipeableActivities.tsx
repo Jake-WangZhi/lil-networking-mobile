@@ -2,10 +2,11 @@ import { Card, CardContent, Typography } from "@mui/material";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import { FreeMode, Pagination } from "swiper";
+import { Activity } from "@prisma/client";
+
 import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/pagination";
-import { Activity } from "@/types";
 
 interface Props {
   activities: Activity[];

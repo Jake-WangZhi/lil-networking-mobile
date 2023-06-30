@@ -27,10 +27,8 @@ export default function GoalSettingPage() {
     email: session?.user?.email,
   });
 
-  const [goalConnections, setGoalConnections] = useState(
-    goals?.goalConnections ?? 2
-  );
-  const [goalMessages, setGoalMessages] = useState(goals?.goalMessages ?? 2);
+  const [goalConnections, setGoalConnections] = useState(2);
+  const [goalMessages, setGoalMessages] = useState(2);
   const [errorMessage, setErrorMessage] = useState("");
   const [isDisabled, setIsDisabled] = useState(true);
 
@@ -41,6 +39,15 @@ export default function GoalSettingPage() {
       setIsDisabled(false);
     }, 0);
   }, []);
+
+  useEffect(() => {
+    if (goals) {
+      const { goalConnections, goalMessages } = goals;
+
+      setGoalConnections(goalConnections);
+      setGoalMessages(goalMessages);
+    }
+  }, [goals]);
 
   const postGoalsMutation = useGoalsMutation({
     method: "PUT",
@@ -101,13 +108,20 @@ export default function GoalSettingPage() {
   const handleSaveClick = useCallback(
     () =>
       postGoalsMutation.mutate({
-        goals: {
+        goalsArgs: {
+          networkingComfortLevel: goals?.networkingComfortLevel ?? 1,
           goalConnections,
           goalMessages,
         },
         email: session?.user?.email || "",
       }),
-    [goalConnections, goalMessages, postGoalsMutation, session?.user?.email]
+    [
+      goalConnections,
+      goalMessages,
+      postGoalsMutation,
+      session?.user?.email,
+      goals?.networkingComfortLevel,
+    ]
   );
 
   const handleBackClick = useCallback(() => {

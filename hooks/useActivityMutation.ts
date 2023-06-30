@@ -1,4 +1,4 @@
-import { Activity } from "@/types";
+import { ActivityArgs } from "@/types";
 import { useMutation } from "@tanstack/react-query";
 
 type ActivityResponse = {
@@ -13,18 +13,18 @@ type Args = {
 
 export const useActivityMutation = ({ onSuccess, onError, method }: Args) =>
   useMutation({
-    mutationFn: async (activity: Activity) => {
-      let url = `/contacts/${activity.contactId}/activities/api`;
+    mutationFn: async (activityArgs: ActivityArgs) => {
+      let url = `/contacts/${activityArgs.contactId}/activities/api`;
 
       if (method === "DELETE") {
-        url = `/contacts/${activity.contactId}/activities/${activity.id}`;
+        url = `/contacts/${activityArgs.contactId}/activities/${activityArgs.id}`;
       }
 
       const response = await fetch(url, {
         headers: {
           "Content-Type": "application/json",
         },
-        ...(method === "DELETE" ? {} : { body: JSON.stringify(activity) }),
+        ...(method === "DELETE" ? {} : { body: JSON.stringify(activityArgs) }),
         method,
       });
 

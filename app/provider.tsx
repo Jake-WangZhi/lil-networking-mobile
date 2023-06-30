@@ -1,16 +1,24 @@
 "use client";
 
-import React from "react";
+import { useEffect, PropsWithChildren, useState } from "react";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
-export function QCProvider({ children }: React.PropsWithChildren) {
-  const [client] = React.useState(new QueryClient());
+export function QCProvider({ children }: PropsWithChildren) {
+  const [client] = useState(new QueryClient());
+
+  useEffect(() => {
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("serviceworker.js", {
+        scope: "./",
+      });
+    }
+  }, []);
 
   return <QueryClientProvider client={client}>{children}</QueryClientProvider>;
 }
 
-export function MuiCssProvider({ children }: React.PropsWithChildren) {
+export function MuiCssProvider({ children }: PropsWithChildren) {
   let theme = createTheme({
     typography: {
       allVariants: {
@@ -211,6 +219,40 @@ export function MuiCssProvider({ children }: React.PropsWithChildren) {
       MuiModal: {
         styleOverrides: {
           backdrop: { backgroundColor: "transparent" },
+        },
+      },
+      MuiSwitch: {
+        styleOverrides: {
+          root: {
+            width: "52px",
+            height: "32px",
+            padding: "0px",
+          },
+          switchBase: {
+            padding: "0px",
+            margin: "4px",
+            transitionDuration: "300ms",
+            color: "#938F99",
+            "&.Mui-checked": {
+              color: "#38ACE2",
+            },
+          },
+          track: {
+            borderColor: "red",
+            backgroundColor: "#36343B",
+            opacity: 1,
+            border: "2px solid #938F99",
+            borderRadius: "100px",
+            ".Mui-checked+ &": {
+              backgroundColor: "white !important",
+              opacity: "1 !important",
+              border: "0px",
+            },
+          },
+          thumb: {
+            width: "24px",
+            height: "24px",
+          },
         },
       },
     },

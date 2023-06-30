@@ -28,6 +28,7 @@ export default function CreateActivityPage({
   const prefilledDescription =
     searchParams?.get(SearchParams.Description) || "";
   const isFromMessage = searchParams?.get(SearchParams.IsFromMessage) || "";
+  const isFromProfile = searchParams?.get(SearchParams.IsFromProfile) || "";
 
   const [description, setDescription] = useState(prefilledDescription);
   const [title, setTitle] = useState(prefilledTitle);
@@ -41,9 +42,13 @@ export default function CreateActivityPage({
     method: "POST",
     onSuccess: ({ showQuote }) => {
       setErrorMessage("");
-      if (showQuote)
-        return router.push(`/quote?${SearchParams.RedirectPath}=/dashboard`);
-      router.push("/dashboard");
+      const redirectPath = SearchParams.RedirectPath;
+      const destinationPath = isFromProfile ? "/contacts" : "/dashboard";
+
+      const path = showQuote
+        ? `/quote?${redirectPath}=${destinationPath}`
+        : destinationPath;
+      router.push(path);
     },
     onError: (error) => {
       setErrorMessage(
@@ -235,6 +240,12 @@ export default function CreateActivityPage({
           name="isFromMessage"
           type="hidden"
           defaultValue={isFromMessage}
+        />
+        <input
+          id="isFromProfile"
+          name="isFromProfile"
+          type="hidden"
+          defaultValue={isFromProfile}
         />
         <button ref={submitFormRef} className="hidden" type="submit"></button>
       </form>

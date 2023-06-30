@@ -17,6 +17,10 @@ export default function SettingsPage() {
     router.push("/settings/goals");
   }, [router]);
 
+  const handleNotificationsClick = useCallback(() => {
+    router.push("/settings/notifications");
+  }, [router]);
+
   return (
     <main className="relative min-h-screen py-8 space-y-6">
       <Typography variant="h1" sx={{ px: "24px" }}>
@@ -50,6 +54,7 @@ export default function SettingsPage() {
           sx={{
             width: "100%",
           }}
+          onClick={handleNotificationsClick}
         >
           <div className="flex justify-between px-4 w-full">
             <Typography variant="subtitle1">Notifications</Typography>

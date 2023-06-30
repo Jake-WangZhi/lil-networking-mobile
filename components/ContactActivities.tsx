@@ -1,11 +1,12 @@
 import { useActivityMutation } from "@/hooks/useActivityMutation";
-import { Activity, ActivityType, SearchParams } from "@/types";
+import { ActivityType, SearchParams } from "@/types";
 import { Circle, PlusCircle, Trash2 } from "react-feather";
 import { useCallback, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { Card, CardContent, Typography } from "@mui/material";
 import { Button } from "./Button";
 import { useRouter, useSearchParams } from "next/navigation";
+import { Activity } from "@prisma/client";
 
 interface Props {
   activities: Activity[];
@@ -33,7 +34,7 @@ export const ContactActivites = ({ activities }: Props) => {
 
   const handleDeleteClick = useCallback(
     (activity: Activity) => () => {
-      deleteActivityMutation.mutate(activity);
+      deleteActivityMutation.mutate({ id: activity.id });
     },
     [deleteActivityMutation]
   );

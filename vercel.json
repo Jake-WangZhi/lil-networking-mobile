@@ -3,8 +3,20 @@
   "installCommand": "yarn install",
   "crons": [
     {
-      "path": "/api/cron",
-      "schedule": "0 0 1 * *"
+      "path": "/api/streak_calculation_cron",
+      "schedule": "0 6 1 * *"
+    },
+    {
+      "path": "/api/new_action_push_notifications_cron",
+      "schedule": "0 13 * * *"
+    },
+    {
+      "path": "/api/streak_push_notifications_cron",
+      "schedule": "0 13 23 * *"
+    },
+    {
+      "path": "/api/meet_goal_push_notifications_cron",
+      "schedule": "0 13 * * *"
     }
   ]
 }

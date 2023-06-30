@@ -1,4 +1,4 @@
-import { Contact } from "@/types";
+import { ContactArgs } from "@/types";
 import { useMutation } from "@tanstack/react-query";
 
 type Args = {
@@ -9,12 +9,12 @@ type Args = {
 
 export const useContactMutation = ({ onSuccess, onError, method }: Args) =>
   useMutation({
-    mutationFn: async (contact: Contact) => {
-      const response = await fetch(`/contacts/${contact.id}/api`, {
+    mutationFn: async (contactArgs: ContactArgs) => {
+      const response = await fetch(`/contacts/${contactArgs.id}/api`, {
         headers: {
           "Content-Type": "application/json",
         },
-        ...(method === "DELETE" ? {} : { body: JSON.stringify(contact) }),
+        ...(method === "DELETE" ? {} : { body: JSON.stringify(contactArgs) }),
         method,
       });
 

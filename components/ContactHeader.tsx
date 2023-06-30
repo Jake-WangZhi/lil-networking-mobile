@@ -89,7 +89,7 @@ export const ContactHeader = ({ contact }: Props) => {
         setIsAlertOpen(true);
       } else {
         updateContactMutation.mutate({
-          ...contact,
+          id: contact.id,
           isArchived: !contact.isArchived,
         });
       }
@@ -99,10 +99,10 @@ export const ContactHeader = ({ contact }: Props) => {
 
   const handleConfirmClick = useCallback(() => {
     if (action === "delete") {
-      deleteContactMutation.mutate({ ...contact, id: contact.id });
+      deleteContactMutation.mutate({ id: contact.id });
     } else if (action === "archive") {
       updateContactMutation.mutate({
-        ...contact,
+        id: contact.id,
         isArchived: !contact.isArchived,
       });
     }

@@ -44,7 +44,7 @@ export default function GoalsPage() {
   const handleDoneClick = useCallback(
     () =>
       postGoalsMutation.mutate({
-        goals: {
+        goalsArgs: {
           networkingComfortLevel,
           goalConnections,
           goalMessages,

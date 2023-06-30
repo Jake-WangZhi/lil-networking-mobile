@@ -13,7 +13,8 @@ import { useRouter } from "next/navigation";
 import { urlBase64ToUint8Array } from "@/lib/utils";
 import { useSubscriptionMutation } from "@/hooks/useSubscription";
 import { useSession } from "next-auth/react";
-import { Subscription } from "@/types";
+import { SubscriptionArgs } from "@/types";
+import { useNotificationSettingsMutation } from "@/hooks/useNotificationSettingsMutation";
 
 import "swiper/css";
 
@@ -44,9 +45,22 @@ export default function OnboardingPage() {
   const swiperRef = useRef<SwiperRef>();
   const nextButtonRef = useRef<HTMLButtonElement>(null);
 
-  const postSubscriptionMutation = useSubscriptionMutation({
+  const postNotificationSettingsMutation = useNotificationSettingsMutation({
     method: "POST",
     onSuccess: () => {},
+    onError: () => {},
+  });
+
+  const postSubscriptionMutation = useSubscriptionMutation({
+    method: "POST",
+    onSuccess: ({ id }) => {
+      postNotificationSettingsMutation.mutate({
+        newAction: true,
+        streak: true,
+        meetGoal: true,
+        subscriptionId: id,
+      });
+    },
     onError: () => {},
   });
 
@@ -66,6 +80,8 @@ export default function OnboardingPage() {
     if ("Notification" in window) {
       const result = await window.Notification.requestPermission();
 
+      nextButtonRef.current?.click();
+
       if (result === "granted") {
         const subscribeOptions = {
           userVisibleOnly: true,
@@ -82,11 +98,9 @@ export default function OnboardingPage() {
 
         postSubscriptionMutation.mutate({
           email: session?.user?.email || "",
-          subscription: pushSubscription?.toJSON() as Subscription,
+          subscription: pushSubscription?.toJSON() as SubscriptionArgs,
         });
       }
-
-      nextButtonRef.current?.click();
     }
   }, [postSubscriptionMutation, session?.user?.email]);
 

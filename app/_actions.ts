@@ -23,6 +23,7 @@ interface FormDataOptions {
   description: string;
   contactId: string;
   isFromMessage: boolean;
+  isFromProfile: boolean;
 }
 
 interface FormData {
@@ -126,6 +127,7 @@ export async function createActivity(formData: FormData) {
   const description = formData.get("description");
   const contactId = formData.get("contactId");
   const isFromMessage = formData.get("isFromMessage");
+  const isFromProfile = formData.get("isFromProfile");
 
   await prisma.activity.create({
     data: {
@@ -162,10 +164,15 @@ export async function createActivity(formData: FormData) {
   });
 
   if (isFromMessage) {
-    if (count % 10 === 0)
-      return redirect(`/quote?${SearchParams.RedirectPath}=/dashboard`);
+    const redirectPath = SearchParams.RedirectPath;
+    const destinationPath = isFromProfile ? "/contacts" : "/dashboard";
 
-    redirect("/dashboard");
+    const path =
+      count % 10 === 0
+        ? `/quote?${redirectPath}=${destinationPath}`
+        : destinationPath;
+
+    redirect(path);
   } else {
     if (count % 10 === 0)
       return redirect(
