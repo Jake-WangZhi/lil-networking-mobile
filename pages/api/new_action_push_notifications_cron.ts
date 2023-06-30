@@ -26,7 +26,7 @@ export default async function handler(
         },
       });
 
-      if (!subscription) return;
+      if (!subscription) continue;
 
       const contacts = await prisma.contact.findMany({
         where: {
@@ -49,8 +49,8 @@ export default async function handler(
 
         if (activity) {
           const activityDate = new Date(activity.date);
-
           const dayDiff = differenceInDays(new Date(), activityDate);
+
           if (dayDiff === 31) {
             const notificationData = {
               title: `New Action Alert`,

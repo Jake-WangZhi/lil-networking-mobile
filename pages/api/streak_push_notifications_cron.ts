@@ -25,7 +25,7 @@ export default async function handler(
         },
       });
 
-      if (!subscription) return;
+      if (!subscription) continue;
 
       const goals = await prisma.goals.findUnique({
         where: {
@@ -33,7 +33,8 @@ export default async function handler(
         },
       });
 
-      if (!goals) return;
+      if (!goals) continue;
+
       const { connections, goalConnections, messages, goalMessages, streak } =
         goals;
 
@@ -45,7 +46,7 @@ export default async function handler(
           },
         });
 
-        if (!user) return;
+        if (!user) continue;
 
         try {
           const notificationData = {
