@@ -49,7 +49,7 @@ export default function GoalSettingPage() {
     }
   }, [goals]);
 
-  const postGoalsMutation = useGoalsMutation({
+  const putGoalsMutation = useGoalsMutation({
     method: "PUT",
     onSuccess: () => {
       setErrorMessage("");
@@ -105,28 +105,23 @@ export default function GoalSettingPage() {
     [goalConnections, goalMessages]
   );
 
-  const handleSaveClick = useCallback(
-    () =>
-      postGoalsMutation.mutate({
-        goalsArgs: {
-          networkingComfortLevel: goals?.networkingComfortLevel ?? 1,
-          goalConnections,
-          goalMessages,
-        },
-        email: session?.user?.email || "",
-      }),
-    [
-      goalConnections,
-      goalMessages,
-      postGoalsMutation,
-      session?.user?.email,
-      goals?.networkingComfortLevel,
-    ]
-  );
-
   const handleBackClick = useCallback(() => {
     router.push("/settings");
-  }, [router]);
+
+    putGoalsMutation.mutate({
+      goalsArgs: {
+        goalConnections,
+        goalMessages,
+      },
+      email: session?.user?.email || "",
+    });
+  }, [
+    router,
+    goalConnections,
+    goalMessages,
+    putGoalsMutation,
+    session?.user?.email,
+  ]);
 
   const handleSetGoalsClick = useCallback(() => {
     router.push(`/goals?${SearchParams.IsFromSettings}=true`);
@@ -218,84 +213,64 @@ export default function GoalSettingPage() {
   }
 
   return (
-    <main className="relative min-h-screen py-8 flex flex-col justify-between">
-      <div className="space-y-6">
-        <Grid container alignItems="center" sx={{ px: "16px" }}>
-          <Grid item xs={2}>
-            <Button
-              variant="text"
-              onClick={handleBackClick}
-              sx={{ px: "6px", ml: "-6px" }}
-            >
-              <ChevronLeft
-                size={36}
-                className="md:w-11 md:h-11 lg:w-13 lg:h-13"
-              />
-            </Button>
-          </Grid>
-          <Grid item xs={8} sx={{ display: "flex", justifyContent: "center" }}>
-            <Typography variant="h3" sx={{ fontWeight: 600 }}>
-              Goals
-            </Typography>
-          </Grid>
-          <Grid item xs={2}></Grid>
-        </Grid>
-        <div className="px-12 space-y-8">
-          {GOAL_QUESTIONS.map(
-            ({ title, selectedValue, setValue, buttonContents }, index) => {
-              return (
-                <div key={`question-${index}`} className="space-y-6">
-                  <div>
-                    <Typography variant="h3" sx={{ fontWeight: 600 }}>
-                      {title}
-                    </Typography>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    {buttonContents.map(({ label, value }, index) => {
-                      return (
-                        <Button
-                          key={`answer-${index}`}
-                          variant="outlined"
-                          sx={{
-                            px: "38px",
-                            py: "12px",
-                            border:
-                              selectedValue === value
-                                ? "1px solid #38ACE2"
-                                : "none",
-                            color:
-                              selectedValue === value ? "#38ACE2" : "white",
-                          }}
-                          onClick={handleOptionClick(value, setValue)}
-                          disabled={isDisabled}
-                        >
-                          {label}
-                        </Button>
-                      );
-                    })}
-                  </div>
-                </div>
-              );
-            }
-          )}
-        </div>
-      </div>
-
-      <div>
-        {errorMessage && (
-          <Typography variant="subtitle2" sx={{ textAlign: "center" }}>
-            {errorMessage}
-          </Typography>
-        )}
-        <div className="text-center">
+    <main className="relative min-h-screen py-8 space-y-6">
+      <Grid container alignItems="center" sx={{ px: "16px" }}>
+        <Grid item xs={2}>
           <Button
-            variant="contained"
-            sx={{ width: "163px" }}
-            onClick={handleSaveClick}
+            variant="text"
+            onClick={handleBackClick}
+            sx={{ px: "6px", ml: "-6px" }}
           >
-            Save
+            <ChevronLeft
+              size={36}
+              className="md:w-11 md:h-11 lg:w-13 lg:h-13"
+            />
           </Button>
-        </div>
+        </Grid>
+        <Grid item xs={8} sx={{ display: "flex", justifyContent: "center" }}>
+          <Typography variant="h3" sx={{ fontWeight: 600 }}>
+            Goals
+          </Typography>
+        </Grid>
+        <Grid item xs={2}></Grid>
+      </Grid>
+      <div className="px-12 space-y-8">
+        {GOAL_QUESTIONS.map(
+          ({ title, selectedValue, setValue, buttonContents }, index) => {
+            return (
+              <div key={`question-${index}`} className="space-y-6">
+                <div>
+                  <Typography variant="h3" sx={{ fontWeight: 600 }}>
+                    {title}
+                  </Typography>
+                </div>
+                <div className="flex items-center justify-between">
+                  {buttonContents.map(({ label, value }, index) => {
+                    return (
+                      <Button
+                        key={`answer-${index}`}
+                        variant="outlined"
+                        sx={{
+                          px: "38px",
+                          py: "12px",
+                          border:
+                            selectedValue === value
+                              ? "1px solid #38ACE2"
+                              : "none",
+                          color: selectedValue === value ? "#38ACE2" : "white",
+                        }}
+                        onClick={handleOptionClick(value, setValue)}
+                        disabled={isDisabled}
+                      >
+                        {label}
+                      </Button>
+                    );
+                  })}
+                </div>
+              </div>
+            );
+          }
+        )}
       </div>
     </main>
   );
