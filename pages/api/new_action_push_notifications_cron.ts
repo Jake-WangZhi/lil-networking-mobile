@@ -1,13 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import webpush from "web-push";
 import prisma from "@/lib/prisma";
 import { differenceInDays } from "date-fns";
-
-webpush.setVapidDetails(
-  process.env.VAPID_MAILTO ?? "",
-  process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY ?? "",
-  process.env.VAPID_PRIVATE_KEY ?? ""
-);
+import { sendPushNotification } from "@/helper/pushNotificationHelper";
 
 export default async function handler(
   request: NextApiRequest,
@@ -39,13 +33,16 @@ export default async function handler(
         select: {
           id: true,
           firstName: true,
+          goalDays: true,
         },
       });
 
       for (const contact of contacts) {
+        const { id, firstName, goalDays } = contact;
+
         const activity = await prisma.activity.findFirst({
           where: {
-            contactId: contact.id,
+            contactId: id,
             type: "USER",
           },
           orderBy: { date: "desc" },
@@ -58,36 +55,13 @@ export default async function handler(
           const activityDate = new Date(activity.date);
           const dayDiff = differenceInDays(new Date(), activityDate);
 
-          if (dayDiff === 31) {
+          if (dayDiff === goalDays + 1) {
             const notificationData = {
               title: `New Action Alert`,
-              body: `${contact.firstName} has been added to new actions. Reach out today!`,
+              body: `${firstName} has been added to new actions. Reach out today!`,
             };
 
-            const { endpoint, p256dh, auth } = subscription;
-
-            try {
-              await webpush.sendNotification(
-                { endpoint, keys: { p256dh, auth } },
-                JSON.stringify(notificationData)
-              );
-            } catch (error: any) {
-              console.error(
-                "Error sending new action push notification:",
-                error
-              );
-              if (error.statusCode === 410) {
-                // Clean out unsubscribed or expired push subscriptions.
-                await prisma.notificationSettings.delete({
-                  where: { subscriptionId: subscription.id },
-                });
-                await prisma.subscription.delete({
-                  where: { id: subscription.id },
-                });
-              }
-
-              continue;
-            }
+            await sendPushNotification(subscription, notificationData);
           }
         }
       }

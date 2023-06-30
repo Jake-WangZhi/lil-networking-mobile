@@ -1,13 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import webpush from "web-push";
 import prisma from "@/lib/prisma";
 import { differenceInDays } from "date-fns";
-
-webpush.setVapidDetails(
-  process.env.VAPID_MAILTO ?? "",
-  process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY ?? "",
-  process.env.VAPID_PRIVATE_KEY ?? ""
-);
+import { sendPushNotification } from "@/helper/pushNotificationHelper";
 
 export default async function handler(
   request: NextApiRequest,
@@ -55,8 +49,6 @@ export default async function handler(
         }! You haven't been active in a week. Get back on the app and build those habits!`,
       };
 
-      const { endpoint, p256dh, auth } = subscription;
-
       const activity = await prisma.activity.findFirst({
         where: {
           contactId: { in: contactIds },
@@ -69,25 +61,7 @@ export default async function handler(
       });
 
       if (!activity) {
-        try {
-          await webpush.sendNotification(
-            { endpoint, keys: { p256dh, auth } },
-            JSON.stringify(notificationData)
-          );
-        } catch (error: any) {
-          console.error("Error sending meet goal push notification:", error);
-          if (error.statusCode === 410) {
-            // Clean out unsubscribed or expired push subscriptions.
-            await prisma.notificationSettings.delete({
-              where: { subscriptionId: subscription.id },
-            });
-            await prisma.subscription.delete({
-              where: { id: subscription.id },
-            });
-          }
-
-          continue;
-        }
+        await sendPushNotification(subscription, notificationData);
 
         continue;
       }
@@ -96,25 +70,7 @@ export default async function handler(
       const dayDiff = differenceInDays(new Date(), activityDate);
 
       if (dayDiff > 7) {
-        try {
-          await webpush.sendNotification(
-            { endpoint, keys: { p256dh, auth } },
-            JSON.stringify(notificationData)
-          );
-        } catch (error: any) {
-          console.error("Error sending meet goal push notification:", error);
-          if (error.statusCode === 410) {
-            // Clean out unsubscribed or expired push subscriptions.
-            await prisma.notificationSettings.delete({
-              where: { subscriptionId: subscription.id },
-            });
-            await prisma.subscription.delete({
-              where: { id: subscription.id },
-            });
-          }
-
-          continue;
-        }
+        await sendPushNotification(subscription, notificationData);
       }
     }
 

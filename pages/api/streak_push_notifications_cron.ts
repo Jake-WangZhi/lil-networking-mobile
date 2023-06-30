@@ -1,12 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import webpush from "web-push";
 import prisma from "@/lib/prisma";
-
-webpush.setVapidDetails(
-  process.env.VAPID_MAILTO ?? "",
-  process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY ?? "",
-  process.env.VAPID_PRIVATE_KEY ?? ""
-);
+import { sendPushNotification } from "@/helper/pushNotificationHelper";
 
 export default async function handler(
   request: NextApiRequest,
@@ -56,34 +50,14 @@ export default async function handler(
 
         if (!user) continue;
 
-        try {
-          const notificationData = {
-            title: `Streak Reminder`,
-            body: `Hi, ${
-              user.name?.split(" ")[0]
-            }, make sure to meet your goals by the end of the month to keep your current streak!`,
-          };
+        const notificationData = {
+          title: `Streak Reminder`,
+          body: `Hi, ${
+            user.name?.split(" ")[0]
+          }, make sure to meet your goals by the end of the month to keep your current streak!`,
+        };
 
-          const { endpoint, p256dh, auth } = subscription;
-
-          await webpush.sendNotification(
-            { endpoint, keys: { p256dh, auth } },
-            JSON.stringify(notificationData)
-          );
-        } catch (error: any) {
-          console.error("Error sending streak push notification:", error);
-          if (error.statusCode === 410) {
-            // Clean out unsubscribed or expired push subscriptions.
-            await prisma.notificationSettings.delete({
-              where: { subscriptionId: subscription.id },
-            });
-            await prisma.subscription.delete({
-              where: { id: subscription.id },
-            });
-          }
-
-          continue;
-        }
+        await sendPushNotification(subscription, notificationData);
       }
     }
 

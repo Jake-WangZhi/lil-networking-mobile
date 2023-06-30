@@ -26,7 +26,7 @@ export async function POST(request: Request) {
   const newGoals = await prisma.goals.create({
     data: {
       userId: user.id,
-      networkingComfortLevel,
+      networkingComfortLevel: networkingComfortLevel ?? 1,
       goalConnections,
       goalMessages,
     },

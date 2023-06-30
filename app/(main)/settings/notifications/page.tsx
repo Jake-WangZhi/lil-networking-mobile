@@ -194,6 +194,8 @@ export default function NotificationSettingPage() {
     streakChecked,
     putNotificationSettingsMutation,
     subscriptionId,
+    postSubscriptionMutation,
+    session?.user?.email,
   ]);
 
   return (
