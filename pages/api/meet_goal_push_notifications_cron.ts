@@ -69,7 +69,8 @@ export default async function handler(
       const activityDate = new Date(activity.date);
       const dayDiff = differenceInDays(new Date(), activityDate);
 
-      if (dayDiff > 7) {
+      //Once a week after that initial notification
+      if (dayDiff % 7 === 0) {
         await sendPushNotification(subscription, notificationData);
       }
     }
