@@ -51,12 +51,6 @@ export default function OnboardingPage() {
     onError: () => {},
   });
 
-  const postNotificationSettingsMutation = useNotificationSettingsMutation({
-    method: "POST",
-    onSuccess: () => {},
-    onError: () => {},
-  });
-
   const handleSetGoalsClick = useCallback(
     () => router.push("/goals"),
     [router]
@@ -91,24 +85,11 @@ export default function OnboardingPage() {
           email: session?.user?.email || "",
           subscription: pushSubscription?.toJSON() as SubscriptionArgs,
         });
-
-        postNotificationSettingsMutation.mutate({
-          email: session?.user?.email || "",
-          notificationSettings: {
-            newAction: true,
-            streak: true,
-            meetGoal: true,
-          },
-        });
       }
 
       nextButtonRef.current?.click();
     }
-  }, [
-    postSubscriptionMutation,
-    postNotificationSettingsMutation,
-    session?.user?.email,
-  ]);
+  }, [postSubscriptionMutation, session?.user?.email]);
 
   return (
     <main className="relative">

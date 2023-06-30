@@ -25,7 +25,17 @@ export async function POST(request: Request) {
     data: {
       userId: user.id,
       endpoint: subscription.endpoint,
-      keys: subscription.keys,
+      p256dh: subscription.keys.p256dh,
+      auth: subscription.keys.auth,
+    },
+  });
+
+  await prisma.notificationSettings.create({
+    data: {
+      subscriptionId: newSubscription.id,
+      newAction: true,
+      meetGoal: true,
+      streak: true,
     },
   });
 

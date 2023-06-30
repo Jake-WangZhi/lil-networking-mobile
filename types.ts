@@ -68,15 +68,17 @@ export enum SearchParams {
   IsFromMessage = "is_from_message",
   IsFromProfile = "is_from_profile",
   IsFromSettings = "is_from_settings",
+  Endpoint = "endpoint",
 }
 
 export interface SubscriptionArgs {
   endpoint: string;
-  keys: {};
+  keys: { p256dh: string; auth: string };
 }
 
 export interface NotificationSettingsArgs {
   newAction: boolean;
   streak: boolean;
   meetGoal: boolean;
+  subscriptionId: string;
 }

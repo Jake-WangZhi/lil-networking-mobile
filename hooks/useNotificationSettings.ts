@@ -4,19 +4,21 @@ import { NotificationSettings } from "@prisma/client";
 import { useQuery } from "@tanstack/react-query";
 
 type Args = {
-  email?: string | null;
+  endpoint?: string | null;
 };
 
-export const useNotificationSettings = ({ email }: Args) => {
+export const useNotificationSettings = ({ endpoint }: Args) => {
   const {
     isError,
     data: notificationSettings,
     isLoading,
   } = useQuery<NotificationSettings>({
-    queryKey: ["notificationSettings", email],
+    queryKey: ["notificationSettings", endpoint],
     queryFn: () =>
-      fetcher(`/settings/notifications/api?${SearchParams.Email}=${email}`),
-    enabled: !!email,
+      fetcher(
+        `/settings/notifications/api?${SearchParams.Endpoint}=${endpoint}`
+      ),
+    enabled: !!endpoint,
   });
 
   return {

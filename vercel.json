@@ -4,7 +4,11 @@
   "crons": [
     {
       "path": "/api/streak_calculation_cron",
-      "schedule": "0 0 1 * *"
+      "schedule": "0 6 1 * *"
+    },
+    {
+      "path": "/api/push_notifications_cron",
+      "schedule": "0 13 * * *"
     }
   ]
 }

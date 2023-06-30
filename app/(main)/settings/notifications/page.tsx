@@ -18,24 +18,42 @@ const isGranted =
 export default function NotificationSettingPage() {
   const { data: session } = useSession();
   const router = useRouter();
-  const { notificationSettings } = useNotificationSettings({
-    email: session?.user?.email,
-  });
+  const [endpoint, setEndpoint] = useState(""); // State to hold the endpoint value
+  const { notificationSettings } = useNotificationSettings({ endpoint }); // Pass the endpoint
 
   const [allNotificationsChecked, setAllNotificationsChecked] = useState(false);
   const [newActionChecked, setNewActionChecked] = useState(false);
   const [streakChecked, setStreakChecked] = useState(false);
   const [meetGoalChecked, setMeetGoalChecked] = useState(false);
+  const [subscriptionId, setSubscriptionId] = useState("");
 
   useEffect(() => {
     if (notificationSettings) {
-      const { newAction, streak, meetGoal } = notificationSettings;
+      const { newAction, streak, meetGoal, subscriptionId } =
+        notificationSettings;
 
       setNewActionChecked(newAction);
       setStreakChecked(streak);
       setMeetGoalChecked(meetGoal);
+      setSubscriptionId(subscriptionId);
     }
   }, [notificationSettings]);
+
+  // Fetch notification settings and update state
+  const fetchNotificationSettings = useCallback(async () => {
+    const registration = await navigator.serviceWorker.getRegistration();
+    if (registration) {
+      const subscription = await registration.pushManager.getSubscription();
+      if (subscription) {
+        const endpoint = subscription.endpoint;
+        setEndpoint(endpoint); // Set the endpoint value in state
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchNotificationSettings();
+  }, [fetchNotificationSettings]);
 
   const postSubscriptionMutation = useSubscriptionMutation({
     method: "POST",
@@ -125,16 +143,15 @@ export default function NotificationSettingPage() {
     [isNotificationModificationAllowed]
   );
 
-  const handleBackClick = useCallback(() => {
-    if (isGranted)
+  const handleBackClick = useCallback(async () => {
+    if (isGranted) {
       putNotificationSettingsMutation.mutate({
-        email: session?.user?.email ?? "",
-        notificationSettings: {
-          newAction: newActionChecked,
-          streak: streakChecked,
-          meetGoal: meetGoalChecked,
-        },
+        newAction: newActionChecked,
+        streak: streakChecked,
+        meetGoal: meetGoalChecked,
+        subscriptionId,
       });
+    }
 
     router.push("/settings");
   }, [
@@ -207,7 +224,7 @@ export default function NotificationSettingPage() {
           </div>
           <div className="flex justify-between">
             <div>
-              <Typography variant="subtitle1">Meet Goal Reminder</Typography>
+              <Typography variant="subtitle1">Meet goal reminder</Typography>
               <Typography variant="body1">
                 No activity in more than a week
               </Typography>

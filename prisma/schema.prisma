@@ -75,15 +75,14 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  name                 String?
-  email                String?               @unique
-  emailVerified        DateTime?
-  image                String?
-  accounts             Account[]
-  Contacts             Contact[]
-  goals                Goals?
-  subscriptions        Subscription[]
-  notificationSettings NotificationSettings?
+  name          String?
+  email         String?        @unique
+  emailVerified DateTime?
+  image         String?
+  accounts      Account[]
+  Contacts      Contact[]
+  goals         Goals?
+  subscriptions Subscription[]
 }
 
 model Goals {
@@ -125,10 +124,13 @@ model Subscription {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   endpoint  String   @unique
-  keys      Json
+  auth      String   @unique
+  p256dh    String   @unique
 
   User   User   @relation(fields: [userId], references: [id])
   userId String
+
+  notificationSettings NotificationSettings?
 }
 
 model NotificationSettings {
@@ -140,6 +142,6 @@ model NotificationSettings {
   streak    Boolean
   meetGoal  Boolean
 
-  user   User   @relation(fields: [userId], references: [id])
-  userId String @unique
+  subscription   Subscription @relation(fields: [subscriptionId], references: [id])
+  subscriptionId String       @unique
 }

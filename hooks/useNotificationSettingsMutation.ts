@@ -7,31 +7,20 @@ type Args = {
   method: "POST" | "PUT";
 };
 
-type HandleSetNotificationsArgs = {
-  email: string;
-  notificationSettings: NotificationSettingsArgs;
-};
-
 export const useNotificationSettingsMutation = ({
   onSuccess,
   onError,
   method,
 }: Args) =>
   useMutation({
-    mutationFn: async ({
-      email,
-      notificationSettings,
-    }: HandleSetNotificationsArgs) => {
-      const response = await fetch(
-        `/settings/notifications/api?${SearchParams.Email}=${email}`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(notificationSettings),
-          method,
-        }
-      );
+    mutationFn: async (notificationSettingsArgs: NotificationSettingsArgs) => {
+      const response = await fetch(`/settings/notifications/api`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(notificationSettingsArgs),
+        method,
+      });
 
       if (!response.ok) {
         throw new Error("Unable to set notifications");

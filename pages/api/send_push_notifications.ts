@@ -13,16 +13,16 @@ export default async function handler(
   response: NextApiResponse
 ) {
   try {
-    const subscriptionData: any[] = await prisma.subscription.findMany();
+    const subscriptionData = await prisma.subscription.findMany();
 
     const notificationData = {
       title: "Push Notification Title",
       body: "This is a push notification",
     };
 
-    for (const { endpoint, keys } of subscriptionData) {
+    for (const { endpoint, p256dh, auth } of subscriptionData) {
       await webpush.sendNotification(
-        { endpoint, keys },
+        { endpoint, keys: { p256dh, auth } },
         JSON.stringify(notificationData)
       );
     }

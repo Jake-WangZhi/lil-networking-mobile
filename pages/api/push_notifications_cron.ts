@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import webpush from "web-push";
 import prisma from "@/lib/prisma";
-import schedule from "node-schedule";
+import { differenceInDays } from "date-fns";
 
 webpush.setVapidDetails(
   process.env.VAPID_MAILTO ?? "",
@@ -14,20 +14,68 @@ export default async function handler(
   response: NextApiResponse
 ) {
   try {
-    const subscriptionData: any[] = await prisma.subscription.findMany();
+    // const usersWithEnabledNotifications = await prisma.user.findMany({
+    //   where: {
+    //     notificationSettings: {
+    //       OR: [{ newAction: true }, { streak: true }, { meetGoal: true }],
+    //     },
+    //   },
+    // });
 
-    const notificationData = {
-      title: "New Action Alert",
-      body: "New actions on your dashboard",
-    };
-
-    const date = new Date(2023, 5, 28, 0, 25, 0);
-
-    schedule.scheduleJob(date, function () {
-      subscriptionData.map((data) =>
-        webpush.sendNotification(data, JSON.stringify(notificationData))
-      );
+    const enabledNotifications = await prisma.notificationSettings.findMany({
+      where: {
+        OR: [{ newAction: true }, { streak: true }, { meetGoal: true }],
+      },
     });
+
+    for (const notifications of enabledNotifications) {
+      const subscription = await prisma.subscription.findUnique({
+        where: {
+          id: notifications.subscriptionId,
+        },
+      });
+
+      if (!subscription) return;
+      if (notifications.newAction) {
+        const contacts = await prisma.contact.findMany({
+          where: {
+            userId: subscription.userId,
+          },
+        });
+
+        for (const contact of contacts) {
+          const activity = await prisma.activity.findFirst({
+            where: {
+              contactId: contact.id,
+            },
+            orderBy: { date: "desc" },
+            select: {
+              date: true,
+            },
+          });
+
+          if (activity) {
+            const activityDate = new Date(activity.date);
+
+            const dayDiff = differenceInDays(new Date(), activityDate);
+
+            if (dayDiff === 31) {
+              const notificationData = {
+                title: `New Action Alert`,
+                body: `${contact.firstName} has been added to new actions. Reach out today!`,
+              };
+
+              const { endpoint, p256dh, auth } = subscription;
+
+              await webpush.sendNotification(
+                { endpoint, keys: { p256dh, auth } },
+                JSON.stringify(notificationData)
+              );
+            }
+          }
+        }
+      }
+    }
 
     response
       .status(200)
