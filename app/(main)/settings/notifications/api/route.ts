@@ -31,6 +31,25 @@ export async function GET(request: Request) {
   return NextResponse.json(notificationSettings);
 }
 
+export async function POST(request: Request) {
+  const notificationSettingsArgs: NotificationSettingsArgs =
+    await request.json();
+
+  const { newAction, streak, meetGoal, subscriptionId } =
+    notificationSettingsArgs;
+
+  const newNotificationSettings = await prisma.notificationSettings.create({
+    data: {
+      subscriptionId,
+      newAction,
+      streak,
+      meetGoal,
+    },
+  });
+
+  return NextResponse.json(newNotificationSettings);
+}
+
 export async function PUT(request: Request) {
   const notificationSettingsArgs: NotificationSettingsArgs =
     await request.json();

@@ -31,13 +31,19 @@ export default function NotificationSettingPage() {
     onSuccess: ({ id }) => {
       setSubscriptionId(id);
 
-      putNotificationSettingsMutation.mutate({
+      postNotificationSettingsMutation.mutate({
         newAction: newActionChecked,
         streak: streakChecked,
         meetGoal: meetGoalChecked,
         subscriptionId: id,
       });
     },
+    onError: () => {},
+  });
+
+  const postNotificationSettingsMutation = useNotificationSettingsMutation({
+    method: "POST",
+    onSuccess: () => {},
     onError: () => {},
   });
 

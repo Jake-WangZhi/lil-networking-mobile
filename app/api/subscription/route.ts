@@ -32,14 +32,5 @@ export async function POST(request: Request) {
     },
   });
 
-  await prisma.notificationSettings.create({
-    data: {
-      subscriptionId: newSubscription.id,
-      newAction: true,
-      meetGoal: true,
-      streak: true,
-    },
-  });
-
   return NextResponse.json(newSubscription);
 }
