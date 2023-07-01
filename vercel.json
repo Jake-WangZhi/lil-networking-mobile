@@ -12,7 +12,7 @@
     },
     {
       "path": "/api/streak_push_notifications_cron",
-      "schedule": "0 13 23 * *"
+      "schedule": "0 13 24 * *"
     },
     {
       "path": "/api/meet_goal_push_notifications_cron",
