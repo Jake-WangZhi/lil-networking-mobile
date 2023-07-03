@@ -117,8 +117,7 @@ export function MuiCssProvider({ children }: PropsWithChildren) {
           tooltip: {
             position: "relative",
             backgroundColor: "#0F1A24",
-            marginTop: "24px !important",
-            padding: "8px 16px",
+            padding: "8px",
             "&::after": {
               borderRadius: "4px",
               content: '""',
@@ -133,6 +132,12 @@ export function MuiCssProvider({ children }: PropsWithChildren) {
           arrow: {
             background: "#0F1A24",
             color: "rgba(255, 255, 255, 0.16)",
+          },
+          tooltipPlacementBottom: {
+            marginTop: "16px !important",
+          },
+          tooltipPlacementLeft: {
+            marginRight: "16px !important",
           },
         },
       },

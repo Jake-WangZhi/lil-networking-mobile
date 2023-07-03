@@ -1,15 +1,28 @@
 import { Tooltip, Typography } from "@mui/material";
 import { useCallback, useEffect, useRef, useState, MouseEvent } from "react";
-import { Info, X } from "react-feather";
+import { PlusSquare, X } from "react-feather";
 import { Button } from "./Button";
+import { useRouter } from "next/navigation";
 
-export const InfoTooltipButton = () => {
+interface Props {
+  hasContacts?: boolean;
+}
+
+export const AddContactTooltipButton = ({ hasContacts }: Props) => {
   const [open, setOpen] = useState(false);
   const tooltipRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
+
+  useEffect(() => {
+    if (hasContacts === false) return setOpen(true);
+
+    setOpen(false);
+  }, [hasContacts]);
 
   const handleClick = useCallback(() => {
-    setOpen(true);
-  }, []);
+    setOpen(false);
+    router.push("/contacts/create");
+  }, [router]);
 
   const handleClose = useCallback((event: MouseEvent) => {
     event.stopPropagation();
@@ -31,17 +44,9 @@ export const InfoTooltipButton = () => {
   }, []);
 
   const tooltipContent = (
-    <div ref={tooltipRef} className="flex justify-between px-2 py-2">
+    <div ref={tooltipRef} className="flex justify-between space-x-2">
       <div>
-        <Typography variant="body1">
-          <span className="font-bold">Past due:</span> Items that have been
-          actionable for 10+ days
-        </Typography>
-        <br />
-        <Typography variant="body1">
-          <span className="font-bold">New Actions:</span> Items that have been
-          actionable between 0-10 days.
-        </Typography>
+        <Typography variant="body1">Add contacts here</Typography>
       </div>
       <div className="flex items-start">
         <Button
@@ -57,17 +62,11 @@ export const InfoTooltipButton = () => {
 
   return (
     <Button variant="text" onClick={handleClick} sx={{ px: "8px" }}>
-      <Tooltip
-        open={open}
-        title={tooltipContent}
-        arrow
-        placement="bottom-start"
-      >
-        <Info
+      <Tooltip open={open} title={tooltipContent} arrow placement="left">
+        <PlusSquare
           size={32}
-          fill="white"
-          color="#0F1A24"
-          className="md:w-10 md:h-10 lg:w-12 lg:h-12 "
+          color={"#38ACE2"}
+          className="md:w-10 md:h-10 lg:w-12 lg:h-12"
         />
       </Tooltip>
     </Button>

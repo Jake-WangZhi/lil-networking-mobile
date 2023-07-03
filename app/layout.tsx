@@ -32,7 +32,11 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <head>
-        <link rel="manifest" href="/manifest.json" />
+        <link
+          rel="manifest"
+          crossOrigin="use-credentials"
+          href="/manifest.json"
+        />
       </head>
       <body className="font-sans bg-dark-blue mx-auto max-w-lg md:max-w-xl lg:max-w-3xl">
         <QCProvider>
