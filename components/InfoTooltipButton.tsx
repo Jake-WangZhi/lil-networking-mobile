@@ -31,7 +31,7 @@ export const InfoTooltipButton = () => {
   }, []);
 
   const tooltipContent = (
-    <div ref={tooltipRef} className="flex justify-between px-2 py-2">
+    <div ref={tooltipRef} className="flex justify-between p-2">
       <div>
         <Typography variant="body1">
           <span className="font-bold">Past due:</span> Items that have been
