@@ -122,7 +122,7 @@ export const ActionList = ({ actions, isLoading, isError }: Props) => {
           <div className="flex items-center space-x-2">
             <div className="w-1 h-4 border-l-4 border-magenta md:border-l-5 md:h-5 lg:border-l-6 lg:h-6"></div>
             <Typography
-              variant="subtitle1"
+              variant="h3"
               sx={{
                 fontWeight: 600,
               }}
@@ -154,7 +154,7 @@ export const ActionList = ({ actions, isLoading, isError }: Props) => {
           <div className="flex items-center space-x-2">
             <div className="w-1 h-4 border-l-4 border-light-yellow md:border-l-5 md:h-5 lg:border-l-6 lg:h-6"></div>
             <Typography
-              variant="subtitle1"
+              variant="h3"
               sx={{
                 fontWeight: 600,
               }}

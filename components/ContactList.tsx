@@ -85,7 +85,7 @@ export const ContactList = ({ contacts, isLoading, isError, name }: Props) => {
     <div className="w-full mb-20 mt-5">
       <div className="flex items-center space-x-2 mb-2">
         <Typography
-          variant="subtitle1"
+          variant="h3"
           sx={{
             fontWeight: 600,
           }}

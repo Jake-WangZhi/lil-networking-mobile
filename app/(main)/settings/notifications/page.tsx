@@ -229,7 +229,7 @@ export default function NotificationSettingPage() {
       </Grid>
       <div className="flex justify-between mt-6">
         <div>
-          <Typography variant="subtitle1">
+          <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
             Enable all push notifications
           </Typography>
           <Typography variant="body1">
@@ -248,7 +248,9 @@ export default function NotificationSettingPage() {
         <div className="space-y-4">
           <div className="flex justify-between">
             <div>
-              <Typography variant="subtitle1">New action alert</Typography>
+              <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
+                New action alert
+              </Typography>
               <Typography variant="body1">
                 New actions on your dashboard
               </Typography>
@@ -257,7 +259,9 @@ export default function NotificationSettingPage() {
           </div>
           <div className="flex justify-between">
             <div>
-              <Typography variant="subtitle1">Streak reminder</Typography>
+              <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
+                Streak reminder
+              </Typography>
               <Typography variant="body1">
                 One week before losing streak
               </Typography>
@@ -266,7 +270,9 @@ export default function NotificationSettingPage() {
           </div>
           <div className="flex justify-between">
             <div>
-              <Typography variant="subtitle1">Meet goal reminder</Typography>
+              <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
+                Meet goal reminder
+              </Typography>
               <Typography variant="body1">
                 No activity in more than a week
               </Typography>
