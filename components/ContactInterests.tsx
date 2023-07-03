@@ -11,7 +11,7 @@ interface Props {
 export const ContactInterests = ({ interests }: Props) => {
   return (
     <div className="space-y-3 mb-8">
-      <Typography variant="subtitle1" sx={{ mx: "16px" }}>
+      <Typography variant="h3" sx={{ mx: "16px", fontWeight: 600 }}>
         Interests
       </Typography>
       <div className="ml-4">

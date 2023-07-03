@@ -26,7 +26,7 @@ export const OnboardingIntroPage = ({
       >
         <Image src={image} alt={title} className="w-full" />
       </div>
-      <div className="px-8 text-white mt-12 space-y-6">
+      <div className="px-6 text-white mt-12 space-y-6">
         <Typography variant="h1">{title}</Typography>
         <Typography variant="h3">{description}</Typography>
       </div>

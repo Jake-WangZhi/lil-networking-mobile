@@ -55,7 +55,9 @@ export const ContactActivites = ({ activities }: Props) => {
         </Typography>
       )}
       <div className="flex items-center justify-between mb-3">
-        <Typography variant="subtitle1">Activites</Typography>
+        <Typography variant="h3" sx={{ fontWeight: 600 }}>
+          Activities
+        </Typography>
         {!isFromMessage && (
           <Button
             onClick={handlePlusClick}

@@ -22,20 +22,20 @@ const ONBOARDING_INTRO_PAGES = [
   {
     title: "Set Goals",
     description:
-      "The Lil Networking app will help you set goals that best fit your needs when it comes to your career.",
+      "Set, track, and achieve networking goals to expand your network and stay connected with contacts.",
     image: pic1,
+  },
+  {
+    title: "Customization",
+    description:
+      "Set your reminder cadences to your preferences for effective scheduling.",
+    image: pic3,
   },
   {
     title: "Build Relationships",
     description:
-      "Build new and existing relationships by staying up to date on their work and interests.",
+      "Stay on top of your contacts with helpful reminders to keep in touch and re-engage efficiently.",
     image: pic2,
-  },
-  {
-    title: "Stay Connected",
-    description:
-      "Set notifications to help remind you when to reach out to connections.",
-    image: pic3,
   },
 ];
 
@@ -116,7 +116,7 @@ export default function OnboardingPage() {
               title={page.title}
               description={page.description}
               image={page.image}
-              addImgPadding={index === 1}
+              addImgPadding={index === 2}
               handleNextClick={handleNextClick}
             />
           </SwiperSlide>
@@ -124,6 +124,7 @@ export default function OnboardingPage() {
         <SwiperSlide>
           <OnboardingActionPage
             title="Stay Informed"
+            description="iOS notifications require iOS 16.5 or later"
             actionButton={
               <Button variant="contained" onClick={handleNotificationClick}>
                 Allow notifications
@@ -140,12 +141,14 @@ export default function OnboardingPage() {
                 Not now
               </Button>
             }
+            morePadding={true}
           />
           <button ref={nextButtonRef} onClick={handleNextClick} />;
         </SwiperSlide>
         <SwiperSlide>
           <OnboardingActionPage
-            title="Ready to set a goal?"
+            title="Ready to set your Networking Goals?"
+            description="You can change your goals at anytime"
             actionButton={
               <Button
                 variant="contained"
