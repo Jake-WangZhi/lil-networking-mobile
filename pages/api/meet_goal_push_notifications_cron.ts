@@ -25,6 +25,14 @@ export default async function handler(
 
       if (!subscription) continue;
 
+      const goals = await prisma.goals.findUnique({
+        where: {
+          userId: subscription.userId,
+        },
+      });
+
+      if (!goals) continue;
+
       const contacts = await prisma.contact.findMany({
         where: {
           userId: subscription.userId,
@@ -37,6 +45,7 @@ export default async function handler(
         where: { id: subscription.userId },
         select: {
           name: true,
+          createdAt: true,
         },
       });
 
@@ -61,7 +70,11 @@ export default async function handler(
       });
 
       if (!activity) {
-        await sendPushNotification(subscription, notificationData);
+        const dayDiff = differenceInDays(new Date(), user.createdAt);
+
+        if (dayDiff !== 0 && dayDiff % 7 === 0) {
+          await sendPushNotification(subscription, notificationData);
+        }
 
         continue;
       }
@@ -70,7 +83,7 @@ export default async function handler(
       const dayDiff = differenceInDays(new Date(), activityDate);
 
       //Once a week after that initial notification
-      if (dayDiff % 7 === 0) {
+      if (dayDiff !== 0 && dayDiff % 7 === 0) {
         await sendPushNotification(subscription, notificationData);
       }
     }
