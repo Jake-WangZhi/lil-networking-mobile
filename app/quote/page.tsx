@@ -22,7 +22,7 @@ export default function QuotePage() {
         <div className="mt-40 w-full">
           <Button
             variant="contained"
-            sx={{ width: "100%" }}
+            sx={{ width: "164px" }}
             onClick={() =>
               router.push(searchParams?.get(SearchParams.RedirectPath) || "")
             }
@@ -49,7 +49,7 @@ export default function QuotePage() {
         <div className="mt-40 w-full">
           <Button
             variant="contained"
-            sx={{ width: "100%" }}
+            sx={{ width: "164px" }}
             onClick={() =>
               router.push(searchParams?.get(SearchParams.RedirectPath) || "")
             }
@@ -81,7 +81,7 @@ export default function QuotePage() {
       <div className="w-full">
         <Button
           variant="contained"
-          sx={{ width: "100%" }}
+          sx={{ width: "164px" }}
           onClick={() =>
             router.push(searchParams?.get(SearchParams.RedirectPath) || "")
           }
