@@ -1,9 +1,9 @@
 "use client";
 
+import { Typography } from "@mui/material";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
-import { ClipLoader } from "react-spinners";
 
 // Prisma does not support Edge without the Data Proxy currently
 export const runtime = "nodejs"; // default
@@ -23,8 +23,17 @@ export default function Home() {
   }, [router, session]);
 
   return (
-    <main className="relative flex min-h-screen flex-col items-center justify-center">
-      <ClipLoader color="#38ACE2" size={150} />
+    <main className="relative flex flex-col justify-center px-8 space-y-4 mt-20">
+      <h1 className="flex flex-col text-light-blue text-start text-5xl font-bold tracking-tight leading-72 md:text-7xl">
+        <span className="text-3xl md:text-5xl leading-48">Lil</span>
+        <span className="text-white">Networking</span>
+        App
+      </h1>
+      <div className="w-1/12 h-[202px] border-l-4 border-light-blue"></div>
+      <Typography variant="h3">
+        Build networking habits & <br />
+        reach your goals
+      </Typography>
     </main>
   );
 }
