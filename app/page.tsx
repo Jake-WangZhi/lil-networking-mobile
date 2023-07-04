@@ -1,7 +1,6 @@
 "use client";
 
 import { Typography } from "@mui/material";
-import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
@@ -11,16 +10,11 @@ export const preferredRegion = "home";
 export const dynamic = "force-dynamic";
 
 export default function Home() {
-  const { data: session } = useSession();
   const router = useRouter();
 
   useEffect(() => {
-    if (session) {
-      router.push("/dashboard");
-    } else {
-      router.push("/signin");
-    }
-  }, [router, session]);
+    router.push("/dashboard");
+  }, [router]);
 
   return (
     <main className="relative flex flex-col justify-center px-8 space-y-4 mt-20">
