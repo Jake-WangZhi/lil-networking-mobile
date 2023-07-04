@@ -77,7 +77,7 @@ export default async function handler(
 
       const dayDiff = differenceInDays(
         new Date(),
-        activity?.date ? new Date(activity.date) : user.createdAt
+        activity ? new Date(activity.date) : user.createdAt
       );
 
       if (dayDiff !== 0 && dayDiff % 7 === 0) {
