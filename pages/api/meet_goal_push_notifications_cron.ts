@@ -61,7 +61,6 @@ export default async function handler(
       const activity = await prisma.activity.findFirst({
         where: {
           contactId: { in: contactIds },
-          type: "USER",
         },
         orderBy: [
           {
