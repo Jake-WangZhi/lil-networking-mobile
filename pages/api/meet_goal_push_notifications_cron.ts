@@ -63,26 +63,24 @@ export default async function handler(
           contactId: { in: contactIds },
           type: "USER",
         },
-        orderBy: { date: "desc" },
+        orderBy: [
+          {
+            date: "desc",
+          },
+          {
+            createdAt: "desc",
+          },
+        ],
         select: {
           date: true,
         },
       });
 
-      if (!activity) {
-        const dayDiff = differenceInDays(new Date(), user.createdAt);
+      const dayDiff = differenceInDays(
+        new Date(),
+        activity?.date ? new Date(activity.date) : user.createdAt
+      );
 
-        if (dayDiff !== 0 && dayDiff % 7 === 0) {
-          await sendPushNotification(subscription, notificationData);
-        }
-
-        continue;
-      }
-
-      const activityDate = new Date(activity.date);
-      const dayDiff = differenceInDays(new Date(), activityDate);
-
-      //Once a week after that initial notification
       if (dayDiff !== 0 && dayDiff % 7 === 0) {
         await sendPushNotification(subscription, notificationData);
       }

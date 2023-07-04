@@ -43,9 +43,15 @@ export default async function handler(
         const activity = await prisma.activity.findFirst({
           where: {
             contactId: id,
-            type: "USER",
           },
-          orderBy: { date: "desc" },
+          orderBy: [
+            {
+              date: "desc",
+            },
+            {
+              createdAt: "desc",
+            },
+          ],
           select: {
             date: true,
           },
@@ -55,7 +61,7 @@ export default async function handler(
           const activityDate = new Date(activity.date);
           const dayDiff = differenceInDays(new Date(), activityDate);
 
-          if (dayDiff === goalDays + 1) {
+          if (dayDiff === goalDays) {
             const notificationData = {
               title: `New Action Alert`,
               body: `${firstName} has been added to new actions. Reach out today!`,
