@@ -34,7 +34,7 @@ export const InfoTooltipButton = () => {
     <div ref={tooltipRef} className="flex justify-between px-2 py-3">
       <div>
         <Typography variant="body1">
-          Past due: Items that have been actionable for 10+ days
+          Priority: Items that have been actionable for 10+ days
         </Typography>
         <br />
         <Typography variant="body1">

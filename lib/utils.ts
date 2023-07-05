@@ -35,11 +35,11 @@ export const validatePhone = (phone: string) => {
   }
 };
 
-export function calculateDaysSinceCreatedAt(createdAt: Date) {
-  const createdAtDate = new Date(createdAt); // Convert the timestamp to a Date object
+export function calculateDaysSinceActivityDate(dateStr: string) {
+  const activityDate = new Date(dateStr); // Convert the timestamp to a Date object
   const currentDate = new Date(); // Get the current date
 
-  const timeDifferenceInDays = differenceInDays(currentDate, createdAtDate);
+  const timeDifferenceInDays = differenceInDays(currentDate, activityDate);
 
   return timeDifferenceInDays;
 }
@@ -49,6 +49,15 @@ export const fetcher = (url: string) =>
     if (response.ok) return response.json();
     else throw new Error(response.statusText);
   });
+
+export const formatDate = (dateStr: string) => {
+  return new Date(dateStr).toLocaleString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+    timeZone: "UTC",
+  });
+};
 
 export const formatTitles = (titles: string[]) => {
   return titles

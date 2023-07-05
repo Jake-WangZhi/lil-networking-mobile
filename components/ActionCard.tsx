@@ -44,7 +44,7 @@ export const ActionCard = ({ action, actionType }: Props) => {
                 color: actionType === "past" ? "#ED3293" : "#FFCF79",
               }}
             >
-              {`${action.days} Days ago`}
+              {action.days < action.goalDays ? "" : `${action.days} Days ago`}
             </Typography>
             <Typography
               variant="body1"
