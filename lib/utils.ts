@@ -1,4 +1,9 @@
-import { formatDistanceToNow, differenceInDays } from "date-fns";
+import {
+  formatDistanceToNow,
+  differenceInDays,
+  parseISO,
+  format,
+} from "date-fns";
 import validator from "validator";
 
 export const timeAgo = (timestamp: Date, timeOnly?: boolean): string => {
@@ -51,12 +56,9 @@ export const fetcher = (url: string) =>
   });
 
 export const formatDate = (dateStr: string) => {
-  return new Date(dateStr).toLocaleString("en-US", {
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-    timeZone: "UTC",
-  });
+  const parsedDate = parseISO(dateStr);
+  const formattedDate = format(parsedDate, "MMM d, yyyy");
+  return formattedDate;
 };
 
 export const formatTitles = (titles: string[]) => {
