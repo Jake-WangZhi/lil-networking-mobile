@@ -50,30 +50,6 @@ export const fetcher = (url: string) =>
     else throw new Error(response.statusText);
   });
 
-export const formatDate = (dateStr: string) => {
-  const [year, month, day] = dateStr.split("-");
-
-  const months: string[] = [
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec",
-  ];
-
-  const monthName = months[Number(month) - 1];
-
-  const formattedDate = `${monthName} ${parseInt(day, 10)}, ${year}`;
-  return formattedDate;
-};
-
 export const formatTitles = (titles: string[]) => {
   return titles
     .join(titles.length === 2 ? " and " : ", ")

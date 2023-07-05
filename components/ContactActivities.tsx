@@ -10,9 +10,10 @@ import { Activity } from "@prisma/client";
 
 interface Props {
   activities: Activity[];
+  contactId: string;
 }
 
-export const ContactActivites = ({ activities }: Props) => {
+export const ContactActivites = ({ activities, contactId }: Props) => {
   const queryClient = useQueryClient();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -40,8 +41,8 @@ export const ContactActivites = ({ activities }: Props) => {
   );
 
   const handlePlusClick = useCallback(
-    () => router.push(`/contacts/${activities[0].contactId}/activities/create`),
-    [activities, router]
+    () => router.push(`/contacts/${contactId}/activities/create`),
+    [contactId, router]
   );
 
   return (

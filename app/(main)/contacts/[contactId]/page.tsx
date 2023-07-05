@@ -70,7 +70,7 @@ export default function ContactPage({
       <ContactHeader contact={contact} />
       <ContactInfo contact={contact} />
       {interests.length !== 0 && <ContactInterests interests={interests} />}
-      <ContactActivites activities={activities} />
+      <ContactActivites activities={activities} contactId={contact.id} />
       <NavFooter />
     </main>
   );
