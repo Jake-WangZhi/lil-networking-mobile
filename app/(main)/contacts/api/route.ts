@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { Activity, Contact, Prisma } from "@prisma/client";
 import { SearchParams } from "@/types";
+import { getLatestActivitiesForContacts } from "@/helper/ApiHelper";
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
@@ -95,49 +96,4 @@ const getContacts = async (name: string | null, userId: string) => {
   });
 
   return contacts;
-};
-
-// Try to get the latest USER activities for each contact first,
-// Then get the SYSTEM activities for the contacts who don't have any USER activities
-const getLatestActivitiesForContacts = async (contactIds: string[]) => {
-  const activities = await prisma.activity.findMany({
-    where: {
-      contactId: { in: contactIds },
-      type: "USER",
-    },
-    orderBy: [
-      {
-        date: "desc",
-      },
-      {
-        createdAt: "desc",
-      },
-    ],
-  });
-
-  const contactIdsWithActivity = new Set(
-    activities.map((activity) => activity.contactId)
-  );
-
-  for (const contactId of contactIds) {
-    const hasActivity = contactIdsWithActivity.has(contactId);
-
-    if (!hasActivity) {
-      const activity = await prisma.activity.findFirst({
-        where: {
-          contactId: contactId,
-          type: "SYSTEM",
-        },
-        orderBy: {
-          createdAt: "asc",
-        },
-      });
-
-      if (activity) {
-        activities.push(activity);
-      }
-    }
-  }
-
-  return activities;
 };

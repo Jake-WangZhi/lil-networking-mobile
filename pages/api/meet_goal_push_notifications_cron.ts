@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import prisma from "@/lib/prisma";
 import { differenceInDays } from "date-fns";
-import { sendPushNotification } from "@/helper/pushNotificationHelper";
+import { sendPushNotification } from "@/helper/PushNotificationHelper";
 
 export default async function handler(
   request: NextApiRequest,
