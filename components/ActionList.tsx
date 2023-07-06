@@ -125,7 +125,7 @@ export const ActionList = ({ actions, isLoading, isError }: Props) => {
               variant="h3"
               sx={{
                 fontWeight: 600,
-                lineHeight: "21px",
+                height: "22px",
               }}
             >{`Priority (${actions.pastActions.length})`}</Typography>
           </div>
@@ -158,7 +158,7 @@ export const ActionList = ({ actions, isLoading, isError }: Props) => {
               variant="h3"
               sx={{
                 fontWeight: 600,
-                height: "21px",
+                height: "22px",
               }}
             >{`Upcoming (${actions.upcomingActions?.length})`}</Typography>
           </div>
