@@ -2,7 +2,6 @@ import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { Activity, Contact, Prisma } from "@prisma/client";
 import { SearchParams } from "@/types";
-import { getLatestActivitiesForContacts } from "@/helper/ApiHelper";
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
@@ -27,7 +26,21 @@ export async function GET(request: Request) {
 
   const contactIds = contacts.map((c) => c.id);
 
-  const activities = await getLatestActivitiesForContacts(contactIds);
+  const activities = await prisma.activity.findMany({
+    where: {
+      contactId: { in: contactIds },
+    },
+    orderBy: [
+      { type: "asc" },
+      {
+        date: "desc",
+      },
+      {
+        createdAt: "desc",
+      },
+    ],
+    distinct: ["contactId"],
+  });
 
   const parsedContacts = parseContacts(contacts, activities);
 

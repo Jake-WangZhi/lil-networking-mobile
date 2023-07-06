@@ -2,7 +2,6 @@ import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { Activity, Contact } from "@prisma/client";
 import { Action, SearchParams } from "@/types";
-import { getLatestActivitiesForContacts } from "@/helper/ApiHelper";
 import { differenceInDays } from "date-fns";
 
 const DAYS_BEFORE_PAST_DUE = 10;
@@ -34,7 +33,21 @@ export async function GET(request: Request) {
 
   const contactIds = contacts.map((c) => c.id);
 
-  const activities = await getLatestActivitiesForContacts(contactIds);
+  const activities = await prisma.activity.findMany({
+    where: {
+      contactId: { in: contactIds },
+    },
+    orderBy: [
+      { type: "asc" },
+      {
+        date: "desc",
+      },
+      {
+        createdAt: "desc",
+      },
+    ],
+    distinct: ["contactId"],
+  });
 
   const actions = parseActions(contacts, activities);
 
@@ -67,7 +80,7 @@ const parseActions = (contacts: Contact[], activities: Activity[]) => {
         days,
         goalDays,
         ...(!isUserActivity && {
-          contactCreatedAt: activity.createdAt.toISOString(),
+          contactCreatedAt: activity.date.toISOString(),
         }),
       };
 
