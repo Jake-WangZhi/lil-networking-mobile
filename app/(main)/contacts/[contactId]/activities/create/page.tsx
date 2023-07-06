@@ -38,13 +38,13 @@ export default function CreateActivityPage({
   const [dateError, setDateError] = useState("");
   const [isLogging, setIsLogging] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const [localizedDateTimeISO, setLocalizedDateTimeISO] = useState("");
+  const [localizedISODate, setlocalizedISODate] = useState("");
 
   useEffect(() => {
     if (date) {
       const localizedISODate = convertToLocalizedISODate(date);
 
-      setLocalizedDateTimeISO(localizedISODate);
+      setlocalizedISODate(localizedISODate);
     }
   }, [date]);
 
@@ -260,10 +260,10 @@ export default function CreateActivityPage({
           defaultValue={isFromProfile}
         />
         <input
-          id="localizedDateTimeISO"
-          name="localizedDateTimeISO"
+          id="localizedISODate"
+          name="localizedISODate"
           type="hidden"
-          defaultValue={localizedDateTimeISO}
+          defaultValue={localizedISODate}
         />
         <button ref={submitFormRef} className="hidden" type="submit"></button>
       </form>
