@@ -58,8 +58,8 @@ export default async function handler(
           },
         });
 
-        if (activity) {
-          const activityDate = new Date(activity?.date ?? "");
+        if (activity && activity.date) {
+          const activityDate = new Date(activity.date);
           const dayDiff = differenceInDays(new Date(), activityDate);
 
           if (dayDiff === goalDays) {
