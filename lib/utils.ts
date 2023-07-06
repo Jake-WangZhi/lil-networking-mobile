@@ -50,6 +50,7 @@ export const fetcher = (url: string) =>
 export const formatDate = (dateStr: string) => {
   const parsedDate = parseISO(dateStr);
   const formattedDate = format(parsedDate, "MMM d, yyyy");
+
   return formattedDate;
 };
 
