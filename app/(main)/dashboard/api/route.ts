@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { Activity, Contact } from "@prisma/client";
-import { Action, SearchParams } from "@/types";
+import { Action, ActivityType, SearchParams } from "@/types";
 import { differenceInDays } from "date-fns";
 
 const DAYS_BEFORE_PAST_DUE = 10;
@@ -69,7 +69,7 @@ const parseActions = (contacts: Contact[], activities: Activity[]) => {
     if (contact) {
       const days = differenceInDays(new Date(), activity.date);
       const goalDays = contact.goalDays;
-      const isUserActivity = activity.type === "USER";
+      const isUserActivity = activity.type === ActivityType.USER;
 
       const action = {
         contactFirstName: contact.firstName,

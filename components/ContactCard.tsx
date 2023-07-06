@@ -1,7 +1,8 @@
-import { Contact } from "@/types";
+import { ActivityType, Contact } from "@/types";
 import { ArrowRight, Archive } from "react-feather";
 import Link from "next/link";
 import { Card, CardActionArea, CardContent, Typography } from "@mui/material";
+import { formatDate } from "@/lib/utils";
 
 interface Props {
   contact: Contact;
@@ -31,9 +32,9 @@ export const ContactCard = ({ contact }: Props) => {
                   opacity: 0.7,
                 }}
               >
-                {contact?.industry}
+                {contact.industry}
               </Typography>
-              {contact?.isArchived && (
+              {contact.isArchived && (
                 <Archive size={16} className="opacity-70 flex-shrink-0" />
               )}
             </div>
@@ -46,7 +47,9 @@ export const ContactCard = ({ contact }: Props) => {
                 WebkitLineClamp: 2,
               }}
             >
-              {contact?.activities[0]?.description}
+              {contact.activities[0].type === ActivityType.USER
+                ? contact.activities[0].description
+                : `Contact added ${formatDate(contact.activities[0].date)}`}
             </Typography>
           </Link>
         </CardContent>
