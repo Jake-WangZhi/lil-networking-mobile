@@ -5,25 +5,15 @@ import { GoalSummary } from "@/components/GoalSummary";
 import { useSession } from "next-auth/react";
 import { useActions } from "@/hooks/useActions";
 import { Typography } from "@mui/material";
-import { PlusSquare } from "react-feather";
-import { Button } from "@/components/Button";
 import { InfoTooltipButton } from "@/components/InfoTooltipButton";
 import { NavFooter } from "@/components/NavFooter";
-import { useRouter } from "next/navigation";
-import { useCallback } from "react";
+import { AddContactTooltipButton } from "@/components/AddContactTooltipButton";
 
 export default function DashboardPage() {
   const { data: session } = useSession();
-  const router = useRouter();
-
   const { actions, isLoading, isError } = useActions({
     email: session?.user?.email,
   });
-
-  const handlePlusClick = useCallback(
-    () => router.push("/contacts/create"),
-    [router]
-  );
 
   return (
     <main className="relative flex flex-col items-center text-white px-4">
@@ -34,13 +24,7 @@ export default function DashboardPage() {
           </Typography>
           <div className="flex items-center space-x-2">
             <InfoTooltipButton />
-            <Button variant="text" onClick={handlePlusClick} sx={{ px: "8px" }}>
-              <PlusSquare
-                size={32}
-                color={"#38ACE2"}
-                className="md:w-10 md:h-10 lg:w-12 lg:h-12"
-              />
-            </Button>
+            <AddContactTooltipButton hasContacts={actions?.hasContacts} />
           </div>
         </div>
         <GoalSummary />
