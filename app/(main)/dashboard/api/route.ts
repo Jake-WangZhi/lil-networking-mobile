@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { Activity, Contact } from "@prisma/client";
-import { calculateDaysSinceActivityDate, formatDate } from "@/lib/utils";
+import { calculateDaysSinceActivityDate } from "@/lib/utils";
 import { Action, SearchParams } from "@/types";
 
 const DAYS_BEFORE_PAST_DUE = 10;
@@ -36,6 +36,7 @@ export async function GET(request: Request) {
   const activities = await prisma.activity.findMany({
     where: {
       contactId: { in: contactIds },
+      type: "USER",
     },
     orderBy: [
       {
@@ -47,6 +48,30 @@ export async function GET(request: Request) {
     ],
     distinct: ["contactId"],
   });
+
+  const contactIdsWithActivity = new Set(
+    activities.map((activity) => activity.contactId)
+  );
+
+  for (const contactId of contactIds) {
+    const hasActivity = contactIdsWithActivity.has(contactId);
+
+    if (!hasActivity) {
+      const activity = await prisma.activity.findFirst({
+        where: {
+          contactId: contactId,
+          type: "SYSTEM",
+        },
+        orderBy: {
+          createdAt: "asc",
+        },
+      });
+
+      if (activity) {
+        activities.push(activity);
+      }
+    }
+  }
 
   const actions = parseActions(contacts, activities);
 
@@ -66,7 +91,9 @@ const parseActions = (contacts: Contact[], activities: Activity[]) => {
     const contact = contactIndex[activity.contactId];
 
     if (contact) {
-      const days = calculateDaysSinceActivityDate(activity.date);
+      const days = calculateDaysSinceActivityDate(
+        activity.date ? activity.date : activity.createdAt.toISOString()
+      );
       const goalDays = contact.goalDays;
       const isUserActivity = activity.type === "USER";
 
@@ -75,11 +102,12 @@ const parseActions = (contacts: Contact[], activities: Activity[]) => {
         contactLastName: contact.lastName,
         contactIndustry: contact.industry || "",
         contactId: contact.id,
-        description: isUserActivity
-          ? activity.description
-          : `Contact added ${formatDate(activity.date)}`,
+        description: activity.description,
         days,
         goalDays,
+        ...(!isUserActivity && {
+          contactCreatedAt: activity.createdAt.toISOString(),
+        }),
       };
 
       const pastDueThreshold = isUserActivity ? goalDays : 0;

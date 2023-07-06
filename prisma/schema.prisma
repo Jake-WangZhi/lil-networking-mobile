@@ -38,7 +38,7 @@ model Activity {
 
   title       String
   description String
-  date        String
+  date        String?
 
   type ActivityType
 

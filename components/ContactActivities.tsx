@@ -7,6 +7,7 @@ import { Card, CardContent, Typography } from "@mui/material";
 import { Button } from "./Button";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Activity } from "@prisma/client";
+import { formatDate } from "@/lib/utils";
 
 interface Props {
   activities: Activity[];
@@ -118,7 +119,9 @@ export const ContactActivites = ({ activities, contactId }: Props) => {
                   variant="body1"
                   sx={{ opacity: 0.7, marginBottom: "8px" }}
                 >
-                  {activity.date}
+                  {activity.date
+                    ? formatDate(activity.date)
+                    : formatDate(new Date(activity.createdAt).toISOString())}
                 </Typography>
                 <Typography variant="body1">{activity.description}</Typography>
               </CardContent>

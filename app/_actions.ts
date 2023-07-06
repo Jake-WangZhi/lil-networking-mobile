@@ -24,7 +24,6 @@ interface FormDataOptions {
   contactId: string;
   isFromMessage: boolean;
   isFromProfile: boolean;
-  createdAt: string;
 }
 
 interface FormData {
@@ -51,7 +50,6 @@ export async function upsertContact(formData: FormData) {
     .get("interests")
     .split(",")
     .filter((link) => link !== "");
-  const createdAt = formData.get("createdAt");
 
   const user = await prisma.user.findUnique({
     where: { email: userEmail },
@@ -85,7 +83,6 @@ export async function upsertContact(formData: FormData) {
         contactId: contact.id,
         title: "Contact created",
         description: "",
-        date: createdAt,
         type: "SYSTEM",
       },
     });

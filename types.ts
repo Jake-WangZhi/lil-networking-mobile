@@ -8,6 +8,7 @@ export interface Action {
   contactIndustry: string;
   description: string;
   goalDays: number;
+  contactCreatedAt?: string;
 }
 
 export enum ActionType {

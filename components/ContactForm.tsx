@@ -13,16 +13,6 @@ interface Props {
   userEmail?: string | null;
 }
 
-const formatDate = (date: string) => {
-  const [month, day, year] = date.split("/");
-  const formattedDate = `${year}-${month.padStart(2, "0")}-${day.padStart(
-    2,
-    "0"
-  )}`;
-
-  return formattedDate;
-};
-
 export const ContactForm = ({ contact, userEmail }: Props) => {
   const router = useRouter();
   const submitFormRef = useRef<HTMLButtonElement>(null);
@@ -513,12 +503,7 @@ export const ContactForm = ({ contact, userEmail }: Props) => {
           type="hidden"
           defaultValue={tags}
         />
-        <input
-          id="createdAt"
-          name="createdAt"
-          type="hidden"
-          defaultValue={formatDate(new Date().toLocaleDateString("en-US"))}
-        />
+
         <button ref={submitFormRef} className="hidden" type="submit"></button>
       </form>
     </main>

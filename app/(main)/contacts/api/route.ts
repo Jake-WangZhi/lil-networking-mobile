@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { Activity, Contact, Prisma } from "@prisma/client";
-import { formatDate } from "@/lib/utils";
 import { SearchParams } from "@/types";
 
 export async function GET(request: Request) {
@@ -64,6 +63,7 @@ export async function GET(request: Request) {
   const activities = await prisma.activity.findMany({
     where: {
       contactId: { in: contactIds },
+      type: "USER",
     },
     orderBy: [
       {
@@ -74,6 +74,30 @@ export async function GET(request: Request) {
       },
     ],
   });
+
+  const contactIdsWithActivity = new Set(
+    activities.map((activity) => activity.contactId)
+  );
+
+  for (const contactId of contactIds) {
+    const hasActivity = contactIdsWithActivity.has(contactId);
+
+    if (!hasActivity) {
+      const activity = await prisma.activity.findFirst({
+        where: {
+          contactId: contactId,
+          type: "SYSTEM",
+        },
+        orderBy: {
+          createdAt: "asc",
+        },
+      });
+
+      if (activity) {
+        activities.push(activity);
+      }
+    }
+  }
 
   const parsedContacts = parseContacts(contacts, activities);
 
@@ -94,12 +118,9 @@ const parseContacts = (contacts: Contact[], activities: Activity[]) => {
       phone: contact.phone,
       links: contact.links,
       interests: contact.interests,
-      activities: activities
-        .filter((activity) => activity.contactId === contact.id)
-        .map((activity) => ({
-          ...activity,
-          date: formatDate(activity.date),
-        })),
+      activities: activities.filter(
+        (activity) => activity.contactId === contact.id
+      ),
       isArchived: contact.isArchived,
     };
   });
