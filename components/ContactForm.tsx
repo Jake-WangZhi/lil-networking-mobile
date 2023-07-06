@@ -503,7 +503,6 @@ export const ContactForm = ({ contact, userEmail }: Props) => {
           type="hidden"
           defaultValue={tags}
         />
-
         <button ref={submitFormRef} className="hidden" type="submit"></button>
       </form>
     </main>
