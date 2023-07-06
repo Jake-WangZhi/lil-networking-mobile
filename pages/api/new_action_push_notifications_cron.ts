@@ -43,6 +43,7 @@ export default async function handler(
         const activity = await prisma.activity.findFirst({
           where: {
             contactId: id,
+            type: "USER",
           },
           orderBy: [
             {
@@ -58,7 +59,7 @@ export default async function handler(
         });
 
         if (activity) {
-          const activityDate = new Date(activity.date);
+          const activityDate = new Date(activity?.date ?? "");
           const dayDiff = differenceInDays(new Date(), activityDate);
 
           if (dayDiff === goalDays) {

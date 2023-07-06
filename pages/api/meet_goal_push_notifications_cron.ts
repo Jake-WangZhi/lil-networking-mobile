@@ -72,12 +72,20 @@ export default async function handler(
         ],
         select: {
           date: true,
+          createdAt: true,
         },
       });
 
+      // Check if a user activity exists first,
+      // if not, then check if a system activity exists,
+      // if still not, use the creation date of the user.
       const dayDiff = differenceInDays(
         new Date(),
-        activity ? new Date(activity.date) : user.createdAt
+        activity
+          ? activity.date
+            ? new Date(activity.date)
+            : activity.createdAt
+          : user.createdAt
       );
 
       if (dayDiff !== 0 && dayDiff % 7 === 0) {
