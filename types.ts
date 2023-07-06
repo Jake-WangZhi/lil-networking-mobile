@@ -36,7 +36,7 @@ export interface Activity {
   updatedAt: string;
   title: string;
   description: string;
-  date: string | null;
+  date: string;
   type: ActivityType;
   contactId: string;
 }

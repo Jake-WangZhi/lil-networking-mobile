@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { Activity, Contact } from "@prisma/client";
-import { calculateDaysSinceActivityDate } from "@/lib/utils";
 import { Action, SearchParams } from "@/types";
 import { getLatestActivitiesForContacts } from "@/helper/ApiHelper";
+import { differenceInDays } from "date-fns";
 
 const DAYS_BEFORE_PAST_DUE = 10;
 
@@ -54,9 +54,7 @@ const parseActions = (contacts: Contact[], activities: Activity[]) => {
     const contact = contactIndex[activity.contactId];
 
     if (contact) {
-      const days = calculateDaysSinceActivityDate(
-        activity.date ? activity.date : activity.createdAt.toISOString()
-      );
+      const days = differenceInDays(new Date(), activity.date);
       const goalDays = contact.goalDays;
       const isUserActivity = activity.type === "USER";
 

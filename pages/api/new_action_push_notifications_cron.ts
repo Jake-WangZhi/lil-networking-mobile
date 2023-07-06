@@ -58,7 +58,7 @@ export default async function handler(
           },
         });
 
-        if (activity && activity.date) {
+        if (activity) {
           const activityDate = new Date(activity.date);
           const dayDiff = differenceInDays(new Date(), activityDate);
 

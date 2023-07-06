@@ -1,12 +1,11 @@
 import { useActivityMutation } from "@/hooks/useActivityMutation";
-import { ActivityType, SearchParams } from "@/types";
+import { Activity, ActivityType, SearchParams } from "@/types";
 import { Circle, PlusCircle, Trash2 } from "react-feather";
 import { useCallback, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { Card, CardContent, Typography } from "@mui/material";
 import { Button } from "./Button";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Activity } from "@prisma/client";
 import { formatDate } from "@/lib/utils";
 
 interface Props {
@@ -119,9 +118,7 @@ export const ContactActivites = ({ activities, contactId }: Props) => {
                   variant="body1"
                   sx={{ opacity: 0.7, marginBottom: "8px" }}
                 >
-                  {activity.date
-                    ? formatDate(activity.date)
-                    : formatDate(new Date(activity.createdAt).toISOString())}
+                  {formatDate(activity.date)}
                 </Typography>
                 <Typography variant="body1">{activity.description}</Typography>
               </CardContent>

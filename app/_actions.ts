@@ -24,6 +24,7 @@ interface FormDataOptions {
   contactId: string;
   isFromMessage: boolean;
   isFromProfile: boolean;
+  localizedDateTimeISO: string;
 }
 
 interface FormData {
@@ -82,6 +83,7 @@ export async function upsertContact(formData: FormData) {
       data: {
         contactId: contact.id,
         title: "Contact created",
+        date: new Date(),
         description: "",
         type: "SYSTEM",
       },
@@ -127,13 +129,14 @@ export async function createActivity(formData: FormData) {
   const contactId = formData.get("contactId");
   const isFromMessage = formData.get("isFromMessage");
   const isFromProfile = formData.get("isFromProfile");
+  const localizedDateTimeISO = formData.get("localizedDateTimeISO");
 
   await prisma.activity.create({
     data: {
       contactId,
       title,
       description,
-      date,
+      date: new Date(localizedDateTimeISO),
       type: "USER",
     },
   });

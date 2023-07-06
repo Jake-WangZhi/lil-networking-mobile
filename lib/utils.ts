@@ -1,8 +1,9 @@
 import {
   formatDistanceToNow,
-  differenceInDays,
   parseISO,
   format,
+  addHours,
+  formatISO,
 } from "date-fns";
 import validator from "validator";
 
@@ -40,15 +41,6 @@ export const validatePhone = (phone: string) => {
   }
 };
 
-export function calculateDaysSinceActivityDate(dateStr: string) {
-  const activityDate = new Date(dateStr); // Convert the timestamp to a Date object
-  const currentDate = new Date(); // Get the current date
-
-  const timeDifferenceInDays = differenceInDays(currentDate, activityDate);
-
-  return timeDifferenceInDays;
-}
-
 export const fetcher = (url: string) =>
   fetch(url).then((response) => {
     if (response.ok) return response.json();
@@ -81,4 +73,13 @@ export const urlBase64ToUint8Array = (base64String: string) => {
   }
 
   return outputArray;
+};
+
+export const convertToLocalizedISODate = (date: string) => {
+  const newDate = new Date(date);
+  const timezoneOffsetInHours = Math.floor(newDate.getTimezoneOffset() / 60);
+  const offsetDate = addHours(newDate, timezoneOffsetInHours);
+  const isoDate = formatISO(offsetDate, { representation: "complete" });
+
+  return isoDate;
 };
