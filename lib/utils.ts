@@ -1,10 +1,4 @@
-import {
-  formatDistanceToNow,
-  parseISO,
-  format,
-  addHours,
-  formatISO,
-} from "date-fns";
+import { formatDistanceToNow, parseISO, format } from "date-fns";
 import validator from "validator";
 
 export const timeAgo = (timestamp: Date, timeOnly?: boolean): string => {
@@ -77,10 +71,9 @@ export const urlBase64ToUint8Array = (base64String: string) => {
 };
 
 export const convertToLocalizedISODate = (date: string) => {
-  const newDate = new Date(date);
-  const timezoneOffsetInHours = Math.floor(newDate.getTimezoneOffset() / 60);
-  const offsetDate = addHours(newDate, timezoneOffsetInHours);
-  const isoDate = formatISO(offsetDate, { representation: "complete" });
+  const localizedDate = new Date(date.replace(/-/g, "/"));
 
-  return isoDate;
+  const localizedISODate = localizedDate.toISOString();
+
+  return localizedISODate;
 };
