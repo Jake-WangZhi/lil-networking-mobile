@@ -22,8 +22,44 @@ export async function GET(request: Request) {
       { status: 404, headers: { "content-type": "application/json" } }
     );
 
+  const contacts = await getContacts(name, user.id);
+
+  const contactIds = contacts.map((c) => c.id);
+
+  const activities = await getLatestActivitiesForContacts(contactIds);
+
+  const parsedContacts = parseContacts(contacts, activities);
+
+  return NextResponse.json(parsedContacts);
+}
+
+const parseContacts = (contacts: Contact[], activities: Activity[]) => {
+  const parsedContacts = contacts.map((contact) => {
+    return {
+      id: contact.id,
+      firstName: contact.firstName,
+      lastName: contact.lastName,
+      title: contact.title,
+      company: contact.company,
+      industry: contact.industry,
+      goalDays: contact.goalDays,
+      email: contact.email,
+      phone: contact.phone,
+      links: contact.links,
+      interests: contact.interests,
+      activities: activities.filter(
+        (activity) => activity.contactId === contact.id
+      ),
+      isArchived: contact.isArchived,
+    };
+  });
+
+  return parsedContacts;
+};
+
+const getContacts = async (name: string | null, userId: string) => {
   let whereClause: Prisma.ContactWhereInput = {
-    userId: user.id,
+    userId,
   };
 
   if (name) {
@@ -58,8 +94,12 @@ export async function GET(request: Request) {
     ],
   });
 
-  const contactIds = contacts.map((c) => c.id);
+  return contacts;
+};
 
+// Try to get the latest USER activities for each contact first,
+// Then get the SYSTEM activities for the contacts who don't have any USER activities
+const getLatestActivitiesForContacts = async (contactIds: string[]) => {
   const activities = await prisma.activity.findMany({
     where: {
       contactId: { in: contactIds },
@@ -99,31 +139,5 @@ export async function GET(request: Request) {
     }
   }
 
-  const parsedContacts = parseContacts(contacts, activities);
-
-  return NextResponse.json(parsedContacts);
-}
-
-const parseContacts = (contacts: Contact[], activities: Activity[]) => {
-  const parsedContacts = contacts.map((contact) => {
-    return {
-      id: contact.id,
-      firstName: contact.firstName,
-      lastName: contact.lastName,
-      title: contact.title,
-      company: contact.company,
-      industry: contact.industry,
-      goalDays: contact.goalDays,
-      email: contact.email,
-      phone: contact.phone,
-      links: contact.links,
-      interests: contact.interests,
-      activities: activities.filter(
-        (activity) => activity.contactId === contact.id
-      ),
-      isArchived: contact.isArchived,
-    };
-  });
-
-  return parsedContacts;
+  return activities;
 };
