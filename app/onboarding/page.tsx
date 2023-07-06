@@ -34,7 +34,7 @@ const ONBOARDING_INTRO_PAGES = [
   {
     title: "Build Relationships",
     description:
-      "Stay on top of your contacts with helpful reminders to keep in touch and re-engage efficiently.",
+      "Track and get helpful reminders of when and what you discussed with your networking contacts to quickly re-engage with them.",
     image: pic2,
   },
 ];
@@ -123,8 +123,8 @@ export default function OnboardingPage() {
         ))}
         <SwiperSlide>
           <OnboardingActionPage
-            title="Stay Informed"
-            description="iOS notifications require iOS 16.5 or later"
+            title="Enable Notifications"
+            description="iOS notifications require version 16.5 or later"
             actionButton={
               <Button variant="contained" onClick={handleNotificationClick}>
                 Allow notifications
@@ -147,7 +147,7 @@ export default function OnboardingPage() {
         </SwiperSlide>
         <SwiperSlide>
           <OnboardingActionPage
-            title="Ready to set your Networking Goals?"
+            title="Ready To Set Your Networking Goals?"
             description="You can change your goals at anytime"
             actionButton={
               <Button
