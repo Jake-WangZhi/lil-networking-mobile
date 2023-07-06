@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import prisma from "@/lib/prisma";
 import { differenceInDays } from "date-fns";
-import { sendPushNotification } from "@/helper/pushNotificationHelper";
+import { sendPushNotification } from "@/helper/PushNotificationHelper";
 
 export default async function handler(
   request: NextApiRequest,
@@ -62,22 +62,18 @@ export default async function handler(
         where: {
           contactId: { in: contactIds },
         },
-        orderBy: [
-          {
-            date: "desc",
-          },
-          {
-            createdAt: "desc",
-          },
-        ],
+        orderBy: {
+          createdAt: "desc",
+        },
         select: {
-          date: true,
+          createdAt: true,
         },
       });
 
+      // If there is no activities, use the creation date of the user.
       const dayDiff = differenceInDays(
         new Date(),
-        activity ? new Date(activity.date) : user.createdAt
+        activity ? activity.createdAt : user.createdAt
       );
 
       if (dayDiff !== 0 && dayDiff % 7 === 0) {

@@ -1,6 +1,7 @@
 import { Action, ActionType } from "@/types";
 import { ArrowRight } from "react-feather";
 import { Card, CardActionArea, CardContent, Typography } from "@mui/material";
+import { formatDate } from "@/lib/utils";
 import Link from "next/link";
 
 interface Props {
@@ -44,7 +45,7 @@ export const ActionCard = ({ action, actionType }: Props) => {
                 color: actionType === "past" ? "#ED3293" : "#FFCF79",
               }}
             >
-              {action.days} Days ago
+              {action.days < action.goalDays ? "" : `${action.days} Days ago`}
             </Typography>
             <Typography
               variant="body1"
@@ -55,7 +56,9 @@ export const ActionCard = ({ action, actionType }: Props) => {
                 WebkitLineClamp: 2,
               }}
             >
-              {action.description}
+              {action.contactCreatedAt
+                ? `Contact added ${formatDate(action.contactCreatedAt)}`
+                : action.description}
             </Typography>
           </Link>
         </CardContent>

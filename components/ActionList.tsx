@@ -126,7 +126,7 @@ export const ActionList = ({ actions, isLoading, isError }: Props) => {
               sx={{
                 fontWeight: 600,
               }}
-            >{`Past Due (${actions.pastActions.length})`}</Typography>
+            >{`Priority (${actions.pastActions.length})`}</Typography>
           </div>
         </AccordionSummary>
         <AccordionDetails>

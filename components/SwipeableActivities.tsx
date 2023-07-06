@@ -2,7 +2,8 @@ import { Card, CardContent, Typography } from "@mui/material";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import { FreeMode, Pagination } from "swiper";
-import { Activity } from "@prisma/client";
+import { Activity } from "@/types";
+import { formatDate } from "@/lib/utils";
 
 import "swiper/css";
 import "swiper/css/free-mode";
@@ -43,7 +44,7 @@ export const SwipeableActivities = ({ activities }: Props) => {
                   variant="body1"
                   sx={{ opacity: 0.7, marginBottom: "8px" }}
                 >
-                  {activity.date}
+                  {formatDate(activity.date)}
                 </Typography>
                 <Typography
                   variant="body1"

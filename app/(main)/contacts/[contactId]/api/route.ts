@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { Activity, Contact } from "@prisma/client";
-import { formatDate } from "@/lib/utils";
 import { ContactArgs } from "@/types";
 
 export async function GET(
@@ -21,6 +20,7 @@ export async function GET(
       contactId: contact?.id,
     },
     orderBy: [
+      { type: "asc" },
       {
         date: "desc",
       },
@@ -92,12 +92,9 @@ const parseContact = (contact: Contact, activities: Activity[]) => {
     phone,
     links,
     interests,
-    activities: activities
-      .filter((activity) => activity.contactId === contact.id)
-      .map((activity) => ({
-        ...activity,
-        date: formatDate(activity.date),
-      })),
+    activities: activities.filter(
+      (activity) => activity.contactId === contact.id
+    ),
     isArchived,
   };
 };

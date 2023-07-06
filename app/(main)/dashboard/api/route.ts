@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { Activity, Contact } from "@prisma/client";
-import { calculateDaysSinceCreatedAt } from "@/lib/utils";
-import { Action, SearchParams } from "@/types";
+import { Action, ActivityType, SearchParams } from "@/types";
+import { differenceInDays } from "date-fns";
 
 const DAYS_BEFORE_PAST_DUE = 10;
 
@@ -38,6 +38,7 @@ export async function GET(request: Request) {
       contactId: { in: contactIds },
     },
     orderBy: [
+      { type: "asc" },
       {
         date: "desc",
       },
@@ -66,8 +67,9 @@ const parseActions = (contacts: Contact[], activities: Activity[]) => {
     const contact = contactIndex[activity.contactId];
 
     if (contact) {
-      const days = calculateDaysSinceCreatedAt(new Date(activity.date));
+      const days = differenceInDays(new Date(), activity.date);
       const goalDays = contact.goalDays;
+      const isUserActivity = activity.type === ActivityType.USER;
 
       const action = {
         contactFirstName: contact.firstName,
@@ -77,11 +79,17 @@ const parseActions = (contacts: Contact[], activities: Activity[]) => {
         description: activity.description,
         days,
         goalDays,
+        ...(!isUserActivity && {
+          contactCreatedAt: activity.date.toISOString(),
+        }),
       };
 
-      if (days > goalDays + DAYS_BEFORE_PAST_DUE) {
+      const pastDueThreshold = isUserActivity ? goalDays : 0;
+      const upcomingThreshold = goalDays + DAYS_BEFORE_PAST_DUE;
+
+      if (days > upcomingThreshold) {
         pastActions.push(action);
-      } else if (goalDays <= days && days <= goalDays + DAYS_BEFORE_PAST_DUE) {
+      } else if (pastDueThreshold <= days && days <= upcomingThreshold) {
         upcomingActions.push(action);
       }
     }

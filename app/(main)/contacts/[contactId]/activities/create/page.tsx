@@ -4,11 +4,12 @@ import { ActivityType, SearchParams } from "@/types";
 import { Typography, Grid } from "@mui/material";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
-import { useState, ChangeEvent, useCallback, useRef } from "react";
+import { useState, ChangeEvent, useCallback, useRef, useEffect } from "react";
 import { AlertTriangle } from "react-feather";
 import { createActivity } from "../../../../../_actions";
 import { Button } from "@/components/Button";
 import { useActivityMutation } from "@/hooks/useActivityMutation";
+import { convertToLocalizedISODate } from "@/lib/utils";
 
 import "../../../styles.css";
 
@@ -37,6 +38,15 @@ export default function CreateActivityPage({
   const [dateError, setDateError] = useState("");
   const [isLogging, setIsLogging] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [localizedISODate, setlocalizedISODate] = useState("");
+
+  useEffect(() => {
+    if (date) {
+      const localizedISODate = convertToLocalizedISODate(date);
+
+      setlocalizedISODate(localizedISODate);
+    }
+  }, [date]);
 
   const postActivityMutation = useActivityMutation({
     method: "POST",
@@ -88,9 +98,11 @@ export default function CreateActivityPage({
 
   const handleCancelClick = useCallback(() => {
     if (isFromMessage) {
+      const localizedISODate = convertToLocalizedISODate(date);
+
       postActivityMutation.mutate({
         title: prefilledTitle,
-        date: prefilledDate,
+        date: localizedISODate,
         description: prefilledDescription,
         contactId: params.contactId,
         type: ActivityType.USER,
@@ -99,10 +111,10 @@ export default function CreateActivityPage({
       router.back();
     }
   }, [
+    date,
     isFromMessage,
     params.contactId,
     postActivityMutation,
-    prefilledDate,
     prefilledDescription,
     prefilledTitle,
     router,
@@ -246,6 +258,12 @@ export default function CreateActivityPage({
           name="isFromProfile"
           type="hidden"
           defaultValue={isFromProfile}
+        />
+        <input
+          id="localizedISODate"
+          name="localizedISODate"
+          type="hidden"
+          defaultValue={localizedISODate}
         />
         <button ref={submitFormRef} className="hidden" type="submit"></button>
       </form>

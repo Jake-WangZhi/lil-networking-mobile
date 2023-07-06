@@ -9,6 +9,7 @@ import { AlertDialog } from "./AlertDialog";
 import { useSession } from "next-auth/react";
 import { useActivityMutation } from "@/hooks/useActivityMutation";
 import { useBackPath } from "@/contexts/BackPathContext";
+import { convertToLocalizedISODate } from "@/lib/utils";
 
 interface Props {
   contact: Contact;
@@ -96,11 +97,13 @@ export const MessageActions = ({ contact }: Props) => {
 
   const handleCancelEditClick = useCallback(() => {
     setIsEditAlertOpen(false);
+    const localizedISODate = convertToLocalizedISODate(preFilledFormData.date);
 
     postActivityMutation.mutate({
       ...preFilledFormData,
       contactId: contact.id,
       type: ActivityType.USER,
+      date: localizedISODate,
     });
   }, [contact.id, postActivityMutation, preFilledFormData]);
 

@@ -1,15 +1,5 @@
-import { formatDistanceToNow, differenceInDays } from "date-fns";
+import { parseISO, format, parse, formatISO } from "date-fns";
 import validator from "validator";
-
-export const timeAgo = (timestamp: Date, timeOnly?: boolean): string => {
-  if (!timestamp) return "never";
-  const formattedTimeDiff = formatDistanceToNow(timestamp, { addSuffix: true });
-
-  return formattedTimeDiff;
-};
-
-export const classNames = (...classes: (false | null | undefined | string)[]) =>
-  classes.filter(Boolean).join(" ");
 
 export const formatPhoneNumber = (phoneNumber: string) => {
   const cleaned = ("" + phoneNumber).replace(/\D/g, "");
@@ -35,15 +25,6 @@ export const validatePhone = (phone: string) => {
   }
 };
 
-export function calculateDaysSinceCreatedAt(createdAt: Date) {
-  const createdAtDate = new Date(createdAt); // Convert the timestamp to a Date object
-  const currentDate = new Date(); // Get the current date
-
-  const timeDifferenceInDays = differenceInDays(currentDate, createdAtDate);
-
-  return timeDifferenceInDays;
-}
-
 export const fetcher = (url: string) =>
   fetch(url).then((response) => {
     if (response.ok) return response.json();
@@ -51,26 +32,9 @@ export const fetcher = (url: string) =>
   });
 
 export const formatDate = (dateStr: string) => {
-  const [year, month, day] = dateStr.split("-");
+  const parsedDate = parseISO(dateStr);
+  const formattedDate = format(parsedDate, "MMM d, yyyy");
 
-  const months: string[] = [
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec",
-  ];
-
-  const monthName = months[Number(month) - 1];
-
-  const formattedDate = `${monthName} ${parseInt(day, 10)}, ${year}`;
   return formattedDate;
 };
 
@@ -94,4 +58,14 @@ export const urlBase64ToUint8Array = (base64String: string) => {
   }
 
   return outputArray;
+};
+
+export const convertToLocalizedISODate = (date: string) => {
+  const localizedDate = parse(date, "yyyy-MM-dd", new Date());
+
+  const localizedISODate = formatISO(localizedDate, {
+    representation: "complete",
+  });
+
+  return localizedISODate;
 };

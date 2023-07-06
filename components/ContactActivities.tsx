@@ -1,18 +1,19 @@
 import { useActivityMutation } from "@/hooks/useActivityMutation";
-import { ActivityType, SearchParams } from "@/types";
+import { Activity, ActivityType, SearchParams } from "@/types";
 import { Circle, PlusCircle, Trash2 } from "react-feather";
 import { useCallback, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { Card, CardContent, Typography } from "@mui/material";
 import { Button } from "./Button";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Activity } from "@prisma/client";
+import { formatDate } from "@/lib/utils";
 
 interface Props {
   activities: Activity[];
+  contactId: string;
 }
 
-export const ContactActivites = ({ activities }: Props) => {
+export const ContactActivites = ({ activities, contactId }: Props) => {
   const queryClient = useQueryClient();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -40,8 +41,8 @@ export const ContactActivites = ({ activities }: Props) => {
   );
 
   const handlePlusClick = useCallback(
-    () => router.push(`/contacts/${activities[0].contactId}/activities/create`),
-    [activities, router]
+    () => router.push(`/contacts/${contactId}/activities/create`),
+    [contactId, router]
   );
 
   return (
@@ -117,7 +118,7 @@ export const ContactActivites = ({ activities }: Props) => {
                   variant="body1"
                   sx={{ opacity: 0.7, marginBottom: "8px" }}
                 >
-                  {activity.date}
+                  {formatDate(activity.date)}
                 </Typography>
                 <Typography variant="body1">{activity.description}</Typography>
               </CardContent>
