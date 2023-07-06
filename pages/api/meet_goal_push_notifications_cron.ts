@@ -62,30 +62,18 @@ export default async function handler(
         where: {
           contactId: { in: contactIds },
         },
-        orderBy: [
-          {
-            date: "desc",
-          },
-          {
-            createdAt: "desc",
-          },
-        ],
+        orderBy: {
+          createdAt: "desc",
+        },
         select: {
-          date: true,
           createdAt: true,
         },
       });
 
-      // Check if a user activity exists first,
-      // if not, then check if a system activity exists,
-      // if still not, use the creation date of the user.
+      // If there is no activities, use the creation date of the user.
       const dayDiff = differenceInDays(
         new Date(),
-        activity
-          ? activity.date
-            ? new Date(activity.date)
-            : activity.createdAt
-          : user.createdAt
+        activity ? activity.createdAt : user.createdAt
       );
 
       if (dayDiff !== 0 && dayDiff % 7 === 0) {
