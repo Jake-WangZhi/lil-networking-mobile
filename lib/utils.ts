@@ -1,15 +1,5 @@
-import { formatDistanceToNow, parseISO, format } from "date-fns";
+import { parseISO, format } from "date-fns";
 import validator from "validator";
-
-export const timeAgo = (timestamp: Date, timeOnly?: boolean): string => {
-  if (!timestamp) return "never";
-  const formattedTimeDiff = formatDistanceToNow(timestamp, { addSuffix: true });
-
-  return formattedTimeDiff;
-};
-
-export const classNames = (...classes: (false | null | undefined | string)[]) =>
-  classes.filter(Boolean).join(" ");
 
 export const formatPhoneNumber = (phoneNumber: string) => {
   const cleaned = ("" + phoneNumber).replace(/\D/g, "");
