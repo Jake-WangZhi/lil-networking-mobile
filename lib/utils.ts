@@ -1,4 +1,4 @@
-import { parseISO, format, parse, formatISO } from "date-fns";
+import { parseISO, format, formatISO } from "date-fns";
 import validator from "validator";
 
 export const formatPhoneNumber = (phoneNumber: string) => {
@@ -61,11 +61,8 @@ export const urlBase64ToUint8Array = (base64String: string) => {
 };
 
 export const convertToLocalizedISODate = (date: string) => {
-  const localizedDate = parse(date, "yyyy-MM-dd", new Date());
-
-  const localizedISODate = formatISO(localizedDate, {
-    representation: "complete",
-  });
+  const localizedDate = parseISO(date);
+  const localizedISODate = formatISO(localizedDate);
 
   return localizedISODate;
 };

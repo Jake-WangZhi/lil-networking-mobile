@@ -125,6 +125,7 @@ export const ActionList = ({ actions, isLoading, isError }: Props) => {
               variant="h3"
               sx={{
                 fontWeight: 600,
+                lineHeight: "21px",
               }}
             >{`Priority (${actions.pastActions.length})`}</Typography>
           </div>
@@ -157,8 +158,9 @@ export const ActionList = ({ actions, isLoading, isError }: Props) => {
               variant="h3"
               sx={{
                 fontWeight: 600,
+                height: "21px",
               }}
-            >{`New Action Items (${actions.upcomingActions?.length})`}</Typography>
+            >{`Upcoming (${actions.upcomingActions?.length})`}</Typography>
           </div>
         </AccordionSummary>
         <AccordionDetails>

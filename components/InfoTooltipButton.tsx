@@ -39,7 +39,7 @@ export const InfoTooltipButton = () => {
         </Typography>
         <br />
         <Typography variant="body1">
-          <span className="font-bold">New Actions:</span> Items that have been
+          <span className="font-bold">Upcoming:</span> Items that have been
           actionable between 0-10 days.
         </Typography>
       </div>
