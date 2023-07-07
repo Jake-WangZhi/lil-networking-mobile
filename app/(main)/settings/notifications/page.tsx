@@ -68,11 +68,14 @@ export default function NotificationSettingPage() {
   useEffect(() => {
     const fetchNotificationSettings = async () => {
       const registration = await navigator.serviceWorker.getRegistration();
-      if (registration) {
-        const subscription = await registration.pushManager.getSubscription();
-        if (subscription) {
-          const endpoint = subscription.endpoint;
-          setEndpoint(endpoint);
+      if (registration && "pushManager" in registration) {
+        const pushManager = registration.pushManager;
+        if ("getSubscription" in pushManager) {
+          const subscription = await pushManager.getSubscription();
+          if (subscription) {
+            const endpoint = subscription.endpoint;
+            setEndpoint(endpoint);
+          }
         }
       }
     };
