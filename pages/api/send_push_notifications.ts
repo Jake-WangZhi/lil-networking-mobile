@@ -12,6 +12,11 @@ export default async function handler(
   request: NextApiRequest,
   response: NextApiResponse
 ) {
+  if (request.query.key !== process.env.CRON_KEY) {
+    response.status(404).end();
+    return;
+  }
+
   try {
     const subscriptionData = await prisma.subscription.findMany();
 
