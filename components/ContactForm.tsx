@@ -115,7 +115,11 @@ export const ContactForm = ({ contact, userEmail }: Props) => {
         <div className="flex items-center sticky top-0 w-full bg-dark-blue z-10 pt-8 mb-6 px-4">
           <Grid container alignItems="center">
             <Grid item xs={2}>
-              <Button variant="text" onClick={handleBackClick}>
+              <Button
+                variant="text"
+                onClick={handleBackClick}
+                sx={{ px: "14px", ml: "-14px" }}
+              >
                 <Typography variant="subtitle1">Cancel</Typography>
               </Button>
             </Grid>
@@ -138,6 +142,8 @@ export const ContactForm = ({ contact, userEmail }: Props) => {
                   color: "#38ACE2",
                   fontSize: "16px",
                   fontWeight: 400,
+                  px: "14px",
+                  mr: "-14px",
                   "&:hover": {
                     color: "#38ACE2",
                   },
