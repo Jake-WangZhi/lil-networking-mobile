@@ -49,7 +49,11 @@ export async function GET(request: Request) {
     distinct: ["contactId"],
   });
 
-  const actions = parseActions(contacts, activities);
+  const sortedActivities = activities.sort(
+    (a, b) => b.date.getTime() - a.date.getTime()
+  );
+
+  const actions = parseActions(contacts, sortedActivities);
 
   return NextResponse.json({ ...actions, hasContacts: !!contacts.length });
 }
