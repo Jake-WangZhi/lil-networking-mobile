@@ -249,6 +249,18 @@ export default function CreateActivityPage({
           defaultValue={params.contactId}
         />
         <input
+          id="isFromMessage"
+          name="isFromMessage"
+          type="hidden"
+          defaultValue={isFromMessage}
+        />
+        <input
+          id="isFromProfile"
+          name="isFromProfile"
+          type="hidden"
+          defaultValue={isFromProfile}
+        />
+        <input
           id="isFromDashboard"
           name="isFromDashboard"
           type="hidden"

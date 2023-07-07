@@ -20,6 +20,7 @@ export const ContactHeader = ({ contact }: Props) => {
   const queryClient = useQueryClient();
   const searchParams = useSearchParams();
   const isChanged = searchParams?.get(SearchParams.IsChanged);
+  const isFromMessage = searchParams?.get(SearchParams.IsFromMessage);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
@@ -149,106 +150,107 @@ export const ContactHeader = ({ contact }: Props) => {
             />
           )}
         </Button>
-
-        <div className="relative">
-          <div className="flex items-center">
-            {contact.isArchived && (
-              <div className="bg-white bg-opacity-5 rounded-2xl px-4 py-[6px]">
-                <Typography variant="body1">Archived</Typography>
-              </div>
-            )}
-            <Button
-              variant="text"
-              sx={{
-                mr: "-12px",
-                px: "12px",
+        {!isFromMessage && (
+          <div className="relative">
+            <div className="flex items-center">
+              {contact.isArchived && (
+                <div className="bg-white bg-opacity-5 rounded-2xl px-4 py-[6px]">
+                  <Typography variant="body1">Archived</Typography>
+                </div>
+              )}
+              <Button
+                variant="text"
+                sx={{
+                  mr: "-12px",
+                  px: "12px",
+                }}
+                onClick={handleDropdownClick}
+              >
+                <DotsThreeCircleVertical
+                  size={24}
+                  className="md:w-7 md:h-7 lg:w-8 lg:h-8"
+                />
+              </Button>
+            </div>
+            <Menu
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleDropdownClose}
+              MenuListProps={{
+                "aria-labelledby": "basic-button",
               }}
-              onClick={handleDropdownClick}
             >
-              <DotsThreeCircleVertical
-                size={24}
-                className="md:w-7 md:h-7 lg:w-8 lg:h-8"
-              />
-            </Button>
+              <MenuItem onClick={handleDropdownClose}>
+                <Button
+                  onClick={handleEditClick}
+                  variant="text"
+                  sx={{
+                    width: "100%",
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    px: "16px",
+                    color: "black",
+                    "&:hover": {
+                      backgroundColor: "rgba(0, 0, 0, 0.08)",
+                    },
+                  }}
+                >
+                  <Typography variant="subtitle1" sx={{ color: "black" }}>
+                    Edit
+                  </Typography>
+                  <Edit size={24} />
+                </Button>
+              </MenuItem>
+              <Divider />
+              <MenuItem onClick={handleDropdownClose}>
+                <Button
+                  onClick={handleStatusChange(!contact.isArchived)}
+                  variant="text"
+                  sx={{
+                    width: "100%",
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    px: "16px",
+                    color: "black",
+                    "&:hover": {
+                      backgroundColor: "rgba(0, 0, 0, 0.08)",
+                    },
+                  }}
+                >
+                  <Typography variant="subtitle1" sx={{ color: "black" }}>
+                    {contact.isArchived ? "Unarchive" : "Archive"}
+                  </Typography>
+                  <Archive size={24} />
+                </Button>
+              </MenuItem>
+              <Divider />
+              <MenuItem onClick={handleDropdownClose}>
+                <Button
+                  onClick={handleDeleteClick}
+                  variant="text"
+                  sx={{
+                    width: "100%",
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    px: "16px",
+                    color: "black",
+                    "&:hover": {
+                      backgroundColor: "rgba(0, 0, 0, 0.08)",
+                    },
+                  }}
+                >
+                  <Typography variant="subtitle1" sx={{ color: "black" }}>
+                    Delete
+                  </Typography>
+                  <Trash2 size={24} />
+                </Button>
+              </MenuItem>
+            </Menu>
           </div>
-          <Menu
-            anchorEl={anchorEl}
-            open={open}
-            onClose={handleDropdownClose}
-            MenuListProps={{
-              "aria-labelledby": "basic-button",
-            }}
-          >
-            <MenuItem onClick={handleDropdownClose}>
-              <Button
-                onClick={handleEditClick}
-                variant="text"
-                sx={{
-                  width: "100%",
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  px: "16px",
-                  color: "black",
-                  "&:hover": {
-                    backgroundColor: "rgba(0, 0, 0, 0.08)",
-                  },
-                }}
-              >
-                <Typography variant="subtitle1" sx={{ color: "black" }}>
-                  Edit
-                </Typography>
-                <Edit size={24} />
-              </Button>
-            </MenuItem>
-            <Divider />
-            <MenuItem onClick={handleDropdownClose}>
-              <Button
-                onClick={handleStatusChange(!contact.isArchived)}
-                variant="text"
-                sx={{
-                  width: "100%",
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  px: "16px",
-                  color: "black",
-                  "&:hover": {
-                    backgroundColor: "rgba(0, 0, 0, 0.08)",
-                  },
-                }}
-              >
-                <Typography variant="subtitle1" sx={{ color: "black" }}>
-                  {contact.isArchived ? "Unarchive" : "Archive"}
-                </Typography>
-                <Archive size={24} />
-              </Button>
-            </MenuItem>
-            <Divider />
-            <MenuItem onClick={handleDropdownClose}>
-              <Button
-                onClick={handleDeleteClick}
-                variant="text"
-                sx={{
-                  width: "100%",
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  px: "16px",
-                  color: "black",
-                  "&:hover": {
-                    backgroundColor: "rgba(0, 0, 0, 0.08)",
-                  },
-                }}
-              >
-                <Typography variant="subtitle1" sx={{ color: "black" }}>
-                  Delete
-                </Typography>
-                <Trash2 size={24} />
-              </Button>
-            </MenuItem>
-          </Menu>
-        </div>
+        )}
       </div>
       <AlertDialog
         isOpen={isAlertOpen}
