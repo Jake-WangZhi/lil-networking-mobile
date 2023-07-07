@@ -30,6 +30,7 @@ export default function CreateActivityPage({
     searchParams?.get(SearchParams.Description) || "";
   const isFromMessage = searchParams?.get(SearchParams.IsFromMessage) || "";
   const isFromProfile = searchParams?.get(SearchParams.IsFromProfile) || "";
+  const isFromDashboard = searchParams?.get(SearchParams.IsFromDashboard) || "";
 
   const [description, setDescription] = useState(prefilledDescription);
   const [title, setTitle] = useState(prefilledTitle);
@@ -258,6 +259,12 @@ export default function CreateActivityPage({
           name="isFromProfile"
           type="hidden"
           defaultValue={isFromProfile}
+        />
+        <input
+          id="isFromDashboard"
+          name="isFromDashboard"
+          type="hidden"
+          defaultValue={isFromDashboard}
         />
         <input
           id="localizedISODate"

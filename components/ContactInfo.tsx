@@ -1,7 +1,10 @@
 import { Link, Mail, Phone } from "react-feather";
 import { Contact } from "@/types";
-import { formatPhoneNumber } from "@/lib/utils";
 import { Card, CardContent, Typography } from "@mui/material";
+import { Clock } from "@phosphor-icons/react";
+import { Button } from "./Button";
+import { formatPhoneNumber } from "@/lib/utils";
+import { useCallback } from "react";
 
 interface Props {
   contact: Contact;
@@ -20,6 +23,28 @@ export const ContactInfo = ({ contact }: Props) => {
     links,
   } = contact;
 
+  const handlePhoneClick = useCallback(() => {
+    const phone = `tel:${contact.phone}`;
+
+    window.location.href = phone;
+  }, [contact.phone]);
+
+  const handleEmailClick = useCallback(() => {
+    const emailAddress = `mailto:${contact.email}`;
+
+    window.location.href = emailAddress;
+  }, [contact.email]);
+
+  const handleLinkedInClick = useCallback(
+    (linkedInLink: string) => () => {
+      const link = document.createElement("a");
+      link.href = linkedInLink;
+      link.target = "_blank";
+      link.click();
+    },
+    []
+  );
+
   return (
     <div className="mx-4 mb-6">
       <Card>
@@ -31,60 +56,91 @@ export const ContactInfo = ({ contact }: Props) => {
             <Typography variant="subtitle1">{title}</Typography>
             <Typography variant="subtitle1">{company}</Typography>
             <Typography variant="subtitle1">{industry}</Typography>
-            {email && (
-              <div className="flex space-x-1">
-                <Mail
-                  size={16}
-                  className="md:w-5 md:h-5 lg:w-6 lg:h-6 flex-shrink-0 mt-1"
-                />
-                <Typography
-                  variant="subtitle1"
+            <div className="flex items-center space-x-3">
+              <Clock
+                size={24}
+                className="md:w-7 md:h-7 lg:w-8 lg:h-8 flex-shrink-0"
+              />
+              <Typography variant="subtitle1">{goalDays} days</Typography>
+            </div>
+            <div>
+              {email && (
+                <Button
+                  variant="text"
                   sx={{
-                    overflow: "hidden",
-                    overflowWrap: "break-words",
+                    width: "100%",
                   }}
+                  onClick={handleEmailClick}
                 >
-                  {email}
-                </Typography>
-              </div>
-            )}
-            {phone && (
-              <div className="flex space-x-1">
-                <Phone
-                  size={16}
-                  className="md:w-5 md:h-5 lg:w-6 lg:h-6 flex-shrink-0 mt-1"
-                />
-                <Typography
-                  variant="subtitle1"
+                  <div className="flex items-center space-x-3 w-full">
+                    <Mail
+                      size={24}
+                      className="md:w-7 md:h-7 lg:w-8 lg:h-8 flex-shrink-0 text-light-blue"
+                    />
+                    <Typography
+                      variant="subtitle1"
+                      sx={{
+                        overflow: "hidden",
+                        overflowWrap: "break-words",
+                      }}
+                    >
+                      {email}
+                    </Typography>
+                  </div>
+                </Button>
+              )}
+              {phone && (
+                <Button
+                  variant="text"
                   sx={{
-                    overflow: "hidden",
-                    overflowWrap: "break-words",
+                    width: "100%",
                   }}
+                  onClick={handlePhoneClick}
                 >
-                  {formatPhoneNumber(phone)}
-                </Typography>
-              </div>
-            )}
-            {links?.map((link, index) => (
-              <div key={`link-${index}`} className="flex space-x-1">
-                <Link
-                  size={16}
-                  className="md:w-5 md:h-5 lg:w-6 lg:h-6 flex-shrink-0 mt-1"
-                />
-                <Typography
-                  variant="subtitle1"
+                  <div className="flex items-center space-x-3 w-full">
+                    <Phone
+                      size={24}
+                      className="md:w-7 md:h-7 lg:w-8 lg:h-8 flex-shrink-0 text-light-blue"
+                    />
+                    <Typography
+                      variant="subtitle1"
+                      sx={{
+                        overflow: "hidden",
+                        overflowWrap: "break-words",
+                      }}
+                    >
+                      {formatPhoneNumber(phone)}
+                    </Typography>
+                  </div>
+                </Button>
+              )}
+              {links?.map((link, index) => (
+                <Button
+                  variant="text"
                   sx={{
-                    overflow: "hidden",
-                    overflowWrap: "break-words",
+                    width: "100%",
                   }}
+                  onClick={handleLinkedInClick(link)}
+                  key={`link-${index}`}
                 >
-                  {link}
-                </Typography>
-              </div>
-            ))}
-            <Typography variant="subtitle1">
-              Cadence: Every {goalDays} days
-            </Typography>
+                  <div className="flex space-x-3 w-full">
+                    <Link
+                      size={24}
+                      className="md:w-7 md:h-7 lg:w-8 lg:h-8 flex-shrink-0 text-light-blue"
+                    />
+                    <Typography
+                      variant="subtitle1"
+                      sx={{
+                        overflow: "hidden",
+                        overflowWrap: "break-words",
+                      }}
+                    >
+                      {link}
+                    </Typography>
+                  </div>
+                </Button>
+              ))}
+            </div>
           </div>
         </CardContent>
       </Card>

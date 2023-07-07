@@ -18,6 +18,7 @@ export const ContactActivites = ({ activities, contactId }: Props) => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const isFromMessage = searchParams?.get(SearchParams.IsFromMessage);
+  const isFromDashboard = searchParams?.get(SearchParams.IsFromDashboard);
 
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -41,8 +42,13 @@ export const ContactActivites = ({ activities, contactId }: Props) => {
   );
 
   const handlePlusClick = useCallback(
-    () => router.push(`/contacts/${contactId}/activities/create`),
-    [contactId, router]
+    () =>
+      router.push(
+        `/contacts/${contactId}/activities/create${
+          isFromDashboard ? `?${SearchParams.IsFromDashboard}=true` : ""
+        }`
+      ),
+    [contactId, isFromDashboard, router]
   );
 
   return (

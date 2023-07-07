@@ -4,14 +4,7 @@ import { DotsThreeCircleVertical } from "@phosphor-icons/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState, useCallback } from "react";
 import { useQueryClient } from "@tanstack/react-query";
-import {
-  ChevronLeft,
-  Edit,
-  Archive,
-  Trash2,
-  MessageSquare,
-  X,
-} from "react-feather";
+import { ChevronLeft, Edit, Archive, Trash2, X } from "react-feather";
 import { Contact, SearchParams } from "@/types";
 import { Divider, Menu, MenuItem, Typography } from "@mui/material";
 import { Button } from "./Button";
@@ -121,14 +114,6 @@ export const ContactHeader = ({ contact }: Props) => {
     }
   }, [backPath, isChanged, router]);
 
-  const handleMessageClick = useCallback(
-    () =>
-      router.push(
-        `/contacts/${contact.id}/message?${SearchParams.IsFromProfile}=true`
-      ),
-    [contact.id, router]
-  );
-
   const handleEditClick = useCallback(
     () => router.push(`/contacts/${contact.id}/edit`),
     [contact.id, router]
@@ -195,29 +180,6 @@ export const ContactHeader = ({ contact }: Props) => {
                 "aria-labelledby": "basic-button",
               }}
             >
-              <MenuItem onClick={handleDropdownClose}>
-                <Button
-                  onClick={handleMessageClick}
-                  variant="text"
-                  sx={{
-                    width: "100%",
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    px: "16px",
-                    color: "black",
-                    "&:hover": {
-                      backgroundColor: "rgba(0, 0, 0, 0.08)",
-                    },
-                  }}
-                >
-                  <Typography variant="subtitle1" sx={{ color: "black" }}>
-                    Message
-                  </Typography>
-                  <MessageSquare size={24} />
-                </Button>
-              </MenuItem>
-              <Divider />
               <MenuItem onClick={handleDropdownClose}>
                 <Button
                   onClick={handleEditClick}

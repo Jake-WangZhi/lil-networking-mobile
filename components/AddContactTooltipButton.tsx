@@ -65,8 +65,7 @@ export const AddContactTooltipButton = ({ hasContacts }: Props) => {
       <Tooltip open={open} title={tooltipContent} arrow placement="left">
         <PlusSquare
           size={32}
-          color={"#38ACE2"}
-          className="md:w-10 md:h-10 lg:w-12 lg:h-12"
+          className="md:w-10 md:h-10 lg:w-12 lg:h-12 text-light-blue"
         />
       </Tooltip>
     </Button>

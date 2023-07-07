@@ -1,4 +1,4 @@
-import { Action, ActionType } from "@/types";
+import { Action, ActionType, SearchParams } from "@/types";
 import { ArrowRight } from "react-feather";
 import { Card, CardActionArea, CardContent, Typography } from "@mui/material";
 import { formatDate } from "@/lib/utils";
@@ -14,7 +14,9 @@ export const ActionCard = ({ action, actionType }: Props) => {
     <Card>
       <CardActionArea>
         <CardContent>
-          <Link href={`/contacts/${action.contactId}/message`}>
+          <Link
+            href={`/contacts/${action.contactId}?${SearchParams.IsFromDashboard}=true`}
+          >
             <div className="flex justify-between text-white">
               <Typography
                 variant="subtitle1"
