@@ -14,7 +14,7 @@ export const ActionCard = ({ action, actionType }: Props) => {
     <Card>
       <CardActionArea>
         <CardContent>
-          <Link href={`/contacts/${action.contactId}/message`}>
+          <Link href={`/contacts/${action.contactId}`}>
             <div className="flex justify-between text-white">
               <Typography
                 variant="subtitle1"
