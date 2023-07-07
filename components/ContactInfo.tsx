@@ -26,24 +26,18 @@ export const ContactInfo = ({ contact }: Props) => {
   const handlePhoneClick = useCallback(() => {
     const phone = `tel:${contact.phone}`;
 
-    const link = document.createElement("a");
-    link.href = phone;
-    link.click();
+    window.location.href = phone;
   }, [contact.phone]);
 
   const handleEmailClick = useCallback(() => {
     const emailAddress = `mailto:${contact.email}`;
 
-    const link = document.createElement("a");
-    link.href = emailAddress;
-    link.click();
+    window.location.href = emailAddress;
   }, [contact.email]);
 
   const handleLinkedInClick = useCallback(
     (linkedInLink: string) => () => {
-      const link = document.createElement("a");
-      link.href = linkedInLink;
-      link.click();
+      window.location.href = linkedInLink;
     },
     []
   );
