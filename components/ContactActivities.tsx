@@ -17,7 +17,7 @@ export const ContactActivites = ({ activities, contactId }: Props) => {
   const queryClient = useQueryClient();
   const router = useRouter();
   const searchParams = useSearchParams();
-  const isFromMessage = searchParams?.get(SearchParams.IsFromMessage);
+  const isFromDashboard = searchParams?.get(SearchParams.IsFromDashboard) || "";
 
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -41,8 +41,13 @@ export const ContactActivites = ({ activities, contactId }: Props) => {
   );
 
   const handlePlusClick = useCallback(
-    () => router.push(`/contacts/${contactId}/activities/create`),
-    [contactId, router]
+    () =>
+      router.push(
+        `/contacts/${contactId}/activities/create${
+          isFromDashboard ? `?${SearchParams.IsFromDashboard}=true` : ""
+        }`
+      ),
+    [contactId, isFromDashboard, router]
   );
 
   return (
@@ -59,23 +64,21 @@ export const ContactActivites = ({ activities, contactId }: Props) => {
         <Typography variant="h3" sx={{ fontWeight: 600 }}>
           Activities
         </Typography>
-        {!isFromMessage && (
-          <Button
-            onClick={handlePlusClick}
-            variant="text"
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              gap: "4px",
-              px: "8px",
-            }}
-          >
-            <PlusCircle size={24} />
-            <Typography variant="body1" sx={{ fontWeight: 600 }}>
-              Log Activity
-            </Typography>
-          </Button>
-        )}
+        <Button
+          onClick={handlePlusClick}
+          variant="text"
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            gap: "4px",
+            px: "8px",
+          }}
+        >
+          <PlusCircle size={24} />
+          <Typography variant="body1" sx={{ fontWeight: 600 }}>
+            Log Activity
+          </Typography>
+        </Button>
       </div>
       {activities?.map((activity, index) => (
         <div key={`activity-${index}`}>
@@ -102,7 +105,7 @@ export const ContactActivites = ({ activities, contactId }: Props) => {
                   >
                     {activity.title}
                   </Typography>
-                  {activity.type === ActivityType.USER && !isFromMessage && (
+                  {activity.type === ActivityType.USER && (
                     <div className="flex items-start">
                       <Button
                         variant="text"

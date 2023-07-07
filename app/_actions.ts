@@ -19,11 +19,11 @@ interface FormDataOptions {
   links: string;
   interests: string;
   userEmail: string;
-  date: string;
   description: string;
   contactId: string;
   isFromMessage: boolean;
   isFromProfile: boolean;
+  isFromDashboard: boolean;
   localizedISODate: string;
 }
 
@@ -124,11 +124,9 @@ export async function upsertContact(formData: FormData) {
 
 export async function createActivity(formData: FormData) {
   const title = formData.get("title");
-  const date = formData.get("date");
   const description = formData.get("description");
   const contactId = formData.get("contactId");
-  const isFromMessage = formData.get("isFromMessage");
-  const isFromProfile = formData.get("isFromProfile");
+  const isFromDashboard = formData.get("isFromDashboard");
   const localizedISODate = formData.get("localizedISODate");
 
   await prisma.activity.create({
@@ -165,22 +163,15 @@ export async function createActivity(formData: FormData) {
     },
   });
 
-  if (isFromMessage) {
-    const redirectPath = SearchParams.RedirectPath;
-    const destinationPath = isFromProfile ? "/contacts" : "/dashboard";
+  const redirectPath = SearchParams.RedirectPath;
+  const destinationPath = isFromDashboard
+    ? "/dashboard"
+    : `/contacts/${contactId}?${SearchParams.IsChanged}=true`;
 
-    const path =
-      count % 10 === 0
-        ? `/quote?${redirectPath}=${destinationPath}`
-        : destinationPath;
+  const path =
+    count % 10 === 0
+      ? `/quote?${redirectPath}=${destinationPath}`
+      : destinationPath;
 
-    redirect(path);
-  } else {
-    if (count % 10 === 0)
-      return redirect(
-        `/quote?${SearchParams.RedirectPath}=/contacts/${contactId}?${SearchParams.IsChanged}=true`
-      );
-
-    redirect(`/contacts/${contactId}?${SearchParams.IsChanged}=true`);
-  }
+  redirect(path);
 }
