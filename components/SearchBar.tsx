@@ -53,9 +53,9 @@ export const SearchBar = ({ name, setName }: Props) => {
           <Button
             variant="text"
             sx={{
-              color: "#0A84FF",
+              color: "#38ACE2",
               "&:hover": {
-                color: "#0A84FF",
+                color: "#38ACE2",
               },
             }}
             onClick={handleCancel}
