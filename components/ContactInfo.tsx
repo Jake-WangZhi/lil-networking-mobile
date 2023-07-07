@@ -37,7 +37,10 @@ export const ContactInfo = ({ contact }: Props) => {
 
   const handleLinkedInClick = useCallback(
     (linkedInLink: string) => () => {
-      window.location.href = linkedInLink;
+      const link = document.createElement("a");
+      link.href = linkedInLink;
+      link.target = "_blank";
+      link.click();
     },
     []
   );

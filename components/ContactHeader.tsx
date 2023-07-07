@@ -114,14 +114,6 @@ export const ContactHeader = ({ contact }: Props) => {
     }
   }, [backPath, isChanged, router]);
 
-  const handleMessageClick = useCallback(
-    () =>
-      router.push(
-        `/contacts/${contact.id}/message?${SearchParams.IsFromProfile}=true`
-      ),
-    [contact.id, router]
-  );
-
   const handleEditClick = useCallback(
     () => router.push(`/contacts/${contact.id}/edit`),
     [contact.id, router]
