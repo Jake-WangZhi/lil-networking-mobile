@@ -1,6 +1,6 @@
 "use client";
 
-import { SearchParams } from "@/types";
+import { ActivityType, SearchParams } from "@/types";
 import { Typography, Grid } from "@mui/material";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
@@ -11,6 +11,7 @@ import { Button } from "@/components/Button";
 import { convertToLocalizedISODate } from "@/lib/utils";
 
 import "../../../styles.css";
+import { useActivityMutation } from "@/hooks/useActivityMutation";
 
 const CHARACTER_LIMIT = 300;
 
@@ -27,6 +28,8 @@ export default function CreateActivityPage({
   const prefilledDate = searchParams?.get(SearchParams.Date) || "";
   const prefilledDescription =
     searchParams?.get(SearchParams.Description) || "";
+  const isFromMessage = searchParams?.get(SearchParams.IsFromMessage) || "";
+  const isFromProfile = searchParams?.get(SearchParams.IsFromProfile) || "";
   const isFromDashboard = searchParams?.get(SearchParams.IsFromDashboard) || "";
 
   const [description, setDescription] = useState(prefilledDescription);
@@ -45,6 +48,26 @@ export default function CreateActivityPage({
       setlocalizedISODate(localizedISODate);
     }
   }, [date]);
+
+  const postActivityMutation = useActivityMutation({
+    method: "POST",
+    onSuccess: ({ showQuote }) => {
+      setErrorMessage("");
+      const redirectPath = SearchParams.RedirectPath;
+      const destinationPath = isFromProfile ? "/contacts" : "/dashboard";
+
+      const path = showQuote
+        ? `/quote?${redirectPath}=${destinationPath}`
+        : destinationPath;
+      router.push(path);
+    },
+    onError: (error) => {
+      setErrorMessage(
+        "An error occurred. Cannot submit the form. Please try again."
+      );
+      console.log(error);
+    },
+  });
 
   const handleDescriptionChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     setDescription(event.target.value);
@@ -75,8 +98,28 @@ export default function CreateActivityPage({
   }, [date, title]);
 
   const handleCancelClick = useCallback(() => {
-    router.back();
-  }, [router]);
+    if (isFromMessage) {
+      const localizedISODate = convertToLocalizedISODate(date);
+
+      postActivityMutation.mutate({
+        title: prefilledTitle,
+        date: localizedISODate,
+        description: prefilledDescription,
+        contactId: params.contactId,
+        type: ActivityType.USER,
+      });
+    } else {
+      router.back();
+    }
+  }, [
+    date,
+    isFromMessage,
+    params.contactId,
+    postActivityMutation,
+    prefilledDescription,
+    prefilledTitle,
+    router,
+  ]);
 
   return (
     <main className="relative flex flex-col items-center text-white px-4 py-8">

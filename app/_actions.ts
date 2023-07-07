@@ -126,8 +126,10 @@ export async function createActivity(formData: FormData) {
   const title = formData.get("title");
   const description = formData.get("description");
   const contactId = formData.get("contactId");
-  const isFromDashboard = formData.get("isFromDashboard");
+  const isFromMessage = formData.get("isFromMessage");
+  const isFromProfile = formData.get("isFromProfile");
   const localizedISODate = formData.get("localizedISODate");
+  const isFromDashboard = formData.get("isFromDashboard");
 
   await prisma.activity.create({
     data: {
@@ -163,15 +165,27 @@ export async function createActivity(formData: FormData) {
     },
   });
 
-  const redirectPath = SearchParams.RedirectPath;
-  const destinationPath = isFromDashboard
-    ? "/dashboard"
-    : `/contacts/${contactId}?${SearchParams.IsChanged}=true`;
+  if (isFromMessage) {
+    const redirectPath = SearchParams.RedirectPath;
+    const destinationPath = isFromProfile ? "/contacts" : "/dashboard";
 
-  const path =
-    count % 10 === 0
-      ? `/quote?${redirectPath}=${destinationPath}`
-      : destinationPath;
+    const path =
+      count % 10 === 0
+        ? `/quote?${redirectPath}=${destinationPath}`
+        : destinationPath;
 
-  redirect(path);
+    redirect(path);
+  } else {
+    const redirectPath = SearchParams.RedirectPath;
+    const destinationPath = isFromDashboard
+      ? "/dashboard"
+      : `/contacts/${contactId}?${SearchParams.IsChanged}=true`;
+
+    const path =
+      count % 10 === 0
+        ? `/quote?${redirectPath}=${destinationPath}`
+        : destinationPath;
+
+    redirect(path);
+  }
 }
