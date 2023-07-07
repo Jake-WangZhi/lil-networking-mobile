@@ -1,19 +1,11 @@
 "use client";
 
-import { useEffect, PropsWithChildren, useState } from "react";
+import { PropsWithChildren, useState } from "react";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 export function QCProvider({ children }: PropsWithChildren) {
   const [client] = useState(new QueryClient());
-
-  useEffect(() => {
-    if ("serviceWorker" in navigator) {
-      navigator.serviceWorker.register("serviceworker.js", {
-        scope: "./",
-      });
-    }
-  }, []);
 
   return <QueryClientProvider client={client}>{children}</QueryClientProvider>;
 }

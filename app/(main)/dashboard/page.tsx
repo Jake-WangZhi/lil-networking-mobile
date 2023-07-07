@@ -8,12 +8,19 @@ import { Typography } from "@mui/material";
 import { InfoTooltipButton } from "@/components/InfoTooltipButton";
 import { NavFooter } from "@/components/NavFooter";
 import { AddContactTooltipButton } from "@/components/AddContactTooltipButton";
+import { useEffect } from "react";
 
 export default function DashboardPage() {
   const { data: session } = useSession();
   const { actions, isLoading, isError } = useActions({
     email: session?.user?.email,
   });
+
+  useEffect(() => {
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("serviceworker.js");
+    }
+  }, []);
 
   return (
     <main className="relative flex flex-col items-center text-white px-4">

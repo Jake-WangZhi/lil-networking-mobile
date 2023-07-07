@@ -8,7 +8,7 @@ import pic3 from "@/public/images/onboarding_pic3.svg";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Swiper as SwiperRef } from "swiper";
 import { Button } from "@/components/Button";
-import { useCallback, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { urlBase64ToUint8Array } from "@/lib/utils";
 import { useSubscriptionMutation } from "@/hooks/useSubscription";
@@ -63,6 +63,12 @@ export default function OnboardingPage() {
     },
     onError: () => {},
   });
+
+  useEffect(() => {
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("serviceworker.js");
+    }
+  }, []);
 
   const handleSetGoalsClick = useCallback(
     () => router.push("/goals"),
