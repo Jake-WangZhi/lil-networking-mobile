@@ -8,10 +8,10 @@ import { useState, ChangeEvent, useCallback, useRef, useEffect } from "react";
 import { AlertTriangle } from "react-feather";
 import { createActivity } from "../../../../../_actions";
 import { Button } from "@/components/Button";
+import { useActivityMutation } from "@/hooks/useActivityMutation";
 import { convertToLocalizedISODate } from "@/lib/utils";
 
 import "../../../styles.css";
-import { useActivityMutation } from "@/hooks/useActivityMutation";
 
 const CHARACTER_LIMIT = 300;
 
