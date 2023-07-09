@@ -53,8 +53,8 @@ export const ContactInfo = ({ contact }: Props) => {
             <Typography variant="h2">
               {firstName} {lastName}
             </Typography>
-            <Typography variant="subtitle1">{title}</Typography>
-            <Typography variant="subtitle1">{company}</Typography>
+            {title && <Typography variant="subtitle1">{title}</Typography>}
+            {company && <Typography variant="subtitle1">{company}</Typography>}
             <Typography variant="subtitle1">{industry}</Typography>
             <div className="flex items-center space-x-3">
               <Clock
@@ -63,84 +63,86 @@ export const ContactInfo = ({ contact }: Props) => {
               />
               <Typography variant="subtitle1">{goalDays} days</Typography>
             </div>
-            <div>
-              {email && (
-                <Button
-                  variant="text"
-                  sx={{
-                    width: "100%",
-                  }}
-                  onClick={handleEmailClick}
-                >
-                  <div className="flex items-center space-x-3 w-full">
-                    <Mail
-                      size={24}
-                      className="md:w-7 md:h-7 lg:w-8 lg:h-8 flex-shrink-0 text-light-blue"
-                    />
-                    <Typography
-                      variant="subtitle1"
-                      sx={{
-                        overflow: "hidden",
-                        overflowWrap: "break-words",
-                      }}
-                    >
-                      {email}
-                    </Typography>
-                  </div>
-                </Button>
-              )}
-              {phone && (
-                <Button
-                  variant="text"
-                  sx={{
-                    width: "100%",
-                  }}
-                  onClick={handlePhoneClick}
-                >
-                  <div className="flex items-center space-x-3 w-full">
-                    <Phone
-                      size={24}
-                      className="md:w-7 md:h-7 lg:w-8 lg:h-8 flex-shrink-0 text-light-blue"
-                    />
-                    <Typography
-                      variant="subtitle1"
-                      sx={{
-                        overflow: "hidden",
-                        overflowWrap: "break-words",
-                      }}
-                    >
-                      {formatPhoneNumber(phone)}
-                    </Typography>
-                  </div>
-                </Button>
-              )}
-              {links?.map((link, index) => (
-                <Button
-                  variant="text"
-                  sx={{
-                    width: "100%",
-                  }}
-                  onClick={handleLinkedInClick(link)}
-                  key={`link-${index}`}
-                >
-                  <div className="flex space-x-3 w-full">
-                    <Link
-                      size={24}
-                      className="md:w-7 md:h-7 lg:w-8 lg:h-8 flex-shrink-0 text-light-blue"
-                    />
-                    <Typography
-                      variant="subtitle1"
-                      sx={{
-                        overflow: "hidden",
-                        overflowWrap: "break-words",
-                      }}
-                    >
-                      {link}
-                    </Typography>
-                  </div>
-                </Button>
-              ))}
-            </div>
+            {(email || phone || links.length !== 0) && (
+              <div>
+                {email && (
+                  <Button
+                    variant="text"
+                    sx={{
+                      width: "100%",
+                    }}
+                    onClick={handleEmailClick}
+                  >
+                    <div className="flex items-center space-x-3 w-full">
+                      <Mail
+                        size={24}
+                        className="md:w-7 md:h-7 lg:w-8 lg:h-8 flex-shrink-0 text-light-blue"
+                      />
+                      <Typography
+                        variant="subtitle1"
+                        sx={{
+                          overflow: "hidden",
+                          overflowWrap: "break-words",
+                        }}
+                      >
+                        {email}
+                      </Typography>
+                    </div>
+                  </Button>
+                )}
+                {phone && (
+                  <Button
+                    variant="text"
+                    sx={{
+                      width: "100%",
+                    }}
+                    onClick={handlePhoneClick}
+                  >
+                    <div className="flex items-center space-x-3 w-full">
+                      <Phone
+                        size={24}
+                        className="md:w-7 md:h-7 lg:w-8 lg:h-8 flex-shrink-0 text-light-blue"
+                      />
+                      <Typography
+                        variant="subtitle1"
+                        sx={{
+                          overflow: "hidden",
+                          overflowWrap: "break-words",
+                        }}
+                      >
+                        {formatPhoneNumber(phone)}
+                      </Typography>
+                    </div>
+                  </Button>
+                )}
+                {links?.map((link, index) => (
+                  <Button
+                    variant="text"
+                    sx={{
+                      width: "100%",
+                    }}
+                    onClick={handleLinkedInClick(link)}
+                    key={`link-${index}`}
+                  >
+                    <div className="flex space-x-3 w-full">
+                      <Link
+                        size={24}
+                        className="md:w-7 md:h-7 lg:w-8 lg:h-8 flex-shrink-0 text-light-blue"
+                      />
+                      <Typography
+                        variant="subtitle1"
+                        sx={{
+                          overflow: "hidden",
+                          overflowWrap: "break-words",
+                        }}
+                      >
+                        {link}
+                      </Typography>
+                    </div>
+                  </Button>
+                ))}
+              </div>
+            )}
           </div>
         </CardContent>
       </Card>
