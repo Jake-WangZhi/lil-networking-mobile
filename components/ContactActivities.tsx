@@ -35,8 +35,8 @@ export const ContactActivites = ({ activities, contactId }: Props) => {
   });
 
   const handleDeleteClick = useCallback(
-    (activity: Activity) => () => {
-      deleteActivityMutation.mutate({ id: activity.id });
+    (id: string) => () => {
+      deleteActivityMutation.mutate({ id });
     },
     [deleteActivityMutation]
   );
@@ -83,7 +83,7 @@ export const ContactActivites = ({ activities, contactId }: Props) => {
           </Button>
         )}
       </div>
-      {activities?.map((activity, index) => (
+      {activities?.map(({ id, title, date, description, type }, index) => (
         <div key={`activity-${index}`}>
           <Circle
             size={16}
@@ -106,13 +106,13 @@ export const ContactActivites = ({ activities, contactId }: Props) => {
                       fontWeight: 600,
                     }}
                   >
-                    {activity.title}
+                    {title}
                   </Typography>
-                  {activity.type === ActivityType.USER && !isFromMessage && (
+                  {type === ActivityType.USER && !isFromMessage && (
                     <div className="flex items-start">
                       <Button
                         variant="text"
-                        onClick={handleDeleteClick(activity)}
+                        onClick={handleDeleteClick(id)}
                         sx={{ height: "auto" }}
                       >
                         <Trash2 size={24} />
@@ -120,13 +120,17 @@ export const ContactActivites = ({ activities, contactId }: Props) => {
                     </div>
                   )}
                 </div>
-                <Typography
-                  variant="body1"
-                  sx={{ opacity: 0.7, marginBottom: "8px" }}
-                >
-                  {formatDate(activity.date)}
+                <Typography variant="body1" sx={{ opacity: 0.7 }}>
+                  {formatDate(date)}
                 </Typography>
-                <Typography variant="body1">{activity.description}</Typography>
+                {description && (
+                  <Typography
+                    variant="body1"
+                    sx={{ opacity: 0.7, marginTop: "8px" }}
+                  >
+                    {description}
+                  </Typography>
+                )}
               </CardContent>
             </Card>
           </div>
