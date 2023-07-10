@@ -2,11 +2,7 @@ import { fetcher } from "@/lib/utils";
 import { Quote } from "@prisma/client";
 import { useQuery } from "@tanstack/react-query";
 
-type Args = {
-  randomNum: number;
-};
-
-export const useQuote = ({ randomNum }: Args) => {
+export const useQuote = () => {
   const {
     isError,
     data: quote,
