@@ -15,7 +15,7 @@ export default function QuotePage() {
 
   if (isError) {
     return (
-      <main className="relative min-h-screen flex flex-col items-center justify-center px-5">
+      <main className="relative min-h-screen flex flex-col items-center justify-center text-center px-5">
         <Typography variant="body1">
           Something went wrong, please try again later
         </Typography>
@@ -42,9 +42,9 @@ export default function QuotePage() {
     );
   }
 
-  if (!quotes) {
+  if (!quotes || quotes.length === 0) {
     return (
-      <main className="relative min-h-screen flex flex-col items-center justify-center px-5">
+      <main className="relative min-h-screen flex flex-col items-center justify-center text-center px-5">
         <Typography variant="body1">No Quote Available</Typography>
         <div className="mt-40 w-full">
           <Button
