@@ -10,6 +10,7 @@ export const useQuotes = () => {
   } = useQuery<Quote[]>({
     queryKey: ["quote"],
     queryFn: () => fetcher(`/quote/api`),
+    cacheTime: 0, // Disable caching
   });
 
   return {
