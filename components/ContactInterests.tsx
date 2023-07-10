@@ -14,23 +14,23 @@ export const ContactInterests = ({ interests }: Props) => {
       <Typography variant="h3" sx={{ mx: "16px", fontWeight: 600 }}>
         Interests
       </Typography>
-      <div className="ml-4">
-        <Swiper
-          slidesPerView={"auto"}
-          spaceBetween={8}
-          freeMode={true}
-          modules={[FreeMode]}
-        >
-          {interests?.map((interest, index) => (
-            <SwiperSlide
-              key={`interest-${index}`}
-              className="!w-auto bg-white bg-opacity-[0.12] rounded-2xl px-4 py-[6px]"
-            >
-              <Typography variant="body1">{interest}</Typography>
-            </SwiperSlide>
-          ))}
-        </Swiper>
-      </div>
+      <Swiper
+        slidesPerView={"auto"}
+        spaceBetween={8}
+        freeMode={true}
+        modules={[FreeMode]}
+      >
+        {interests?.map((interest, index) => (
+          <SwiperSlide
+            key={`interest-${index}`}
+            className={`!w-auto bg-white bg-opacity-[0.12] rounded-2xl px-4 py-[6px] ${
+              index === 0 && "ml-4"
+            } ${index === interests.length - 1 && "mr-4"}`}
+          >
+            <Typography variant="body1">{interest}</Typography>
+          </SwiperSlide>
+        ))}
+      </Swiper>
     </div>
   );
 };
