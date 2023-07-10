@@ -68,15 +68,11 @@ export const convertToLocalizedISODate = (date: string) => {
 };
 
 export const formatBaseUrl = (url: string) => {
-  let formattedUrl = url.replace(/^https?:\/\//, ""); // Remove "http://" or "https://"
-
-  if (formattedUrl.startsWith("www.")) {
-    formattedUrl = formattedUrl.slice(4); // Remove "www" prefix
-  }
+  let formattedUrl = url.replace(/^https?:\/\//, "").replace(/^www\./, ""); //Remove "http://" or "https://" and  "www" prefix
 
   const index = formattedUrl.indexOf("/");
   if (index !== -1) {
-    formattedUrl = formattedUrl.slice(0, index); // Remove everything after the first "/"
+    formattedUrl = formattedUrl.slice(0, index); //Remove everything after the first "/"
   }
 
   return formattedUrl;
