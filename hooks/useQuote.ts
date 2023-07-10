@@ -2,19 +2,19 @@ import { fetcher } from "@/lib/utils";
 import { Quote } from "@prisma/client";
 import { useQuery } from "@tanstack/react-query";
 
-export const useQuotes = () => {
+export const useQuote = () => {
   const {
     isError,
-    data: quotes,
+    data: quote,
     isLoading,
-  } = useQuery<Quote[]>({
+  } = useQuery<Quote>({
     queryKey: ["quote"],
     queryFn: () => fetcher(`/quote/api`),
     cacheTime: 0, // Disable caching
   });
 
   return {
-    quotes,
+    quote,
     isLoading,
     isError,
   };

@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/Button";
-import { useQuotes } from "@/hooks/useQuotes";
+import { useQuote } from "@/hooks/useQuote";
 import { formatTitles } from "@/lib/utils";
 import { SearchParams } from "@/types";
 import { Typography } from "@mui/material";
@@ -11,7 +11,7 @@ import { ClipLoader } from "react-spinners";
 export default function QuotePage() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { quotes, isLoading, isError } = useQuotes();
+  const { quote, isLoading, isError } = useQuote();
 
   if (isError) {
     return (
@@ -42,7 +42,7 @@ export default function QuotePage() {
     );
   }
 
-  if (!quotes || quotes.length === 0) {
+  if (!quote) {
     return (
       <main className="relative min-h-screen flex flex-col items-center justify-center text-center px-5">
         <Typography variant="body1">No Quote Available</Typography>
@@ -60,8 +60,6 @@ export default function QuotePage() {
       </main>
     );
   }
-
-  const quote = quotes[Math.floor(Math.random() * quotes.length)];
 
   return (
     <main className="relative text-center px-5">
