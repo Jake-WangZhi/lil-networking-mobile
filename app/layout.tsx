@@ -4,6 +4,7 @@ import { Session } from "next-auth";
 import { headers } from "next/headers";
 import AuthContext from "./AuthContext";
 import { QCProvider, MuiCssProvider } from "@/app/provider";
+import { Analytics } from "@vercel/analytics/react";
 
 export const metadata = {
   title: "Lil Networking",
@@ -41,7 +42,9 @@ export default async function RootLayout({
       <body className="font-sans bg-dark-blue mx-auto max-w-lg md:max-w-xl lg:max-w-3xl">
         <QCProvider>
           <MuiCssProvider>
-            <AuthContext session={session}>{children}</AuthContext>
+            <AuthContext session={session}>
+              {children} <Analytics />
+            </AuthContext>
           </MuiCssProvider>
         </QCProvider>
       </body>
