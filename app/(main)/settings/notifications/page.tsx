@@ -25,6 +25,8 @@ export default function NotificationSettingPage() {
   const [streakChecked, setStreakChecked] = useState(false);
   const [meetGoalChecked, setMeetGoalChecked] = useState(false);
   const [subscriptionId, setSubscriptionId] = useState("");
+  const [showDefaultNote, setShowDefaultNote] = useState(true);
+  const [showDeniedNote, setShowDeniedNote] = useState(false);
 
   const postSubscriptionMutation = useSubscriptionMutation({
     method: "POST",
@@ -84,23 +86,21 @@ export default function NotificationSettingPage() {
   }, []);
 
   useEffect(() => {
-    setAllNotificationsChecked(
-      newActionChecked && streakChecked && meetGoalChecked
-    );
-  }, [newActionChecked, streakChecked, meetGoalChecked]);
+    const askForNotificationPermission = async () => {
+      if (!("Notification" in window)) return;
+      const prevPermission = window.Notification.permission;
 
-  const isNotificationModificationAllowed = useCallback(async () => {
-    if (
-      "Notification" in window &&
-      window.Notification.permission === "granted"
-    )
-      return true;
+      const permission = await window.Notification.requestPermission();
 
-    //If the permission is default, we ask for permission
-    if (window.Notification.permission !== "denied") {
-      const result = await window.Notification.requestPermission();
+      if (permission === "denied") {
+        setShowDefaultNote(false);
+        setShowDeniedNote(true);
+        return;
+      }
 
-      if (result === "granted") {
+      setShowDefaultNote(false);
+
+      if (prevPermission === "default" && permission === "granted") {
         const subscribeOptions = {
           userVisibleOnly: true,
           applicationServerKey: urlBase64ToUint8Array(
@@ -119,12 +119,35 @@ export default function NotificationSettingPage() {
           subscription: pushSubscription?.toJSON() as SubscriptionArgs,
         });
 
+        setAllNotificationsChecked(true);
+        setNewActionChecked(true);
+        setStreakChecked(true);
+        setMeetGoalChecked(true);
+      }
+    };
+
+    askForNotificationPermission();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    setAllNotificationsChecked(
+      newActionChecked && streakChecked && meetGoalChecked
+    );
+  }, [newActionChecked, streakChecked, meetGoalChecked]);
+
+  const isNotificationModificationAllowed = useCallback(async () => {
+    if ("Notification" in window) {
+      const result = await window.Notification.requestPermission();
+
+      if (result === "granted") {
+        setShowDeniedNote(false);
         return true;
       }
     }
 
     return false;
-  }, [postSubscriptionMutation, session?.user?.email]);
+  }, []);
 
   const switchAllNotifications = useCallback(
     async (event: ChangeEvent<HTMLInputElement>, checked: boolean) => {
@@ -230,6 +253,18 @@ export default function NotificationSettingPage() {
         </Grid>
         <Grid item xs={2}></Grid>
       </Grid>
+      {showDefaultNote && (
+        <Typography variant="subtitle1" sx={{ mt: "16px" }}>
+          IOS notifications require version 16.5 or later
+        </Typography>
+      )}
+      {showDeniedNote && (
+        <Typography variant="subtitle1" sx={{ mt: "16px" }}>
+          Your device notifications are turned off. To control what
+          notifications you receive, turn on notifications in your device
+          settings
+        </Typography>
+      )}
       <div className="flex justify-between mt-6">
         <div>
           <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
