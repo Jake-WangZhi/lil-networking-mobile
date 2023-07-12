@@ -27,15 +27,16 @@ export async function GET(request: Request) {
   const contacts = await prisma.contact.findMany({
     where: {
       userId: user.id,
-      isArchived: false,
     },
   });
 
-  const contactIds = contacts.map((c) => c.id);
+  const activeContacts = contacts.filter((c) => !c.isArchived);
+
+  const activeContactIds = activeContacts.map((c) => c.id);
 
   const activities = await prisma.activity.findMany({
     where: {
-      contactId: { in: contactIds },
+      contactId: { in: activeContactIds },
     },
     orderBy: [
       { type: "asc" },
@@ -53,7 +54,7 @@ export async function GET(request: Request) {
     (a, b) => b.date.getTime() - a.date.getTime()
   );
 
-  const actions = parseActions(contacts, sortedActivities);
+  const actions = parseActions(activeContacts, sortedActivities);
 
   return NextResponse.json({ ...actions, hasContacts: !!contacts.length });
 }
