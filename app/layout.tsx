@@ -5,6 +5,7 @@ import { headers } from "next/headers";
 import AuthContext from "./AuthContext";
 import { QCProvider, MuiCssProvider } from "@/app/provider";
 import { Analytics } from "@vercel/analytics/react";
+import Script from "next/script";
 
 export const metadata = {
   title: "Lil Networking",
@@ -32,6 +33,17 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
+      <Script
+        strategy="afterInteractive"
+        src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}`}
+      />
+      <Script id="google-analytics" strategy="afterInteractive">
+        {`window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', '${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}');`}
+      </Script>
+
       <head>
         <link
           rel="manifest"
