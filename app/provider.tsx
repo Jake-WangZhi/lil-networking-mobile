@@ -3,11 +3,17 @@
 import { PropsWithChildren, useState } from "react";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { GoogleAnalytics } from "nextjs-google-analytics";
 
 export function QCProvider({ children }: PropsWithChildren) {
   const [client] = useState(new QueryClient());
 
-  return <QueryClientProvider client={client}>{children}</QueryClientProvider>;
+  return (
+    <QueryClientProvider client={client}>
+      <GoogleAnalytics trackPageViews />
+      {children}
+    </QueryClientProvider>
+  );
 }
 
 export function MuiCssProvider({ children }: PropsWithChildren) {
