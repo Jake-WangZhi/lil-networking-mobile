@@ -29,7 +29,7 @@ export default function Home() {
         Build networking habits & <br />
         reach your goals
       </Typography>
-      <AddToHomeScreenBanner withPaddingBottom={false} />
+      <AddToHomeScreenBanner addBottomPadding={false} />
     </main>
   );
 }

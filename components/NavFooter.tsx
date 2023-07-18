@@ -23,7 +23,7 @@ export const NavFooter = () => {
       }}
       elevation={3}
     >
-      <AddToHomeScreenBanner withPaddingBottom={true} />
+      <AddToHomeScreenBanner addBottomPadding={true} />
       <BottomNavigation
         showLabels
         value={value}

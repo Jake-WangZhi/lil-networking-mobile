@@ -6,7 +6,7 @@ import { Typography } from "@mui/material";
 import { useState, useCallback, useEffect } from "react";
 
 interface Props {
-  withPaddingBottom: boolean;
+  addBottomPadding: boolean;
 }
 
 interface BeforeInstallPromptEvent extends Event {
@@ -23,7 +23,7 @@ enum OutcomeType {
   Dismissed = "dismissed",
 }
 
-export const AddToHomeScreenBanner = ({ withPaddingBottom }: Props) => {
+export const AddToHomeScreenBanner = ({ addBottomPadding }: Props) => {
   const [deferredPrompt, setDeferredPrompt] =
     useState<BeforeInstallPromptEvent | null>(null);
   const [isModalOpened, setIsModalOpened] = useState(false);
@@ -65,7 +65,7 @@ export const AddToHomeScreenBanner = ({ withPaddingBottom }: Props) => {
       {isModalOpened && (
         <div
           className={`fixed bottom-0 left-0 right-0 w-full z-10 mx-auto max-w-lg md:max-w-xl lg:max-w-3xl px-4 py-6 bg-[#2C353E] flex justify-between ${
-            withPaddingBottom && "mb-14"
+            addBottomPadding && "mb-14"
           }`}
         >
           <div className="flex items-center space-x-2">

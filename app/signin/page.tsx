@@ -29,7 +29,7 @@ export default function SignInPage() {
           Sign in with LinkedIn
         </Button>
       </div>
-      <AddToHomeScreenBanner withPaddingBottom={false} />
+      <AddToHomeScreenBanner addBottomPadding={false} />
     </main>
   );
 }
