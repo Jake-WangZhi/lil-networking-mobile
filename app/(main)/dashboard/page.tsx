@@ -26,10 +26,11 @@ export default function DashboardPage() {
   useEffect(() => {
     const eventAlreadySent = sessionStorage.getItem("lastOpenedEventSent");
 
-    if (!eventAlreadySent) {
+    const email = session?.user?.email;
+    if (!eventAlreadySent && email) {
       event(`last_opened`, {
         category: new Date().toISOString(),
-        label: session?.user?.email || "",
+        label: email,
       });
 
       sessionStorage.setItem("lastOpenedEventSent", "true");

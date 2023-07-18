@@ -104,8 +104,9 @@ export const ContactForm = ({ contact, userEmail }: Props) => {
 
     if (!hasError) {
       submitFormRef.current?.click();
-      !contact &&
-        event("contact_created", { label: `${session?.user?.email}` });
+
+      const email = session?.user?.email;
+      !contact && email && event("contact_created", { label: email });
     } else {
       setIsSaving(false);
     }

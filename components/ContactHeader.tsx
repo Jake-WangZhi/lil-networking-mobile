@@ -49,9 +49,12 @@ export const ContactHeader = ({ contact }: Props) => {
     onSuccess: () => {
       setErrorMessage("");
 
-      event(`contact_${!contact.isArchived ? "archived" : "unarchived"}`, {
-        label: `${session?.user?.email}`,
-      });
+      const email = session?.user?.email;
+
+      if (email)
+        event(`contact_${!contact.isArchived ? "archived" : "unarchived"}`, {
+          label: email,
+        });
 
       queryClient.refetchQueries(["contact", contact.id]);
     },

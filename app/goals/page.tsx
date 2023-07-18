@@ -34,9 +34,11 @@ export default function GoalsPage() {
     onSuccess: () => {
       setErrorMessage("");
 
-      event(`goals_setup`, {
-        label: `${session?.user?.email}`,
-      });
+      const email = session?.user?.email;
+      if (email)
+        event(`goals_setup`, {
+          label: email,
+        });
 
       if (isFromSettings) return router.push("/settings/goals");
       router.push("/dashboard");

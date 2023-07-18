@@ -20,21 +20,23 @@ export const GoalSummary = () => {
   useEffect(() => {
     const eventAlreadySent = sessionStorage.getItem("streakEventSent");
 
-    if (!eventAlreadySent && !isLoading) {
+    const email = session?.user?.email;
+
+    if (!eventAlreadySent && !isLoading && email) {
       event(`current_streak`, {
         category: new Date().toISOString(),
-        label: session?.user?.email || "",
+        label: email,
         value: goals ? goals.streak : 0,
       });
 
       event(`highest_streak`, {
-        label: session?.user?.email || "",
+        label: email,
         value: goals ? goals.streak : 0,
       });
 
       sessionStorage.setItem("streakEventSent", "true");
     }
-  }, [isLoading, session?.user?.email]);
+  }, [isLoading, session?.user?.email, goals]);
 
   const handleClick = useCallback(() => router.push("/goals"), [router]);
 
