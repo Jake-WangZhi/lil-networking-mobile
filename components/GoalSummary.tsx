@@ -20,7 +20,7 @@ export const GoalSummary = () => {
   useEffect(() => {
     const eventAlreadySent = sessionStorage.getItem("streakEventSent");
 
-    if (!eventAlreadySent) {
+    if (!eventAlreadySent && !isLoading) {
       event(`current_streak`, {
         label: session?.user?.email || "",
         value: goals ? goals.streak : 0,
@@ -33,7 +33,7 @@ export const GoalSummary = () => {
 
       sessionStorage.setItem("streakEventSent", "true");
     }
-  }, [goals, session?.user?.email]);
+  }, [isLoading, session?.user?.email]);
 
   const handleClick = useCallback(() => router.push("/goals"), [router]);
 
