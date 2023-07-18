@@ -22,6 +22,7 @@ export const GoalSummary = () => {
 
     if (!eventAlreadySent && !isLoading) {
       event(`current_streak`, {
+        category: new Date().toISOString(),
         label: session?.user?.email || "",
         value: goals ? goals.streak : 0,
       });
