@@ -6,7 +6,8 @@ import { Button } from "./Button";
 import { PlusCircle } from "react-feather";
 import { useRouter } from "next/navigation";
 import { ClipLoader } from "react-spinners";
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
+import { event } from "nextjs-google-analytics";
 
 export const GoalSummary = () => {
   const { data: session } = useSession();
@@ -15,6 +16,27 @@ export const GoalSummary = () => {
   const { goals, isLoading, isError } = useGoals({
     email: session?.user?.email,
   });
+
+  useEffect(() => {
+    const eventAlreadySent = sessionStorage.getItem("streakEventSent");
+
+    const email = session?.user?.email;
+
+    if (!eventAlreadySent && !isLoading && email) {
+      event(`current_streak`, {
+        category: new Date().toISOString(),
+        label: email,
+        value: goals ? goals.streak : 0,
+      });
+
+      event(`highest_streak`, {
+        label: email,
+        value: goals ? goals.streak : 0,
+      });
+
+      sessionStorage.setItem("streakEventSent", "true");
+    }
+  }, [isLoading, session?.user?.email, goals]);
 
   const handleClick = useCallback(() => router.push("/goals"), [router]);
 

@@ -15,8 +15,17 @@ export default async function handler(
 
     await prisma.$transaction(
       goalsCollection.map((goals) => {
-        const { connections, goalConnections, messages, goalMessages, streak } =
-          goals;
+        const {
+          connections,
+          goalConnections,
+          messages,
+          goalMessages,
+          streak,
+          highestStreak,
+        } = goals;
+
+        const isGoalReached =
+          connections >= goalConnections && messages >= goalMessages;
 
         return prisma.goals.update({
           where: {
@@ -24,10 +33,10 @@ export default async function handler(
           },
           data: {
             streak: {
-              increment:
-                connections >= goalConnections && messages >= goalMessages
-                  ? 1
-                  : -streak,
+              increment: isGoalReached ? 1 : -streak,
+            },
+            highestStreak: {
+              increment: streak === highestStreak && isGoalReached ? 1 : 0,
             },
             connections: 0,
             messages: 0,
