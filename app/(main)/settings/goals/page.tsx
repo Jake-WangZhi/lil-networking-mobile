@@ -234,6 +234,9 @@ export default function GoalSettingPage() {
         </Grid>
         <Grid item xs={2}></Grid>
       </Grid>
+      {errorMessage && (
+        <Typography variant="subtitle2">{errorMessage}</Typography>
+      )}
       <div className="px-12 space-y-8">
         {GOAL_QUESTIONS.map(
           ({ title, selectedValue, setValue, buttonContents }, index) => {

@@ -9,6 +9,7 @@ import { InfoTooltipButton } from "@/components/InfoTooltipButton";
 import { NavFooter } from "@/components/NavFooter";
 import { AddContactTooltipButton } from "@/components/AddContactTooltipButton";
 import { useEffect } from "react";
+import { event } from "nextjs-google-analytics";
 
 export default function DashboardPage() {
   const { data: session } = useSession();
@@ -21,6 +22,19 @@ export default function DashboardPage() {
       navigator.serviceWorker.register("serviceworker.js");
     }
   }, []);
+
+  useEffect(() => {
+    const eventAlreadySent = sessionStorage.getItem("lastOpenedEventSent");
+
+    if (!eventAlreadySent) {
+      event(`last_opened`, {
+        category: new Date().toISOString(),
+        label: session?.user?.email || "",
+      });
+
+      sessionStorage.setItem("lastOpenedEventSent", "true");
+    }
+  }, [session?.user?.email]);
 
   return (
     <main className="relative flex flex-col items-center text-white px-4">

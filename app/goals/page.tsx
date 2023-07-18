@@ -12,6 +12,7 @@ import { useSession } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { GoalQuestions } from "@/components/GoalQuestions";
 import { SearchParams } from "@/types";
+import { event } from "nextjs-google-analytics";
 
 import "swiper/css";
 
@@ -32,6 +33,11 @@ export default function GoalsPage() {
     method: "POST",
     onSuccess: () => {
       setErrorMessage("");
+
+      event(`goals_setup`, {
+        label: `${session?.user?.email}`,
+      });
+
       if (isFromSettings) return router.push("/settings/goals");
       router.push("/dashboard");
     },
