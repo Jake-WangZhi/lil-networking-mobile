@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useBackPath } from "@/contexts/BackPathContext";
 import { BottomNavigation, BottomNavigationAction, Paper } from "@mui/material";
 import { useState } from "react";
+import { AddToHomeScreenBanner } from "./AddToHomeScreenBanner";
 
 export const NavFooter = () => {
   const { backPath, setBackPath } = useBackPath();
@@ -22,6 +23,7 @@ export const NavFooter = () => {
       }}
       elevation={3}
     >
+      <AddToHomeScreenBanner withPaddingBottom={true} />
       <BottomNavigation
         showLabels
         value={value}

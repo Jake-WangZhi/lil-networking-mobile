@@ -1,5 +1,6 @@
 "use client";
 
+import { AddToHomeScreenBanner } from "@/components/AddToHomeScreenBanner";
 import { Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
@@ -28,6 +29,7 @@ export default function Home() {
         Build networking habits & <br />
         reach your goals
       </Typography>
+      <AddToHomeScreenBanner withPaddingBottom={false} />
     </main>
   );
 }
