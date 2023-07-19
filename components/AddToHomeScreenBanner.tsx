@@ -49,7 +49,6 @@ export const AddToHomeScreenBanner = ({ addBottomPadding }: Props) => {
   }, [handleBeforeInstallPrompt]);
 
   useEffect(() => {
-    // Check if window is defined (to avoid errors during server-side rendering)
     if (typeof window !== "undefined") {
       const userAgent = window.navigator.userAgent;
       const isIOSDevice = /iPhone|iPad/.test(userAgent);
