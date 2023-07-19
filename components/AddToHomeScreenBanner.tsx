@@ -52,10 +52,13 @@ export const AddToHomeScreenBanner = ({ addBottomPadding }: Props) => {
     // Check if window is defined (to avoid errors during server-side rendering)
     if (typeof window !== "undefined") {
       const userAgent = window.navigator.userAgent;
-      const isIOSDevice = /iPhone/.test(userAgent) || /iPad/.test(userAgent);
+      const isIOSDevice = /iPhone|iPad/.test(userAgent);
       if (isIOSDevice) {
         setIsIOS(true);
-        setIsModalOpened(true);
+        const isInStandaloneMode = window.matchMedia(
+          "(display-mode: standalone)"
+        ).matches;
+        if (!isInStandaloneMode) setIsModalOpened(true);
       }
     }
   }, []);
