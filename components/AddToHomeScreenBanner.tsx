@@ -27,7 +27,11 @@ export const AddToHomeScreenBanner = ({ addBottomPadding }: Props) => {
   const [deferredPrompt, setDeferredPrompt] =
     useState<BeforeInstallPromptEvent | null>(null);
   const [isModalOpened, setIsModalOpened] = useState(false);
-  const [isIOS, setIsIOS] = useState(false);
+
+  const isIOS =
+    typeof window !== "undefined"
+      ? /iPhone|iPad/.test(window.navigator.userAgent)
+      : false;
 
   const handleBeforeInstallPrompt = useCallback((e: Event) => {
     // Prevent Chrome 67 and earlier from automatically showing the prompt
@@ -49,18 +53,13 @@ export const AddToHomeScreenBanner = ({ addBottomPadding }: Props) => {
   }, [handleBeforeInstallPrompt]);
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      const userAgent = window.navigator.userAgent;
-      const isIOSDevice = /iPhone|iPad/.test(userAgent);
-      if (isIOSDevice) {
-        setIsIOS(true);
-        const isInStandaloneMode = window.matchMedia(
-          "(display-mode: standalone)"
-        ).matches;
-        if (!isInStandaloneMode) setIsModalOpened(true);
-      }
+    if (isIOS) {
+      const isInStandaloneMode = window.matchMedia(
+        "(display-mode: standalone)"
+      ).matches;
+      if (!isInStandaloneMode) setIsModalOpened(true);
     }
-  }, []);
+  }, [isIOS]);
 
   const handleA2HSClick = useCallback(() => {
     if (!deferredPrompt) return;
@@ -103,7 +102,7 @@ export const AddToHomeScreenBanner = ({ addBottomPadding }: Props) => {
                       size={14}
                       className="md:w-4 md:h-4 lg:w-5 lg:h-5 flex-shrink-0"
                     />
-                    <span>and then "Add to Home Screen".</span>
+                    <span>and then &quot;Add to Home Screen&quot;.</span>
                   </span>
                 </Typography>
               ) : (
