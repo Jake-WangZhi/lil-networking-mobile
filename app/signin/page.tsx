@@ -1,5 +1,6 @@
 "use client";
 
+import { AddToHomeScreenBanner } from "@/components/AddToHomeScreenBanner";
 import { Button } from "@/components/Button";
 import { Typography } from "@mui/material";
 import { signIn } from "next-auth/react";
@@ -28,6 +29,7 @@ export default function SignInPage() {
           Sign in with LinkedIn
         </Button>
       </div>
+      <AddToHomeScreenBanner addBottomPadding={false} />
     </main>
   );
 }
