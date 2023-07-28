@@ -1,5 +1,5 @@
 {
-  "name": "little-networking",
+  "name": "lil-networking",
   "packageManager": "yarn@3.6.1",
   "repository": "https://github.com/FoundryMakes/lil-networking",
   "license": "MIT",
@@ -9,10 +9,10 @@
     "apps/*"
   ],
   "scripts": {
-    "web": "yarn workspace web dev",
-    "web:install": "yarn workspace web install",
-    "web:build": "yarn workspace web build",
-    "web:start": "yarn workspace web start",
-    "web:lint": "yarn workspace web lint"
+    "web": "yarn workspace @foundrymakes/web dev",
+    "web:install": "yarn workspace @foundrymakes/web install",
+    "web:build": "yarn workspace @foundrymakes/web build",
+    "web:start": "yarn workspace @foundrymakes/web start",
+    "web:lint": "yarn workspace @foundrymakes/web lint"
   }
 }

@@ -1,5 +1,5 @@
 {
-  "name": "web",
+  "name": "@foundrymakes/web",
   "repository": "https://github.com/FoundryMakes/lil-networking",
   "license": "MIT",
   "version": "0.0.0",
@@ -54,7 +54,6 @@
     "@types/react-tagsinput": "^3.20.0",
     "@types/validator": "^13.7.17",
     "@types/web-push": "^3.3.2",
-    "prisma": "^4.13.0",
-    "turbo": "^1.9.3"
+    "prisma": "^4.13.0"
   }
 }
