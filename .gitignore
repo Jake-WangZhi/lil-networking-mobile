@@ -52,7 +52,7 @@ yarn-error.log*
 /apps/web/public/fallback-*.js
 
 # yarn
-.yarn
+.yarn/*
 !.yarn/patches
 !.yarn/plugins
 !.yarn/releases
