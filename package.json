@@ -10,6 +10,7 @@
   ],
   "scripts": {
     "web": "yarn workspace web dev",
+    "web:install": "yarn workspace web install",
     "web:build": "yarn workspace web build",
     "web:start": "yarn workspace web start",
     "web:lint": "yarn workspace web lint"
