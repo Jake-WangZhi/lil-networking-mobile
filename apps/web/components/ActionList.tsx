@@ -10,7 +10,7 @@ import {
 import Image from "next/image";
 import icon from "@/public/images/empty_state_icon.svg";
 import Lottie from "react-lottie";
-import animationData from "../lottie/908-add-and-save.json";
+import animationData from "@/lottie/908-add-and-save.json";
 import { ChevronDown } from "react-feather";
 
 interface Props {
