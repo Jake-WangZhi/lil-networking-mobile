@@ -6,13 +6,15 @@
   "version": "0.0.0",
   "private": true,
   "workspaces": [
-    "apps/*"
+    "apps/*",
+    "packages/*"
   ],
   "scripts": {
-    "web": "yarn workspace @foundrymakes/web dev",
-    "web:install": "yarn workspace @foundrymakes/web install",
-    "web:build": "yarn workspace @foundrymakes/web build",
-    "web:start": "yarn workspace @foundrymakes/web start",
-    "web:lint": "yarn workspace @foundrymakes/web lint"
+    "build": "turbo build",
+    "dev": "turbo dev --parallel"
+  },
+  "dependencies": {
+    "turbo": "^1.10.12",
+    "typescript": "^5.1.6"
   }
 }
