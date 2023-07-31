@@ -11,7 +11,10 @@
   ],
   "scripts": {
     "build": "turbo build",
-    "dev": "turbo dev --parallel"
+    "dev": "turbo dev --parallel",
+    "clean": "git clean -xdf node_modules",
+    "clean:workspaces": "turbo clean",
+    "lint": "turbo lint"
   },
   "dependencies": {
     "turbo": "^1.10.12",
