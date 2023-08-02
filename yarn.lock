@@ -2324,6 +2324,7 @@ __metadata:
     "@babel/runtime": ^7.22.6
     "@expo/config-plugins": ~7.2.2
     "@expo/metro-config": ^0.10.7
+    "@foundrymakes/tailwind-config": ^0.1.0
     "@tanstack/react-query": ^4.32.0
     "@types/babel__core": ^7.20.1
     "@types/react": ^18.2.17
@@ -2346,6 +2347,16 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@foundrymakes/tailwind-config@^0.1.0, @foundrymakes/tailwind-config@workspace:packages/config/tailwind":
+  version: 0.0.0-use.local
+  resolution: "@foundrymakes/tailwind-config@workspace:packages/config/tailwind"
+  dependencies:
+    autoprefixer: ^10.4.14
+    postcss: ^8.4.26
+    tailwindcss: 3.3.2
+  languageName: unknown
+  linkType: soft
+
 "@foundrymakes/web@workspace:apps/web":
   version: 0.0.0-use.local
   resolution: "@foundrymakes/web@workspace:apps/web"
@@ -2353,6 +2364,7 @@ __metadata:
     "@emotion/react": ^11.11.0
     "@emotion/styled": ^11.11.0
     "@fontsource/metropolis": ^4.5.3
+    "@foundrymakes/tailwind-config": ^0.1.0
     "@headlessui/react": ^1.7.14
     "@mui/material": ^5.13.3
     "@next-auth/prisma-adapter": ^1.0.6
@@ -4557,7 +4569,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"autoprefixer@npm:10.4.14":
+"autoprefixer@npm:10.4.14, autoprefixer@npm:^10.4.14":
   version: 10.4.14
   resolution: "autoprefixer@npm:10.4.14"
   dependencies:
