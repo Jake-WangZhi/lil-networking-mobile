@@ -78,8 +78,3 @@ web-build/
 
 # Metro
 .metro-health-check*
-
-# debug
-npm-debug.*
-yarn-debug.*
-yarn-error.*

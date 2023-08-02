@@ -19,7 +19,7 @@ const defineConfig = (): ExpoConfig => ({
   assetBundlePatterns: ["**/*"],
   ios: {
     supportsTablet: true,
-    bundleIdentifier: "com.foundrymakes.www",
+    bundleIdentifier: "com.foundrymakes.lil-networking",
   },
   android: {
     adaptiveIcon: {
