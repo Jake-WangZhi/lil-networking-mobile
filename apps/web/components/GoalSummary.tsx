@@ -1,7 +1,7 @@
 import { Typography } from "@mui/material";
 import { GoalStats } from "./GoalStats";
 import { useSession } from "next-auth/react";
-import { useGoals } from "@/hooks/useGoals";
+import { useGoals } from "~/hooks/useGoals";
 import { Button } from "./Button";
 import { PlusCircle } from "react-feather";
 import { useRouter } from "next/navigation";

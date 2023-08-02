@@ -1,13 +1,13 @@
 "use client";
 
-import { ActionList } from "@/components/ActionList";
-import { GoalSummary } from "@/components/GoalSummary";
+import { ActionList } from "~/components/ActionList";
+import { GoalSummary } from "~/components/GoalSummary";
 import { useSession } from "next-auth/react";
-import { useActions } from "@/hooks/useActions";
+import { useActions } from "~/hooks/useActions";
 import { Typography } from "@mui/material";
-import { InfoTooltipButton } from "@/components/InfoTooltipButton";
-import { NavFooter } from "@/components/NavFooter";
-import { AddContactTooltipButton } from "@/components/AddContactTooltipButton";
+import { InfoTooltipButton } from "~/components/InfoTooltipButton";
+import { NavFooter } from "~/components/NavFooter";
+import { AddContactTooltipButton } from "~/components/AddContactTooltipButton";
 import { useEffect } from "react";
 import { event } from "nextjs-google-analytics";
 

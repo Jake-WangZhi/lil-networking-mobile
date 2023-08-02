@@ -1,6 +1,6 @@
 "use client";
 
-import { BackPathContext } from "@/contexts/BackPathContext";
+import { BackPathContext } from "~/contexts/BackPathContext";
 import { usePathname } from "next/navigation";
 import React from "react";
 import { useState } from "react";

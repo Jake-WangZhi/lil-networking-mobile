@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import prisma from "@/lib/prisma";
-import { sendPushNotification } from "@/helper/PushNotificationHelper";
+import prisma from "~/lib/prisma";
+import { sendPushNotification } from "~/helper/PushNotificationHelper";
 
 export default async function handler(
   request: NextApiRequest,
