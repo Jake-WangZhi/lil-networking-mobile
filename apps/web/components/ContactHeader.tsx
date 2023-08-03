@@ -1,11 +1,11 @@
-import { useBackPath } from "@/contexts/BackPathContext";
-import { useContactMutation } from "@/hooks/useContactMutation";
+import { useBackPath } from "~/contexts/BackPathContext";
+import { useContactMutation } from "~/hooks/useContactMutation";
 import { DotsThreeCircleVertical } from "@phosphor-icons/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState, useCallback } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { ChevronLeft, Edit, Archive, Trash2, X } from "react-feather";
-import { Contact, SearchParams } from "@/types";
+import { Contact, SearchParams } from "~/types";
 import { Divider, Menu, MenuItem, Typography } from "@mui/material";
 import { Button } from "./Button";
 import { AlertDialog } from "./AlertDialog";

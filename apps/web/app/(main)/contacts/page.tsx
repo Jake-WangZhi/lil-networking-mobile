@@ -1,10 +1,10 @@
 "use client";
 
-import { AddContactTooltipButton } from "@/components/AddContactTooltipButton";
-import { ContactList } from "@/components/ContactList";
-import { NavFooter } from "@/components/NavFooter";
-import { SearchBar } from "@/components/SearchBar";
-import { useContacts } from "@/hooks/useContacts";
+import { AddContactTooltipButton } from "~/components/AddContactTooltipButton";
+import { ContactList } from "~/components/ContactList";
+import { NavFooter } from "~/components/NavFooter";
+import { SearchBar } from "~/components/SearchBar";
+import { useContacts } from "~/hooks/useContacts";
 import { Typography } from "@mui/material";
 import { useSession } from "next-auth/react";
 import { useState } from "react";

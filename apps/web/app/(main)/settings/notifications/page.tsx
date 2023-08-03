@@ -2,15 +2,15 @@
 
 import { ChangeEvent, useCallback, useEffect, useState } from "react";
 import { Grid, Switch, Typography } from "@mui/material";
-import { Button } from "@/components/Button";
+import { Button } from "~/components/Button";
 import { ChevronLeft } from "react-feather";
 import { useRouter } from "next/navigation";
-import { urlBase64ToUint8Array } from "@/lib/utils";
-import { SubscriptionArgs } from "@/types";
-import { useSubscriptionMutation } from "@/hooks/useSubscription";
+import { urlBase64ToUint8Array } from "~/lib/utils";
+import { SubscriptionArgs } from "~/types";
+import { useSubscriptionMutation } from "~/hooks/useSubscription";
 import { useSession } from "next-auth/react";
-import { useNotificationSettings } from "@/hooks/useNotificationSettings";
-import { useNotificationSettingsMutation } from "@/hooks/useNotificationSettingsMutation";
+import { useNotificationSettings } from "~/hooks/useNotificationSettings";
+import { useNotificationSettingsMutation } from "~/hooks/useNotificationSettingsMutation";
 
 export default function NotificationSettingPage() {
   const { data: session } = useSession();

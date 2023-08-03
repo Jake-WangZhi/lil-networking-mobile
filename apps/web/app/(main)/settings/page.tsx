@@ -1,7 +1,7 @@
 "use client";
 
-import { Button } from "@/components/Button";
-import { NavFooter } from "@/components/NavFooter";
+import { Button } from "~/components/Button";
+import { NavFooter } from "~/components/NavFooter";
 import { Typography } from "@mui/material";
 import { UserCircle } from "@phosphor-icons/react";
 import { useSession } from "next-auth/react";
