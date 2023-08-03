@@ -1,6 +1,6 @@
 {
   "name": "lil-networking",
-  "packageManager": "yarn@3.6.1",
+  "packageManager": "yarn@1.22.19",
   "repository": "https://github.com/FoundryMakes/lil-networking",
   "license": "MIT",
   "version": "0.0.0",
