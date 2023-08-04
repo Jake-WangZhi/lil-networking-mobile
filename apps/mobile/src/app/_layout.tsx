@@ -1,26 +1,26 @@
 import React from "react";
-import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Stack } from "expo-router";
-import { StatusBar } from "expo-status-bar";
+import {
+  NativeBaseProvider,
+  StatusBar,
+  extendTheme,
+  ITheme,
+} from "native-base";
+import "../global.css";
+import "@fontsource/metropolis";
 
-// This is the main layout of the app
-// It wraps your pages with the providers they need
+const theme: ITheme = extendTheme({
+  button: {
+    height: "48px",
+  },
+});
+
 const RootLayout = () => {
   return (
-    <SafeAreaProvider>
-      {/*
-          The Stack component displays the current page.
-          It also allows you to configure your screens 
-        */}
-      <Stack
-        screenOptions={{
-          headerStyle: {
-            backgroundColor: "#0F1A24",
-          },
-        }}
-      />
-      <StatusBar />
-    </SafeAreaProvider>
+    <NativeBaseProvider theme={theme}>
+      <Stack screenOptions={{ headerShown: false }} />
+      <StatusBar barStyle={"light-content"} />
+    </NativeBaseProvider>
   );
 };
 
