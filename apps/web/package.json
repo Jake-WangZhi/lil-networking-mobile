@@ -12,6 +12,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@clerk/clerk-sdk-node": "^4.12.2",
     "@emotion/react": "^11.11.0",
     "@emotion/styled": "^11.11.0",
     "@fontsource/metropolis": "^4.5.3",
@@ -35,6 +36,7 @@
     "react-spinners": "^0.13.8",
     "react-swipeable": "^7.0.0",
     "react-tagsinput": "^3.20.1",
+    "svix": "^1.8.0",
     "swiper": "^9.3.1",
     "validator": "^13.9.0",
     "web-push": "^3.6.3"

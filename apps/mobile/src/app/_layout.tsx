@@ -11,14 +11,13 @@ import {
 } from "native-base";
 import { ClerkProvider } from "@clerk/clerk-expo";
 import { UserProvider } from "~/contexts/userContext";
+import { CLERK_PUBLISHABLE_KEY } from "@env"; // Import the environment variable
 
 const theme: ITheme = extendTheme({
   button: {
     height: "48px",
   },
 });
-const CLERK_PUBLISHABLE_KEY =
-  "pk_test_cmF0aW9uYWwtbWFsYW11dGUtNTkuY2xlcmsuYWNjb3VudHMuZGV2JA";
 
 const RootLayout = () => {
   return (

@@ -12,7 +12,6 @@ export default function Login() {
 
       if (createdSessionId && setActive) {
         setActive({ session: createdSessionId });
-        console.log("session");
       } else {
         console.log("failed to sign in");
       }
