@@ -11,7 +11,7 @@ import {
 } from "native-base";
 import { ClerkProvider } from "@clerk/clerk-expo";
 import { UserProvider } from "~/contexts/userContext";
-import { CLERK_PUBLISHABLE_KEY } from "@env"; // Import the environment variable
+import { CLERK_PUBLISHABLE_KEY } from "@env";
 
 const theme: ITheme = extendTheme({
   button: {
