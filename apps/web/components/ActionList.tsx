@@ -80,7 +80,7 @@ export const ActionList = ({ actions, isLoading, isError }: Props) => {
           }}
           width={130}
           height={130}
-        />
+        ></Lottie>
         <Typography variant="h2">Your Dashboard is empty</Typography>{" "}
         <Typography
           variant="subtitle1"

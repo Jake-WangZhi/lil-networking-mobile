@@ -499,7 +499,7 @@ export const ContactForm = ({ contact, userEmail }: Props) => {
               }}
               focusedClassName="ring-1 ring-white outline-none appearance-none caret-white"
               className="rounded-[4px] block w-full min-h-12 h-auto p-4 bg-white bg-opacity-5"
-            />
+            ></TagsInput>
           </Grid>
         </Grid>
 

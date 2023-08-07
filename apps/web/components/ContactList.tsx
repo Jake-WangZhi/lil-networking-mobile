@@ -69,7 +69,7 @@ export const ContactList = ({ contacts, isLoading, isError, name }: Props) => {
           }}
           width={130}
           height={130}
-        />
+        ></Lottie>
         <Typography variant="h2">You have no contacts</Typography>
         <Typography
           variant="subtitle1"

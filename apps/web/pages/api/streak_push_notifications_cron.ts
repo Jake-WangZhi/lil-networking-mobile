@@ -49,7 +49,7 @@ export default async function handler(
         const user = await prisma.user.findUnique({
           where: { id: subscription.userId },
           select: {
-            name: true,
+            firstName: true,
           },
         });
 
@@ -57,9 +57,7 @@ export default async function handler(
 
         const notificationData = {
           title: `Streak Reminder`,
-          body: `Hi, ${
-            user.name?.split(" ")[0]
-          }, make sure to meet your goals by the end of the month to keep your current streak!`,
+          body: `Hi, ${user.firstName}, make sure to meet your goals by the end of the month to keep your current streak!`,
         };
 
         await sendPushNotification(subscription, notificationData);

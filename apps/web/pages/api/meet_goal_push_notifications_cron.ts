@@ -49,7 +49,7 @@ export default async function handler(
       const user = await prisma.user.findUnique({
         where: { id: subscription.userId },
         select: {
-          name: true,
+          firstName: true,
           createdAt: true,
         },
       });
@@ -58,9 +58,7 @@ export default async function handler(
 
       const notificationData = {
         title: `Meet Goal Reminder`,
-        body: `Hey, ${
-          user.name?.split(" ")[0]
-        }! You haven't been active in a week. Get back on the app and build those habits!`,
+        body: `Hey, ${user.firstName}! You haven't been active in a week. Get back on the app and build those habits!`,
       };
 
       const activity = await prisma.activity.findFirst({
