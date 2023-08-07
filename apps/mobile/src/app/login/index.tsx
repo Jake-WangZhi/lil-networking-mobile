@@ -1,5 +1,6 @@
+const logo = require("../../../assets/icon.png");
+
 import { Button, Text, View, Image, Center, VStack, HStack } from "native-base";
-import logo from "../../../assets/icon.png";
 import { Notepad, UsersThree, ArrowsClockwise } from "phosphor-react-native";
 import { useOAuth } from "@clerk/clerk-expo";
 
