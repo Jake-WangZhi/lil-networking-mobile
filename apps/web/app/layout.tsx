@@ -1,10 +1,6 @@
 import "tailwindcss/tailwind.css";
 import "@fontsource/metropolis";
 import { Session } from "next-auth";
-import { headers } from "next/headers";
-import AuthContext from "./AuthContext";
-import { QCProvider, MuiCssProvider } from "~/app/provider";
-import { Analytics } from "@vercel/analytics/react";
 
 export const metadata = {
   title: "Lil Networking",
@@ -28,8 +24,6 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const session = await getSession(headers().get("cookie") ?? "");
-
   return (
     <html lang="en">
       <head>
@@ -39,15 +33,7 @@ export default async function RootLayout({
           href="/manifest.json"
         />
       </head>
-      <body className="font-sans bg-dark-blue mx-auto max-w-lg md:max-w-xl lg:max-w-3xl">
-        <QCProvider>
-          <MuiCssProvider>
-            <AuthContext session={session}>
-              {children} <Analytics />
-            </AuthContext>
-          </MuiCssProvider>
-        </QCProvider>
-      </body>
+      <body>{children}</body>
     </html>
   );
 }
