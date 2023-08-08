@@ -1,8 +1,9 @@
 const logo = require("../../../assets/icon.png");
 
-import { Button, Text, View, Image, Center, VStack, HStack } from "native-base";
+import { Button, Text, Image, Center, VStack, HStack } from "gluestack-ui";
 import { Notepad, UsersThree, ArrowsClockwise } from "phosphor-react-native";
 import { useOAuth } from "@clerk/clerk-expo";
+import { View } from "react-native";
 
 export default function Login() {
   const { startOAuthFlow } = useOAuth({ strategy: "oauth_linkedin" });
@@ -24,24 +25,28 @@ export default function Login() {
   return (
     <View className="flex-1 px-16 pt-40 pb-24 bg-dark-blue justify-between">
       <Center>
-        <Image source={logo} alt="Alternate Text" size={186} />
+        <Image
+          source={logo}
+          alt="Alternate Text"
+          className="w-[186px] h-[186px]"
+        />
         <Text className="text-white text-2xl font-semibold leading-8">
           Lil' Networking App
         </Text>
 
         <View className="py-14">
-          <VStack space={7}>
-            <HStack space={4}>
+          <VStack space={"3xl"}>
+            <HStack space="lg">
               <Notepad color="white" />
               <Text className="text-white text-xl">
                 Build Networking Habits
               </Text>
             </HStack>
-            <HStack space={4}>
+            <HStack space={"lg"}>
               <UsersThree color="white" />
               <Text className="text-white text-xl">Maintain Relationships</Text>
             </HStack>
-            <HStack space={4}>
+            <HStack space={"lg"}>
               <ArrowsClockwise color="white" />
               <Text className="text-white text-xl">Stay Connected</Text>
             </HStack>
@@ -51,7 +56,7 @@ export default function Login() {
 
       <Center>
         <Button
-          className="flex items-center justify-center rounded-[28px] bg-light-blue w-48"
+          className="flex items-center justify-center rounded-[28px] bg-light-blue w-52 h-12"
           onPress={onSignInPress}
         >
           <Text className="text-black">Sign in with LinkedIn</Text>

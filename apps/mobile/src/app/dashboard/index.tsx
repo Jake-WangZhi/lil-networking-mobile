@@ -1,5 +1,6 @@
 import { useClerk, useUser } from "@clerk/clerk-expo";
-import { Button, Text, View } from "native-base";
+import { Button, Text } from "gluestack-ui";
+import { View } from "react-native";
 
 export default function Dashboard() {
   const { user } = useUser();
