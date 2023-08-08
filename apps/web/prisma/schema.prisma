@@ -51,20 +51,13 @@ enum ActivityType {
 }
 
 model User {
-  id        String   @id @default(cuid())
+  id        String   @id
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  firstName     String
-  lastName      String
-  email         String?        @unique
-  phone         String?        @unique
-  image         String?
   Contacts      Contact[]
   goals         Goals?
   subscriptions Subscription[]
-
-  externalId String @unique
 }
 
 model Goals {
