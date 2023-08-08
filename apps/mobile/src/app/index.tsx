@@ -1,4 +1,4 @@
-import { View } from "native-base";
+import { View } from "react-native";
 import { SignedIn, SignedOut } from "@clerk/clerk-expo";
 import Dashboard from "./dashboard";
 import Login from "./login";

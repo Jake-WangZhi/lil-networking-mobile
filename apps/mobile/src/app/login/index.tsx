@@ -9,7 +9,7 @@ export default function Login() {
 
   const onSignInPress = async () => {
     try {
-      const { createdSessionId, setActive, signIn } = await startOAuthFlow();
+      const { createdSessionId, setActive } = await startOAuthFlow();
 
       if (createdSessionId && setActive) {
         setActive({ session: createdSessionId });
@@ -22,10 +22,10 @@ export default function Login() {
   };
 
   return (
-    <View className={`flex-1 px-16 pt-40 pb-24 bg-dark-blue justify-between`}>
+    <View className="flex-1 px-16 pt-40 pb-24 bg-dark-blue justify-between">
       <Center>
         <Image source={logo} alt="Alternate Text" size={186} />
-        <Text className={`text-white text-2xl font-semibold leading-8`}>
+        <Text className="text-white text-2xl font-semibold leading-8">
           Lil' Networking App
         </Text>
 
@@ -51,10 +51,10 @@ export default function Login() {
 
       <Center>
         <Button
-          className={`flex items-center justify-center rounded-[28px] bg-light-blue w-48`}
+          className="flex items-center justify-center rounded-[28px] bg-light-blue w-48"
           onPress={onSignInPress}
         >
-          <Text className={`text-black`}>Sign in with LinkedIn</Text>
+          <Text className="text-black">Sign in with LinkedIn</Text>
         </Button>
       </Center>
     </View>

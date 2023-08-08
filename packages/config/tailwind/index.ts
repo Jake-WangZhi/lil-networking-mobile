@@ -4,16 +4,6 @@ export default {
   content: [""],
   theme: {
     extend: {
-      fontSize: {
-        xs: "11px",
-        xl: "19px",
-        "2xl": "23px",
-        "3xl": "32px",
-      },
-      lineHeight: {
-        72: "57.6px",
-        48: "38.4px",
-      },
       fontFamily: {
         sans: ["Metropolis", "sans-serif"],
       },

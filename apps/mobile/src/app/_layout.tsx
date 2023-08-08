@@ -10,8 +10,6 @@ import {
   ITheme,
 } from "native-base";
 import { ClerkProvider } from "@clerk/clerk-expo";
-import { UserProvider } from "~/contexts/userContext";
-import { CLERK_PUBLISHABLE_KEY } from "@env";
 
 const theme: ITheme = extendTheme({
   button: {
@@ -20,13 +18,14 @@ const theme: ITheme = extendTheme({
 });
 
 const RootLayout = () => {
+  const CLERK_PUBLISHABLE_KEY =
+    process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY || "";
+
   return (
     <ClerkProvider publishableKey={CLERK_PUBLISHABLE_KEY}>
       <NativeBaseProvider theme={theme}>
-        <UserProvider>
-          <Stack screenOptions={{ headerShown: false }} />
-          <StatusBar barStyle={"light-content"} />
-        </UserProvider>
+        <Stack screenOptions={{ headerShown: false }} />
+        <StatusBar barStyle={"light-content"} />
       </NativeBaseProvider>
     </ClerkProvider>
   );

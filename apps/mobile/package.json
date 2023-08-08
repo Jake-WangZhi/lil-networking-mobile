@@ -8,7 +8,7 @@
     "dev": "expo start",
     "dev:android": "expo start --android",
     "dev:ios": "expo start --ios",
-    "devNoCache:ios": "expo start --clear --ios"
+    "devNoCache": "expo start --clear"
   },
   "dependencies": {
     "@clerk/clerk-expo": "^0.18.17",
@@ -39,6 +39,7 @@
     "@expo/config-plugins": "~7.2.2",
     "@foundrymakes/tailwind-config": "^0.1.0",
     "@types/babel__core": "^7.20.1",
+    "@types/node": "^20.4.8",
     "@types/react": "^18.2.17",
     "eslint": "^8.45.0",
     "postcss": "^8.4.26",
