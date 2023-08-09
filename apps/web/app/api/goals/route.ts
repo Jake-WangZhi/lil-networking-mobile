@@ -13,19 +13,11 @@ export async function POST(request: Request) {
       { status: 400, headers: { "content-type": "application/json" } }
     );
 
-  const user = await prisma.user.findUnique({ where: { id: userId } });
-
-  if (!user)
-    return new NextResponse(
-      JSON.stringify({ success: false, message: "No User Found" }),
-      { status: 404, headers: { "content-type": "application/json" } }
-    );
-
   const { networkingComfortLevel, goalConnections, goalMessages } = goalsArgs;
 
   const newGoals = await prisma.goals.create({
     data: {
-      userId: user.id,
+      userId,
       networkingComfortLevel: networkingComfortLevel ?? 1,
       goalConnections,
       goalMessages,
@@ -46,19 +38,11 @@ export async function PUT(request: Request) {
       { status: 400, headers: { "content-type": "application/json" } }
     );
 
-  const user = await prisma.user.findUnique({ where: { id: userId } });
-
-  if (!user)
-    return new NextResponse(
-      JSON.stringify({ success: false, message: "No User Found" }),
-      { status: 404, headers: { "content-type": "application/json" } }
-    );
-
   const { goalConnections, goalMessages } = goalsArgs;
 
   const newGoals = await prisma.goals.update({
     where: {
-      userId: user.id,
+      userId,
     },
     data: {
       goalConnections,
@@ -79,17 +63,9 @@ export async function GET(request: Request) {
       { status: 400, headers: { "content-type": "application/json" } }
     );
 
-  const user = await prisma.user.findUnique({ where: { id: userId } });
-
-  if (!user)
-    return new NextResponse(
-      JSON.stringify({ success: false, message: "No User Found" }),
-      { status: 404, headers: { "content-type": "application/json" } }
-    );
-
   const goals = await prisma.goals.findUnique({
     where: {
-      userId: user.id,
+      userId,
     },
   });
 

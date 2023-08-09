@@ -14,15 +14,7 @@ export async function GET(request: Request) {
       { status: 400, headers: { "content-type": "application/json" } }
     );
 
-  const user = await prisma.user.findUnique({ where: { id: userId } });
-
-  if (!user)
-    return new NextResponse(
-      JSON.stringify({ success: false, message: "No User Found" }),
-      { status: 404, headers: { "content-type": "application/json" } }
-    );
-
-  const contacts = await getContacts(name, user.id);
+  const contacts = await getContacts(name, userId);
 
   const contactIds = contacts.map((c) => c.id);
 
