@@ -3,31 +3,20 @@ import "@fontsource/metropolis";
 
 import React from "react";
 import { Stack } from "expo-router";
-import {
-  NativeBaseProvider,
-  StatusBar,
-  extendTheme,
-  ITheme,
-} from "native-base";
 import { ClerkProvider } from "@clerk/clerk-expo";
-import { UserProvider } from "~/contexts/userContext";
-import { CLERK_PUBLISHABLE_KEY } from "@env";
-
-const theme: ITheme = extendTheme({
-  button: {
-    height: "48px",
-  },
-});
+import { StatusBar } from "react-native";
+import { GluestackUIProvider, config } from "gluestack-ui";
 
 const RootLayout = () => {
+  const CLERK_PUBLISHABLE_KEY =
+    process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY || "";
+
   return (
     <ClerkProvider publishableKey={CLERK_PUBLISHABLE_KEY}>
-      <NativeBaseProvider theme={theme}>
-        <UserProvider>
-          <Stack screenOptions={{ headerShown: false }} />
-          <StatusBar barStyle={"light-content"} />
-        </UserProvider>
-      </NativeBaseProvider>
+      <GluestackUIProvider config={config.theme}>
+        <Stack screenOptions={{ headerShown: false }} />
+        <StatusBar barStyle={"light-content"} />
+      </GluestackUIProvider>
     </ClerkProvider>
   );
 };
