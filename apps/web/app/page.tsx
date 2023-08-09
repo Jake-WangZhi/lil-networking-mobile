@@ -1,7 +1,5 @@
 "use client";
 
-import { Typography } from "@mui/material";
-
 // Prisma does not support Edge without the Data Proxy currently
 export const runtime = "nodejs"; // default
 export const preferredRegion = "home";
@@ -16,10 +14,10 @@ export default function Home() {
         App
       </h1>
       <div className="w-1/12 h-[202px] border-l-4 border-light-blue"></div>
-      <Typography variant="h3">
+      <div>
         Build networking habits & <br />
         reach your goals
-      </Typography>
+      </div>
     </main>
   );
 }
