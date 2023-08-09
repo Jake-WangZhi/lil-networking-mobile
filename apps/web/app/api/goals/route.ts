@@ -4,16 +4,16 @@ import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
   const { searchParams } = new URL(request.url);
-  const email = searchParams.get(SearchParams.Email);
+  const userId = searchParams.get(SearchParams.UserId);
   const goalsArgs: GoalsArgs = await request.json();
 
-  if (!email)
+  if (!userId)
     return new NextResponse(
-      JSON.stringify({ success: false, message: "Missing Email" }),
+      JSON.stringify({ success: false, message: "Missing User Id" }),
       { status: 400, headers: { "content-type": "application/json" } }
     );
 
-  const user = await prisma.user.findUnique({ where: { email } });
+  const user = await prisma.user.findUnique({ where: { id: userId } });
 
   if (!user)
     return new NextResponse(
@@ -37,16 +37,16 @@ export async function POST(request: Request) {
 
 export async function PUT(request: Request) {
   const { searchParams } = new URL(request.url);
-  const email = searchParams.get(SearchParams.Email);
+  const userId = searchParams.get(SearchParams.UserId);
   const goalsArgs: GoalsArgs = await request.json();
 
-  if (!email)
+  if (!userId)
     return new NextResponse(
-      JSON.stringify({ success: false, message: "Missing Email" }),
+      JSON.stringify({ success: false, message: "Missing User Id" }),
       { status: 400, headers: { "content-type": "application/json" } }
     );
 
-  const user = await prisma.user.findUnique({ where: { email } });
+  const user = await prisma.user.findUnique({ where: { id: userId } });
 
   if (!user)
     return new NextResponse(
@@ -71,15 +71,15 @@ export async function PUT(request: Request) {
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
-  const email = searchParams.get(SearchParams.Email);
+  const userId = searchParams.get(SearchParams.UserId);
 
-  if (!email)
+  if (!userId)
     return new NextResponse(
-      JSON.stringify({ success: false, message: "Missing Email" }),
+      JSON.stringify({ success: false, message: "Missing User Id" }),
       { status: 400, headers: { "content-type": "application/json" } }
     );
 
-  const user = await prisma.user.findUnique({ where: { email } });
+  const user = await prisma.user.findUnique({ where: { id: userId } });
 
   if (!user)
     return new NextResponse(

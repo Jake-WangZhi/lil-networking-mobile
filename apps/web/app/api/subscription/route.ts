@@ -5,15 +5,15 @@ import { SearchParams, SubscriptionArgs } from "~/types";
 export async function POST(request: Request) {
   const subscriptionArgs: SubscriptionArgs = await request.json();
   const { searchParams } = new URL(request.url);
-  const email = searchParams.get(SearchParams.Email);
+  const userId = searchParams.get(SearchParams.UserId);
 
-  if (!email)
+  if (!userId)
     return new NextResponse(
-      JSON.stringify({ success: false, message: "Missing Email" }),
+      JSON.stringify({ success: false, message: "Missing User Id" }),
       { status: 400, headers: { "content-type": "application/json" } }
     );
 
-  const user = await prisma.user.findUnique({ where: { email } });
+  const user = await prisma.user.findUnique({ where: { id: userId } });
 
   if (!user)
     return new NextResponse(
