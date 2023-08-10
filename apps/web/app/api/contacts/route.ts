@@ -5,24 +5,16 @@ import { SearchParams } from "~/types";
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
-  const userEmail = searchParams.get(SearchParams.UserEmail);
+  const userId = searchParams.get(SearchParams.UserId);
   const name = searchParams.get(SearchParams.Name);
 
-  if (!userEmail)
+  if (!userId)
     return new NextResponse(
-      JSON.stringify({ success: false, message: "Missing Email" }),
+      JSON.stringify({ success: false, message: "Missing User Id" }),
       { status: 400, headers: { "content-type": "application/json" } }
     );
 
-  const user = await prisma.user.findUnique({ where: { email: userEmail } });
-
-  if (!user)
-    return new NextResponse(
-      JSON.stringify({ success: false, message: "No User Found" }),
-      { status: 404, headers: { "content-type": "application/json" } }
-    );
-
-  const contacts = await getContacts(name, user.id);
+  const contacts = await getContacts(name, userId);
 
   const contactIds = contacts.map((c) => c.id);
 

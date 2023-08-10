@@ -8,25 +8,17 @@ const DAYS_BEFORE_PAST_DUE = 10;
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
-  const email = searchParams.get(SearchParams.Email);
+  const userId = searchParams.get(SearchParams.UserId);
 
-  if (!email)
+  if (!userId)
     return new NextResponse(
-      JSON.stringify({ success: false, message: "Missing Email" }),
+      JSON.stringify({ success: false, message: "Missing User Id" }),
       { status: 400, headers: { "content-type": "application/json" } }
-    );
-
-  const user = await prisma.user.findUnique({ where: { email } });
-
-  if (!user)
-    return new NextResponse(
-      JSON.stringify({ success: false, message: "No User Found" }),
-      { status: 404, headers: { "content-type": "application/json" } }
     );
 
   const contacts = await prisma.contact.findMany({
     where: {
-      userId: user.id,
+      userId,
     },
   });
 
