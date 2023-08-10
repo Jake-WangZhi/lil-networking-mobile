@@ -1,9 +1,17 @@
-import { Text, View } from "react-native";
+import { View } from "react-native";
+import { SignedIn, SignedOut } from "@clerk/clerk-expo";
+import Dashboard from "./dashboard";
+import Login from "./login";
 
 export default function App() {
   return (
-    <View className="flex-1 items-center justify-center bg-[#0F1A24]">
-      <Text className="text-white">Lil’ Networking App</Text>
+    <View className="bg-dark-blue flex-1">
+      <SignedIn>
+        <Dashboard />
+      </SignedIn>
+      <SignedOut>
+        <Login />
+      </SignedOut>
     </View>
   );
 }

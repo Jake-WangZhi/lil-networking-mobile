@@ -26,7 +26,7 @@ model Contact {
   activities Activity[]
   isArchived Boolean    @default(false)
 
-  User   User   @relation(fields: [userId], references: [id])
+  User   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String
 }
 
@@ -50,35 +50,11 @@ enum ActivityType {
   SYSTEM
 }
 
-model Account {
-  id                String  @id @default(cuid())
-  type              String
-  provider          String
-  providerAccountId String
-  refresh_token     String? @db.Text
-  access_token      String? @db.Text
-  expires_at        Int?
-  token_type        String?
-  scope             String?
-  id_token          String? @db.Text
-  session_state     String?
-
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId String
-
-  @@unique([provider, providerAccountId])
-}
-
 model User {
-  id        String   @id @default(cuid())
+  id        String   @id
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  name          String?
-  email         String?        @unique
-  emailVerified DateTime?
-  image         String?
-  accounts      Account[]
   Contacts      Contact[]
   goals         Goals?
   subscriptions Subscription[]
@@ -97,16 +73,8 @@ model Goals {
   streak                 Int @default(0)
   highestStreak          Int @default(0)
 
-  user   User   @relation(fields: [userId], references: [id])
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String @unique
-}
-
-model VerificationToken {
-  identifier String
-  token      String   @unique
-  expires    DateTime
-
-  @@unique([identifier, token])
 }
 
 model Quote {
@@ -127,7 +95,7 @@ model Subscription {
   auth      String   @unique
   p256dh    String   @unique
 
-  User   User   @relation(fields: [userId], references: [id])
+  User   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String
 
   notificationSettings NotificationSettings?
@@ -142,6 +110,6 @@ model NotificationSettings {
   streak    Boolean
   meetGoal  Boolean
 
-  subscription   Subscription @relation(fields: [subscriptionId], references: [id])
+  subscription   Subscription @relation(fields: [subscriptionId], references: [id], onDelete: Cascade)
   subscriptionId String       @unique
 }
