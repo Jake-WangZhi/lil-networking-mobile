@@ -12,9 +12,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@emotion/react": "^11.11.0",
-    "@emotion/styled": "^11.11.0",
-    "@headlessui/react": "^1.7.14",
     "@prisma/client": "4.13.0",
     "@vercel/postgres": "0.1.0-canary.29",
     "date-fns": "^2.30.0",
@@ -23,11 +20,9 @@
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@foundrymakes/tailwind-config": "^0.1.0",
     "@types/node": "18.15.11",
     "@types/react": "18.0.37",
     "@types/react-dom": "18.0.11",
-    "autoprefixer": "10.4.14",
     "eslint": "8.38.0",
     "eslint-config-next": "^13.4.1",
     "eslint-plugin-unused-imports": "^2.0.0",
