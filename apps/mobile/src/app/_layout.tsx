@@ -8,6 +8,20 @@ import { StatusBar } from "react-native";
 import { GluestackUIProvider, config } from "gluestack-ui";
 import * as SecureStore from "expo-secure-store";
 
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { NavigationContainer } from "@react-navigation/native";
+
+import Dashboard from "./(main)/dashboard";
+const Tab = createBottomTabNavigator();
+
+function MyTabs() {
+  return (
+    <Tab.Navigator>
+      <Tab.Screen name="Home" component={Dashboard} />
+    </Tab.Navigator>
+  );
+}
+
 const CLERK_PUBLISHABLE_KEY = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY;
 
 const tokenCache = {

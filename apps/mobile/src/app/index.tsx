@@ -1,6 +1,6 @@
 import { View } from "react-native";
 import { SignedIn, SignedOut } from "@clerk/clerk-expo";
-import Dashboard from "./dashboard";
+import Dashboard from "./(main)/dashboard";
 import Login from "./login";
 
 export default function App() {

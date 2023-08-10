@@ -11,7 +11,7 @@ export default {
         xs: "11",
         xl: "19",
         "2xl": "23",
-        "3xl": "32",
+        "3xl": "33",
       },
       lineHeight: {
         72: "57.6",
