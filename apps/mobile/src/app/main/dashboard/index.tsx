@@ -2,15 +2,13 @@ const animationData = require("~/lottie/add-and-save.json");
 
 import { useUser } from "@clerk/clerk-expo";
 import { Button, Text } from "gluestack-ui";
-import { TouchableOpacity, View } from "react-native";
-import { Info, PlusCircle, X } from "phosphor-react-native";
+import { View } from "react-native";
+import { PlusCircle } from "phosphor-react-native";
 import LottieView from "lottie-react-native";
-import Tooltip from "react-native-walkthrough-tooltip";
-import { useState } from "react";
+import { Tooltip } from "~/components/Tooltip";
 
 export default function Dashboard() {
   const { user } = useUser();
-  const [showTip, setTip] = useState(false);
 
   if (!user) {
     return (
@@ -28,57 +26,27 @@ export default function Dashboard() {
             Hi, {user.firstName}
           </Text>
           <Tooltip
-            backgroundColor="transparent"
-            contentStyle={{ backgroundColor: "#0F1A24", padding: 0 }}
-            arrowStyle={{
-              backgroundColor: "#0F1A24",
-              borderTopColor: "rgba(255, 255, 255, 0.16)",
-            }}
-            isVisible={showTip}
             content={
-              <View
-                style={{
-                  backgroundColor: "rgba(255, 255, 255, 0.16)",
-                  padding: 16,
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                }}
-              >
-                <View className="space-y-4">
-                  <View>
-                    <Text className="text-white font-bold text-sm">
-                      Priority:{" "}
-                      <Text className="text-white text-sm">
-                        Items that have been actionable for 10+ days
-                      </Text>
+              <View className="space-y-4">
+                <View>
+                  <Text className="text-white font-bold text-sm">
+                    Priority:{" "}
+                    <Text className="text-white text-sm">
+                      Items that have been actionable for 10+ days
                     </Text>
-                  </View>
-                  <View>
-                    <Text className="text-white font-bold text-sm">
-                      Upcoming:{" "}
-                      <Text className="text-white text-sm">
-                        Items that have been actionable between 0-10 days
-                      </Text>
-                    </Text>
-                  </View>
+                  </Text>
                 </View>
                 <View>
-                  <Button
-                    className="bg-transparent w-4 h-4"
-                    onPress={() => setTip(false)}
-                  >
-                    <X color="white" size={16} />
-                  </Button>
+                  <Text className="text-white font-bold text-sm">
+                    Upcoming:{" "}
+                    <Text className="text-white text-sm">
+                      Items that have been actionable between 0-10 days
+                    </Text>
+                  </Text>
                 </View>
               </View>
             }
-            onClose={() => setTip(false)}
-            placement="bottom"
-          >
-            <TouchableOpacity onPress={() => setTip(true)}>
-              <Info color="white" size={48} />
-            </TouchableOpacity>
-          </Tooltip>
+          />
         </View>
         <Button
           style={{ backgroundColor: "rgba(255, 255, 255, 0.05)" }}
