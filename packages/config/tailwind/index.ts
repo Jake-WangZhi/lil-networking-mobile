@@ -13,6 +13,7 @@ export default {
         "light-black": "#2E2E2E",
         "light-yellow": "#FFCF79",
         error: "#F42010",
+        "light-white": "rgba(255, 255, 255, 0.16)",
       },
     },
   },

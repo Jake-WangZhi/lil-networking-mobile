@@ -2,22 +2,55 @@ import "../global.css";
 import "@fontsource/metropolis";
 
 import React from "react";
-import { Stack } from "expo-router";
 import { ClerkProvider } from "@clerk/clerk-expo";
-import { StatusBar } from "react-native";
 import { GluestackUIProvider, config } from "gluestack-ui";
 import * as SecureStore from "expo-secure-store";
 
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-import Dashboard from "./(main)/dashboard";
+import Dashboard from "./dashboard";
+import Contacts from "./contacts";
+import { Info } from "phosphor-react-native";
+import Settings from "./settings";
+import App from ".";
+import Login from "./login";
+
 const Tab = createBottomTabNavigator();
+const Stack = createNativeStackNavigator();
 
 function MyTabs() {
   return (
-    <Tab.Navigator>
-      <Tab.Screen name="Home" component={Dashboard} />
+    <Tab.Navigator
+      sceneContainerStyle={{ backgroundColor: "#0F1A24 !important" }}
+    >
+      <Tab.Screen
+        name="dashboard/index"
+        component={Dashboard}
+        options={{
+          tabBarIcon: () => <Info />,
+          headerShown: false,
+          tabBarLabel: "Dashboard",
+        }}
+      />
+      <Tab.Screen
+        name="contacts/index"
+        component={Contacts}
+        options={{
+          tabBarIcon: () => <Info />,
+          headerShown: false,
+          tabBarLabel: "Contacts",
+        }}
+      />
+      <Tab.Screen
+        name="settings/index"
+        component={Settings}
+        options={{
+          tabBarIcon: () => <Info />,
+          headerShown: false,
+          tabBarLabel: "Contacts",
+        }}
+      />
     </Tab.Navigator>
   );
 }
@@ -52,8 +85,76 @@ const RootLayout = () => {
       publishableKey={CLERK_PUBLISHABLE_KEY}
     >
       <GluestackUIProvider config={config.theme}>
-        <Stack screenOptions={{ headerShown: false }} />
-        <StatusBar barStyle={"light-content"} />
+        {/* <Stack.Navigator initialRouteName="index">
+          <Stack.Screen
+            name="main"
+            component={MyTabs}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="index"
+            component={App}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="login/index"
+            component={Login}
+            options={{
+              headerShown: false,
+            }}
+          />
+        </Stack.Navigator> */}
+
+        <Tab.Navigator
+          sceneContainerStyle={{ backgroundColor: "#0F1A24" }}
+          initialRouteName="index"
+        >
+          <Tab.Screen
+            name="index"
+            component={App}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Tab.Screen
+            name="login/index"
+            component={Login}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Tab.Screen
+            name="dashboard/index"
+            component={Dashboard}
+            options={{
+              tabBarIcon: () => <Info />,
+              headerShown: false,
+              tabBarLabel: "Dashboard",
+            }}
+          />
+          <Tab.Screen
+            name="contacts/index"
+            component={Contacts}
+            options={{
+              tabBarIcon: () => <Info />,
+              headerShown: false,
+              tabBarLabel: "Contacts",
+            }}
+          />
+          <Tab.Screen
+            name="settings/index"
+            component={Settings}
+            options={{
+              tabBarIcon: () => <Info />,
+              headerShown: false,
+              tabBarLabel: "Settings",
+            }}
+          />
+        </Tab.Navigator>
       </GluestackUIProvider>
     </ClerkProvider>
   );

@@ -1,4 +1,4 @@
-const logo = require("../../../assets/icon.png");
+const logo = require("~/images/icon.png");
 
 import { Button, Text, Image, Center, VStack, HStack } from "gluestack-ui";
 import { Notepad, UsersThree, ArrowsClockwise } from "phosphor-react-native";

@@ -1,6 +1,7 @@
 import { useClerk } from "@clerk/clerk-expo";
-import { Button, Text } from "gluestack-ui";
+import { Text } from "gluestack-ui";
 import { View } from "react-native";
+import { Link } from "expo-router";
 
 export default function Settings() {
   const { signOut } = useClerk();
@@ -8,12 +9,15 @@ export default function Settings() {
   return (
     <View className="flex-1 justify-center items-center">
       <Text className="text-white">Hello, this is the settings</Text>
-      <Button
+      <Link
         className="flex items-center justify-center bg-transparent"
-        onPress={() => signOut()}
+        onPress={() => {
+          signOut();
+        }}
+        href="/login"
       >
         <Text className="text-white">Sign out</Text>
-      </Button>
+      </Link>
     </View>
   );
 }
