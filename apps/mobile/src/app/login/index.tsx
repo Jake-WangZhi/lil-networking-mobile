@@ -4,6 +4,7 @@ import { Button, Text, Image, Center, VStack, HStack } from "gluestack-ui";
 import { Notepad, UsersThree, ArrowsClockwise } from "phosphor-react-native";
 import { useOAuth } from "@clerk/clerk-expo";
 import { View } from "react-native";
+import { router } from "expo-router";
 
 export default function Login() {
   const { startOAuthFlow } = useOAuth({ strategy: "oauth_linkedin" });
@@ -14,6 +15,7 @@ export default function Login() {
 
       if (createdSessionId && setActive) {
         setActive({ session: createdSessionId });
+        router.replace("/main");
       } else {
         console.log("failed to sign in");
       }

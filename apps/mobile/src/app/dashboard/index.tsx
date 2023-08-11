@@ -3,7 +3,7 @@ const animationData = require("~/lottie/add-and-save.json");
 import { useUser } from "@clerk/clerk-expo";
 import { Button, Text } from "gluestack-ui";
 import { TouchableOpacity, View } from "react-native";
-import { Info, PlusCircle } from "phosphor-react-native";
+import { Info, PlusCircle, X } from "phosphor-react-native";
 import LottieView from "lottie-react-native";
 import Tooltip from "react-native-walkthrough-tooltip";
 import { useState } from "react";
@@ -40,24 +40,35 @@ export default function Dashboard() {
                 style={{
                   backgroundColor: "rgba(255, 255, 255, 0.16)",
                   padding: 16,
-                  gap: 16,
+                  flexDirection: "row",
+                  justifyContent: "space-between",
                 }}
               >
-                <View>
-                  <Text className="text-white font-bold text-sm">
-                    Priority:{" "}
-                    <Text className="text-white text-sm">
-                      Items that have been actionable for 10+ days
+                <View className="space-y-4">
+                  <View>
+                    <Text className="text-white font-bold text-sm">
+                      Priority:{" "}
+                      <Text className="text-white text-sm">
+                        Items that have been actionable for 10+ days
+                      </Text>
                     </Text>
-                  </Text>
+                  </View>
+                  <View>
+                    <Text className="text-white font-bold text-sm">
+                      Upcoming:{" "}
+                      <Text className="text-white text-sm">
+                        Items that have been actionable between 0-10 days
+                      </Text>
+                    </Text>
+                  </View>
                 </View>
                 <View>
-                  <Text className="text-white font-bold text-sm">
-                    Upcoming:{" "}
-                    <Text className="text-white text-sm">
-                      Items that have been actionable between 0-10 days
-                    </Text>
-                  </Text>
+                  <Button
+                    className="bg-transparent w-4 h-4"
+                    onPress={() => setTip(false)}
+                  >
+                    <X color="white" size={16} />
+                  </Button>
                 </View>
               </View>
             }
