@@ -49,13 +49,10 @@ export default function Dashboard() {
           />
         </View>
         <Button
-          style={{
-            backgroundColor: "rgba(255, 255, 255, 0.05)",
-            borderColor: "rgba(255, 255, 255, 0.07)",
-          }}
-          className=" mt-6 space-x-2 border border-dashed rounded-xl h-[140]"
+          style={{ backgroundColor: "rgba(255, 255, 255, 0.05)" }}
+          className="mt-6 space-x-2 border border-dashed border-white rounded-xl h-[140]"
         >
-          <PlusCircle color="white" />
+          <PlusCircle color="white" size={32} />
           <Text className="text-white font-normal">Add Goals</Text>
         </Button>
       </View>
