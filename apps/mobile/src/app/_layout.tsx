@@ -9,7 +9,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import App from ".";
 import Login from "./login";
-import main from "./main";
+import Main from "./main";
 
 const Stack = createNativeStackNavigator();
 
@@ -63,7 +63,7 @@ const RootLayout = () => {
           />
           <Stack.Screen
             name="main/index"
-            component={main}
+            component={Main}
             options={{
               headerShown: false,
             }}

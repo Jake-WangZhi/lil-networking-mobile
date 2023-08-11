@@ -5,8 +5,11 @@ import { Notepad, UsersThree, ArrowsClockwise } from "phosphor-react-native";
 import { useOAuth } from "@clerk/clerk-expo";
 import { View } from "react-native";
 import { router } from "expo-router";
+import { useWarmUpBrowser } from "../hooks/useWarmUpBrowser";
 
 export default function Login() {
+  useWarmUpBrowser();
+
   const { startOAuthFlow } = useOAuth({ strategy: "oauth_linkedin" });
 
   const onSignInPress = async () => {

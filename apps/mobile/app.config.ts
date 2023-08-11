@@ -1,5 +1,13 @@
 import type { ExpoConfig } from "@expo/config";
 
+const projectId = process.env.EAS_PROJECT_ID;
+
+if (!projectId) {
+  throw new Error(
+    "Please set the EAS_PROJECT_ID environment variable to your EAS project ID."
+  );
+}
+
 const defineConfig = (): ExpoConfig => ({
   name: "lil-networking",
   slug: "lil-networking",
@@ -29,7 +37,7 @@ const defineConfig = (): ExpoConfig => ({
   },
   extra: {
     eas: {
-      projectId: "8611db62-b5f8-4bd4-bda2-fd91ad0f7d7c",
+      projectId,
     },
   },
   experiments: {

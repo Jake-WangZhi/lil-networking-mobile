@@ -1,8 +1,8 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import Dashboard from "../dashboard";
 import { House, Users, Gear } from "phosphor-react-native";
-import Contacts from "../contacts";
-import Settings from "../settings";
+import Dashboard from "./dashboard";
+import Contacts from "./contacts";
+import Settings from "./settings";
 
 const Tab = createBottomTabNavigator();
 
