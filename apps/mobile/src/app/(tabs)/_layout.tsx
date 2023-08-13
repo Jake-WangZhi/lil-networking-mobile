@@ -1,21 +1,15 @@
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { House, Users, Gear } from "phosphor-react-native";
-import Dashboard from "./dashboard";
-import Contacts from "./contacts";
-import Settings from "./settings";
+import { Tabs } from "expo-router";
 
-const Tab = createBottomTabNavigator();
-
-export default function Main() {
+export default function Layout() {
   return (
-    <Tab.Navigator
+    <Tabs
       sceneContainerStyle={{
         backgroundColor: "#0F1A24",
       }}
     >
-      <Tab.Screen
+      <Tabs.Screen
         name="dashboard/index"
-        component={Dashboard}
         options={{
           tabBarIcon: ({ focused }) => (
             <House
@@ -31,9 +25,8 @@ export default function Main() {
           tabBarLabelStyle: { fontWeight: "600", fontSize: 11 },
         }}
       />
-      <Tab.Screen
+      <Tabs.Screen
         name="contacts/index"
-        component={Contacts}
         options={{
           tabBarIcon: ({ focused }) => (
             <Users
@@ -49,9 +42,8 @@ export default function Main() {
           tabBarLabelStyle: { fontWeight: "600", fontSize: 11 },
         }}
       />
-      <Tab.Screen
+      <Tabs.Screen
         name="settings/index"
-        component={Settings}
         options={{
           tabBarIcon: ({ focused }) => (
             <Gear
@@ -67,6 +59,6 @@ export default function Main() {
           tabBarLabelStyle: { fontWeight: "600", fontSize: 11 },
         }}
       />
-    </Tab.Navigator>
+    </Tabs>
   );
 }

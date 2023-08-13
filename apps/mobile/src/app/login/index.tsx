@@ -18,7 +18,7 @@ export default function Login() {
 
       if (createdSessionId && setActive) {
         setActive({ session: createdSessionId });
-        router.replace("/main");
+        router.push("/dashboard");
       } else {
         console.log("failed to sign in");
       }

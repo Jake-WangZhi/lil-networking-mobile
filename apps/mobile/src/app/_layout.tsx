@@ -5,13 +5,8 @@ import React from "react";
 import { ClerkProvider } from "@clerk/clerk-expo";
 import { GluestackUIProvider, config } from "gluestack-ui";
 import * as SecureStore from "expo-secure-store";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-import App from ".";
-import Login from "./login";
-import Main from "./main";
-
-const Stack = createNativeStackNavigator();
+import { Stack } from "expo-router";
 
 const CLERK_PUBLISHABLE_KEY = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY;
 
@@ -43,32 +38,10 @@ const RootLayout = () => {
         tokenCache={tokenCache}
         publishableKey={CLERK_PUBLISHABLE_KEY}
       >
-        <Stack.Navigator
-          initialRouteName="index"
+        <Stack
           screenOptions={{ headerShown: false }}
-        >
-          <Stack.Screen
-            name="index"
-            component={App}
-            options={{
-              headerShown: false,
-            }}
-          />
-          <Stack.Screen
-            name="login/index"
-            component={Login}
-            options={{
-              headerShown: false,
-            }}
-          />
-          <Stack.Screen
-            name="main/index"
-            component={Main}
-            options={{
-              headerShown: false,
-            }}
-          />
-        </Stack.Navigator>
+          initialRouteName="index"
+        />
       </ClerkProvider>
     </GluestackUIProvider>
   );
