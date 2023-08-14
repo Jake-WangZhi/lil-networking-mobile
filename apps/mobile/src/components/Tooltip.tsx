@@ -1,7 +1,6 @@
-import { Button } from "gluestack-ui";
 import { Info, X } from "phosphor-react-native";
 import { ReactElement, useState } from "react";
-import { TouchableOpacity, View } from "react-native";
+import { TouchableOpacity, View, Pressable } from "react-native";
 import RNTooltip from "react-native-walkthrough-tooltip";
 
 interface Props {
@@ -31,12 +30,12 @@ export const Tooltip = ({ content }: Props) => {
         >
           {content}
           <View>
-            <Button
+            <Pressable
               className="bg-transparent w-4 h-4 p-0"
               onPress={() => setTip(false)}
             >
               <X color="white" size={16} />
-            </Button>
+            </Pressable>
           </View>
         </View>
       }

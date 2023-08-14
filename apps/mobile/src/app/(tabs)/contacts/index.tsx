@@ -1,5 +1,4 @@
-import { Text } from "gluestack-ui";
-import { View } from "react-native";
+import { View, Text } from "react-native";
 
 export default function Contacts() {
   return (

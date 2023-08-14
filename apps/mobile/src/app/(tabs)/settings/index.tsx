@@ -1,6 +1,5 @@
 import { useClerk } from "@clerk/clerk-expo";
-import { Text } from "gluestack-ui";
-import { View } from "react-native";
+import { View, Text } from "react-native";
 import { Link } from "expo-router";
 
 export default function Settings() {

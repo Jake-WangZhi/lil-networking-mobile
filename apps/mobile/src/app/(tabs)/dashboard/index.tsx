@@ -1,8 +1,7 @@
 const animationData = require("~/lottie/add-and-save.json");
 
 import { useUser } from "@clerk/clerk-expo";
-import { Button, Text } from "gluestack-ui";
-import { View } from "react-native";
+import { View, Text } from "react-native";
 import { PlusCircle } from "phosphor-react-native";
 import LottieView from "lottie-react-native";
 import { Tooltip } from "~/components/Tooltip";
@@ -32,7 +31,7 @@ export default function Dashboard() {
                 <View>
                   <Text className="text-white font-bold text-sm">
                     Priority:{" "}
-                    <Text className="text-white text-sm">
+                    <Text className="text-white font-normal text-sm">
                       Items that have been actionable for 10+ days
                     </Text>
                   </Text>
@@ -40,7 +39,7 @@ export default function Dashboard() {
                 <View>
                   <Text className="text-white font-bold text-sm">
                     Upcoming:{" "}
-                    <Text className="text-white text-sm">
+                    <Text className="text-white font-normal text-sm">
                       Items that have been actionable between 0-10 days
                     </Text>
                   </Text>
@@ -49,14 +48,15 @@ export default function Dashboard() {
             }
           />
         </View>
-        <Ripple>
-          <Button
-            style={{ backgroundColor: "rgba(255, 255, 255, 0.05)" }}
-            className="mt-6 space-x-2 border border-dashed border-white rounded-xl h-[140]"
-          >
+        <Ripple
+          onPress={() => console.log("haha")}
+          style={{ backgroundColor: "rgba(255, 255, 255, 0.05)" }}
+          className="flex justify-center items-center mt-6 border border-dashed border-white rounded-xl h-[140]"
+        >
+          <View className="flex flex-row items-center space-x-2">
             <PlusCircle color="white" size={32} />
             <Text className="text-white font-normal">Add Goals</Text>
-          </Button>
+          </View>
         </Ripple>
       </View>
       <View className="px-14 pt-28">

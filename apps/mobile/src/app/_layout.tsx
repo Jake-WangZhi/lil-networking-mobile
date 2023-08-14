@@ -3,7 +3,7 @@ import "@fontsource/metropolis";
 
 import React from "react";
 import { ClerkProvider } from "@clerk/clerk-expo";
-import { GluestackUIProvider, config } from "gluestack-ui";
+import { GluestackUIProvider, config } from "@gluestack-ui/react";
 import * as SecureStore from "expo-secure-store";
 
 import { Stack } from "expo-router";
