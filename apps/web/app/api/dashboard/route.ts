@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server";
 import prisma from "~/lib/prisma";
-import { Activity, Contact } from "@prisma/client";
-import { Action, ActivityType, SearchParams } from "~/types";
+import type { Activity, Contact } from "@prisma/client";
+import type { Action } from "~/types";
+import { ActivityType, SearchParams } from "~/types";
 import { differenceInDays } from "date-fns";
 
 const DAYS_BEFORE_PAST_DUE = 10;
@@ -52,8 +53,8 @@ export async function GET(request: Request) {
 }
 
 const parseActions = (contacts: Contact[], activities: Activity[]) => {
-  const pastActions: Array<Action> = [];
-  const upcomingActions: Array<Action> = [];
+  const pastActions: Action[] = [];
+  const upcomingActions: Action[] = [];
 
   const contactIndex: Record<string, Contact> = {};
   contacts.forEach((contact) => {

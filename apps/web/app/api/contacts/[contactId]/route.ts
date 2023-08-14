@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import prisma from "~/lib/prisma";
-import { Activity, Contact } from "@prisma/client";
-import { ContactArgs } from "~/types";
+import type { Activity, Contact } from "@prisma/client";
+import type { ContactArgs } from "~/types";
 
 export async function GET(
   request: Request,

@@ -1,5 +1,6 @@
 import { Info, X } from "phosphor-react-native";
-import { ReactElement, useState } from "react";
+import type { ReactElement } from "react";
+import { useState } from "react";
 import { TouchableOpacity, View, Pressable } from "react-native";
 import RNTooltip from "react-native-walkthrough-tooltip";
 

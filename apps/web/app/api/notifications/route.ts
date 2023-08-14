@@ -1,4 +1,5 @@
-import { NotificationSettingsArgs, SearchParams } from "~/types";
+import type { NotificationSettingsArgs } from "~/types";
+import { SearchParams } from "~/types";
 import { NextResponse } from "next/server";
 import prisma from "~/lib/prisma";
 
