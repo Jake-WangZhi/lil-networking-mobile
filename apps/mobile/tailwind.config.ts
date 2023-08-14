@@ -1,5 +1,3 @@
-import type { Config } from "tailwindcss";
-
 import baseConfig from "@foundrymakes/tailwind-config";
 
 export default {

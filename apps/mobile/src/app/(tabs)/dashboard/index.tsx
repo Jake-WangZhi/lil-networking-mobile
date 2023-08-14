@@ -1,8 +1,9 @@
-const animationData = require("~/lottie/add-and-save.json");
+import animationData from "~/lottie/add-and-save.json";
 
 import { useUser } from "@clerk/clerk-expo";
-import { View, Text } from "react-native";
+import { View, Text, ActivityIndicator } from "react-native";
 import { PlusCircle } from "phosphor-react-native";
+import { Center } from "@gluestack-ui/react";
 import LottieView from "lottie-react-native";
 import { Tooltip } from "~/components/Tooltip";
 import Ripple from "react-native-material-ripple";
@@ -13,12 +14,11 @@ export default function Dashboard() {
 
   if (!user) {
     return (
-      <View className={`flex-1 justify-center items-center`}>
-        <Text className="text-white">No User Found</Text>
-      </View>
+      <Center>
+        <ActivityIndicator size="large" color="#38ACE2" />
+      </Center>
     );
   }
-
   return (
     <>
       <View className="px-4">

@@ -4,6 +4,7 @@ import prisma from "~/lib/prisma";
 export async function GET(request: Request) {
   //Keep this line to prevent the function from being cached
   //To ensure it returns a different quote randomly with each request.
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { searchParams } = new URL(request.url);
 
   const count = await prisma.quote.count();

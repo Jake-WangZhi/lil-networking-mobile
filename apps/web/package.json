@@ -9,7 +9,8 @@
     "build": "prisma generate && prisma migrate deploy && next build",
     "clean": "git clean -xdf .next .turbo node_modules",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "lint:fix": "yarn lint --fix"
   },
   "dependencies": {
     "@prisma/client": "4.13.0",
@@ -20,16 +21,24 @@
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
+    "@foundrymakes/eslint-config": "^0.2.0",
+    "@foundrymakes/tailwind-config": "^0.1.0",
     "@types/node": "18.15.11",
     "@types/react": "18.0.37",
     "@types/react-dom": "18.0.11",
     "eslint": "8.38.0",
-    "eslint-config-next": "^13.4.1",
-    "eslint-plugin-unused-imports": "^2.0.0",
     "postcss": "8.4.22",
     "prisma": "4.13.0",
     "tailwindcss": "3.3.1",
     "ts-node": "^10.9.1",
     "typescript": "5.0.4"
+  },
+  "eslintConfig": {
+    "root": true,
+    "extends": [
+      "@foundrymakes/eslint-config/base",
+      "@foundrymakes/eslint-config/nextjs",
+      "@foundrymakes/eslint-config/react"
+    ]
   }
 }
