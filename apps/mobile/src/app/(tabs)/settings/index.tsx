@@ -1,14 +1,9 @@
 import { useClerk } from "@clerk/clerk-expo";
 import { View, Text } from "react-native";
 import { Link } from "expo-router";
-import { useCallback } from "react";
 
 export default function Settings() {
   const { signOut } = useClerk();
-
-  const pressOnSignOut = useCallback(async () => {
-    await signOut();
-  }, [signOut]);
 
   return (
     <>
@@ -16,7 +11,7 @@ export default function Settings() {
         <Text className="text-white">Hello, this is the settings</Text>
         <Link
           className="flex items-center justify-center bg-transparent"
-          onPress={pressOnSignOut}
+          onPress={() => signOut()}
           href="/login"
         >
           <Text className="text-white">Sign out</Text>
