@@ -6,6 +6,7 @@ import { PlusCircle } from "phosphor-react-native";
 import LottieView from "lottie-react-native";
 import { Tooltip } from "~/components/Tooltip";
 import Ripple from "react-native-material-ripple";
+import { DashboardTutorial } from "~/components/DashboardTutorial";
 
 export default function Dashboard() {
   const { user } = useUser();
@@ -82,6 +83,7 @@ export default function Dashboard() {
           </View>
         </View>
       </View>
+      <DashboardTutorial />
     </>
   );
 }

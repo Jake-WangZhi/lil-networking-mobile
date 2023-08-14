@@ -16,13 +16,13 @@ export const Tooltip = ({ content }: Props) => {
       contentStyle={{ backgroundColor: "#0F1A24", padding: 0 }}
       arrowStyle={{
         backgroundColor: "#0F1A24",
-        borderTopColor: "rgba(255, 255, 255, 0.16)",
+        borderTopColor: "rgba(255, 255, 255, 0.12)",
       }}
       isVisible={showTip}
       content={
         <View
           style={{
-            backgroundColor: "rgba(255, 255, 255, 0.16)",
+            backgroundColor: "rgba(255, 255, 255, 0.12)",
             padding: 16,
             flexDirection: "row",
             gap: 8,
