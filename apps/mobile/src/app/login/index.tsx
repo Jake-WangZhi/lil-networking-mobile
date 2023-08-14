@@ -5,7 +5,6 @@ import { Center, VStack, HStack } from "@gluestack-ui/react";
 import { Notepad, UsersThree, ArrowsClockwise } from "phosphor-react-native";
 import { useOAuth } from "@clerk/clerk-expo";
 import { View, Text, Image } from "react-native";
-import { router } from "expo-router";
 import { useWarmUpBrowser } from "~/hooks/useWarmUpBrowser";
 import Ripple from "react-native-material-ripple";
 
@@ -20,7 +19,6 @@ export default function Login() {
 
       if (createdSessionId && setActive) {
         await setActive({ session: createdSessionId });
-        router.push("/dashboard");
       } else {
         console.log("failed to sign in");
       }
