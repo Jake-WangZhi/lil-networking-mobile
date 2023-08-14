@@ -49,7 +49,6 @@ export default function Dashboard() {
           />
         </View>
         <Ripple
-          onPress={() => console.log("haha")}
           style={{ backgroundColor: "rgba(255, 255, 255, 0.05)" }}
           className="flex justify-center items-center mt-6 border border-dashed border-white rounded-xl h-[140]"
         >
