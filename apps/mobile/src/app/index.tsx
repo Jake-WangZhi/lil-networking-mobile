@@ -1,13 +1,13 @@
 import { View } from "react-native";
 import { SignedIn, SignedOut } from "@clerk/clerk-expo";
-import Dashboard from "./dashboard";
 import Login from "./login";
+import { Redirect } from "expo-router";
 
 export default function App() {
   return (
-    <View className="bg-dark-blue flex-1">
+    <View className="flex-1">
       <SignedIn>
-        <Dashboard />
+        <Redirect href="/dashboard" />
       </SignedIn>
       <SignedOut>
         <Login />

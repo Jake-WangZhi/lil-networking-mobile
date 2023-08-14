@@ -1,11 +1,16 @@
-const logo = require("../../../assets/icon.png");
+const logo = require("~/images/icon.png");
 
-import { Button, Text, Image, Center, VStack, HStack } from "gluestack-ui";
+import { Center, VStack, HStack } from "@gluestack-ui/react";
 import { Notepad, UsersThree, ArrowsClockwise } from "phosphor-react-native";
 import { useOAuth } from "@clerk/clerk-expo";
-import { View } from "react-native";
+import { View, Text, Image } from "react-native";
+import { router } from "expo-router";
+import { useWarmUpBrowser } from "~/hooks/useWarmUpBrowser";
+import Ripple from "react-native-material-ripple";
 
 export default function Login() {
+  useWarmUpBrowser();
+
   const { startOAuthFlow } = useOAuth({ strategy: "oauth_linkedin" });
 
   const onSignInPress = async () => {
@@ -14,6 +19,7 @@ export default function Login() {
 
       if (createdSessionId && setActive) {
         setActive({ session: createdSessionId });
+        router.push("/dashboard");
       } else {
         console.log("failed to sign in");
       }
@@ -28,7 +34,10 @@ export default function Login() {
         <Image
           source={logo}
           alt="Alternate Text"
-          className="w-[186px] h-[186px]"
+          style={{
+            height: 186,
+            width: 186,
+          }}
         />
         <Text className="text-white text-2xl font-semibold leading-8">
           Lil' Networking App
@@ -55,12 +64,12 @@ export default function Login() {
       </Center>
 
       <Center>
-        <Button
+        <Ripple
           className="flex items-center justify-center rounded-[28px] bg-light-blue w-52 h-12"
           onPress={onSignInPress}
         >
           <Text className="text-black">Sign in with LinkedIn</Text>
-        </Button>
+        </Ripple>
       </Center>
     </View>
   );
