@@ -11,9 +11,7 @@ export default function Settings() {
         <Text className="text-white">Hello, this is the settings</Text>
         <Link
           className="flex items-center justify-center bg-transparent"
-          onPress={() => {
-            signOut();
-          }}
+          onPress={() => signOut()}
           href="/login"
         >
           <Text className="text-white">Sign out</Text>

@@ -1,10 +1,10 @@
+// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 const logo = require("~/images/icon.png");
 
 import { Center, VStack, HStack } from "@gluestack-ui/react";
 import { Notepad, UsersThree, ArrowsClockwise } from "phosphor-react-native";
 import { useOAuth } from "@clerk/clerk-expo";
 import { View, Text, Image } from "react-native";
-import { router } from "expo-router";
 import { useWarmUpBrowser } from "~/hooks/useWarmUpBrowser";
 import Ripple from "react-native-material-ripple";
 
@@ -18,12 +18,11 @@ export default function Login() {
       const { createdSessionId, setActive } = await startOAuthFlow();
 
       if (createdSessionId && setActive) {
-        setActive({ session: createdSessionId });
-        router.push("/dashboard");
+        await setActive({ session: createdSessionId });
       } else {
         console.log("failed to sign in");
       }
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.log(err);
     }
   };
@@ -32,6 +31,7 @@ export default function Login() {
     <View className="flex-1 px-16 pt-40 pb-24 bg-dark-blue justify-between">
       <Center>
         <Image
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
           source={logo}
           alt="Alternate Text"
           style={{
@@ -40,22 +40,22 @@ export default function Login() {
           }}
         />
         <Text className="text-white text-2xl font-semibold leading-8">
-          Lil' Networking App
+          Lil&apos; Networking App
         </Text>
 
         <View className="py-14">
-          <VStack space={"3xl"}>
+          <VStack space="3xl">
             <HStack space="lg">
               <Notepad color="white" />
               <Text className="text-white text-xl">
                 Build Networking Habits
               </Text>
             </HStack>
-            <HStack space={"lg"}>
+            <HStack space="lg">
               <UsersThree color="white" />
               <Text className="text-white text-xl">Maintain Relationships</Text>
             </HStack>
-            <HStack space={"lg"}>
+            <HStack space="lg">
               <ArrowsClockwise color="white" />
               <Text className="text-white text-xl">Stay Connected</Text>
             </HStack>

@@ -1,4 +1,4 @@
-import { ActivityArgs } from "~/types";
+import type { ActivityArgs } from "~/types";
 import { NextResponse } from "next/server";
 import prisma from "~/lib/prisma";
 

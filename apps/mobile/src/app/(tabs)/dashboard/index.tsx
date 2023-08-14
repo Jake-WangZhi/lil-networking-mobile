@@ -1,4 +1,4 @@
-const animationData = require("~/lottie/add-and-save.json");
+import animationData from "~/lottie/add-and-save.json";
 
 import { useUser } from "@clerk/clerk-expo";
 import { View, Text, ActivityIndicator } from "react-native";

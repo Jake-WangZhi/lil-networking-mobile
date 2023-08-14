@@ -18,5 +18,13 @@
             "cache": false
         },
         "lint": {}
-    }
+    },
+    "globalEnv": [
+        "EAS_PROJECT_ID",
+        "EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY",
+        "NODE_ENV",
+        "CRON_KEY",
+        "POSTGRES_PRISMA_URL",
+        "POSTGRES_URL_NON_POOLING"
+    ]
 }
