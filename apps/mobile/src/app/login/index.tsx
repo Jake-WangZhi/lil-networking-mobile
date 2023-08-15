@@ -7,6 +7,7 @@ import { useOAuth } from "@clerk/clerk-expo";
 import { View, Text, Image } from "react-native";
 import { useWarmUpBrowser } from "~/hooks/useWarmUpBrowser";
 import Ripple from "react-native-material-ripple";
+import { router } from "expo-router";
 
 export default function Login() {
   useWarmUpBrowser();
@@ -19,6 +20,7 @@ export default function Login() {
 
       if (createdSessionId && setActive) {
         await setActive({ session: createdSessionId });
+        router.push("/dashboard");
       } else {
         console.log("failed to sign in");
       }
