@@ -1,8 +1,6 @@
 import {
-  Button,
   Center,
   Modal,
-  ButtonText,
   ModalBody,
   ModalContent,
   ModalFooter,
@@ -14,14 +12,10 @@ import { TutorialItem } from "~/components/TutorialItem";
 import { Paginator } from "~/components/Paginator";
 import Ripple from "react-native-material-ripple";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import type { TutorialModalProps } from "~/types";
 
 interface Props {
-  data: {
-    id: string;
-    title: string;
-    description: string;
-    image: number;
-  }[];
+  data: TutorialModalProps[];
 }
 
 export const TutorialModal = ({ data }: Props) => {
@@ -30,7 +24,6 @@ export const TutorialModal = ({ data }: Props) => {
   const slidesRef = useRef(null);
   const scrollX = useRef(new Animated.Value(0)).current;
   const [currentIndex, setCurrentIndex] = useState(0);
-
   const [nextButton, setNextButton] = useState("Next");
 
   const scrollTo = async () => {
@@ -55,10 +48,6 @@ export const TutorialModal = ({ data }: Props) => {
 
   return (
     <Center>
-      <Button onPress={() => setShowModal(true)} ref={ref}>
-        <ButtonText>Show Modal</ButtonText>
-      </Button>
-
       <Modal
         isOpen={showModal}
         onClose={() => {

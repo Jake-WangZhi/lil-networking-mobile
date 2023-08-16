@@ -1,22 +1,18 @@
 import type { Animated as AnimatedType } from "react-native";
 import { View, useWindowDimensions, Animated } from "react-native";
-
-interface Item {
-  id: string;
-  title: string;
-  description: string;
-  image: number;
-}
+import type { TutorialModalProps } from "~/types";
 
 interface PaginatorProps {
-  data: Item[];
+  data: TutorialModalProps[];
   scrollX: AnimatedType.Value;
 }
 
 export const Paginator = ({ data, scrollX }: PaginatorProps) => {
   const { width } = useWindowDimensions();
-  const modalWidth = width * 0.9;
-  const containerWidth = Math.floor(modalWidth - 32);
+  //The width of gluestack-ui modal with lg size is 90% of the screen width
+  //Also minus the horizontal paddings
+  const containerWidth = Math.floor(width * 0.9 - 32);
+
   return (
     <View className="flex flex-row">
       {data.map((_, i) => {

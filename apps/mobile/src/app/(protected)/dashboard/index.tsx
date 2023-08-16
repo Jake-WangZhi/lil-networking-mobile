@@ -3,10 +3,7 @@ import animationData from "~/lottie/add-and-save.json";
 import { useUser } from "@clerk/clerk-expo";
 import { View, Text } from "react-native";
 import { PlusCircle } from "phosphor-react-native";
-import { Button, ButtonText } from "@gluestack-ui/react";
 import LottieView from "lottie-react-native";
-import { PlusCircle } from "phosphor-react-native";
-import { Text, View } from "react-native";
 import Ripple from "react-native-material-ripple";
 import { DashboardTutorialModal } from "~/components/DashboardTutorialModal";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -101,13 +98,6 @@ export default function Dashboard() {
           </View>
         </View>
       </View>
-      <Button
-        onPress={async () => {
-          await AsyncStorage.removeItem("@viewedDashboardTutorial");
-        }}
-      >
-        <ButtonText>Clear storage</ButtonText>
-      </Button>
       {!viewedTutorial && <DashboardTutorialModal />}
     </>
   );

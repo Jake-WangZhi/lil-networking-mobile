@@ -28,5 +28,5 @@ const data = [
 ];
 
 export const DashboardTutorialModal = () => {
-  <TutorialModal data={data} />;
+  return <TutorialModal data={data} />;
 };
