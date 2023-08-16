@@ -13,6 +13,7 @@ import { useRef, useState } from "react";
 import { TutorialItem } from "~/components/TutorialItem";
 import { Paginator } from "~/components/Paginator";
 import Ripple from "react-native-material-ripple";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 const img1 = require("~/images/onboarding/dashboard/add_contacts.png");
 const img2 = require("~/images/onboarding/dashboard/stats.png");
 const img3 = require("~/images/onboarding/dashboard/priority.png");
@@ -41,7 +42,7 @@ const data = [
 ];
 
 export const DashboardTutorial = () => {
-  const [showModal, setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState(true);
   const ref = useRef(null);
   const slidesRef = useRef(null);
   const scrollX = useRef(new Animated.Value(0)).current;
@@ -49,15 +50,23 @@ export const DashboardTutorial = () => {
 
   const [nextButton, setNextButton] = useState("Next");
 
-  const scrollTo = () => {
+  const scrollTo = async () => {
     if (currentIndex < data.length - 1) {
       if (currentIndex + 1 === data.length - 1) {
         setNextButton("Done");
       }
-      slidesRef.current?.scrollToIndex({ index: currentIndex + 1 });
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      //@ts-ignore
+      slidesRef.current.scrollToIndex({ index: currentIndex + 1 });
       setCurrentIndex((index) => index + 1);
     } else {
       setShowModal(false);
+
+      try {
+        await AsyncStorage.setItem("@viewedDashboardTutorial", "true");
+      } catch (err) {
+        console.log("Error @setViewedDashboardTutorial", err);
+      }
     }
   };
 
@@ -66,6 +75,7 @@ export const DashboardTutorial = () => {
       <Button onPress={() => setShowModal(true)} ref={ref}>
         <ButtonText>Show Modal</ButtonText>
       </Button>
+
       <Modal
         isOpen={showModal}
         onClose={() => {
@@ -106,8 +116,17 @@ export const DashboardTutorial = () => {
                 <Paginator data={data} scrollX={scrollX} />
                 <View className="flex-row">
                   <Ripple
-                    onPress={() => {
+                    onPress={async () => {
                       setShowModal(false);
+
+                      try {
+                        await AsyncStorage.setItem(
+                          "@viewedDashboardTutorial",
+                          "true"
+                        );
+                      } catch (err) {
+                        console.log("Error @setViewedDashboardTutorial", err);
+                      }
                     }}
                     className="px-6 py-3"
                   >

@@ -5,7 +5,6 @@ import React from "react";
 import { ClerkProvider } from "@clerk/clerk-expo";
 import { GluestackUIProvider, config } from "@gluestack-ui/react";
 import * as SecureStore from "expo-secure-store";
-
 import { Stack } from "expo-router";
 
 const CLERK_PUBLISHABLE_KEY = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY;

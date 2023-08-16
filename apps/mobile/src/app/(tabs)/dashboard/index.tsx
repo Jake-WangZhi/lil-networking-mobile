@@ -3,14 +3,32 @@ import animationData from "~/lottie/add-and-save.json";
 import { useUser } from "@clerk/clerk-expo";
 import { View, Text, ActivityIndicator } from "react-native";
 import { PlusCircle } from "phosphor-react-native";
-import { Center } from "@gluestack-ui/react";
+import { Center, Button, ButtonText } from "@gluestack-ui/react";
 import LottieView from "lottie-react-native";
 import { Tooltip } from "~/components/Tooltip";
 import Ripple from "react-native-material-ripple";
 import { DashboardTutorial } from "~/components/DashboardTutorial";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useEffect, useState } from "react";
 
 export default function Dashboard() {
   const { user } = useUser();
+  const [viewedTutorial, setViewedTutorial] = useState(false);
+
+  const checkTutorial = async () => {
+    try {
+      const value = await AsyncStorage.getItem("@viewedDashboardTutorial");
+      if (value !== null) {
+        setViewedTutorial(true);
+      }
+    } catch (err) {
+      console.log("Error @checkDashboardTutorial");
+    }
+  };
+
+  useEffect(() => {
+    void checkTutorial();
+  }, []);
 
   if (!user) {
     return (
@@ -19,6 +37,7 @@ export default function Dashboard() {
       </Center>
     );
   }
+
   return (
     <>
       <View className="px-4">
@@ -83,7 +102,14 @@ export default function Dashboard() {
           </View>
         </View>
       </View>
-      <DashboardTutorial />
+      <Button
+        onPress={async () => {
+          await AsyncStorage.removeItem("@viewedDashboardTutorial");
+        }}
+      >
+        <ButtonText>Clear storage</ButtonText>
+      </Button>
+      {!viewedTutorial && <DashboardTutorial />}
     </>
   );
 }
