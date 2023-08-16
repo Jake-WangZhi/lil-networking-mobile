@@ -1,15 +1,18 @@
 import animationData from "~/lottie/add-and-save.json";
 
 import { useUser } from "@clerk/clerk-expo";
-import { View, Text, ActivityIndicator } from "react-native";
+import { View, Text } from "react-native";
 import { PlusCircle } from "phosphor-react-native";
-import { Center, Button, ButtonText } from "@gluestack-ui/react";
+import { Button, ButtonText } from "@gluestack-ui/react";
 import LottieView from "lottie-react-native";
-import { Tooltip } from "~/components/Tooltip";
+import { PlusCircle } from "phosphor-react-native";
+import { Text, View } from "react-native";
 import Ripple from "react-native-material-ripple";
 import { DashboardTutorialModal } from "~/components/DashboardTutorialModal";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useEffect, useState } from "react";
+import { Loading } from "~/components/Loading";
+import { Tooltip } from "~/components/Tooltip";
 
 export default function Dashboard() {
   const { user } = useUser();
@@ -31,11 +34,7 @@ export default function Dashboard() {
   }, []);
 
   if (!user) {
-    return (
-      <Center>
-        <ActivityIndicator size="large" color="#38ACE2" />
-      </Center>
-    );
+    return <Loading />;
   }
 
   return (

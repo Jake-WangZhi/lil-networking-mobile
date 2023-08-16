@@ -1,12 +1,14 @@
 const logo = require("~/images/icon.png");
 
-import { Center, VStack, HStack } from "@gluestack-ui/react";
-import { Notepad, UsersThree, ArrowsClockwise } from "phosphor-react-native";
 import { useOAuth } from "@clerk/clerk-expo";
-import { View, Text, Image } from "react-native";
-import { useWarmUpBrowser } from "~/hooks/useWarmUpBrowser";
+import { Center, HStack, VStack } from "@gluestack-ui/react";
+import * as WebBrowser from "expo-web-browser";
+import { ArrowsClockwise, Notepad, UsersThree } from "phosphor-react-native";
+import { Image, Text, View } from "react-native";
 import Ripple from "react-native-material-ripple";
-import { router } from "expo-router";
+import { useWarmUpBrowser } from "~/hooks/useWarmUpBrowser";
+
+WebBrowser.maybeCompleteAuthSession();
 
 export default function Login() {
   useWarmUpBrowser();
@@ -19,9 +21,6 @@ export default function Login() {
 
       if (createdSessionId && setActive) {
         await setActive({ session: createdSessionId });
-        router.push("/dashboard");
-      } else {
-        console.log("failed to sign in");
       }
     } catch (err: unknown) {
       console.log(err);

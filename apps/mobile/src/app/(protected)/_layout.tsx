@@ -1,11 +1,14 @@
-import { House, Users, Gear } from "phosphor-react-native";
 import { Tabs } from "expo-router";
+import { Gear, House, Users } from "phosphor-react-native";
 
-export default function Layout() {
+export default function ProtectedLayout() {
   return (
     <Tabs
       sceneContainerStyle={{
         backgroundColor: "#0F1A24",
+      }}
+      screenOptions={{
+        headerShown: false,
       }}
     >
       <Tabs.Screen
@@ -17,7 +20,6 @@ export default function Layout() {
               weight={focused ? "fill" : "bold"}
             />
           ),
-          headerShown: false,
           tabBarLabel: "Dashboard",
           tabBarStyle: { backgroundColor: "#0F1A24", borderTopWidth: 0 },
           tabBarActiveTintColor: "white",
@@ -34,7 +36,6 @@ export default function Layout() {
               weight={focused ? "fill" : "bold"}
             />
           ),
-          headerShown: false,
           tabBarLabel: "Contacts",
           tabBarStyle: { backgroundColor: "#0F1A24", borderTopWidth: 0 },
           tabBarActiveTintColor: "white",
@@ -51,7 +52,6 @@ export default function Layout() {
               weight={focused ? "fill" : "bold"}
             />
           ),
-          headerShown: false,
           tabBarLabel: "Settings",
           tabBarStyle: { backgroundColor: "#0F1A24", borderTopWidth: 0 },
           tabBarActiveTintColor: "white",
