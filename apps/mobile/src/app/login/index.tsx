@@ -1,4 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 const logo = require("~/images/icon.png");
 
 import { Center, VStack, HStack } from "@gluestack-ui/react";
@@ -33,9 +32,8 @@ export default function Login() {
     <View className="flex-1 px-16 pt-40 pb-24 bg-dark-blue justify-between">
       <Center>
         <Image
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
           source={logo}
-          alt="Alternate Text"
+          alt="Logo"
           style={{
             height: 186,
             width: 186,

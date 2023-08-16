@@ -2,20 +2,65 @@ import {
   Button,
   Center,
   Modal,
-  ModalHeader,
   ButtonText,
   ModalBody,
-  ModalCloseButton,
   ModalContent,
   ModalFooter,
   ModalBackdrop,
 } from "@gluestack-ui/react";
-import { Text, View, Pressable } from "react-native";
+import { Text, View, FlatList, Animated } from "react-native";
 import { useRef, useState } from "react";
+import { TutorialItem } from "~/components/TutorialItem";
+import { Paginator } from "~/components/Paginator";
+import Ripple from "react-native-material-ripple";
+const img1 = require("~/images/onboarding/dashboard/add_contacts.png");
+const img2 = require("~/images/onboarding/dashboard/stats.png");
+const img3 = require("~/images/onboarding/dashboard/priority.png");
+
+const data = [
+  {
+    id: "1",
+    title: "Add Contacts",
+    description:
+      "Create new or easily import contacts from your phone to get started.",
+    image: img1,
+  },
+  {
+    id: "2",
+    title: "Networking Goals",
+    description: "Set monthly goals to build and sustain your network.",
+    image: img2,
+  },
+  {
+    id: "3",
+    title: "Contact Reminders",
+    description:
+      "Automated and priority sorted reminders appear based on individual cadence.",
+    image: img3,
+  },
+];
 
 export const DashboardTutorial = () => {
   const [showModal, setShowModal] = useState(false);
   const ref = useRef(null);
+  const slidesRef = useRef(null);
+  const scrollX = useRef(new Animated.Value(0)).current;
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const [nextButton, setNextButton] = useState("Next");
+
+  const scrollTo = () => {
+    if (currentIndex < data.length - 1) {
+      if (currentIndex + 1 === data.length - 1) {
+        setNextButton("Done");
+      }
+      slidesRef.current?.scrollToIndex({ index: currentIndex + 1 });
+      setCurrentIndex((index) => index + 1);
+    } else {
+      setShowModal(false);
+    }
+  };
+
   return (
     <Center>
       <Button onPress={() => setShowModal(true)} ref={ref}>
@@ -27,7 +72,7 @@ export const DashboardTutorial = () => {
           setShowModal(false);
         }}
         finalFocusRef={ref}
-        size={"lg"}
+        size="lg"
       >
         <ModalBackdrop />
         <ModalContent>
@@ -36,31 +81,31 @@ export const DashboardTutorial = () => {
               style={{ backgroundColor: "rgba(255, 255, 255, 0.12)" }}
               className="space-y-6"
             >
-              <ModalHeader>
-                <View className="bg-dark-blue w-full h-[185]"></View>
-              </ModalHeader>
-              <ModalBody>
-                <Center>
-                  <Text className="text-white text-2xl font-semibold">
-                    Add Contacts
-                  </Text>
-                  <Text className="text-white text-base text-center">
-                    Create new or easily import contacts from your phone to get
-                    started.
-                  </Text>
-                </Center>
+              <ModalBody style={{ paddingTop: 16, paddingBottom: 0 }}>
+                <FlatList
+                  data={data}
+                  renderItem={({ item }) => <TutorialItem item={item} />}
+                  horizontal
+                  pagingEnabled
+                  showsHorizontalScrollIndicator={false}
+                  scrollEnabled={false}
+                  keyExtractor={(item) => item.id}
+                  onScroll={Animated.event(
+                    [{ nativeEvent: { contentOffset: { x: scrollX } } }],
+                    { useNativeDriver: false }
+                  )}
+                  ref={slidesRef}
+                />
               </ModalBody>
-              <ModalFooter style={{ justifyContent: "space-between" }}>
-                <Pressable
-                  onPress={() => {
-                    setShowModal(false);
-                  }}
-                  className="px-6 py-3"
-                >
-                  <Text className="text-white opacity-70 text-base">Skip</Text>
-                </Pressable>
+              <ModalFooter
+                style={{
+                  justifyContent: "space-between",
+                  paddingTop: 0,
+                }}
+              >
+                <Paginator data={data} scrollX={scrollX} />
                 <View className="flex-row">
-                  <Pressable
+                  <Ripple
                     onPress={() => {
                       setShowModal(false);
                     }}
@@ -69,17 +114,12 @@ export const DashboardTutorial = () => {
                     <Text className="text-white opacity-70 text-base">
                       Skip
                     </Text>
-                  </Pressable>
-                  <Pressable
-                    onPress={() => {
-                      setShowModal(false);
-                    }}
-                    className="px-6 py-3"
-                  >
+                  </Ripple>
+                  <Ripple onPress={() => scrollTo()} className="px-6 py-3">
                     <Text className="text-light-blue text-base font-semibold">
-                      Next
+                      {nextButton}
                     </Text>
-                  </Pressable>
+                  </Ripple>
                 </View>
               </ModalFooter>
             </View>
