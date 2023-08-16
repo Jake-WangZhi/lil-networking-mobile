@@ -7,7 +7,7 @@ import { Center, Button, ButtonText } from "@gluestack-ui/react";
 import LottieView from "lottie-react-native";
 import { Tooltip } from "~/components/Tooltip";
 import Ripple from "react-native-material-ripple";
-import { DashboardTutorial } from "~/components/DashboardTutorial";
+import { DashboardTutorialModal } from "~/components/DashboardTutorialModal";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useEffect, useState } from "react";
 
@@ -109,7 +109,7 @@ export default function Dashboard() {
       >
         <ButtonText>Clear storage</ButtonText>
       </Button>
-      {!viewedTutorial && <DashboardTutorial />}
+      {!viewedTutorial && <DashboardTutorialModal />}
     </>
   );
 }

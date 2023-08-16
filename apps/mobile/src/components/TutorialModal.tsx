@@ -14,34 +14,8 @@ import { TutorialItem } from "~/components/TutorialItem";
 import { Paginator } from "~/components/Paginator";
 import Ripple from "react-native-material-ripple";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-const img1 = require("~/images/onboarding/dashboard/add_contacts.png");
-const img2 = require("~/images/onboarding/dashboard/stats.png");
-const img3 = require("~/images/onboarding/dashboard/priority.png");
 
-const data = [
-  {
-    id: "1",
-    title: "Add Contacts",
-    description:
-      "Create new or easily import contacts from your phone to get started.",
-    image: img1,
-  },
-  {
-    id: "2",
-    title: "Networking Goals",
-    description: "Set monthly goals to build and sustain your network.",
-    image: img2,
-  },
-  {
-    id: "3",
-    title: "Contact Reminders",
-    description:
-      "Automated and priority sorted reminders appear based on individual cadence.",
-    image: img3,
-  },
-];
-
-export const DashboardTutorial = () => {
+export const TutorialModal = ({ data }) => {
   const [showModal, setShowModal] = useState(true);
   const ref = useRef(null);
   const slidesRef = useRef(null);
@@ -99,6 +73,7 @@ export const DashboardTutorial = () => {
                   pagingEnabled
                   showsHorizontalScrollIndicator={false}
                   scrollEnabled={false}
+                  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
                   keyExtractor={(item) => item.id}
                   onScroll={Animated.event(
                     [{ nativeEvent: { contentOffset: { x: scrollX } } }],
