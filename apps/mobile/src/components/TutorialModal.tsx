@@ -15,7 +15,16 @@ import { Paginator } from "~/components/Paginator";
 import Ripple from "react-native-material-ripple";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export const TutorialModal = ({ data }) => {
+interface Props {
+  data: {
+    id: string;
+    title: string;
+    description: string;
+    image: number;
+  }[];
+}
+
+export const TutorialModal = ({ data }: Props) => {
   const [showModal, setShowModal] = useState(true);
   const ref = useRef(null);
   const slidesRef = useRef(null);
@@ -73,7 +82,6 @@ export const TutorialModal = ({ data }) => {
                   pagingEnabled
                   showsHorizontalScrollIndicator={false}
                   scrollEnabled={false}
-                  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
                   keyExtractor={(item) => item.id}
                   onScroll={Animated.event(
                     [{ nativeEvent: { contentOffset: { x: scrollX } } }],
