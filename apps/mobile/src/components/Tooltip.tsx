@@ -14,21 +14,10 @@ export const Tooltip = ({ content }: Props) => {
   return (
     <RNTooltip
       backgroundColor="transparent"
-      contentStyle={{ backgroundColor: "#0F1A24", padding: 0 }}
-      arrowStyle={{
-        backgroundColor: "#0F1A24",
-        borderTopColor: "rgba(255, 255, 255, 0.12)",
-      }}
+      contentStyle={{ backgroundColor: "#2C353E", padding: 0 }}
       isVisible={showTip}
       content={
-        <View
-          style={{
-            backgroundColor: "rgba(255, 255, 255, 0.12)",
-            padding: 16,
-            flexDirection: "row",
-            gap: 8,
-          }}
-        >
+        <View className="flex-row space-x-2 p-4">
           {content}
           <View>
             <Pressable

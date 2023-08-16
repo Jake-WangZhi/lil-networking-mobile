@@ -19,11 +19,11 @@ interface Props {
 }
 
 export const TutorialModal = ({ data }: Props) => {
-  const [showModal, setShowModal] = useState(true);
   const ref = useRef(null);
   const slidesRef = useRef(null);
   const scrollX = useRef(new Animated.Value(0)).current;
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [showModal, setShowModal] = useState(true);
   const [nextButton, setNextButton] = useState("Next");
 
   const scrollTo = async () => {
