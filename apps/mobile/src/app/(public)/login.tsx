@@ -5,7 +5,6 @@ import { useOAuth } from "@clerk/clerk-expo";
 import { HStack, VStack } from "@gluestack-ui/react";
 import * as WebBrowser from "expo-web-browser";
 import { ArrowsClockwise, Notepad, UsersThree } from "phosphor-react-native";
-import type { ImageSourcePropType } from "react-native";
 import { Image, Text, View } from "react-native";
 import Ripple from "react-native-material-ripple";
 import { useWarmUpBrowser } from "~/hooks/useWarmUpBrowser";
@@ -31,11 +30,7 @@ export default function Login() {
 
   return (
     <View className="flex-1 px-16 pt-40 pb-24 bg-dark-blue justify-center items-center">
-      <Image
-        source={logo as ImageSourcePropType}
-        alt="Logo"
-        className="w-[186] h-[186]"
-      />
+      <Image source={logo} alt="Logo" className="w-[186] h-[186]" />
       <Text className="text-white text-2xl font-semibold leading-8">
         Lil&apos; Networking App
       </Text>
