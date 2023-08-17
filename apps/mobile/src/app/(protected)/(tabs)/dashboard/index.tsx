@@ -47,7 +47,7 @@ export default function Dashboard() {
                 <View>
                   <Text className="text-white font-bold text-sm">
                     Priority:{" "}
-                    <Text className="text-white font-normal text-sm">
+                    <Text className="text-white font-normal text-sm break-words">
                       Items that have been actionable for 10+ days
                     </Text>
                   </Text>
@@ -74,7 +74,7 @@ export default function Dashboard() {
           </View>
         </Ripple>
       </View>
-      <View className="px-14 pt-28">
+      <View className="px-14 flex-1 justify-center items-center">
         <View className="flex justify-center items-center space-y-6">
           <View>
             <LottieView
