@@ -1,13 +1,13 @@
-import { Text, View, Image, useWindowDimensions } from "react-native";
+import { Text, View, Image } from "react-native";
 import { Center } from "@gluestack-ui/react";
 import type { TutorialModalProps } from "~/types";
 
-export const TutorialItem = ({ item }: { item: TutorialModalProps }) => {
-  const { width } = useWindowDimensions();
-  //The width of gluestack-ui modal with lg size is 90% of the screen width
-  //The maximum width is 640, also minus the horizontal paddings
-  const containerWidth = Math.min(Math.floor(width * 0.9), 640) - 32;
+interface Props {
+  item: TutorialModalProps;
+  containerWidth: number;
+}
 
+export const TutorialItem = ({ item, containerWidth }: Props) => {
   return (
     <View
       style={{

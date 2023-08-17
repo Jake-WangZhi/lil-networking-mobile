@@ -6,7 +6,13 @@ import {
   ModalFooter,
   ModalBackdrop,
 } from "@gluestack-ui/react";
-import { Text, View, FlatList, Animated } from "react-native";
+import {
+  Text,
+  View,
+  FlatList,
+  Animated,
+  useWindowDimensions,
+} from "react-native";
 import { useRef, useState } from "react";
 import { TutorialItem } from "~/components/TutorialItem";
 import { Paginator } from "~/components/Paginator";
@@ -25,6 +31,10 @@ export const TutorialModal = ({ data }: Props) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showModal, setShowModal] = useState(true);
   const [nextButton, setNextButton] = useState("Next");
+  const { width } = useWindowDimensions();
+  //The width of gluestack-ui modal with lg size is 90% of the screen width
+  //The maximum width is 640, also minus the horizontal paddings
+  const containerWidth = Math.min(Math.floor(width * 0.9), 640) - 32;
 
   const scrollTo = async () => {
     if (currentIndex < data.length - 1) {
@@ -59,7 +69,9 @@ export const TutorialModal = ({ data }: Props) => {
               <ModalBody style={{ paddingTop: 16, paddingBottom: 0 }}>
                 <FlatList
                   data={data}
-                  renderItem={({ item }) => <TutorialItem item={item} />}
+                  renderItem={({ item }) => (
+                    <TutorialItem item={item} containerWidth={containerWidth} />
+                  )}
                   horizontal
                   pagingEnabled
                   showsHorizontalScrollIndicator={false}
@@ -78,7 +90,11 @@ export const TutorialModal = ({ data }: Props) => {
                   paddingTop: 0,
                 }}
               >
-                <Paginator data={data} scrollX={scrollX} />
+                <Paginator
+                  data={data}
+                  scrollX={scrollX}
+                  containerWidth={containerWidth}
+                />
                 <View className="flex-row">
                   <Ripple
                     onPress={async () => {
