@@ -26,7 +26,7 @@ interface Props {
 
 export const TutorialModal = ({ data }: Props) => {
   const ref = useRef(null);
-  const slidesRef = useRef(null);
+  const slidesRef = useRef<FlatList>(null);
   const scrollX = useRef(new Animated.Value(0)).current;
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showModal, setShowModal] = useState(true);
@@ -42,8 +42,7 @@ export const TutorialModal = ({ data }: Props) => {
         setNextButton("Done");
       }
 
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-      slidesRef.current.scrollToIndex({ index: currentIndex + 1 });
+      slidesRef.current?.scrollToIndex({ index: currentIndex + 1 });
       setCurrentIndex((index) => index + 1);
     } else {
       setShowModal(false);
@@ -79,7 +78,7 @@ export const TutorialModal = ({ data }: Props) => {
               <ModalBody style={{ paddingTop: 16, paddingBottom: 0 }}>
                 <FlatList
                   data={data}
-                  renderItem={({ item }) => (
+                  renderItem={({ item }: { item: TutorialModalProps }) => (
                     <TutorialItem item={item} containerWidth={containerWidth} />
                   )}
                   horizontal
