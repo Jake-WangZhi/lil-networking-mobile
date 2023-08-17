@@ -48,14 +48,7 @@ export const TutorialModal = ({ data }: Props) => {
 
   return (
     <Center>
-      <Modal
-        isOpen={showModal}
-        onClose={() => {
-          setShowModal(false);
-        }}
-        finalFocusRef={ref}
-        size="lg"
-      >
+      <Modal isOpen={showModal} finalFocusRef={ref} size="lg">
         <ModalBackdrop />
         <ModalContent>
           <View className="bg-dark-blue">
