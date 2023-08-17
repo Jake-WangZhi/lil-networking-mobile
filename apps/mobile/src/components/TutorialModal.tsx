@@ -41,8 +41,8 @@ export const TutorialModal = ({ data }: Props) => {
       if (currentIndex + 1 === data.length - 1) {
         setNextButton("Done");
       }
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      //@ts-ignore
+
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
       slidesRef.current.scrollToIndex({ index: currentIndex + 1 });
       setCurrentIndex((index) => index + 1);
     } else {

@@ -35,6 +35,7 @@ const Layout = () => {
 
 const RootLayout = () => {
   return (
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
     <GluestackUIProvider config={config.theme}>
       <ClerkProvider
         tokenCache={tokenCache}

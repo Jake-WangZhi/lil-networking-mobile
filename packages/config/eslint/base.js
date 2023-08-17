@@ -32,8 +32,6 @@ const config = {
     "import/consistent-type-specifier-style": ["error", "prefer-top-level"],
     "@typescript-eslint/no-var-requires": "off",
     "react/jsx-curly-brace-presence": [2, "never"],
-    "@typescript-eslint/no-unsafe-member-access": "off",
-    "@typescript-eslint/no-unsafe-call": "off",
   },
   ignorePatterns: [
     "**/.eslintrc.cjs",
