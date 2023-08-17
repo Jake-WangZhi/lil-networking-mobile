@@ -1,8 +1,8 @@
 import { TutorialModal } from "~/components/TutorialModal";
 
-const img1 = require("~/images/onboarding/dashboard/add_contacts.png");
-const img2 = require("~/images/onboarding/dashboard/stats.png");
-const img3 = require("~/images/onboarding/dashboard/priority.png");
+const img1 = require("~/images/tutorials/dashboard/add_contacts.png");
+const img2 = require("~/images/tutorials/dashboard/stats.png");
+const img3 = require("~/images/tutorials/dashboard/priority.png");
 
 const data = [
   {

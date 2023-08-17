@@ -5,8 +5,8 @@ import type { TutorialModalProps } from "~/types";
 export const TutorialItem = ({ item }: { item: TutorialModalProps }) => {
   const { width } = useWindowDimensions();
   //The width of gluestack-ui modal with lg size is 90% of the screen width
-  //Also minus the horizontal paddings
-  const containerWidth = Math.floor(width * 0.9 - 32);
+  //The maximum width is 640, also minus the horizontal paddings
+  const containerWidth = Math.min(Math.floor(width * 0.9), 640) - 32;
 
   return (
     <View
@@ -15,15 +15,17 @@ export const TutorialItem = ({ item }: { item: TutorialModalProps }) => {
         gap: 24,
       }}
     >
-      <Center>
-        <Image
-          source={item.image}
-          style={{
-            width: containerWidth,
-            height: 186,
-          }}
-        />
-      </Center>
+      <View
+        style={{
+          width: containerWidth,
+          height: 186,
+          backgroundColor: "#0F1A24",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Image source={item.image} />
+      </View>
       <Center style={{ gap: 8 }}>
         <Text className="text-white text-2xl font-semibold text-center">
           {item.title}

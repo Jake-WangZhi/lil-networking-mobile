@@ -10,8 +10,8 @@ interface PaginatorProps {
 export const Paginator = ({ data, scrollX }: PaginatorProps) => {
   const { width } = useWindowDimensions();
   //The width of gluestack-ui modal with lg size is 90% of the screen width
-  //Also minus the horizontal paddings
-  const containerWidth = Math.floor(width * 0.9 - 32);
+  //The maximum width is 640, also minus the horizontal paddings
+  const containerWidth = Math.min(Math.floor(width * 0.9), 640) - 32;
 
   return (
     <View className="flex flex-row">
