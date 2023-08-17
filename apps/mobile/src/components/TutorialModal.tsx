@@ -55,7 +55,7 @@ export const TutorialModal = ({ data }: Props) => {
     }
   };
 
-  const skipPress = async () => {
+  const skip = async () => {
     setShowModal(false);
 
     try {
@@ -67,7 +67,7 @@ export const TutorialModal = ({ data }: Props) => {
 
   return (
     <Center>
-      <Modal isOpen={showModal} finalFocusRef={ref} size="lg">
+      <Modal isOpen={showModal} onClose={skip} finalFocusRef={ref} size="lg">
         <ModalBackdrop />
         <ModalContent>
           <View className="bg-dark-blue">
@@ -105,7 +105,7 @@ export const TutorialModal = ({ data }: Props) => {
                   containerWidth={containerWidth}
                 />
                 <View className="flex-row">
-                  <Ripple onPress={skipPress} className="px-6 py-3">
+                  <Ripple onPress={skip} className="px-6 py-3">
                     <Text className="text-white opacity-70 text-base">
                       Skip
                     </Text>
