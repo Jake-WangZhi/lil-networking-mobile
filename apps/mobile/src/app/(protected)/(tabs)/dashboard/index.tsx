@@ -13,17 +13,17 @@ import { Tooltip } from "~/components/Tooltip";
 
 export default function Dashboard() {
   const { user } = useUser();
-  const [viewedTutorial, setViewedTutorial] = useState<boolean>();
+  const [hasViewedTutorial, setHasViewedTutorial] = useState<boolean>();
 
   const checkTutorial = async () => {
     try {
-      const value = await AsyncStorage.getItem("@viewedDashboardTutorial");
+      const value = await AsyncStorage.getItem("@hasViewedDashboardTutorial");
       if (value !== null) {
-        setViewedTutorial(true);
+        setHasViewedTutorial(true);
       } else {
         //If a user hasn't viewed the tutorial, display after 2 sec
         setTimeout(() => {
-          setViewedTutorial(false);
+          setHasViewedTutorial(false);
         }, 2000);
       }
     } catch (err) {
@@ -103,7 +103,7 @@ export default function Dashboard() {
           </View>
         </View>
       </View>
-      {viewedTutorial === false && <DashboardTutorialModal />}
+      {hasViewedTutorial === false && <DashboardTutorialModal />}
     </>
   );
 }

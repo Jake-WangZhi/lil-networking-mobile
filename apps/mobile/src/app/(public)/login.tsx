@@ -1,4 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 const logo = require("~/images/icon.png");
+import colors from "tailwindcss/colors";
 
 import { useOAuth } from "@clerk/clerk-expo";
 import { HStack, VStack } from "@gluestack-ui/react";
@@ -29,14 +31,7 @@ export default function Login() {
 
   return (
     <View className="flex-1 px-16 pt-40 pb-24 bg-dark-blue justify-center items-center">
-      <Image
-        source={logo}
-        alt="Logo"
-        style={{
-          height: 186,
-          width: 186,
-        }}
-      />
+      <Image source={logo} alt="Logo" className="w-[186] h-[186]" />
       <Text className="text-white text-2xl font-semibold leading-8">
         Lil&apos; Networking App
       </Text>
@@ -44,15 +39,15 @@ export default function Login() {
       <View className="my-14">
         <VStack space="3xl">
           <HStack space="lg">
-            <Notepad color="white" />
+            <Notepad color={colors.white} />
             <Text className="text-white text-xl">Build Networking Habits</Text>
           </HStack>
           <HStack space="lg">
-            <UsersThree color="white" />
+            <UsersThree color={colors.white} />
             <Text className="text-white text-xl">Maintain Relationships</Text>
           </HStack>
           <HStack space="lg">
-            <ArrowsClockwise color="white" />
+            <ArrowsClockwise color={colors.white} />
             <Text className="text-white text-xl">Stay Connected</Text>
           </HStack>
         </VStack>

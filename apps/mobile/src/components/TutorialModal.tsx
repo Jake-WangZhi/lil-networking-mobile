@@ -49,10 +49,20 @@ export const TutorialModal = ({ data }: Props) => {
       setShowModal(false);
 
       try {
-        await AsyncStorage.setItem("@viewedDashboardTutorial", "true");
+        await AsyncStorage.setItem("@hasViewedDashboardTutorial", "true");
       } catch (err) {
-        console.log("Error @setViewedDashboardTutorial", err);
+        console.log("Error @setHasViewedDashboardTutorial", err);
       }
+    }
+  };
+
+  const skipPress = async () => {
+    setShowModal(false);
+
+    try {
+      await AsyncStorage.setItem("@HasViewedDashboardTutorial", "true");
+    } catch (err) {
+      console.log("Error @setHasViewedDashboardTutorial", err);
     }
   };
 
@@ -96,26 +106,12 @@ export const TutorialModal = ({ data }: Props) => {
                   containerWidth={containerWidth}
                 />
                 <View className="flex-row">
-                  <Ripple
-                    onPress={async () => {
-                      setShowModal(false);
-
-                      try {
-                        await AsyncStorage.setItem(
-                          "@viewedDashboardTutorial",
-                          "true"
-                        );
-                      } catch (err) {
-                        console.log("Error @setViewedDashboardTutorial", err);
-                      }
-                    }}
-                    className="px-6 py-3"
-                  >
+                  <Ripple onPress={skipPress} className="px-6 py-3">
                     <Text className="text-white opacity-70 text-base">
                       Skip
                     </Text>
                   </Ripple>
-                  <Ripple onPress={() => scrollTo()} className="px-6 py-3">
+                  <Ripple onPress={scrollTo} className="px-6 py-3">
                     <Text className="text-light-blue text-base font-semibold">
                       {nextButton}
                     </Text>

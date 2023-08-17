@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { TutorialModal } from "~/components/TutorialModal";
 
 const img1 = require("~/images/tutorials/dashboard/add_contacts.png");
