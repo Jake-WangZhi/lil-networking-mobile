@@ -13,13 +13,18 @@ import { Tooltip } from "~/components/Tooltip";
 
 export default function Dashboard() {
   const { user } = useUser();
-  const [viewedTutorial, setViewedTutorial] = useState(false);
+  const [viewedTutorial, setViewedTutorial] = useState<boolean>();
 
   const checkTutorial = async () => {
     try {
       const value = await AsyncStorage.getItem("@viewedDashboardTutorial");
       if (value !== null) {
         setViewedTutorial(true);
+      } else {
+        //If a user hasn't viewed the tutorial, display after 2 sec
+        setTimeout(() => {
+          setViewedTutorial(false);
+        }, 2000);
       }
     } catch (err) {
       console.log("Error @checkDashboardTutorial");
@@ -98,7 +103,7 @@ export default function Dashboard() {
           </View>
         </View>
       </View>
-      {!viewedTutorial && <DashboardTutorialModal />}
+      {viewedTutorial === false && <DashboardTutorialModal />}
     </>
   );
 }
