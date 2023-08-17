@@ -17,9 +17,9 @@ export const Tooltip = ({ content }: Props) => {
       contentStyle={{ backgroundColor: "#2C353E", padding: 0 }}
       isVisible={showTip}
       content={
-        <View className="flex-row space-x-2 p-4">
-          {content}
-          <View>
+        <View className="flex-row p-4">
+          <View className="w-[95%]">{content}</View>
+          <View className="w-[5%] items-center">
             <Pressable
               className="bg-transparent w-4 h-4 p-0"
               onPress={() => setTip(false)}
