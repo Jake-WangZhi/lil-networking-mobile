@@ -6,34 +6,14 @@ import { PlusCircle } from "phosphor-react-native";
 import LottieView from "lottie-react-native";
 import Ripple from "react-native-material-ripple";
 import { DashboardTutorialModal } from "~/components/DashboardTutorialModal";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useEffect, useState } from "react";
 import { Loading } from "~/components/Loading";
 import { Tooltip } from "~/components/Tooltip";
+import { useDashboardTutorial } from "~/hooks/useDashboardTutorial";
 
 export default function Dashboard() {
   const { user } = useUser();
-  const [hasViewedTutorial, setHasViewedTutorial] = useState<boolean>();
 
-  const checkTutorial = async () => {
-    try {
-      const value = await AsyncStorage.getItem("@hasViewedDashboardTutorial");
-      if (value !== null) {
-        setHasViewedTutorial(true);
-      } else {
-        //If a user hasn't viewed the tutorial, display after 2 sec
-        setTimeout(() => {
-          setHasViewedTutorial(false);
-        }, 2000);
-      }
-    } catch (err) {
-      console.log("Error @checkDashboardTutorial");
-    }
-  };
-
-  useEffect(() => {
-    void checkTutorial();
-  }, []);
+  const { hasViewedDashboardTutorial } = useDashboardTutorial();
 
   if (!user) {
     return <Loading />;
@@ -103,7 +83,7 @@ export default function Dashboard() {
           </View>
         </View>
       </View>
-      {hasViewedTutorial === false && <DashboardTutorialModal />}
+      {!hasViewedDashboardTutorial && <DashboardTutorialModal />}
     </>
   );
 }

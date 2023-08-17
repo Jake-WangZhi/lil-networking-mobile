@@ -60,7 +60,7 @@ export const TutorialModal = ({ data }: Props) => {
     setShowModal(false);
 
     try {
-      await AsyncStorage.setItem("@HasViewedDashboardTutorial", "true");
+      await AsyncStorage.setItem("@hasViewedDashboardTutorial", "true");
     } catch (err) {
       console.log("Error @setHasViewedDashboardTutorial", err);
     }

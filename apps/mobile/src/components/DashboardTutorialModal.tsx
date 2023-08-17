@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { TutorialModal } from "~/components/TutorialModal";
 
-const img1 = require("~/images/tutorials/dashboard/add_contacts.png");
-const img2 = require("~/images/tutorials/dashboard/stats.png");
-const img3 = require("~/images/tutorials/dashboard/priority.png");
+import img1 from "~/images/tutorials/dashboard/add_contacts.png";
+import img3 from "~/images/tutorials/dashboard/priority.png";
+import img2 from "~/images/tutorials/dashboard/stats.png";
 
 const data = [
   {

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-const logo = require("~/images/icon.png");
+import logo from "~/images/icon.png";
 import colors from "tailwindcss/colors";
 
 import { useOAuth } from "@clerk/clerk-expo";
