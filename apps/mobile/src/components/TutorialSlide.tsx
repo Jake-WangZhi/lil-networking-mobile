@@ -1,12 +1,12 @@
 import { Text, View, Image } from "react-native";
-import type { TutorialModalProps } from "~/types";
+import type { Slide } from "~/types";
 
 interface Props {
-  item: TutorialModalProps;
+  slide: Slide;
   containerWidth: number;
 }
 
-export const TutorialItem = ({ item, containerWidth }: Props) => {
+export const TutorialSlide = ({ slide, containerWidth }: Props) => {
   return (
     <View
       style={{
@@ -23,14 +23,14 @@ export const TutorialItem = ({ item, containerWidth }: Props) => {
           alignItems: "center",
         }}
       >
-        <Image source={item.image} />
+        <Image source={slide.image} />
       </View>
       <View className="space-y-2 flex justify-center items-center">
         <Text className="text-white text-2xl font-semibold text-center">
-          {item.title}
+          {slide.title}
         </Text>
         <Text className="text-white text-base text-center">
-          {item.description}
+          {slide.description}
         </Text>
       </View>
     </View>

@@ -6,18 +6,18 @@ import {
   useWindowDimensions,
 } from "react-native";
 import { useRef, useState } from "react";
-import { TutorialItem } from "~/components/TutorialItem";
+import { TutorialSlide } from "~/components/TutorialSlide";
 import { Paginator } from "~/components/Paginator";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import type { TutorialModalProps } from "~/types";
+import type { Slide } from "~/types";
 import Modal from "react-native-modal";
 import Ripple from "react-native-material-ripple";
 
 interface Props {
-  data: TutorialModalProps[];
+  slides: Slide[];
 }
 
-export const TutorialModal = ({ data }: Props) => {
+export const TutorialModal = ({ slides }: Props) => {
   const slidesRef = useRef<FlatList>(null);
   const scrollX = useRef(new Animated.Value(0)).current;
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -29,8 +29,8 @@ export const TutorialModal = ({ data }: Props) => {
   const containerWidth = Math.floor(width * 0.9) - 32;
 
   const scrollTo = async () => {
-    if (currentIndex < data.length - 1) {
-      if (currentIndex + 1 === data.length - 1) {
+    if (currentIndex < slides.length - 1) {
+      if (currentIndex + 1 === slides.length - 1) {
         setNextButton("Done");
       }
 
@@ -69,9 +69,9 @@ export const TutorialModal = ({ data }: Props) => {
       >
         <View className="bg-light-grey p-4 space-y-6">
           <FlatList
-            data={data}
-            renderItem={({ item }: { item: TutorialModalProps }) => (
-              <TutorialItem item={item} containerWidth={containerWidth} />
+            data={slides}
+            renderItem={({ item }: { item: Slide }) => (
+              <TutorialSlide slide={item} containerWidth={containerWidth} />
             )}
             horizontal
             pagingEnabled
@@ -87,7 +87,7 @@ export const TutorialModal = ({ data }: Props) => {
 
           <View className="flex-row justify-between items-center">
             <Paginator
-              data={data}
+              slides={slides}
               scrollX={scrollX}
               containerWidth={containerWidth}
             />

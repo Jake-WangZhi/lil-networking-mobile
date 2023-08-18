@@ -4,7 +4,7 @@ import img1 from "~/images/tutorials/dashboard/add_contacts.png";
 import img3 from "~/images/tutorials/dashboard/priority.png";
 import img2 from "~/images/tutorials/dashboard/stats.png";
 
-const data = [
+const slides = [
   {
     id: "1",
     title: "Add Contacts",
@@ -28,5 +28,5 @@ const data = [
 ];
 
 export const DashboardTutorialModal = () => {
-  return <TutorialModal data={data} />;
+  return <TutorialModal slides={slides} />;
 };

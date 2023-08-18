@@ -9,7 +9,6 @@ import { DashboardTutorialModal } from "~/components/DashboardTutorialModal";
 import { Loading } from "~/components/Loading";
 import { Tooltip } from "~/components/Tooltip";
 import { useDashboardTutorial } from "~/hooks/useDashboardTutorial";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Dashboard() {
   const { user } = useUser();
@@ -84,13 +83,6 @@ export default function Dashboard() {
           </View>
         </View>
       </View>
-      <Ripple
-        onPress={async () => {
-          await AsyncStorage.removeItem("@hasViewedDashboardTutorial");
-        }}
-      >
-        <Text>Clear storage</Text>
-      </Ripple>
       {!hasViewedDashboardTutorial && <DashboardTutorialModal />}
     </>
   );

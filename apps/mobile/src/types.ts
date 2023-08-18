@@ -1,6 +1,6 @@
 import type { ImageSourcePropType } from "react-native";
 
-export interface TutorialModalProps {
+export interface Slide {
   id: string;
   title: string;
   description: string;

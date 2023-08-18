@@ -1,21 +1,21 @@
 import type { Animated as AnimatedType } from "react-native";
 import { View, Animated } from "react-native";
-import type { TutorialModalProps } from "~/types";
+import type { Slide } from "~/types";
 
 interface PaginatorProps {
-  data: TutorialModalProps[];
+  slides: Slide[];
   scrollX: AnimatedType.Value;
   containerWidth: number;
 }
 
 export const Paginator = ({
-  data,
+  slides,
   scrollX,
   containerWidth,
 }: PaginatorProps) => {
   return (
     <View className="flex flex-row">
-      {data.map((_, i) => {
+      {slides.map((_, i) => {
         const inputRange = [
           (i - 1) * containerWidth,
           i * containerWidth,
