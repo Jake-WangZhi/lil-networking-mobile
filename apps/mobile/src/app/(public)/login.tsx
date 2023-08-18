@@ -2,7 +2,6 @@ import logo from "~/images/icon.png";
 import colors from "tailwindcss/colors";
 
 import { useOAuth } from "@clerk/clerk-expo";
-import { HStack, VStack } from "@gluestack-ui/react";
 import * as WebBrowser from "expo-web-browser";
 import { ArrowsClockwise, Notepad, UsersThree } from "phosphor-react-native";
 import { Image, Text, View } from "react-native";
@@ -35,21 +34,19 @@ export default function Login() {
         Lil&apos; Networking App
       </Text>
 
-      <View className="my-14">
-        <VStack space="3xl">
-          <HStack space="lg">
-            <Notepad color={colors.white} />
-            <Text className="text-white text-xl">Build Networking Habits</Text>
-          </HStack>
-          <HStack space="lg">
-            <UsersThree color={colors.white} />
-            <Text className="text-white text-xl">Maintain Relationships</Text>
-          </HStack>
-          <HStack space="lg">
-            <ArrowsClockwise color={colors.white} />
-            <Text className="text-white text-xl">Stay Connected</Text>
-          </HStack>
-        </VStack>
+      <View className="my-14 space-y-6">
+        <View className="flex-row space-x-4">
+          <Notepad color={colors.white} />
+          <Text className="text-white text-xl">Build Networking Habits</Text>
+        </View>
+        <View className="flex-row space-x-4">
+          <UsersThree color={colors.white} />
+          <Text className="text-white text-xl">Maintain Relationships</Text>
+        </View>
+        <View className="flex-row space-x-4">
+          <ArrowsClockwise color={colors.white} />
+          <Text className="text-white text-xl">Stay Connected</Text>
+        </View>
       </View>
 
       <Ripple

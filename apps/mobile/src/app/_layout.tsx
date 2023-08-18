@@ -2,7 +2,6 @@ import "@fontsource/metropolis";
 import "../global.css";
 
 import { ClerkProvider, useAuth } from "@clerk/clerk-expo";
-import { GluestackUIProvider, config } from "@gluestack-ui/react";
 import React, { useEffect } from "react";
 
 import { Slot, useRouter, useSegments } from "expo-router";
@@ -35,15 +34,12 @@ const Layout = () => {
 
 const RootLayout = () => {
   return (
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
-    <GluestackUIProvider config={config.theme}>
-      <ClerkProvider
-        tokenCache={tokenCache}
-        publishableKey={CLERK_PUBLISHABLE_KEY}
-      >
-        <Layout />
-      </ClerkProvider>
-    </GluestackUIProvider>
+    <ClerkProvider
+      tokenCache={tokenCache}
+      publishableKey={CLERK_PUBLISHABLE_KEY}
+    >
+      <Layout />
+    </ClerkProvider>
   );
 };
 
