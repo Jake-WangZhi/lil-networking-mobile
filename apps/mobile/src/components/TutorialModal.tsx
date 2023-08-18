@@ -65,6 +65,7 @@ export const TutorialModal = ({ data }: Props) => {
         isVisible={showModal}
         onBackdropPress={skip}
         animationIn="fadeIn"
+        animationOut="fadeIn"
       >
         <View className="bg-light-grey p-4 space-y-6">
           <FlatList
