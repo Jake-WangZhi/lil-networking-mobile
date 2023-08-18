@@ -13,24 +13,14 @@ export const Tooltip = ({ content }: Props) => {
 
   return (
     <RNTooltip
+      disableShadow={true}
       backgroundColor="transparent"
-      contentStyle={{ backgroundColor: "#0F1A24", padding: 0 }}
-      arrowStyle={{
-        backgroundColor: "#0F1A24",
-        borderTopColor: "rgba(255, 255, 255, 0.16)",
-      }}
+      contentStyle={{ backgroundColor: "#2C353E", padding: 0 }}
       isVisible={showTip}
       content={
-        <View
-          style={{
-            backgroundColor: "rgba(255, 255, 255, 0.16)",
-            padding: 16,
-            flexDirection: "row",
-            gap: 8,
-          }}
-        >
-          {content}
-          <View>
+        <View className="flex-row p-4">
+          <View className="w-[95%]">{content}</View>
+          <View className="w-[5%] items-center">
             <Pressable
               className="bg-transparent w-4 h-4 p-0"
               onPress={() => setTip(false)}

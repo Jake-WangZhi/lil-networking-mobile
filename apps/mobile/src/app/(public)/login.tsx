@@ -1,8 +1,7 @@
-// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-const logo = require("~/images/icon.png");
+import logo from "~/images/icon.png";
+import colors from "tailwindcss/colors";
 
 import { useOAuth } from "@clerk/clerk-expo";
-import { Center, HStack, VStack } from "@gluestack-ui/react";
 import * as WebBrowser from "expo-web-browser";
 import { ArrowsClockwise, Notepad, UsersThree } from "phosphor-react-native";
 import { Image, Text, View } from "react-native";
@@ -29,49 +28,35 @@ export default function Login() {
   };
 
   return (
-    <View className="flex-1 px-16 pt-40 pb-24 bg-dark-blue justify-between">
-      <Center>
-        <Image
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-          source={logo}
-          alt="Alternate Text"
-          style={{
-            height: 186,
-            width: 186,
-          }}
-        />
-        <Text className="text-white text-2xl font-semibold leading-8">
-          Lil&apos; Networking App
-        </Text>
+    <View className="flex-1 px-16 pt-40 pb-24 bg-dark-blue justify-center items-center">
+      <Image source={logo} alt="Logo" className="w-[186] h-[186]" />
+      <Text className="text-white text-2xl font-semibold leading-8">
+        Lil&apos; Networking App
+      </Text>
 
-        <View className="py-14">
-          <VStack space="3xl">
-            <HStack space="lg">
-              <Notepad color="white" />
-              <Text className="text-white text-xl">
-                Build Networking Habits
-              </Text>
-            </HStack>
-            <HStack space="lg">
-              <UsersThree color="white" />
-              <Text className="text-white text-xl">Maintain Relationships</Text>
-            </HStack>
-            <HStack space="lg">
-              <ArrowsClockwise color="white" />
-              <Text className="text-white text-xl">Stay Connected</Text>
-            </HStack>
-          </VStack>
+      <View className="my-14 space-y-6">
+        <View className="flex-row space-x-4">
+          <Notepad color={colors.white} />
+          <Text className="text-white text-xl">Build Networking Habits</Text>
         </View>
-      </Center>
+        <View className="flex-row space-x-4">
+          <UsersThree color={colors.white} />
+          <Text className="text-white text-xl">Maintain Relationships</Text>
+        </View>
+        <View className="flex-row space-x-4">
+          <ArrowsClockwise color={colors.white} />
+          <Text className="text-white text-xl">Stay Connected</Text>
+        </View>
+      </View>
 
-      <Center>
-        <Ripple
-          className="flex items-center justify-center rounded-[28px] bg-light-blue w-52 h-12"
-          onPress={onSignInPress}
-        >
-          <Text className="text-black">Sign in with LinkedIn</Text>
-        </Ripple>
-      </Center>
+      <Ripple
+        className="flex items-center justify-center rounded-[28px] bg-light-blue w-52 h-12 mt-16"
+        onPress={onSignInPress}
+      >
+        <Text className="text-black text-base font-semibold">
+          Sign in with LinkedIn
+        </Text>
+      </Ripple>
     </View>
   );
 }

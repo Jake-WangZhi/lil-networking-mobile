@@ -1,19 +1,24 @@
 import animationData from "~/lottie/add-and-save.json";
 
 import { useUser } from "@clerk/clerk-expo";
-import LottieView from "lottie-react-native";
+import { View, Text } from "react-native";
 import { PlusCircle } from "phosphor-react-native";
-import { Text, View } from "react-native";
+import LottieView from "lottie-react-native";
 import Ripple from "react-native-material-ripple";
+import { DashboardTutorialModal } from "~/components/DashboardTutorialModal";
 import { Loading } from "~/components/Loading";
 import { Tooltip } from "~/components/Tooltip";
+import { useDashboardTutorial } from "~/hooks/useDashboardTutorial";
 
 export default function Dashboard() {
   const { user } = useUser();
 
+  const { hasViewedDashboardTutorial } = useDashboardTutorial();
+
   if (!user) {
     return <Loading />;
   }
+
   return (
     <>
       <View className="px-4">
@@ -27,7 +32,7 @@ export default function Dashboard() {
                 <View>
                   <Text className="text-white font-bold text-sm">
                     Priority:{" "}
-                    <Text className="text-white font-normal text-sm">
+                    <Text className="text-white font-normal text-sm break-words">
                       Items that have been actionable for 10+ days
                     </Text>
                   </Text>
@@ -54,7 +59,7 @@ export default function Dashboard() {
           </View>
         </Ripple>
       </View>
-      <View className="px-14 pt-28">
+      <View className="px-14 flex-1 justify-center items-center">
         <View className="flex justify-center items-center space-y-6">
           <View>
             <LottieView
@@ -78,6 +83,7 @@ export default function Dashboard() {
           </View>
         </View>
       </View>
+      {!hasViewedDashboardTutorial && <DashboardTutorialModal />}
     </>
   );
 }
