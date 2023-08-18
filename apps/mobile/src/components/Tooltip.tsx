@@ -13,6 +13,7 @@ export const Tooltip = ({ content }: Props) => {
 
   return (
     <RNTooltip
+      disableShadow={true}
       backgroundColor="transparent"
       contentStyle={{ backgroundColor: "#2C353E", padding: 0 }}
       isVisible={showTip}

@@ -1,5 +1,4 @@
 import { Text, View, Image } from "react-native";
-import { Center } from "@gluestack-ui/react";
 import type { TutorialModalProps } from "~/types";
 
 interface Props {
@@ -26,14 +25,14 @@ export const TutorialItem = ({ item, containerWidth }: Props) => {
       >
         <Image source={item.image} />
       </View>
-      <Center style={{ gap: 8 }}>
+      <View className="space-y-2 flex justify-center items-center">
         <Text className="text-white text-2xl font-semibold text-center">
           {item.title}
         </Text>
         <Text className="text-white text-base text-center">
           {item.description}
         </Text>
-      </Center>
+      </View>
     </View>
   );
 };
