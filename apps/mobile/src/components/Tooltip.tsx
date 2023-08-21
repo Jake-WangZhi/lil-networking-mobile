@@ -1,7 +1,8 @@
 import { Info, X } from "phosphor-react-native";
 import type { ReactElement } from "react";
 import { useState } from "react";
-import { TouchableOpacity, View, Pressable } from "react-native";
+import { View, Pressable } from "react-native";
+import Ripple from "react-native-material-ripple";
 import RNTooltip from "react-native-walkthrough-tooltip";
 
 interface Props {
@@ -33,9 +34,9 @@ export const Tooltip = ({ content }: Props) => {
       onClose={() => setTip(false)}
       placement="bottom"
     >
-      <TouchableOpacity onPress={() => setTip(true)}>
+      <Ripple onPress={() => setTip(true)}>
         <Info color="white" size={48} />
-      </TouchableOpacity>
+      </Ripple>
     </RNTooltip>
   );
 };

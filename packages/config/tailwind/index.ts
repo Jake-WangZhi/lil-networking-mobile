@@ -14,7 +14,7 @@ export default {
         "light-yellow": "#FFCF79",
         "light-grey": "#2C353E",
         "dark-grey": "#1B252F",
-        error: "#F42010",
+        error: "#FB5913",
       },
     },
   },

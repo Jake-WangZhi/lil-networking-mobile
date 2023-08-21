@@ -9,6 +9,8 @@ import { DashboardTutorialModal } from "~/components/DashboardTutorialModal";
 import { Loading } from "~/components/Loading";
 import { Tooltip } from "~/components/Tooltip";
 import { useDashboardTutorial } from "~/hooks/useDashboardTutorial";
+import { Feather } from "@expo/vector-icons";
+import { router } from "expo-router";
 
 export default function Dashboard() {
   const { user } = useUser();
@@ -21,11 +23,11 @@ export default function Dashboard() {
 
   return (
     <>
-      <View className="px-4">
-        <View className="flex-row justify-between items-center pt-20">
-          <Text className="text-white text-3xl font-semibold leading-10">
-            Hi, {user.firstName}
-          </Text>
+      <View className="flex-row justify-between items-center">
+        <Text className="text-white text-3xl font-semibold leading-10">
+          Hi, {user.firstName}
+        </Text>
+        <View className="flex-row items-center space-x-4">
           <Tooltip
             content={
               <View className="space-y-4">
@@ -48,17 +50,20 @@ export default function Dashboard() {
               </View>
             }
           />
+          <Ripple onPress={() => router.push("/create_new_contact")}>
+            <Feather name="plus-square" size={48} color="#38ACE2" />
+          </Ripple>
         </View>
-        <Ripple
-          style={{ backgroundColor: "rgba(255, 255, 255, 0.05)" }}
-          className="flex justify-center items-center mt-6 border border-dashed border-white rounded-xl h-[140]"
-        >
-          <View className="flex flex-row items-center space-x-2">
-            <PlusCircle color="white" size={32} />
-            <Text className="text-white font-normal">Add Goals</Text>
-          </View>
-        </Ripple>
       </View>
+      <Ripple
+        style={{ backgroundColor: "rgba(255, 255, 255, 0.05)" }}
+        className="flex justify-center items-center mt-6 border border-dashed border-white rounded-xl h-[140]"
+      >
+        <View className="flex flex-row items-center space-x-2">
+          <PlusCircle color="white" size={32} />
+          <Text className="text-white font-normal">Add Goals</Text>
+        </View>
+      </Ripple>
       <View className="px-14 flex-1 justify-center items-center">
         <View className="flex justify-center items-center space-y-6">
           <View>
