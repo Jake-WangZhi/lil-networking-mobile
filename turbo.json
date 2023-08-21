@@ -26,6 +26,8 @@
         "CRON_KEY",
         "POSTGRES_PRISMA_URL",
         "POSTGRES_URL_NON_POOLING",
-        "CLERK_API_URL"
+        "CLERK_API_URL",
+        "EXPO_PUBLIC_CLERK_SECRET_KEY",
+        "EXPO_PUBLIC_WEB_URL"
     ]
 }
