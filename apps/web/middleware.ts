@@ -1,14 +1,14 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-const clerk_uri = process.env.CLERK_API_URL;
+const clerk_api_uri = process.env.CLERK_API_URL;
 
 export async function middleware(request: NextRequest) {
   if (request.nextUrl.pathname === "/api/streak_calculation_cron") {
     return NextResponse.next();
   }
 
-  if (!clerk_uri) throw new Error("No Clerk URL");
+  if (!clerk_api_uri) throw new Error("No Clerk API URL");
 
   const userId = request.headers.get("User-ID");
   const clerk_secret_key = request.headers.get("Authorization");
@@ -20,7 +20,7 @@ export async function middleware(request: NextRequest) {
     );
   }
 
-  const response = await fetch(`${clerk_uri}/users/${userId}`, {
+  const response = await fetch(`${clerk_api_uri}/users/${userId}`, {
     headers: {
       Authorization: clerk_secret_key,
     },
