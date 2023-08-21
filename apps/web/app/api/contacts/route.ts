@@ -5,14 +5,8 @@ import { SearchParams } from "~/types";
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
-  const userId = searchParams.get(SearchParams.UserId);
   const name = searchParams.get(SearchParams.Name);
-
-  if (!userId)
-    return new NextResponse(
-      JSON.stringify({ success: false, message: "Missing User Id" }),
-      { status: 400, headers: { "content-type": "application/json" } }
-    );
+  const userId = request.headers.get("User-ID") ?? "";
 
   const contacts = await getContacts(name, userId);
 
