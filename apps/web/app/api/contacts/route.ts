@@ -41,12 +41,11 @@ const parseContacts = (contacts: Contact[], activities: Activity[]) => {
       lastName: contact.lastName,
       title: contact.title,
       company: contact.company,
-      industry: contact.industry,
       goalDays: contact.goalDays,
       email: contact.email,
       phone: contact.phone,
       links: contact.links,
-      interests: contact.interests,
+      tags: contact.tags,
       activities: activities.filter(
         (activity) => activity.contactId === contact.id
       ),
@@ -96,3 +95,50 @@ const getContacts = async (name: string | null, userId: string) => {
 
   return contacts;
 };
+
+interface ContactPayload {
+  firstName: string;
+  lastName: string;
+  title: string;
+  company: string;
+  reminder: number;
+  email: string;
+  phone: string;
+  linkedIn: string;
+  location: string;
+  links: string[];
+  tags: string[];
+}
+
+export async function POST(request: Request) {
+  const userId = request.headers.get("User-ID") ?? "";
+  const body: ContactPayload = await request.json();
+  console.log("body", body);
+  const newContact = await prisma.contact.create({
+    data: {
+      firstName: body.firstName,
+      lastName: body.lastName,
+      title: body.title,
+      company: body.company,
+      email: body.email,
+      goalDays: body.reminder,
+      linkedIn: body.linkedIn,
+      location: body.location,
+      phone: body.phone,
+      links: body.links,
+      tags: body.tags,
+      User: {
+        connectOrCreate: {
+          where: {
+            id: userId,
+          },
+          create: {
+            id: userId,
+          },
+        },
+      },
+    },
+  });
+
+  return NextResponse.json(newContact);
+}

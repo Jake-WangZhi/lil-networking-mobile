@@ -5,7 +5,7 @@ import { Formik } from "formik";
 import { Warning, PlusCircle } from "phosphor-react-native";
 import { useState } from "react";
 import * as Yup from "yup";
-import { useContactMutation } from "~/hooks/useContact";
+import { useContactMutation } from "~/hooks/useContactMutation";
 
 const ValidationSchema = Yup.object().shape({
   firstName: Yup.string().required(),
@@ -64,7 +64,8 @@ export default function CreateNewContact() {
         }}
         validationSchema={ValidationSchema}
         onSubmit={(values) => {
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+          console.log("values", values);
+
           postContactMutation.mutate(values);
         }}
       >

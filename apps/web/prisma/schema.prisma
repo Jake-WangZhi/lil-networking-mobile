@@ -17,14 +17,13 @@ model Contact {
   lastName   String
   title      String
   company    String
-  industry   String
   goalDays   Int
   email      String
   phone      String
   linkedIn   String
   location   String
   links      String[]
-  interests  String[]
+  tags       String[]
   activities Activity[]
   isArchived Boolean    @default(false)
 
