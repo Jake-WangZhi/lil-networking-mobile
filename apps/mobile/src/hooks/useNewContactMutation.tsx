@@ -4,7 +4,6 @@ import { useAuth } from "@clerk/clerk-expo";
 interface Args {
   onSuccess: () => void;
   onError: (error: unknown) => void;
-  method: "POST" | "PUT";
 }
 
 const EXPO_PUBLIC_API_BASE_URL = process.env.EXPO_PUBLIC_API_BASE_URL;
@@ -12,7 +11,7 @@ const EXPO_PUBLIC_API_BASE_URL = process.env.EXPO_PUBLIC_API_BASE_URL;
 if (!EXPO_PUBLIC_API_BASE_URL)
   throw new Error("Missing EXPO_PUBLIC_API_BASE_URL");
 
-export const useContactMutation = ({ onSuccess, onError, method }: Args) => {
+export const useNewContactMutation = ({ onSuccess, onError }: Args) => {
   const { getToken } = useAuth();
 
   async function headers() {
@@ -28,15 +27,16 @@ export const useContactMutation = ({ onSuccess, onError, method }: Args) => {
   }
 
   return useMutation({
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    mutationFn: async (formPayload: any) => {
-      console.log("formPayload", formPayload);
-      const response = await fetch(`${EXPO_PUBLIC_API_BASE_URL}/api/contacts`, {
-        headers: await headers(),
+    mutationFn: async (contactPayload: any) => {
+      const response = await fetch(
+        `${EXPO_PUBLIC_API_BASE_URL}/api/contacts/new`,
+        {
+          headers: await headers(),
 
-        body: JSON.stringify(formPayload),
-        method,
-      });
+          body: JSON.stringify(contactPayload),
+          method: "POST",
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Unable to create the contact");

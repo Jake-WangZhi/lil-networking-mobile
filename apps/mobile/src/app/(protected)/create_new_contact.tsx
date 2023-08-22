@@ -5,7 +5,7 @@ import { Formik } from "formik";
 import { Warning, PlusCircle } from "phosphor-react-native";
 import { useState } from "react";
 import * as Yup from "yup";
-import { useContactMutation } from "~/hooks/useContactMutation";
+import { useNewContactMutation } from "~/hooks/useNewContactMutation";
 
 const ValidationSchema = Yup.object().shape({
   firstName: Yup.string().required(),
@@ -36,8 +36,7 @@ export default function CreateNewContact() {
   const [selectedDays, setSelectedDays] = useState(30);
   const [links, setLinks] = useState<string[]>([]);
 
-  const postContactMutation = useContactMutation({
-    method: "POST",
+  const postNewContactMutation = useNewContactMutation({
     onSuccess: () => {
       console.log("yeah");
     },
@@ -66,7 +65,7 @@ export default function CreateNewContact() {
         onSubmit={(values) => {
           console.log("values", values);
 
-          postContactMutation.mutate(values);
+          postNewContactMutation.mutate(values);
         }}
       >
         {({
