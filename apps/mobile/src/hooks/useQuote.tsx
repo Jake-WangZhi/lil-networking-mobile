@@ -1,4 +1,4 @@
-import { fetcher } from "~/lib/utils";
+import { useAuth } from "@clerk/clerk-expo";
 import { useQuery } from "@tanstack/react-query";
 
 interface Quote {
@@ -10,21 +10,38 @@ interface Quote {
   titles: string[];
 }
 
-const webUrl = process.env.EXPO_PUBLIC_WEB_URL;
+const EXPO_PUBLIC_API_BASE_URL = process.env.EXPO_PUBLIC_API_BASE_URL;
 
-export const useQuote = (userId: string) => {
-  const {
-    isError,
-    data: quote,
-    isLoading,
-  } = useQuery<Quote>({
+if (!EXPO_PUBLIC_API_BASE_URL)
+  throw new Error("Missing EXPO_PUBLIC_API_BASE_URL");
+
+export const useQuote = () => {
+  const { getToken } = useAuth();
+
+  async function headers() {
+    const headers = new Map<string, string>();
+
+    const token = await getToken();
+
+    if (token) headers.set("Authorization", token);
+
+    headers.set("Accept", "application/json");
+
+    return Object.fromEntries(headers);
+  }
+
+  return useQuery<Quote>({
     queryKey: ["quote"],
-    queryFn: () => fetcher(`${webUrl}/api/quote`, userId),
-  });
+    queryFn: async () => {
+      const response = await fetch(`${EXPO_PUBLIC_API_BASE_URL}/api/quote`, {
+        headers: await headers(),
+      });
 
-  return {
-    quote,
-    isLoading,
-    isError,
-  };
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      return response.json();
+    },
+  });
 };
