@@ -21,6 +21,8 @@ model Contact {
   goalDays   Int
   email      String
   phone      String
+  linkedIn   String
+  location   String
   links      String[]
   interests  String[]
   activities Activity[]
