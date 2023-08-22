@@ -2,13 +2,20 @@ import { NextResponse } from "next/server";
 import prisma from "~/lib/prisma";
 import type { Activity, Contact, Prisma } from "@prisma/client";
 import { SearchParams } from "~/types";
+import { currentUser } from "@clerk/nextjs";
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const name = searchParams.get(SearchParams.Name);
-  const userId = request.headers.get("User-ID") ?? "";
+  const user = await currentUser();
 
-  const contacts = await getContacts(name, userId);
+  if (!user)
+    return new NextResponse(
+      JSON.stringify({ success: false, message: "User Not Found" }),
+      { status: 404 }
+    );
+
+  const contacts = await getContacts(name, user.id);
 
   const contactIds = contacts.map((c) => c.id);
 

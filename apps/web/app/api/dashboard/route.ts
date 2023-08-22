@@ -4,15 +4,22 @@ import type { Activity, Contact } from "@prisma/client";
 import type { Action } from "~/types";
 import { ActivityType } from "~/types";
 import { differenceInDays } from "date-fns";
+import { currentUser } from "@clerk/nextjs";
 
 const DAYS_BEFORE_PAST_DUE = 10;
 
-export async function GET(request: Request) {
-  const userId = request.headers.get("User-ID") ?? "";
+export async function GET() {
+  const user = await currentUser();
+
+  if (!user)
+    return new NextResponse(
+      JSON.stringify({ success: false, message: "User Not Found" }),
+      { status: 404 }
+    );
 
   const contacts = await prisma.contact.findMany({
     where: {
-      userId,
+      userId: user.id,
     },
   });
 

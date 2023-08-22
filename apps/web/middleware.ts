@@ -6,7 +6,7 @@ export default authMiddleware({
     if (!auth.userId) {
       return new NextResponse(
         JSON.stringify({ success: false, message: "authentication failed" }),
-        { status: 401, headers: { "content-type": "application/json" } }
+        { status: 401 }
       );
     }
 
