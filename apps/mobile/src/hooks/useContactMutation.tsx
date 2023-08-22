@@ -1,26 +1,38 @@
 import { useMutation } from "@tanstack/react-query";
 import { useAuth } from "@clerk/clerk-expo";
 
-const webUrl = process.env.EXPO_PUBLIC_WEB_URL;
-
 interface Args {
   onSuccess: () => void;
   onError: (error: unknown) => void;
   method: "POST" | "PUT";
 }
 
+const EXPO_PUBLIC_API_BASE_URL = process.env.EXPO_PUBLIC_API_BASE_URL;
+
+if (!EXPO_PUBLIC_API_BASE_URL)
+  throw new Error("Missing EXPO_PUBLIC_API_BASE_URL");
+
 export const useContactMutation = ({ onSuccess, onError, method }: Args) => {
-  const { userId } = useAuth();
+  const { getToken } = useAuth();
+
+  async function headers() {
+    const headers = new Map<string, string>();
+
+    const token = await getToken();
+
+    if (token) headers.set("Authorization", token);
+
+    headers.set("Accept", "application/json");
+
+    return Object.fromEntries(headers);
+  }
+
   return useMutation({
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     mutationFn: async (formPayload: any) => {
       console.log("formPayload", formPayload);
-      const response = await fetch(`${webUrl}/api/contacts`, {
-        headers: {
-          "Content-Type": "application/json",
-          "User-ID": userId ?? "",
-          Authorization: `Bearer ${process.env.EXPO_PUBLIC_CLERK_SECRET_KEY}`,
-        },
+      const response = await fetch(`${EXPO_PUBLIC_API_BASE_URL}/api/contacts`, {
+        headers: await headers(),
 
         body: JSON.stringify(formPayload),
         method,

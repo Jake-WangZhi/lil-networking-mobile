@@ -118,9 +118,17 @@ interface ContactPayload {
 }
 
 export async function POST(request: Request) {
-  const userId = request.headers.get("User-ID") ?? "";
+  const user = await currentUser();
+
+  if (!user)
+    return new NextResponse(
+      JSON.stringify({ success: false, message: "User Not Found" }),
+      { status: 404 }
+    );
+
   const body: ContactPayload = await request.json();
   console.log("body", body);
+
   const newContact = await prisma.contact.create({
     data: {
       firstName: body.firstName,
@@ -137,10 +145,10 @@ export async function POST(request: Request) {
       User: {
         connectOrCreate: {
           where: {
-            id: userId,
+            id: user.id,
           },
           create: {
-            id: userId,
+            id: user.id,
           },
         },
       },

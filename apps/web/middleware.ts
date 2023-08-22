@@ -9,8 +9,6 @@ export default authMiddleware({
         { status: 401 }
       );
     }
-
-    return NextResponse.next();
   },
   ignoredRoutes: ["/api/streak_calculation_cron"],
 });
