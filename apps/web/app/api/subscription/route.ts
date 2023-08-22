@@ -1,24 +1,20 @@
+import { currentUser } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
 import prisma from "~/lib/prisma";
 import type { SubscriptionArgs } from "~/types";
-import { SearchParams } from "~/types";
 
 export async function POST(request: Request) {
   const subscriptionArgs: SubscriptionArgs = await request.json();
-  const { searchParams } = new URL(request.url);
-  const userId = searchParams.get(SearchParams.UserId);
+  const user = await currentUser();
 
-  if (!userId)
-    return new NextResponse(
-      JSON.stringify({ success: false, message: "Missing User Id" }),
-      { status: 400, headers: { "content-type": "application/json" } }
-    );
+  if (!user)
+    return NextResponse.json({ error: "User Not Found" }, { status: 404 });
 
   const { endpoint, keys } = subscriptionArgs;
 
   const newSubscription = await prisma.subscription.create({
     data: {
-      userId,
+      userId: user.id,
       endpoint: endpoint,
       p256dh: keys.p256dh,
       auth: keys.auth,

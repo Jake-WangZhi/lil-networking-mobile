@@ -2,24 +2,21 @@ import { NextResponse } from "next/server";
 import prisma from "~/lib/prisma";
 import type { Activity, Contact } from "@prisma/client";
 import type { Action } from "~/types";
-import { ActivityType, SearchParams } from "~/types";
+import { ActivityType } from "~/types";
 import { differenceInDays } from "date-fns";
+import { currentUser } from "@clerk/nextjs";
 
 const DAYS_BEFORE_PAST_DUE = 10;
 
-export async function GET(request: Request) {
-  const { searchParams } = new URL(request.url);
-  const userId = searchParams.get(SearchParams.UserId);
+export async function GET() {
+  const user = await currentUser();
 
-  if (!userId)
-    return new NextResponse(
-      JSON.stringify({ success: false, message: "Missing User Id" }),
-      { status: 400, headers: { "content-type": "application/json" } }
-    );
+  if (!user)
+    return NextResponse.json({ error: "User Not Found" }, { status: 404 });
 
   const contacts = await prisma.contact.findMany({
     where: {
-      userId,
+      userId: user.id,
     },
   });
 

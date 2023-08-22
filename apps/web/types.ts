@@ -67,7 +67,6 @@ export interface GoalsArgs {
 }
 
 export enum SearchParams {
-  UserId = "user_id",
   Email = "email",
   Name = "name",
   IsChanged = "is_changed",

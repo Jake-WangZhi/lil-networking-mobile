@@ -6,6 +6,7 @@ import React, { useEffect } from "react";
 
 import { Slot, useRouter, useSegments } from "expo-router";
 import { tokenCache } from "~/utils/cache";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 const CLERK_PUBLISHABLE_KEY = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY;
 if (!CLERK_PUBLISHABLE_KEY) {
@@ -32,13 +33,17 @@ const Layout = () => {
   return <Slot />;
 };
 
+const queryClient = new QueryClient();
+
 const RootLayout = () => {
   return (
     <ClerkProvider
       tokenCache={tokenCache}
       publishableKey={CLERK_PUBLISHABLE_KEY}
     >
-      <Layout />
+      <QueryClientProvider client={queryClient}>
+        <Layout />
+      </QueryClientProvider>
     </ClerkProvider>
   );
 };

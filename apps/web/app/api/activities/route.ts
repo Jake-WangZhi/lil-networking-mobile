@@ -15,10 +15,7 @@ export async function POST(
   });
 
   if (!contact)
-    return new NextResponse(
-      JSON.stringify({ success: false, message: "No Contact Found" }),
-      { status: 404, headers: { "content-type": "application/json" } }
-    );
+    return NextResponse.json({ error: "No Contact Found" }, { status: 404 });
 
   if (title && date && description && type)
     await prisma.activity.create({
