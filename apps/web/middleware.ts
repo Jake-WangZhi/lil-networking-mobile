@@ -4,8 +4,8 @@ import { NextResponse } from "next/server";
 export default authMiddleware({
   afterAuth(auth) {
     if (!auth.userId) {
-      return new NextResponse(
-        JSON.stringify({ success: false, message: "authentication failed" }),
+      return NextResponse.json(
+        { error: "authentication failed" },
         { status: 401 }
       );
     }
