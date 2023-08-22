@@ -12,10 +12,7 @@ export async function GET() {
   const user = await currentUser();
 
   if (!user)
-    return new NextResponse(
-      JSON.stringify({ success: false, message: "User Not Found" }),
-      { status: 404 }
-    );
+    return NextResponse.json({ error: "User Not Found" }, { status: 404 });
 
   const contacts = await prisma.contact.findMany({
     where: {
