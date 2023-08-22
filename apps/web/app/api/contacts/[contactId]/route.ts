@@ -71,12 +71,11 @@ const parseContact = (contact: Contact, activities: Activity[]) => {
     lastName,
     title,
     company,
-    industry,
     goalDays,
     email,
     phone,
     links,
-    interests,
+    tags,
     isArchived,
   } = contact;
 
@@ -86,12 +85,11 @@ const parseContact = (contact: Contact, activities: Activity[]) => {
     lastName,
     title,
     company,
-    industry,
     goalDays,
     email,
     phone,
     links,
-    interests,
+    tags,
     activities: activities.filter(
       (activity) => activity.contactId === contact.id
     ),
