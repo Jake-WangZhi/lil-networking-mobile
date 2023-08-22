@@ -8,19 +8,16 @@ export async function GET(request: Request) {
   const endpoint = searchParams.get(SearchParams.Endpoint);
 
   if (!endpoint)
-    return new NextResponse(
-      JSON.stringify({ success: false, message: "Missing endpoint" }),
-      { status: 400, headers: { "content-type": "application/json" } }
-    );
+    return NextResponse.json({ error: "Missing endpoint" }, { status: 400 });
 
   const subscription = await prisma.subscription.findUnique({
     where: { endpoint },
   });
 
   if (!subscription)
-    return new NextResponse(
-      JSON.stringify({ success: false, message: "No such subscription" }),
-      { status: 400, headers: { "content-type": "application/json" } }
+    return NextResponse.json(
+      { error: "No such subscription" },
+      { status: 400 }
     );
 
   const notificationSettings = await prisma.notificationSettings.findUnique({
