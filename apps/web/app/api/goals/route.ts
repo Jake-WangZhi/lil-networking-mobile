@@ -7,10 +7,7 @@ export async function POST(request: Request) {
   const user = await currentUser();
 
   if (!user)
-    return new NextResponse(
-      JSON.stringify({ success: false, message: "User Not Found" }),
-      { status: 404 }
-    );
+    return NextResponse.json({ error: "User Not Found" }, { status: 404 });
 
   const goalsArgs: GoalsArgs = await request.json();
 
@@ -32,10 +29,7 @@ export async function PUT(request: Request) {
   const user = await currentUser();
 
   if (!user)
-    return new NextResponse(
-      JSON.stringify({ success: false, message: "User Not Found" }),
-      { status: 404 }
-    );
+    return NextResponse.json({ error: "User Not Found" }, { status: 404 });
 
   const goalsArgs: GoalsArgs = await request.json();
 
@@ -58,10 +52,7 @@ export async function GET() {
   const user = await currentUser();
 
   if (!user)
-    return new NextResponse(
-      JSON.stringify({ success: false, message: "User Not Found" }),
-      { status: 404 }
-    );
+    return NextResponse.json({ error: "User Not Found" }, { status: 404 });
 
   const goals = await prisma.goals.findUnique({
     where: {

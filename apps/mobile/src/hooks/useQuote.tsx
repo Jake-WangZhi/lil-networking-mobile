@@ -1,14 +1,15 @@
 import { useAuth } from "@clerk/clerk-expo";
 import { useQuery } from "@tanstack/react-query";
+import { z } from "zod";
 
-interface Quote {
-  id: string;
-  createdAt: Date;
-  updatedAt: Date;
-  text: string;
-  author: string | null;
-  titles: string[];
-}
+const quoteSchema = z.object({
+  id: z.string(),
+  createdAt: z.string(),
+  updatedAt: z.string(),
+  text: z.string(),
+  author: z.string().nullable(),
+  titles: z.array(z.string()),
+});
 
 const EXPO_PUBLIC_API_BASE_URL = process.env.EXPO_PUBLIC_API_BASE_URL;
 
@@ -30,7 +31,7 @@ export const useQuote = () => {
     return Object.fromEntries(headers);
   }
 
-  return useQuery<Quote>({
+  return useQuery({
     queryKey: ["quote"],
     queryFn: async () => {
       const response = await fetch(`${EXPO_PUBLIC_API_BASE_URL}/api/quote`, {
@@ -41,7 +42,7 @@ export const useQuote = () => {
         throw new Error("Network response was not ok");
       }
 
-      return response.json();
+      return quoteSchema.parse(await response.json());
     },
   });
 };
