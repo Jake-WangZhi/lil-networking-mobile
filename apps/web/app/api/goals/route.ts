@@ -1,9 +1,16 @@
 import prisma from "~/lib/prisma";
 import type { GoalsArgs } from "~/types";
 import { NextResponse } from "next/server";
+import { currentUser } from "@clerk/nextjs";
 
 export async function POST(request: Request) {
-  const userId = request.headers.get("User-ID") ?? "";
+  const user = await currentUser();
+
+  if (!user)
+    return new NextResponse(
+      JSON.stringify({ success: false, message: "User Not Found" }),
+      { status: 404 }
+    );
 
   const goalsArgs: GoalsArgs = await request.json();
 
@@ -11,7 +18,7 @@ export async function POST(request: Request) {
 
   const newGoals = await prisma.goals.create({
     data: {
-      userId,
+      userId: user.id,
       networkingComfortLevel: networkingComfortLevel ?? 1,
       goalConnections,
       goalMessages,
@@ -22,7 +29,13 @@ export async function POST(request: Request) {
 }
 
 export async function PUT(request: Request) {
-  const userId = request.headers.get("User-ID") ?? "";
+  const user = await currentUser();
+
+  if (!user)
+    return new NextResponse(
+      JSON.stringify({ success: false, message: "User Not Found" }),
+      { status: 404 }
+    );
 
   const goalsArgs: GoalsArgs = await request.json();
 
@@ -30,7 +43,7 @@ export async function PUT(request: Request) {
 
   const newGoals = await prisma.goals.update({
     where: {
-      userId,
+      userId: user.id,
     },
     data: {
       goalConnections,
@@ -41,12 +54,18 @@ export async function PUT(request: Request) {
   return NextResponse.json(newGoals);
 }
 
-export async function GET(request: Request) {
-  const userId = request.headers.get("User-ID") ?? "";
+export async function GET() {
+  const user = await currentUser();
+
+  if (!user)
+    return new NextResponse(
+      JSON.stringify({ success: false, message: "User Not Found" }),
+      { status: 404 }
+    );
 
   const goals = await prisma.goals.findUnique({
     where: {
-      userId,
+      userId: user.id,
     },
   });
 
