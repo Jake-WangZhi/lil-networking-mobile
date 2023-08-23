@@ -64,7 +64,7 @@ export default function Dashboard() {
           <Text className="text-white font-normal">Add Goals</Text>
         </View>
       </Ripple>
-      <View className="px-14 flex-1 justify-center items-center">
+      <View className="px-10 flex-1 justify-center items-center">
         <View className="flex justify-center items-center space-y-6">
           <View>
             <LottieView

@@ -55,63 +55,62 @@ export default function CreateNewContact() {
   });
 
   return (
-    <ScrollView automaticallyAdjustKeyboardInsets={true}>
-      <Formik
-        initialValues={{
-          firstName: "",
-          lastName: "",
-          title: "",
-          company: "",
-          goalDays: 30,
-          linkedIn: "",
-          email: "",
-          phone: "",
-          links: [""],
-          tags: [""],
-          location: "",
-        }}
-        validationSchema={ValidationSchema}
-        onSubmit={(values) => {
-          setIsSaving(true);
-          values.links = values.links.filter((item) => item !== "");
-          values.tags = values.tags.filter((item) => item !== "");
+    <Formik
+      initialValues={{
+        firstName: "",
+        lastName: "",
+        title: "",
+        company: "",
+        goalDays: 30,
+        linkedIn: "",
+        email: "",
+        phone: "",
+        links: [""],
+        tags: [""],
+        location: "",
+      }}
+      validationSchema={ValidationSchema}
+      onSubmit={(values) => {
+        setIsSaving(true);
+        values.links = values.links.filter((item) => item !== "");
+        values.tags = values.tags.filter((item) => item !== "");
 
-          console.log("values", values);
+        console.log("values", values);
 
-          postNewContactMutation.mutate(values);
-        }}
-      >
-        {({
-          handleChange,
-          handleBlur,
-          handleSubmit,
-          values,
-          touched,
-          errors,
-        }) => (
-          <>
-            <View className="flex-row items-center">
-              <View className="flex-row justify-start flex-1">
-                <Ripple onPress={() => router.back()} className="py-3">
-                  <Text className="text-white text-base">Cancel</Text>
-                </Ripple>
-              </View>
-              <Text className="text-white text-xl font-semibold">
-                Create Contact
-              </Text>
-              <View className="flex-row justify-end flex-1">
-                <Ripple
-                  onPress={() => handleSubmit()}
-                  className="py-3"
-                  disabled={isSaving}
-                >
-                  <Text className="text-light-blue text-base font-semibold">
-                    {isSaving ? "Saving" : "Save"}
-                  </Text>
-                </Ripple>
-              </View>
+        postNewContactMutation.mutate(values);
+      }}
+    >
+      {({
+        handleChange,
+        handleBlur,
+        handleSubmit,
+        values,
+        touched,
+        errors,
+      }) => (
+        <>
+          <View className="flex-row items-center">
+            <View className="flex-row justify-start flex-1">
+              <Ripple onPress={() => router.back()} className="py-3">
+                <Text className="text-white text-base">Cancel</Text>
+              </Ripple>
             </View>
-
+            <Text className="text-white text-xl font-semibold">
+              Create Contact
+            </Text>
+            <View className="flex-1 flex-row justify-end">
+              <Ripple
+                onPress={() => handleSubmit()}
+                className="py-3"
+                disabled={isSaving}
+              >
+                <Text className="text-light-blue text-base font-semibold">
+                  {isSaving ? "Saving" : "Save"}
+                </Text>
+              </Ripple>
+            </View>
+          </View>
+          <ScrollView automaticallyAdjustKeyboardInsets={true}>
             <View className="space-y-6 mt-4">
               <View className="space-y-4">
                 <Text className="text-white text-xl font-semibold">
@@ -489,9 +488,9 @@ export default function CreateNewContact() {
                 </View>
               </View>
             </View>
-          </>
-        )}
-      </Formik>
-    </ScrollView>
+          </ScrollView>
+        </>
+      )}
+    </Formik>
   );
 }
