@@ -46,17 +46,9 @@ export default function CreateNewContact() {
   const inputRef = useRef<TextInput>(null);
 
   const [isSaving, setIsSaving] = useState(false);
+  const [error, setError] = useState(false);
 
-  const postNewContactMutation = useNewContactMutation({
-    onSuccess: () => {
-      setIsSaving(false);
-      router.push("/dashboard");
-    },
-    onError: (error) => {
-      setIsSaving(false);
-      console.log(error);
-    },
-  });
+  const createNewContactMutation = useNewContactMutation();
 
   if (isSaving) return <Loading />;
 
@@ -82,7 +74,17 @@ export default function CreateNewContact() {
         values.links = values.links.filter((item) => item !== "");
         values.tags = values.tags.filter((item) => item !== "");
 
-        postNewContactMutation.mutate(values);
+        createNewContactMutation.mutate(values, {
+          onSuccess: () => {
+            setIsSaving(false);
+            router.push("/dashboard");
+          },
+          onError: (error) => {
+            console.log(error);
+            setError(true);
+            setIsSaving(false);
+          },
+        });
       }}
     >
       {({
@@ -117,6 +119,11 @@ export default function CreateNewContact() {
           </View>
           <ScrollView automaticallyAdjustKeyboardInsets={true}>
             <View className="space-y-6 mt-4">
+              {error && (
+                <Text className="text-error">
+                  Unable to create the contact, please try again later!
+                </Text>
+              )}
               <View className="space-y-4">
                 <Text className="text-white text-xl font-semibold">
                   Primary Information

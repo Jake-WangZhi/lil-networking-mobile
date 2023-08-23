@@ -1,31 +1,27 @@
 import { useMutation } from "@tanstack/react-query";
 import { useAuth } from "@clerk/clerk-expo";
+import { z } from "zod";
 
-interface Args {
-  onSuccess: () => void;
-  onError: (error: unknown) => void;
-}
-
-interface ContactPayload {
-  firstName: string;
-  lastName: string;
-  title: string;
-  company: string;
-  goalDays: number;
-  linkedInUrl: string;
-  email: string;
-  phone: string;
-  links: string[];
-  tags: string[];
-  location: string;
-}
+const contactPayloadSchema = z.object({
+  firstName: z.string(),
+  lastName: z.string(),
+  title: z.string(),
+  company: z.string(),
+  goalDays: z.number(),
+  email: z.string(),
+  phone: z.string(),
+  linkedInUrl: z.string(),
+  location: z.string(),
+  links: z.array(z.string()),
+  tags: z.array(z.string()),
+});
 
 const EXPO_PUBLIC_API_BASE_URL = process.env.EXPO_PUBLIC_API_BASE_URL;
 
 if (!EXPO_PUBLIC_API_BASE_URL)
   throw new Error("Missing EXPO_PUBLIC_API_BASE_URL");
 
-export const useNewContactMutation = ({ onSuccess, onError }: Args) => {
+export const useNewContactMutation = () => {
   const { getToken } = useAuth();
 
   async function headers() {
@@ -41,12 +37,12 @@ export const useNewContactMutation = ({ onSuccess, onError }: Args) => {
   }
 
   return useMutation({
-    mutationFn: async (contactPayload: ContactPayload) => {
+    mutationFn: async (contactPayload: unknown) => {
       const response = await fetch(
         `${EXPO_PUBLIC_API_BASE_URL}/api/contacts/new`,
         {
           headers: await headers(),
-          body: JSON.stringify(contactPayload),
+          body: JSON.stringify(contactPayloadSchema.parse(contactPayload)),
           method: "POST",
         }
       );
@@ -55,7 +51,5 @@ export const useNewContactMutation = ({ onSuccess, onError }: Args) => {
         throw new Error("Unable to create the contact");
       }
     },
-    onSuccess,
-    onError,
   });
 };
