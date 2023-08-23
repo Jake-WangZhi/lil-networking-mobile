@@ -4,24 +4,25 @@ import Ripple from "react-native-material-ripple";
 import { Formik } from "formik";
 import { Warning, PlusCircle } from "phosphor-react-native";
 import { useRef, useState } from "react";
-import * as Yup from "yup";
+import { z } from "zod";
 import { useNewContactMutation } from "~/hooks/useNewContactMutation";
 import { XCircle } from "phosphor-react-native";
-import { linkedInUrlRegex, phoneRegex, urlRegex } from "~/utils/regex";
+import { linkedInUrlRegex, phoneRegex } from "~/utils/regex";
 import { Loading } from "~/components/Loading";
+import { toFormikValidationSchema } from "zod-formik-adapter";
 
-const ValidationSchema = Yup.object().shape({
-  firstName: Yup.string().required(),
-  lastName: Yup.string(),
-  title: Yup.string(),
-  company: Yup.string(),
-  goalDays: Yup.number().required(),
-  linkedIn: Yup.string().matches(linkedInUrlRegex),
-  email: Yup.string().email(),
-  phone: Yup.string().matches(phoneRegex),
-  links: Yup.array().of(Yup.string().matches(urlRegex)),
-  tags: Yup.array(),
-  location: Yup.string(),
+const ValidationSchema = z.object({
+  firstName: z.string(),
+  lastName: z.string().optional(),
+  title: z.string().optional(),
+  company: z.string().optional(),
+  goalDays: z.number(),
+  linkedInUrl: z.string().regex(linkedInUrlRegex).optional(),
+  email: z.string().email().optional(),
+  phone: z.string().regex(phoneRegex).optional(),
+  links: z.array(z.string().url().optional()),
+  tags: z.array(z.string().optional()),
+  location: z.string().optional(),
 });
 
 export default function CreateNewContact() {
@@ -67,14 +68,14 @@ export default function CreateNewContact() {
         title: "",
         company: "",
         goalDays: 30,
-        linkedIn: "",
+        linkedInUrl: "",
         email: "",
         phone: "",
         links: [""],
         tags: [""],
         location: "",
       }}
-      validationSchema={ValidationSchema}
+      validationSchema={toFormikValidationSchema(ValidationSchema)}
       onSubmit={(values) => {
         setIsSaving(true);
 
@@ -264,17 +265,17 @@ export default function CreateNewContact() {
                     <TextInput
                       className={`bg-dark-grey h-12 flex-1 text-white p-2 ${
                         (isLinkedInFocused && "border border-white rounded") ||
-                        (errors.linkedIn && "border border-error rounded")
+                        (errors.linkedInUrl && "border border-error rounded")
                       }`}
-                      onChangeText={handleChange("linkedIn")}
-                      onBlur={handleBlur("linkedIn")}
-                      value={values.linkedIn}
+                      onChangeText={handleChange("linkedInUrl")}
+                      onBlur={handleBlur("linkedInUrl")}
+                      value={values.linkedInUrl}
                       selectionColor="white"
                       onFocus={() => setIsLinkedInFocused(true)}
                       onEndEditing={() => setIsLinkedInFocused(false)}
                     />
                   </View>
-                  {touched.linkedIn && errors.linkedIn && (
+                  {touched.linkedInUrl && errors.linkedInUrl && (
                     <View className="flex-row items-center space-x-2">
                       <Text className="text-white text-base w-[74]" />
                       <View className="flex-row items-center space-x-1">

@@ -1,20 +1,21 @@
 import { currentUser } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
 import prisma from "~/lib/prisma";
+import { z } from "zod";
 
-interface ContactPayload {
-  firstName: string;
-  lastName: string;
-  title: string;
-  company: string;
-  goalDays: number;
-  email: string;
-  phone: string;
-  linkedIn: string;
-  location: string;
-  links: string[];
-  tags: string[];
-}
+const contactPayloadSchema = z.object({
+  firstName: z.string(),
+  lastName: z.string(),
+  title: z.string(),
+  company: z.string(),
+  goalDays: z.number(),
+  email: z.string(),
+  phone: z.string(),
+  linkedInUrl: z.string(),
+  location: z.string(),
+  links: z.array(z.string()),
+  tags: z.array(z.string()),
+});
 
 export async function POST(request: Request) {
   const user = await currentUser();
@@ -28,13 +29,13 @@ export async function POST(request: Request) {
     title,
     company,
     goalDays,
-    linkedIn,
+    linkedInUrl,
     email,
     phone,
     links,
     tags,
     location,
-  } = (await request.json()) as ContactPayload;
+  } = contactPayloadSchema.parse(await request.json());
 
   const newContact = await prisma.contact.create({
     data: {
@@ -44,7 +45,7 @@ export async function POST(request: Request) {
       company,
       email,
       goalDays,
-      linkedIn,
+      linkedInUrl,
       location,
       phone,
       links,

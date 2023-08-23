@@ -12,7 +12,7 @@ interface ContactPayload {
   title: string;
   company: string;
   goalDays: number;
-  linkedIn: string;
+  linkedInUrl: string;
   email: string;
   phone: string;
   links: string[];
