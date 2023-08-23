@@ -8,6 +8,7 @@ import * as Yup from "yup";
 import { useNewContactMutation } from "~/hooks/useNewContactMutation";
 import { XCircle } from "phosphor-react-native";
 import { linkedInUrlRegex, phoneRegex } from "~/utils/regex";
+import { Loading } from "~/components/Loading";
 
 const ValidationSchema = Yup.object().shape({
   firstName: Yup.string().required(),
@@ -54,6 +55,8 @@ export default function CreateNewContact() {
     },
   });
 
+  if (isSaving) return <Loading />;
+
   return (
     <Formik
       initialValues={{
@@ -72,10 +75,9 @@ export default function CreateNewContact() {
       validationSchema={ValidationSchema}
       onSubmit={(values) => {
         setIsSaving(true);
+
         values.links = values.links.filter((item) => item !== "");
         values.tags = values.tags.filter((item) => item !== "");
-
-        console.log("values", values);
 
         postNewContactMutation.mutate(values);
       }}
@@ -105,7 +107,7 @@ export default function CreateNewContact() {
                 disabled={isSaving}
               >
                 <Text className="text-light-blue text-base font-semibold">
-                  {isSaving ? "Saving" : "Save"}
+                  Save
                 </Text>
               </Ripple>
             </View>
@@ -248,7 +250,7 @@ export default function CreateNewContact() {
                 </View>
               </View>
 
-              <View className="space-y-4 mt-4">
+              <View className="space-y-4">
                 <Text className="text-white text-xl font-semibold">
                   Contact Information
                 </Text>
@@ -383,7 +385,7 @@ export default function CreateNewContact() {
                   Interests, Industries, notes, priorities, etc.
                 </Text>
                 <Pressable
-                  className={`flex-row items-center flex-wrap space-x-4 space-y-2 mt-4 bg-dark-grey p-4 flex-1 min-h-[64] ${
+                  className={`flex-row items-center flex-wrap space-x-4 space-y-2 mt-4 bg-dark-grey p-4 min-h-[64] ${
                     isTagsFocused && "border border-white rounded"
                   }`}
                   onPress={() => {
@@ -420,16 +422,6 @@ export default function CreateNewContact() {
                     }
                     placeholderTextColor="rgba(255, 255, 255, 0.70)"
                     selectionColor="white"
-                    // onKeyPress={(e) => {
-                    //   const { key } = e.nativeEvent;
-                    //   const trimmedInput = input.trim();
-                    //   console.log("key", key);
-
-                    //   if (key === "Enter") {
-                    //     setInput("");
-                    //     setTags((prevTags) => [...prevTags, trimmedInput]);
-                    //   }
-                    // }}
                     onKeyPress={(e) => {
                       const { key } = e.nativeEvent;
 
@@ -449,7 +441,6 @@ export default function CreateNewContact() {
                       if (trimmedInput.length) {
                         setInput("");
                         setTags((prevTags) => [...prevTags, trimmedInput]);
-                        inputRef.current?.focus(); // Safely focus on the input again if it exists
                       }
 
                       setIsTagsFocused(false);
