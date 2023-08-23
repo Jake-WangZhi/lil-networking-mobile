@@ -40,7 +40,7 @@ export default function CreateNewContact() {
   const [links, setLinks] = useState<string[]>([]);
   const [focusedIndex, setFocusedIndex] = useState<number | null>(null);
 
-  const [input, setInput] = useState("");
+  const [tagsInput, setTagsInput] = useState("");
   const [tags, setTags] = useState<string[]>([]);
   const inputRef = useRef<TextInput>(null);
 
@@ -407,7 +407,7 @@ export default function CreateNewContact() {
                     isTagsFocused && "border border-white rounded"
                   }`}
                   onPress={() => {
-                    inputRef.current?.focus(); // Safely focus on the input again if it exists
+                    inputRef.current?.focus();
                   }}
                 >
                   {tags.map((tag, index) => (
@@ -434,7 +434,7 @@ export default function CreateNewContact() {
                   <TextInput
                     ref={inputRef}
                     className="text-white"
-                    value={input}
+                    value={tagsInput}
                     placeholder={
                       tags.length !== 0 ? "" : "Type interest here..."
                     }
@@ -443,7 +443,11 @@ export default function CreateNewContact() {
                     onKeyPress={(e) => {
                       const { key } = e.nativeEvent;
 
-                      if (key === "Backspace" && !input.length && tags.length) {
+                      if (
+                        key === "Backspace" &&
+                        !tagsInput.length &&
+                        tags.length
+                      ) {
                         e.preventDefault();
                         const tagsCopy = [...tags];
                         tagsCopy.pop();
@@ -451,13 +455,13 @@ export default function CreateNewContact() {
                         setTags(tagsCopy);
                       }
                     }}
-                    onChangeText={setInput}
+                    onChangeText={setTagsInput}
                     onFocus={() => setIsTagsFocused(true)}
                     onEndEditing={() => {
-                      const trimmedInput = input.trim();
+                      const trimmedInput = tagsInput.trim();
 
                       if (trimmedInput.length) {
-                        setInput("");
+                        setTagsInput("");
                         setTags((prevTags) => [...prevTags, trimmedInput]);
                       }
 
