@@ -7,7 +7,7 @@ import { useRef, useState } from "react";
 import * as Yup from "yup";
 import { useNewContactMutation } from "~/hooks/useNewContactMutation";
 import { XCircle } from "phosphor-react-native";
-import { linkedInUrlRegex, phoneRegex } from "~/utils/regex";
+import { linkedInUrlRegex, phoneRegex, urlRegex } from "~/utils/regex";
 import { Loading } from "~/components/Loading";
 
 const ValidationSchema = Yup.object().shape({
@@ -19,7 +19,7 @@ const ValidationSchema = Yup.object().shape({
   linkedIn: Yup.string().matches(linkedInUrlRegex),
   email: Yup.string().email(),
   phone: Yup.string().matches(phoneRegex),
-  links: Yup.array(),
+  links: Yup.array().of(Yup.string().matches(urlRegex)),
   tags: Yup.array(),
   location: Yup.string(),
 });
@@ -36,7 +36,9 @@ export default function CreateNewContact() {
   const [isTagsFocused, setIsTagsFocused] = useState(false);
 
   const [selectedDays, setSelectedDays] = useState(30);
+
   const [links, setLinks] = useState<string[]>([]);
+  const [focusedIndex, setFocusedIndex] = useState<number | null>(null);
 
   const [input, setInput] = useState("");
   const [tags, setTags] = useState<string[]>([]);
@@ -344,7 +346,12 @@ export default function CreateNewContact() {
                         {`Link ${index + 1}`}
                       </Text>
                       <TextInput
-                        className="bg-dark-grey h-12 flex-1 text-white p-2"
+                        className={`bg-dark-grey h-12 flex-1 text-white p-2 ${
+                          (focusedIndex === index &&
+                            "border border-white rounded") ||
+                          (errors.links?.[index] &&
+                            "border border-error rounded")
+                        }`}
                         onChangeText={(value) => {
                           setLinks((prevLinks) => {
                             const updatedLinks = [...prevLinks];
@@ -357,9 +364,20 @@ export default function CreateNewContact() {
                         selectionColor="white"
                         onEndEditing={() => {
                           values.links = links;
+                          setFocusedIndex(null);
                         }}
+                        onFocus={() => setFocusedIndex(index)}
                       />
                     </View>
+                    {touched.links && errors.links?.[index] && (
+                      <View className="flex-row items-center space-x-2">
+                        <Text className="text-white text-base w-[74]" />
+                        <View className="flex-row items-center space-x-1">
+                          <Warning color="#FB5913" size={16} weight="fill" />
+                          <Text className="text-error">Invalid entry</Text>
+                        </View>
+                      </View>
+                    )}
                   </View>
                 ))}
 
