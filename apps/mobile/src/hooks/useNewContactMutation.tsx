@@ -46,7 +46,6 @@ export const useNewContactMutation = ({ onSuccess, onError }: Args) => {
         `${EXPO_PUBLIC_API_BASE_URL}/api/contacts/new`,
         {
           headers: await headers(),
-
           body: JSON.stringify(contactPayload),
           method: "POST",
         }
