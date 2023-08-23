@@ -6,6 +6,20 @@ interface Args {
   onError: (error: unknown) => void;
 }
 
+interface ContactPayload {
+  firstName: string;
+  lastName: string;
+  title: string;
+  company: string;
+  goalDays: number;
+  linkedIn: string;
+  email: string;
+  phone: string;
+  links: string[];
+  tags: string[];
+  location: string;
+}
+
 const EXPO_PUBLIC_API_BASE_URL = process.env.EXPO_PUBLIC_API_BASE_URL;
 
 if (!EXPO_PUBLIC_API_BASE_URL)
@@ -27,7 +41,7 @@ export const useNewContactMutation = ({ onSuccess, onError }: Args) => {
   }
 
   return useMutation({
-    mutationFn: async (contactPayload: any) => {
+    mutationFn: async (contactPayload: ContactPayload) => {
       const response = await fetch(
         `${EXPO_PUBLIC_API_BASE_URL}/api/contacts/new`,
         {

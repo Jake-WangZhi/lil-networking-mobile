@@ -7,20 +7,17 @@ import { useRef, useState } from "react";
 import * as Yup from "yup";
 import { useNewContactMutation } from "~/hooks/useNewContactMutation";
 import { XCircle } from "phosphor-react-native";
+import { linkedInUrlRegex, phoneRegex } from "~/utils/regex";
 
 const ValidationSchema = Yup.object().shape({
   firstName: Yup.string().required(),
   lastName: Yup.string(),
   title: Yup.string(),
   company: Yup.string(),
-  reminder: Yup.number().required(),
-  linkedIn: Yup.string().matches(
-    /^(https?:\/\/)?(www\.)?linkedin\.com\/in\/[a-zA-Z0-9_-]+(\/)?$/
-  ),
+  goalDays: Yup.number().required(),
+  linkedIn: Yup.string().matches(linkedInUrlRegex),
   email: Yup.string().email(),
-  phone: Yup.string().matches(
-    /^(\+?\d{0,4})?\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{4}\)?)?$/
-  ),
+  phone: Yup.string().matches(phoneRegex),
   links: Yup.array(),
   tags: Yup.array(),
   location: Yup.string(),
@@ -44,11 +41,15 @@ export default function CreateNewContact() {
   const [tags, setTags] = useState<string[]>([]);
   const inputRef = useRef<TextInput>(null);
 
+  const [isSaving, setIsSaving] = useState(false);
+
   const postNewContactMutation = useNewContactMutation({
     onSuccess: () => {
-      console.log("yeah");
+      setIsSaving(false);
+      router.push("/dashboard");
     },
     onError: (error) => {
+      setIsSaving(false);
       console.log(error);
     },
   });
@@ -61,7 +62,7 @@ export default function CreateNewContact() {
           lastName: "",
           title: "",
           company: "",
-          reminder: 30,
+          goalDays: 30,
           linkedIn: "",
           email: "",
           phone: "",
@@ -71,6 +72,10 @@ export default function CreateNewContact() {
         }}
         validationSchema={ValidationSchema}
         onSubmit={(values) => {
+          setIsSaving(true);
+          values.links = values.links.filter((item) => item !== "");
+          values.tags = values.tags.filter((item) => item !== "");
+
           console.log("values", values);
 
           postNewContactMutation.mutate(values);
@@ -95,9 +100,13 @@ export default function CreateNewContact() {
                 Create Contact
               </Text>
               <View className="flex-row justify-end flex-1">
-                <Ripple onPress={() => handleSubmit()} className="py-3">
+                <Ripple
+                  onPress={() => handleSubmit()}
+                  className="py-3"
+                  disabled={isSaving}
+                >
                   <Text className="text-light-blue text-base font-semibold">
-                    Save
+                    {isSaving ? "Saving" : "Save"}
                   </Text>
                 </Ripple>
               </View>
@@ -189,7 +198,10 @@ export default function CreateNewContact() {
                       className={`bg-dark-grey rounded-full ${
                         selectedDays === 30 && "border border-light-blue"
                       }`}
-                      onPress={() => setSelectedDays(30)}
+                      onPress={() => {
+                        setSelectedDays(30);
+                        values.goalDays = 30;
+                      }}
                     >
                       <Text
                         className={`text-sm px-4 py-2 ${
@@ -203,7 +215,10 @@ export default function CreateNewContact() {
                       className={`bg-dark-grey rounded-full ${
                         selectedDays === 60 && "border border-light-blue"
                       }`}
-                      onPress={() => setSelectedDays(60)}
+                      onPress={() => {
+                        setSelectedDays(60);
+                        values.goalDays = 60;
+                      }}
                     >
                       <Text
                         className={`text-sm px-4 py-2 ${
@@ -217,7 +232,10 @@ export default function CreateNewContact() {
                       className={`bg-dark-grey rounded-full ${
                         selectedDays === 90 && "border border-light-blue"
                       }`}
-                      onPress={() => setSelectedDays(90)}
+                      onPress={() => {
+                        setSelectedDays(90);
+                        values.goalDays = 90;
+                      }}
                     >
                       <Text
                         className={`text-sm px-4 py-2 ${

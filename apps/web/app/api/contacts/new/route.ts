@@ -7,7 +7,7 @@ interface ContactPayload {
   lastName: string;
   title: string;
   company: string;
-  reminder: number;
+  goalDays: number;
   email: string;
   phone: string;
   linkedIn: string;
@@ -20,27 +20,35 @@ export async function POST(request: Request) {
   const user = await currentUser();
 
   if (!user)
-    return new NextResponse(
-      JSON.stringify({ success: false, message: "User Not Found" }),
-      { status: 404 }
-    );
+    return NextResponse.json({ error: "User Not Found" }, { status: 404 });
 
-  const body: ContactPayload = await request.json();
-  console.log("body", body);
+  const {
+    firstName,
+    lastName,
+    title,
+    company,
+    goalDays,
+    linkedIn,
+    email,
+    phone,
+    links,
+    tags,
+    location,
+  } = (await request.json()) as ContactPayload;
 
   const newContact = await prisma.contact.create({
     data: {
-      firstName: body.firstName,
-      lastName: body.lastName,
-      title: body.title,
-      company: body.company,
-      email: body.email,
-      goalDays: body.reminder,
-      linkedIn: body.linkedIn,
-      location: body.location,
-      phone: body.phone,
-      links: body.links,
-      tags: body.tags,
+      firstName,
+      lastName,
+      title,
+      company,
+      email,
+      goalDays,
+      linkedIn,
+      location,
+      phone,
+      links,
+      tags,
       User: {
         connectOrCreate: {
           where: {
