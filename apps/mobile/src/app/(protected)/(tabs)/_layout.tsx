@@ -1,11 +1,12 @@
 import { Tabs } from "expo-router";
 import { Gear, House, Users } from "phosphor-react-native";
+import { colors } from "@foundrymakes/tailwind-config";
 
 export default function ProtectedLayout() {
   return (
     <Tabs
       sceneContainerStyle={{
-        backgroundColor: "#0F1A24",
+        backgroundColor: colors["dark-blue"],
       }}
       screenOptions={{
         headerShown: false,
@@ -16,13 +17,16 @@ export default function ProtectedLayout() {
         options={{
           tabBarIcon: ({ focused }) => (
             <House
-              color={focused ? "white" : "rgba(255, 255, 255, 0.7)"}
+              color={focused ? colors.white : "rgba(255, 255, 255, 0.7)"}
               weight={focused ? "fill" : "bold"}
             />
           ),
           tabBarLabel: "Dashboard",
-          tabBarStyle: { backgroundColor: "#0F1A24", borderTopWidth: 0 },
-          tabBarActiveTintColor: "white",
+          tabBarStyle: {
+            backgroundColor: colors["dark-blue"],
+            borderTopWidth: 0,
+          },
+          tabBarActiveTintColor: colors.white,
           tabBarInactiveTintColor: "rgba(255, 255, 255, 0.7)",
           tabBarLabelStyle: { fontWeight: "600", fontSize: 11 },
         }}
@@ -32,13 +36,16 @@ export default function ProtectedLayout() {
         options={{
           tabBarIcon: ({ focused }) => (
             <Users
-              color={focused ? "white" : "rgba(255, 255, 255, 0.7)"}
+              color={focused ? colors.white : "rgba(255, 255, 255, 0.7)"}
               weight={focused ? "fill" : "bold"}
             />
           ),
           tabBarLabel: "Contacts",
-          tabBarStyle: { backgroundColor: "#0F1A24", borderTopWidth: 0 },
-          tabBarActiveTintColor: "white",
+          tabBarStyle: {
+            backgroundColor: colors["dark-blue"],
+            borderTopWidth: 0,
+          },
+          tabBarActiveTintColor: colors.white,
           tabBarInactiveTintColor: "rgba(255, 255, 255, 0.7)",
           tabBarLabelStyle: { fontWeight: "600", fontSize: 11 },
         }}
@@ -48,13 +55,16 @@ export default function ProtectedLayout() {
         options={{
           tabBarIcon: ({ focused }) => (
             <Gear
-              color={focused ? "white" : "rgba(255, 255, 255, 0.7)"}
+              color={focused ? colors.white : "rgba(255, 255, 255, 0.7)"}
               weight={focused ? "fill" : "bold"}
             />
           ),
           tabBarLabel: "Settings",
-          tabBarStyle: { backgroundColor: "#0F1A24", borderTopWidth: 0 },
-          tabBarActiveTintColor: "white",
+          tabBarStyle: {
+            backgroundColor: colors["dark-blue"],
+            borderTopWidth: 0,
+          },
+          tabBarActiveTintColor: colors.white,
           tabBarInactiveTintColor: "rgba(255, 255, 255, 0.7)",
           tabBarLabelStyle: { fontWeight: "600", fontSize: 11 },
         }}

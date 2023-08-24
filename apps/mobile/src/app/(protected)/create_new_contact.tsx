@@ -10,6 +10,7 @@ import { XCircle } from "phosphor-react-native";
 import { linkedInUrlRegex, phoneRegex } from "~/utils/regex";
 import { Loading } from "~/components/Loading";
 import { toFormikValidationSchema } from "zod-formik-adapter";
+import { colors } from "@foundrymakes/tailwind-config";
 
 const ValidationSchema = z.object({
   firstName: z.string(),
@@ -139,7 +140,7 @@ export default function CreateNewContact() {
                       onChangeText={handleChange("firstName")}
                       onBlur={handleBlur("firstName")}
                       value={values.firstName}
-                      selectionColor="white"
+                      selectionColor={colors.white}
                       onFocus={() => setIsFirstNameFocused(true)}
                       onEndEditing={() => setIsFirstNameFocused(false)}
                     />
@@ -148,7 +149,7 @@ export default function CreateNewContact() {
                     <View className="flex-row items-center space-x-2">
                       <Text className="text-white text-base w-[74]" />
                       <View className="flex-row items-center space-x-1">
-                        <Warning color="#FB5913" size={16} weight="fill" />
+                        <Warning color={colors.error} size={16} weight="fill" />
                         <Text className="text-error">Required field</Text>
                       </View>
                     </View>
@@ -164,7 +165,7 @@ export default function CreateNewContact() {
                     onChangeText={handleChange("lastName")}
                     onBlur={handleBlur("lastName")}
                     value={values.lastName}
-                    selectionColor="white"
+                    selectionColor={colors.white}
                     onFocus={() => setIsLastNameFocused(true)}
                     onEndEditing={() => setIsLastNameFocused(false)}
                   />
@@ -179,7 +180,7 @@ export default function CreateNewContact() {
                     onChangeText={handleChange("title")}
                     onBlur={handleBlur("title")}
                     value={values.title}
-                    selectionColor="white"
+                    selectionColor={colors.white}
                     onFocus={() => setIsTitleFocused(true)}
                     onEndEditing={() => setIsTitleFocused(false)}
                   />
@@ -194,7 +195,7 @@ export default function CreateNewContact() {
                     onChangeText={handleChange("company")}
                     onBlur={handleBlur("company")}
                     value={values.company}
-                    selectionColor="white"
+                    selectionColor={colors.white}
                     onFocus={() => setIsCompanyFocused(true)}
                     onEndEditing={() => setIsCompanyFocused(false)}
                   />
@@ -277,7 +278,7 @@ export default function CreateNewContact() {
                       onChangeText={handleChange("linkedInUrl")}
                       onBlur={handleBlur("linkedInUrl")}
                       value={values.linkedInUrl}
-                      selectionColor="white"
+                      selectionColor={colors.white}
                       onFocus={() => setIsLinkedInFocused(true)}
                       onEndEditing={() => setIsLinkedInFocused(false)}
                     />
@@ -286,7 +287,7 @@ export default function CreateNewContact() {
                     <View className="flex-row items-center space-x-2">
                       <Text className="text-white text-base w-[74]" />
                       <View className="flex-row items-center space-x-1">
-                        <Warning color="#FB5913" size={16} weight="fill" />
+                        <Warning color={colors.error} size={16} weight="fill" />
                         <Text className="text-error">Invalid entry</Text>
                       </View>
                     </View>
@@ -304,7 +305,7 @@ export default function CreateNewContact() {
                       onChangeText={handleChange("email")}
                       onBlur={handleBlur("email")}
                       value={values.email}
-                      selectionColor="white"
+                      selectionColor={colors.white}
                       onFocus={() => setIsEmailFocused(true)}
                       onEndEditing={() => setIsEmailFocused(false)}
                     />
@@ -313,7 +314,7 @@ export default function CreateNewContact() {
                     <View className="flex-row items-center space-x-2">
                       <Text className="text-white text-base w-[74]" />
                       <View className="flex-row items-center space-x-1">
-                        <Warning color="#FB5913" size={16} weight="fill" />
+                        <Warning color={colors.error} size={16} weight="fill" />
                         <Text className="text-error">Invalid entry</Text>
                       </View>
                     </View>
@@ -331,7 +332,7 @@ export default function CreateNewContact() {
                       onChangeText={handleChange("phone")}
                       onBlur={handleBlur("phone")}
                       value={values.phone}
-                      selectionColor="white"
+                      selectionColor={colors.white}
                       onFocus={() => setIsPhoneFocused(true)}
                       onEndEditing={() => setIsPhoneFocused(false)}
                     />
@@ -340,7 +341,7 @@ export default function CreateNewContact() {
                     <View className="flex-row items-center space-x-2">
                       <Text className="text-white text-base w-[74]" />
                       <View className="flex-row items-center space-x-1">
-                        <Warning color="#FB5913" size={16} weight="fill" />
+                        <Warning color={colors.error} size={16} weight="fill" />
                         <Text className="text-error">Invalid entry</Text>
                       </View>
                     </View>
@@ -369,7 +370,7 @@ export default function CreateNewContact() {
                         }}
                         onBlur={handleBlur("links")}
                         value={links[index]}
-                        selectionColor="white"
+                        selectionColor={colors.white}
                         onEndEditing={() => {
                           setFocusedIndex(null);
                         }}
@@ -380,7 +381,11 @@ export default function CreateNewContact() {
                       <View className="flex-row items-center space-x-2">
                         <Text className="text-white text-base w-[74]" />
                         <View className="flex-row items-center space-x-1">
-                          <Warning color="#FB5913" size={16} weight="fill" />
+                          <Warning
+                            color={colors.error}
+                            size={16}
+                            weight="fill"
+                          />
                           <Text className="text-error">Invalid entry</Text>
                         </View>
                       </View>
@@ -395,7 +400,7 @@ export default function CreateNewContact() {
                     }}
                     className="flex-row items-center space-x-1"
                   >
-                    <PlusCircle size={24} color="#38ACE2" />
+                    <PlusCircle size={24} color={colors["light-blue"]} />
                     <Text className="text-light-blue">Add Link</Text>
                   </Ripple>
                 </View>
@@ -446,7 +451,7 @@ export default function CreateNewContact() {
                       tags.length !== 0 ? "" : "Type interest here..."
                     }
                     placeholderTextColor="rgba(255, 255, 255, 0.70)"
-                    selectionColor="white"
+                    selectionColor={colors.white}
                     onKeyPress={(e) => {
                       const { key } = e.nativeEvent;
 
@@ -498,7 +503,7 @@ export default function CreateNewContact() {
                     onChangeText={handleChange("location")}
                     onBlur={handleBlur("location")}
                     value={values.location}
-                    selectionColor="white"
+                    selectionColor={colors.white}
                     placeholder="Add where you met here..."
                     placeholderTextColor="rgba(255, 255, 255, 0.70)"
                     onFocus={() => setIsLocationFocused(true)}

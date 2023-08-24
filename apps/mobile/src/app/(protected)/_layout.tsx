@@ -1,4 +1,5 @@
 import { Stack } from "expo-router";
+import { colors } from "@foundrymakes/tailwind-config";
 
 export default function ProtectedLayout() {
   return (
@@ -6,7 +7,7 @@ export default function ProtectedLayout() {
       screenOptions={{
         headerShown: false,
         contentStyle: {
-          backgroundColor: "#0F1A24",
+          backgroundColor: colors["dark-blue"],
           paddingTop: 72,
           paddingHorizontal: 16,
         },

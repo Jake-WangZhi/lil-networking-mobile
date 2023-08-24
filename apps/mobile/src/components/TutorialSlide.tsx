@@ -1,5 +1,6 @@
 import { Text, View, Image } from "react-native";
 import type { Slide } from "~/types";
+import { colors } from "@foundrymakes/tailwind-config";
 
 interface Props {
   slide: Slide;
@@ -18,7 +19,7 @@ export const TutorialSlide = ({ slide, containerWidth }: Props) => {
         style={{
           width: containerWidth,
           height: 186,
-          backgroundColor: "#0F1A24",
+          backgroundColor: colors["dark-blue"],
           justifyContent: "center",
           alignItems: "center",
         }}

@@ -4,6 +4,7 @@ import { useState } from "react";
 import { View, Pressable } from "react-native";
 import Ripple from "react-native-material-ripple";
 import RNTooltip from "react-native-walkthrough-tooltip";
+import { colors } from "@foundrymakes/tailwind-config";
 
 interface Props {
   content: ReactElement;
@@ -16,7 +17,7 @@ export const Tooltip = ({ content }: Props) => {
     <RNTooltip
       disableShadow={true}
       backgroundColor="transparent"
-      contentStyle={{ backgroundColor: "#2C353E", padding: 0 }}
+      contentStyle={{ backgroundColor: colors["light-grey"], padding: 0 }}
       isVisible={showTip}
       content={
         <View className="flex-row p-4">
@@ -26,7 +27,7 @@ export const Tooltip = ({ content }: Props) => {
               className="bg-transparent w-4 h-4 p-0"
               onPress={() => setTip(false)}
             >
-              <X color="white" size={16} />
+              <X color={colors.white} size={16} />
             </Pressable>
           </View>
         </View>
@@ -35,7 +36,7 @@ export const Tooltip = ({ content }: Props) => {
       placement="bottom"
     >
       <Ripple onPress={() => setTip(true)}>
-        <Info color="white" size={48} />
+        <Info color={colors.white} size={48} />
       </Ripple>
     </RNTooltip>
   );
