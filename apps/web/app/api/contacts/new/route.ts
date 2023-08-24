@@ -63,5 +63,15 @@ export async function POST(request: Request) {
     },
   });
 
+  await prisma.activity.create({
+    data: {
+      contactId: newContact.id,
+      title: "Contact created",
+      description: "",
+      date: new Date(),
+      type: "SYSTEM",
+    },
+  });
+
   return NextResponse.json(newContact);
 }

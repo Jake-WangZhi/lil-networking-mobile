@@ -71,8 +71,8 @@ export default function CreateNewContact() {
       onSubmit={(values) => {
         setIsSaving(true);
 
-        values.links = values.links.filter((item) => item !== "");
-        values.tags = values.tags.filter((item) => item !== "");
+        values.links = links.filter((item) => item !== "");
+        values.tags = tags.filter((item) => item !== "");
 
         createNewContactMutation.mutate(values, {
           onSuccess: () => {
@@ -371,7 +371,6 @@ export default function CreateNewContact() {
                         value={links[index]}
                         selectionColor="white"
                         onEndEditing={() => {
-                          values.links = links;
                           setFocusedIndex(null);
                         }}
                         onFocus={() => setFocusedIndex(index)}
@@ -474,7 +473,6 @@ export default function CreateNewContact() {
                       }
 
                       setIsTagsFocused(false);
-                      values.tags = tags;
                     }}
                   />
                 </Pressable>
