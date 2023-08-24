@@ -1,5 +1,4 @@
 import type { ExpoConfig } from "@expo/config";
-import { colors } from "@foundrymakes/tailwind-config";
 
 const projectId = process.env.EXPO_PUBLIC_EAS_PROJECT_ID;
 
@@ -20,7 +19,7 @@ const defineConfig = (): ExpoConfig => ({
   splash: {
     image: "./assets/splash.png",
     resizeMode: "contain",
-    backgroundColor: colors["light-blue"],
+    backgroundColor: "#0F1A24",
   },
   updates: {
     fallbackToCacheTimeout: 0,
@@ -33,7 +32,7 @@ const defineConfig = (): ExpoConfig => ({
   android: {
     adaptiveIcon: {
       foregroundImage: "./assets/icon.png",
-      backgroundColor: colors["light-blue"],
+      backgroundColor: "#0F1A24",
     },
   },
   extra: {

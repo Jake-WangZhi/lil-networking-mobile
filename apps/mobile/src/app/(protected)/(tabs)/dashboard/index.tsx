@@ -10,7 +10,7 @@ import { Loading } from "~/components/Loading";
 import { Tooltip } from "~/components/Tooltip";
 import { useDashboardTutorial } from "~/hooks/useDashboardTutorial";
 import { Feather } from "@expo/vector-icons";
-import { router } from "expo-router";
+import { Link } from "expo-router";
 import { colors } from "@foundrymakes/tailwind-config";
 
 export default function Dashboard() {
@@ -51,13 +51,15 @@ export default function Dashboard() {
               </View>
             }
           />
-          <Ripple onPress={() => router.push("/create_new_contact")}>
-            <Feather
-              name="plus-square"
-              size={48}
-              color={colors["light-blue"]}
-            />
-          </Ripple>
+          <Link href="/create_new_contact" asChild>
+            <Ripple>
+              <Feather
+                name="plus-square"
+                size={48}
+                color={colors["light-blue"]}
+              />
+            </Ripple>
+          </Link>
         </View>
       </View>
       <Ripple
