@@ -6,3 +6,18 @@ export interface Slide {
   description: string;
   image: ImageSourcePropType;
 }
+
+export interface Action {
+  contactId: string;
+  contactFirstName: string;
+  contactLastName: string;
+  days: number;
+  goalDays: number;
+  title: string;
+  contactCreatedAt?: string;
+}
+
+export enum ActionType {
+  Past = "past",
+  Upcoming = "upcoming",
+}

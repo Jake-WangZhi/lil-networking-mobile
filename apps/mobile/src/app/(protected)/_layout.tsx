@@ -1,8 +1,4 @@
 import { Stack } from "expo-router";
-import resolveConfig from "tailwindcss/resolveConfig";
-import tailwindConfig from "../../../tailwind.config";
-
-const fullConfig = resolveConfig(tailwindConfig);
 
 export default function ProtectedLayout() {
   return (
@@ -10,7 +6,7 @@ export default function ProtectedLayout() {
       screenOptions={{
         headerShown: false,
         contentStyle: {
-          backgroundColor: fullConfig.theme?.colors?.["dark-blue"],
+          backgroundColor: "#0F1A24",
           paddingTop: 72,
           paddingHorizontal: 16,
         },

@@ -3,13 +3,29 @@ import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 
 const actionSchema = z.object({
-  contactId: z.string(),
-  contactFirstName: z.string(),
-  contactLastName: z.string(),
-  days: z.number(),
-  goalDays: z.number(),
-  title: z.string(),
-  contactCreatedAt: z.string().optional(),
+  hasContacts: z.boolean(),
+  pastActions: z.array(
+    z.object({
+      contactId: z.string(),
+      contactFirstName: z.string(),
+      contactLastName: z.string(),
+      days: z.number(),
+      goalDays: z.number(),
+      title: z.string(),
+      contactCreatedAt: z.string().optional(),
+    })
+  ),
+  upcomingActions: z.array(
+    z.object({
+      contactId: z.string(),
+      contactFirstName: z.string(),
+      contactLastName: z.string(),
+      days: z.number(),
+      goalDays: z.number(),
+      title: z.string(),
+      contactCreatedAt: z.string().optional(),
+    })
+  ),
 });
 
 export enum ActionType {
@@ -48,9 +64,7 @@ export const useActions = () => {
         throw new Error("Network response was not ok");
       }
 
-      const data = await response.json();
-      console.log("data", data);
-      return actionSchema.parse(data);
+      return actionSchema.parse(await response.json());
     },
   });
 };

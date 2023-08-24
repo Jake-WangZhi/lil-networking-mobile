@@ -117,7 +117,10 @@ export default function CreateNewContact() {
               </Ripple>
             </View>
           </View>
-          <ScrollView automaticallyAdjustKeyboardInsets={true}>
+          <ScrollView
+            automaticallyAdjustKeyboardInsets={true}
+            showsVerticalScrollIndicator={false}
+          >
             <View className="space-y-6 mt-4">
               {error && (
                 <Text className="text-error">

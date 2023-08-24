@@ -1,9 +1,6 @@
-import animationData from "~/lottie/add-and-save.json";
-
 import { useUser } from "@clerk/clerk-expo";
 import { View, Text } from "react-native";
 import { PlusCircle } from "phosphor-react-native";
-import LottieView from "lottie-react-native";
 import Ripple from "react-native-material-ripple";
 import { DashboardTutorialModal } from "~/components/DashboardTutorialModal";
 import { Loading } from "~/components/Loading";
@@ -11,23 +8,18 @@ import { Tooltip } from "~/components/Tooltip";
 import { useDashboardTutorial } from "~/hooks/useDashboardTutorial";
 import { Feather } from "@expo/vector-icons";
 import { Link } from "expo-router";
-import Collapsible from "react-native-collapsible";
-import { useActions } from "~/hooks/useActions";
+import { ActionList } from "~/components/ActionList";
 
 export default function Dashboard() {
   const { user } = useUser();
-  const { data: actions, isLoading, error } = useActions();
   const { hasViewedDashboardTutorial } = useDashboardTutorial();
 
-  if (!user || isLoading) {
+  if (!user) {
     return <Loading />;
   }
 
   return (
     <>
-      {!!error && (
-        <Text className="text-white">{JSON.stringify(error, null, 2)}</Text>
-      )}
       <View className="flex-row justify-between items-center">
         <Text className="text-white text-3xl font-semibold leading-10">
           Hi, {user.firstName}
@@ -71,31 +63,7 @@ export default function Dashboard() {
           <Text className="text-white font-normal">Add Goals</Text>
         </View>
       </Ripple>
-      <View className="px-10 flex-1 justify-center items-center">
-        <View className="flex justify-center items-center space-y-6">
-          <View>
-            <LottieView
-              autoPlay
-              style={{
-                width: 75,
-                height: 75,
-                backgroundColor: "transparent",
-              }}
-              source={animationData}
-              loop={false}
-            />
-          </View>
-          <View>
-            <Text className="text-2xl text-white text-center">
-              Your Dashboard is empty
-            </Text>
-            <Text className="text-base text-white text-center">
-              Add contacts and your reminders will show up here.
-            </Text>
-          </View>
-        </View>
-      </View>
-      {actions}
+      <ActionList />
       {!hasViewedDashboardTutorial && <DashboardTutorialModal />}
     </>
   );
