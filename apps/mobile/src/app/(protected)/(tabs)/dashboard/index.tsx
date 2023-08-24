@@ -10,19 +10,24 @@ import { Loading } from "~/components/Loading";
 import { Tooltip } from "~/components/Tooltip";
 import { useDashboardTutorial } from "~/hooks/useDashboardTutorial";
 import { Feather } from "@expo/vector-icons";
-import { router } from "expo-router";
+import { Link } from "expo-router";
+import Collapsible from "react-native-collapsible";
+import { useActions } from "~/hooks/useActions";
 
 export default function Dashboard() {
   const { user } = useUser();
-
+  const { data: actions, isLoading, error } = useActions();
   const { hasViewedDashboardTutorial } = useDashboardTutorial();
 
-  if (!user) {
+  if (!user || isLoading) {
     return <Loading />;
   }
 
   return (
     <>
+      {!!error && (
+        <Text className="text-white">{JSON.stringify(error, null, 2)}</Text>
+      )}
       <View className="flex-row justify-between items-center">
         <Text className="text-white text-3xl font-semibold leading-10">
           Hi, {user.firstName}
@@ -50,9 +55,11 @@ export default function Dashboard() {
               </View>
             }
           />
-          <Ripple onPress={() => router.push("/create_new_contact")}>
-            <Feather name="plus-square" size={48} color="#38ACE2" />
-          </Ripple>
+          <Link href="/create_new_contact" asChild>
+            <Ripple>
+              <Feather name="plus-square" size={48} color="#38ACE2" />
+            </Ripple>
+          </Link>
         </View>
       </View>
       <Ripple
@@ -88,6 +95,7 @@ export default function Dashboard() {
           </View>
         </View>
       </View>
+      {actions}
       {!hasViewedDashboardTutorial && <DashboardTutorialModal />}
     </>
   );

@@ -3,8 +3,8 @@ export interface Action {
   contactFirstName: string;
   contactLastName: string;
   days: number;
-  description: string;
   goalDays: number;
+  title: string;
   contactCreatedAt?: string;
 }
 

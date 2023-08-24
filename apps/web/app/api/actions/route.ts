@@ -70,9 +70,9 @@ const parseActions = (contacts: Contact[], activities: Activity[]) => {
         contactFirstName: contact.firstName,
         contactLastName: contact.lastName,
         contactId: contact.id,
-        description: activity.description,
         days,
         goalDays,
+        title: contact.title,
         ...(!isUserActivity && {
           contactCreatedAt: activity.date.toISOString(),
         }),
