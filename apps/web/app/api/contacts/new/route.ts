@@ -1,21 +1,7 @@
 import { currentUser } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
 import prisma from "~/lib/prisma";
-import { z } from "zod";
-
-const contactPayloadSchema = z.object({
-  firstName: z.string(),
-  lastName: z.string(),
-  title: z.string(),
-  company: z.string(),
-  goalDays: z.number(),
-  email: z.string(),
-  phone: z.string(),
-  linkedInUrl: z.string(),
-  location: z.string(),
-  links: z.array(z.string()),
-  tags: z.array(z.string()),
-});
+import { createContactPayloadSchema } from "@foundrymakes/validation";
 
 export async function POST(request: Request) {
   const user = await currentUser();
@@ -35,7 +21,7 @@ export async function POST(request: Request) {
     links,
     tags,
     location,
-  } = contactPayloadSchema.parse(await request.json());
+  } = createContactPayloadSchema.parse(await request.json());
 
   const newContact = await prisma.contact.create({
     data: {
@@ -60,16 +46,14 @@ export async function POST(request: Request) {
           },
         },
       },
-    },
-  });
-
-  await prisma.activity.create({
-    data: {
-      contactId: newContact.id,
-      title: "Contact created",
-      description: "",
-      date: new Date(),
-      type: "SYSTEM",
+      activities: {
+        create: {
+          title: "Contact created",
+          description: "",
+          date: new Date(),
+          type: "SYSTEM",
+        },
+      },
     },
   });
 
