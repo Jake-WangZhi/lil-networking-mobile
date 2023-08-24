@@ -9,33 +9,11 @@ export async function POST(request: Request) {
   if (!user)
     return NextResponse.json({ error: "User Not Found" }, { status: 404 });
 
-  const {
-    firstName,
-    lastName,
-    title,
-    company,
-    goalDays,
-    linkedInUrl,
-    email,
-    phone,
-    links,
-    tags,
-    location,
-  } = createContactPayloadSchema.parse(await request.json());
+  const data = createContactPayloadSchema.parse(await request.json());
 
   const newContact = await prisma.contact.create({
     data: {
-      firstName,
-      lastName,
-      title,
-      company,
-      email,
-      goalDays,
-      linkedInUrl,
-      location,
-      phone,
-      links,
-      tags,
+      ...data,
       User: {
         connectOrCreate: {
           where: {
@@ -49,7 +27,6 @@ export async function POST(request: Request) {
       activities: {
         create: {
           title: "Contact created",
-          description: "",
           date: new Date(),
           type: "SYSTEM",
         },
