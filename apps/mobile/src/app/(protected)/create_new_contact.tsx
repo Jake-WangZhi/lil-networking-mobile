@@ -1,7 +1,7 @@
 import { router } from "expo-router";
 import { View, Text, TextInput, ScrollView, Pressable } from "react-native";
 import Ripple from "react-native-material-ripple";
-import { Formik } from "formik";
+import { FieldArray, Formik } from "formik";
 import { Warning, PlusCircle } from "phosphor-react-native";
 import { useRef, useState } from "react";
 import { z } from "zod";
@@ -26,7 +26,7 @@ const ValidationSchema = z.object({
     .optional(),
   email: z.string().email("Invalid Email").optional(),
   phone: z.string().regex(phoneRegex, "Invalid Phone Number").optional(),
-  links: z.array(z.string().url().optional()),
+  links: z.array(z.string().url("Invalid Link").optional()),
   tags: z.array(z.string().optional()),
   location: z.string().optional(),
 });
@@ -35,7 +35,6 @@ export default function CreateNewContact() {
   const [isLocationFocused, setIsLocationFocused] = useState(false);
   const [isTagsFocused, setIsTagsFocused] = useState(false);
 
-  const [links, setLinks] = useState<string[]>([]);
   const [focusedIndex, setFocusedIndex] = useState<number | null>(null);
 
   const [tagsInput, setTagsInput] = useState("");
@@ -61,14 +60,14 @@ export default function CreateNewContact() {
         linkedInUrl: undefined,
         email: undefined,
         phone: undefined,
-        links: [""],
-        tags: [""],
+        links: [],
+        tags: [],
         location: undefined,
       }}
       validationSchema={toFormikValidationSchema(ValidationSchema)}
       onSubmit={(values) => {
-        values.links = links.filter((item) => item !== "");
-        values.tags = tags.filter((item) => item !== "");
+        values.links = values.links.filter((item) => item !== "");
+        values.tags = values.tags.filter((item) => item !== "");
 
         createNewContact(values, {
           onSuccess: () => {
@@ -231,66 +230,66 @@ export default function CreateNewContact() {
                   />
                 </View>
 
-                {links.map((link, index) => (
-                  <View key={index} className="space-y-1">
-                    <View className="flex-row items-center space-x-2">
-                      <Text className="text-white text-base w-[74]">
-                        {`Link ${index + 1}`}
-                      </Text>
-                      <TextInput
-                        className={`bg-dark-grey h-12 flex-1 text-white p-2 ${
-                          (focusedIndex === index &&
-                            "border border-white rounded") ||
-                          (errors.links?.[index] &&
-                            "border border-error rounded")
-                        }`}
-                        onChangeText={(value) => {
-                          setLinks((prevLinks) => {
-                            const updatedLinks = [...prevLinks];
-                            updatedLinks[index] = value;
-                            return updatedLinks;
-                          });
-                        }}
-                        onBlur={handleBlur("links")}
-                        value={links[index]}
-                        selectionColor={colors.white}
-                        onEndEditing={() => {
-                          setFocusedIndex(null);
-                          values.links[index] = links[index];
-                        }}
-                        onFocus={() => setFocusedIndex(index)}
-                        autoCorrect={false}
-                        autoCapitalize="none"
-                      />
-                    </View>
-                    {touched.links && errors.links?.[index] && (
-                      <View className="flex-row items-center space-x-2">
-                        <Text className="text-white text-base w-[74]" />
-                        <View className="flex-row items-center space-x-1">
-                          <Warning
-                            color={colors.error}
-                            size={16}
-                            weight="fill"
-                          />
-                          <Text className="text-error text-xs">
-                            Invalid Link
-                          </Text>
+                <View>
+                  <FieldArray name="links">
+                    {({ push }: { push: (value: string) => void }) => (
+                      <View className="space-y-4">
+                        {values.links.length > 0 &&
+                          values.links.map((_link, index) => (
+                            <View key={index} className="space-y-1">
+                              <View className="flex-row items-center space-x-2">
+                                <Text className="text-white text-base w-[74]">
+                                  {`Link ${index + 1}`}
+                                </Text>
+                                <TextInput
+                                  className={`bg-dark-grey h-12 flex-1 text-white p-2 ${
+                                    (focusedIndex === index &&
+                                      "border border-white rounded") ||
+                                    (errors.links?.[index] &&
+                                      "border border-error rounded")
+                                  }`}
+                                  onChangeText={handleChange(`links.${index}`)}
+                                  onBlur={handleBlur(`links.${index}`)}
+                                  value={values.links[index]}
+                                  selectionColor={colors.white}
+                                  onEndEditing={() => setFocusedIndex(null)}
+                                  onFocus={() => setFocusedIndex(index)}
+                                  autoCapitalize="none"
+                                  autoCorrect={false}
+                                />
+                              </View>
+                              {touched.links && errors.links?.[index] && (
+                                <View className="flex-row items-center space-x-2">
+                                  <Text className="text-white text-base w-[74]" />
+                                  <View className="flex-row items-center space-x-1">
+                                    <Warning
+                                      color={colors.error}
+                                      size={16}
+                                      weight="fill"
+                                    />
+                                    <Text className="text-error text-xs">
+                                      {errors.links?.[index]}
+                                    </Text>
+                                  </View>
+                                </View>
+                              )}
+                            </View>
+                          ))}
+                        <View className="flex-row justify-end">
+                          <Ripple
+                            onPress={() => push("")}
+                            className="flex-row items-center space-x-1"
+                          >
+                            <PlusCircle
+                              size={24}
+                              color={colors["light-blue"]}
+                            />
+                            <Text className="text-light-blue">Add Link</Text>
+                          </Ripple>
                         </View>
                       </View>
                     )}
-                  </View>
-                ))}
-
-                <View className="flex-row justify-end">
-                  <Ripple
-                    onPress={() => {
-                      setLinks((prevLinks) => [...prevLinks, ""]);
-                    }}
-                    className="flex-row items-center space-x-1"
-                  >
-                    <PlusCircle size={24} color={colors["light-blue"]} />
-                    <Text className="text-light-blue">Add Link</Text>
-                  </Ripple>
+                  </FieldArray>
                 </View>
               </View>
 
