@@ -59,13 +59,13 @@ export default function CreateNewContact() {
         email: undefined,
         phone: undefined,
         links: [],
-        tags: [],
+        tags: [""],
         location: undefined,
       }}
       validationSchema={toFormikValidationSchema(ValidationSchema)}
       onSubmit={(values) => {
         values.links = values.links.filter((item) => item !== "");
-        values.tags = values.tags.filter((item) => item !== "");
+        values.tags = tags;
 
         createNewContact(values, {
           onSuccess: () => {
