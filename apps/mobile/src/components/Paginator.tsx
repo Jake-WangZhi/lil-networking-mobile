@@ -1,6 +1,7 @@
 import type { Animated as AnimatedType } from "react-native";
 import { View, Animated } from "react-native";
 import type { Slide } from "~/types";
+import { colors } from "@foundrymakes/tailwind-config";
 
 interface PaginatorProps {
   slides: Slide[];
@@ -30,7 +31,7 @@ export const Paginator = ({
 
         const backgroundColor = scrollX.interpolate({
           inputRange,
-          outputRange: ["#FFFFFF", "#38ACE2", "#FFFFFF"],
+          outputRange: [colors.white, colors["light-blue"], colors.white],
           extrapolate: "clamp",
         });
 

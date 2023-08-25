@@ -25,6 +25,7 @@
   "devDependencies": {
     "@foundrymakes/eslint-config": "^0.2.0",
     "@foundrymakes/tailwind-config": "^0.1.0",
+    "@foundrymakes/validation": "^0.1.0",
     "@types/node": "18.15.11",
     "@types/react": "18.0.37",
     "@types/react-dom": "18.0.11",

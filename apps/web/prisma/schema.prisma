@@ -14,14 +14,14 @@ model Contact {
   updatedAt DateTime @updatedAt
 
   firstName   String
-  lastName    String
-  title       String
-  company     String
+  lastName    String?
+  title       String?
+  company     String?
   goalDays    Int
-  email       String
-  phone       String
-  linkedInUrl String
-  location    String
+  email       String?
+  phone       String?
+  linkedInUrl String?
+  location    String?
   links       String[]
   tags        String[]
   activities  Activity[]
@@ -37,7 +37,7 @@ model Activity {
   updatedAt DateTime @updatedAt
 
   title       String
-  description String
+  description String?
   date        DateTime
 
   type ActivityType

@@ -1,20 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { useAuth } from "@clerk/clerk-expo";
-import { z } from "zod";
-
-const contactPayloadSchema = z.object({
-  firstName: z.string(),
-  lastName: z.string(),
-  title: z.string(),
-  company: z.string(),
-  goalDays: z.number(),
-  email: z.string(),
-  phone: z.string(),
-  linkedInUrl: z.string(),
-  location: z.string(),
-  links: z.array(z.string()),
-  tags: z.array(z.string()),
-});
+import { createContactPayloadSchema } from "@foundrymakes/validation";
 
 const EXPO_PUBLIC_API_BASE_URL = process.env.EXPO_PUBLIC_API_BASE_URL;
 
@@ -42,7 +28,9 @@ export const useNewContactMutation = () => {
         `${EXPO_PUBLIC_API_BASE_URL}/api/contacts/new`,
         {
           headers: await headers(),
-          body: JSON.stringify(contactPayloadSchema.parse(contactPayload)),
+          body: JSON.stringify(
+            createContactPayloadSchema.parse(contactPayload)
+          ),
           method: "POST",
         }
       );

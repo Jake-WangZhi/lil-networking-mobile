@@ -10,6 +10,8 @@ import { XCircle } from "phosphor-react-native";
 import { linkedInUrlRegex, phoneRegex } from "~/utils/regex";
 import { Loading } from "~/components/Loading";
 import { toFormikValidationSchema } from "zod-formik-adapter";
+import { colors } from "@foundrymakes/tailwind-config";
+import { FormikTextInput } from "~/components/FormikTextInput";
 
 const ValidationSchema = z.object({
   firstName: z.string(),
@@ -26,13 +28,6 @@ const ValidationSchema = z.object({
 });
 
 export default function CreateNewContact() {
-  const [isFirstNameFocused, setIsFirstNameFocused] = useState(false);
-  const [isLastNameFocused, setIsLastNameFocused] = useState(false);
-  const [isTitleFocused, setIsTitleFocused] = useState(false);
-  const [isCompanyFocused, setIsCompanyFocused] = useState(false);
-  const [isLinkedInFocused, setIsLinkedInFocused] = useState(false);
-  const [isEmailFocused, setIsEmailFocused] = useState(false);
-  const [isPhoneFocused, setIsPhoneFocused] = useState(false);
   const [isLocationFocused, setIsLocationFocused] = useState(false);
   const [isTagsFocused, setIsTagsFocused] = useState(false);
 
@@ -55,17 +50,17 @@ export default function CreateNewContact() {
   return (
     <Formik
       initialValues={{
-        firstName: "",
-        lastName: "",
-        title: "",
-        company: "",
+        firstName: undefined,
+        lastName: undefined,
+        title: undefined,
+        company: undefined,
         goalDays: 30,
-        linkedInUrl: "",
-        email: "",
-        phone: "",
+        linkedInUrl: undefined,
+        email: undefined,
+        phone: undefined,
         links: [""],
         tags: [""],
-        location: "",
+        location: undefined,
       }}
       validationSchema={toFormikValidationSchema(ValidationSchema)}
       onSubmit={(values) => {
@@ -131,75 +126,41 @@ export default function CreateNewContact() {
                 <Text className="text-white text-xl font-semibold">
                   Primary Information
                 </Text>
-                <View className="space-y-1">
-                  <View className="flex-row items-center space-x-2">
-                    <Text className="text-white text-base w-[74]">First *</Text>
-                    <TextInput
-                      className={`bg-dark-grey h-12 flex-1 text-white p-2 ${
-                        (isFirstNameFocused && "border border-white rounded") ||
-                        (errors.firstName && "border border-error rounded")
-                      }`}
-                      onChangeText={handleChange("firstName")}
-                      onBlur={handleBlur("firstName")}
-                      value={values.firstName}
-                      selectionColor="white"
-                      onFocus={() => setIsFirstNameFocused(true)}
-                      onEndEditing={() => setIsFirstNameFocused(false)}
-                    />
-                  </View>
-                  {touched.firstName && errors.firstName && (
-                    <View className="flex-row items-center space-x-2">
-                      <Text className="text-white text-base w-[74]" />
-                      <View className="flex-row items-center space-x-1">
-                        <Warning color="#FB5913" size={16} weight="fill" />
-                        <Text className="text-error">Required field</Text>
-                      </View>
-                    </View>
-                  )}
+
+                <View>
+                  <FormikTextInput
+                    label="First"
+                    name="firstName"
+                    required
+                    onChangeText={handleChange("firstName")}
+                    onBlur={handleBlur("firstName")}
+                  />
                 </View>
 
-                <View className="flex-row items-center space-x-2">
-                  <Text className="text-white text-base w-[74]">Last</Text>
-                  <TextInput
-                    className={`bg-dark-grey h-12 flex-1 text-white p-2 ${
-                      isLastNameFocused && "border border-white rounded"
-                    }`}
+                <View>
+                  <FormikTextInput
+                    label="Last"
+                    name="lastName"
                     onChangeText={handleChange("lastName")}
                     onBlur={handleBlur("lastName")}
-                    value={values.lastName}
-                    selectionColor="white"
-                    onFocus={() => setIsLastNameFocused(true)}
-                    onEndEditing={() => setIsLastNameFocused(false)}
                   />
                 </View>
 
-                <View className="flex-row items-center space-x-2">
-                  <Text className="text-white text-base w-[74]">Title</Text>
-                  <TextInput
-                    className={`bg-dark-grey h-12 flex-1 text-white p-2 ${
-                      isTitleFocused && "border border-white rounded"
-                    }`}
+                <View>
+                  <FormikTextInput
+                    label="Title"
+                    name="title"
                     onChangeText={handleChange("title")}
                     onBlur={handleBlur("title")}
-                    value={values.title}
-                    selectionColor="white"
-                    onFocus={() => setIsTitleFocused(true)}
-                    onEndEditing={() => setIsTitleFocused(false)}
                   />
                 </View>
 
-                <View className="flex-row items-center space-x-2">
-                  <Text className="text-white text-base w-[74]">Company</Text>
-                  <TextInput
-                    className={`bg-dark-grey h-12 flex-1 text-white p-2 ${
-                      isCompanyFocused && "border border-white rounded"
-                    }`}
+                <View>
+                  <FormikTextInput
+                    label="Company"
+                    name="company"
                     onChangeText={handleChange("company")}
                     onBlur={handleBlur("company")}
-                    value={values.company}
-                    selectionColor="white"
-                    onFocus={() => setIsCompanyFocused(true)}
-                    onEndEditing={() => setIsCompanyFocused(false)}
                   />
                 </View>
 
@@ -267,87 +228,32 @@ export default function CreateNewContact() {
                 <Text className="text-white text-xl font-semibold">
                   Contact Information
                 </Text>
-                <View className="space-y-1">
-                  <View className="flex-row items-center space-x-2">
-                    <Text className="text-white text-base w-[74]">
-                      LinkedIn
-                    </Text>
-                    <TextInput
-                      className={`bg-dark-grey h-12 flex-1 text-white p-2 ${
-                        (isLinkedInFocused && "border border-white rounded") ||
-                        (errors.linkedInUrl && "border border-error rounded")
-                      }`}
-                      onChangeText={handleChange("linkedInUrl")}
-                      onBlur={handleBlur("linkedInUrl")}
-                      value={values.linkedInUrl}
-                      selectionColor="white"
-                      onFocus={() => setIsLinkedInFocused(true)}
-                      onEndEditing={() => setIsLinkedInFocused(false)}
-                    />
-                  </View>
-                  {touched.linkedInUrl && errors.linkedInUrl && (
-                    <View className="flex-row items-center space-x-2">
-                      <Text className="text-white text-base w-[74]" />
-                      <View className="flex-row items-center space-x-1">
-                        <Warning color="#FB5913" size={16} weight="fill" />
-                        <Text className="text-error">Invalid entry</Text>
-                      </View>
-                    </View>
-                  )}
+
+                <View>
+                  <FormikTextInput
+                    label="LinkedIn"
+                    name="linkedInUrl"
+                    onChangeText={handleChange("linkedInUrl")}
+                    onBlur={handleBlur("linkedInUrl")}
+                  />
                 </View>
 
-                <View className="space-y-1">
-                  <View className="flex-row items-center space-x-2">
-                    <Text className="text-white text-base w-[74]">Email</Text>
-                    <TextInput
-                      className={`bg-dark-grey h-12 flex-1 text-white p-2 ${
-                        (isEmailFocused && "border border-white rounded") ||
-                        (errors.email && "border border-error rounded")
-                      }`}
-                      onChangeText={handleChange("email")}
-                      onBlur={handleBlur("email")}
-                      value={values.email}
-                      selectionColor="white"
-                      onFocus={() => setIsEmailFocused(true)}
-                      onEndEditing={() => setIsEmailFocused(false)}
-                    />
-                  </View>
-                  {touched.email && errors.email && (
-                    <View className="flex-row items-center space-x-2">
-                      <Text className="text-white text-base w-[74]" />
-                      <View className="flex-row items-center space-x-1">
-                        <Warning color="#FB5913" size={16} weight="fill" />
-                        <Text className="text-error">Invalid entry</Text>
-                      </View>
-                    </View>
-                  )}
+                <View>
+                  <FormikTextInput
+                    label="Email"
+                    name="email"
+                    onChangeText={handleChange("email")}
+                    onBlur={handleBlur("email")}
+                  />
                 </View>
 
-                <View className="space-y-1">
-                  <View className="flex-row items-center space-x-2">
-                    <Text className="text-white text-base w-[74]">Phone</Text>
-                    <TextInput
-                      className={`bg-dark-grey h-12 flex-1 text-white p-2 ${
-                        (isPhoneFocused && "border border-white rounded") ||
-                        (errors.phone && "border border-error rounded")
-                      }`}
-                      onChangeText={handleChange("phone")}
-                      onBlur={handleBlur("phone")}
-                      value={values.phone}
-                      selectionColor="white"
-                      onFocus={() => setIsPhoneFocused(true)}
-                      onEndEditing={() => setIsPhoneFocused(false)}
-                    />
-                  </View>
-                  {touched.phone && errors.phone && (
-                    <View className="flex-row items-center space-x-2">
-                      <Text className="text-white text-base w-[74]" />
-                      <View className="flex-row items-center space-x-1">
-                        <Warning color="#FB5913" size={16} weight="fill" />
-                        <Text className="text-error">Invalid entry</Text>
-                      </View>
-                    </View>
-                  )}
+                <View>
+                  <FormikTextInput
+                    label="Phone"
+                    name="phone"
+                    onChangeText={handleChange("phone")}
+                    onBlur={handleBlur("phone")}
+                  />
                 </View>
 
                 {links.map((link, index) => (
@@ -372,9 +278,10 @@ export default function CreateNewContact() {
                         }}
                         onBlur={handleBlur("links")}
                         value={links[index]}
-                        selectionColor="white"
+                        selectionColor={colors.white}
                         onEndEditing={() => {
                           setFocusedIndex(null);
+                          values.links[index] = links[index];
                         }}
                         onFocus={() => setFocusedIndex(index)}
                       />
@@ -383,7 +290,11 @@ export default function CreateNewContact() {
                       <View className="flex-row items-center space-x-2">
                         <Text className="text-white text-base w-[74]" />
                         <View className="flex-row items-center space-x-1">
-                          <Warning color="#FB5913" size={16} weight="fill" />
+                          <Warning
+                            color={colors.error}
+                            size={16}
+                            weight="fill"
+                          />
                           <Text className="text-error">Invalid entry</Text>
                         </View>
                       </View>
@@ -398,7 +309,7 @@ export default function CreateNewContact() {
                     }}
                     className="flex-row items-center space-x-1"
                   >
-                    <PlusCircle size={24} color="#38ACE2" />
+                    <PlusCircle size={24} color={colors["light-blue"]} />
                     <Text className="text-light-blue">Add Link</Text>
                   </Ripple>
                 </View>
@@ -449,7 +360,7 @@ export default function CreateNewContact() {
                       tags.length !== 0 ? "" : "Type interest here..."
                     }
                     placeholderTextColor="rgba(255, 255, 255, 0.70)"
-                    selectionColor="white"
+                    selectionColor={colors.white}
                     onKeyPress={(e) => {
                       const { key } = e.nativeEvent;
 
@@ -501,11 +412,12 @@ export default function CreateNewContact() {
                     onChangeText={handleChange("location")}
                     onBlur={handleBlur("location")}
                     value={values.location}
-                    selectionColor="white"
+                    selectionColor={colors.white}
                     placeholder="Add where you met here..."
                     placeholderTextColor="rgba(255, 255, 255, 0.70)"
                     onFocus={() => setIsLocationFocused(true)}
                     onEndEditing={() => setIsLocationFocused(false)}
+                    multiline={true}
                   />
                 </View>
               </View>

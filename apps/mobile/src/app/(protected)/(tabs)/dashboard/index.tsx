@@ -9,6 +9,7 @@ import { useDashboardTutorial } from "~/hooks/useDashboardTutorial";
 import { Feather } from "@expo/vector-icons";
 import { Link } from "expo-router";
 import { ActionList } from "~/components/ActionList";
+import { colors } from "@foundrymakes/tailwind-config";
 
 export default function Dashboard() {
   const { user } = useUser();
@@ -49,7 +50,11 @@ export default function Dashboard() {
           />
           <Link href="/create_new_contact" asChild>
             <Ripple>
-              <Feather name="plus-square" size={48} color="#38ACE2" />
+              <Feather
+                name="plus-square"
+                size={48}
+                color={colors["light-blue"]}
+              />
             </Ripple>
           </Link>
         </View>
@@ -59,7 +64,7 @@ export default function Dashboard() {
         className="flex justify-center items-center mt-6 border border-dashed border-white rounded-xl h-[140]"
       >
         <View className="flex flex-row items-center space-x-2">
-          <PlusCircle color="white" size={32} />
+          <PlusCircle color={colors.white} size={32} />
           <Text className="text-white font-normal">Add Goals</Text>
         </View>
       </Ripple>
