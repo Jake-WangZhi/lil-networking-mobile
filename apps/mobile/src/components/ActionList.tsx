@@ -1,9 +1,10 @@
 import animationData from "~/lottie/add-and-save.json";
+import empty_state_icon from "~/images/empty_state.png";
 
 import LottieView from "lottie-react-native";
 import { useActions } from "~/hooks/useActions";
 import { Loading } from "./Loading";
-import { View, Text, ScrollView } from "react-native";
+import { View, Text, ScrollView, Image } from "react-native";
 import Collapsible from "react-native-collapsible";
 import { useState } from "react";
 import Ripple from "react-native-material-ripple";
@@ -24,7 +25,9 @@ export const ActionList = () => {
     return null;
   }
 
-  if (!actions.hasContacts) {
+  const { pastActions, upcomingActions, hasContacts } = actions;
+
+  if (!hasContacts) {
     return (
       <View className="px-10 flex-1 justify-center items-center">
         <View className="flex justify-center items-center space-y-6">
@@ -40,7 +43,7 @@ export const ActionList = () => {
               loop={false}
             />
           </View>
-          <View>
+          <View className="space-y-4">
             <Text className="text-2xl text-white text-center">
               Your Dashboard is empty
             </Text>
@@ -53,6 +56,26 @@ export const ActionList = () => {
     );
   }
 
+  if (pastActions.length === 0 && upcomingActions.length === 0)
+    return (
+      <View className="px-10 flex-1 justify-center items-center">
+        <View className="flex justify-center items-center space-y-6">
+          <Image
+            source={empty_state_icon}
+            alt="empty_state"
+            className="w-[82] h-[126]"
+          />
+          <View className="space-y-4">
+            <Text className="text-2xl text-white text-center">You Rock!</Text>
+            <Text className="text-base text-white text-center">
+              Have you met anyone new? Add more contacts and continue growing
+              your network.
+            </Text>
+          </View>
+        </View>
+      </View>
+    );
+
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       {!!error && (
@@ -64,7 +87,7 @@ export const ActionList = () => {
       >
         <View className="flex-row items-center space-x-2">
           <View className="bg-magenta w-1 h-4"></View>
-          <Text className="text-white text-xl font-semibold">{`Priority (${actions.pastActions.length})`}</Text>
+          <Text className="text-white text-xl font-semibold">{`Priority (${pastActions.length})`}</Text>
         </View>
         {isPriorityCollapsed ? (
           <CaretDown size={24} color="white" />
@@ -73,7 +96,7 @@ export const ActionList = () => {
         )}
       </Ripple>
       <Collapsible collapsed={isPriorityCollapsed}>
-        {actions.pastActions.map((action, index) => (
+        {pastActions.map((action, index) => (
           <ActionCard
             key={index}
             action={action}
@@ -87,7 +110,7 @@ export const ActionList = () => {
       >
         <View className="flex-row items-center space-x-2">
           <View className="bg-light-yellow w-1 h-4"></View>
-          <Text className="text-white text-xl font-semibold">{`Upcoming (${actions.upcomingActions.length})`}</Text>
+          <Text className="text-white text-xl font-semibold">{`Upcoming (${upcomingActions.length})`}</Text>
         </View>
         {isUpcomingCollapsed ? (
           <CaretDown size={24} color="white" />
@@ -96,7 +119,7 @@ export const ActionList = () => {
         )}
       </Ripple>
       <Collapsible collapsed={isUpcomingCollapsed}>
-        {actions.upcomingActions.map((action, index) => (
+        {upcomingActions.map((action, index) => (
           <ActionCard
             key={index}
             action={action}
