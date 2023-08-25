@@ -1,7 +1,7 @@
 import { router } from "expo-router";
 import { View, Text, TextInput, ScrollView, Pressable } from "react-native";
 import Ripple from "react-native-material-ripple";
-import { Formik } from "formik";
+import { FieldArray, Formik } from "formik";
 import { Warning, PlusCircle } from "phosphor-react-native";
 import { useRef, useState } from "react";
 import { z } from "zod";
@@ -12,38 +12,38 @@ import { Loading } from "~/components/Loading";
 import { toFormikValidationSchema } from "zod-formik-adapter";
 import { colors } from "@foundrymakes/tailwind-config";
 import { FormikTextInput } from "~/components/FormikTextInput";
+import { GoalDaysButton } from "~/components/GoalDaysButton";
 
 const ValidationSchema = z.object({
-  firstName: z.string(),
+  firstName: z.string({ required_error: "Required field" }),
   lastName: z.string().optional(),
   title: z.string().optional(),
   company: z.string().optional(),
   goalDays: z.number(),
-  linkedInUrl: z.string().regex(linkedInUrlRegex).optional(),
-  email: z.string().email().optional(),
-  phone: z.string().regex(phoneRegex).optional(),
-  links: z.array(z.string().url().optional()),
+  linkedInUrl: z
+    .string()
+    .regex(linkedInUrlRegex, "LinkedIn URLs must contain 'linkedin.com'")
+    .optional(),
+  email: z.string().email("Invalid Email").optional(),
+  phone: z.string().regex(phoneRegex, "Invalid Phone Number").optional(),
+  links: z.array(z.string().url("Invalid Link").optional()),
   tags: z.array(z.string().optional()),
   location: z.string().optional(),
 });
 
 export default function CreateNewContact() {
-  const [isLocationFocused, setIsLocationFocused] = useState(false);
+  const [focusedLinkIndex, setFocusedLinkIndex] = useState<number | null>(null);
+
   const [isTagsFocused, setIsTagsFocused] = useState(false);
-
-  const [selectedDays, setSelectedDays] = useState(30);
-
-  const [links, setLinks] = useState<string[]>([]);
-  const [focusedIndex, setFocusedIndex] = useState<number | null>(null);
-
   const [tagsInput, setTagsInput] = useState("");
   const [tags, setTags] = useState<string[]>([]);
   const inputRef = useRef<TextInput>(null);
 
-  const [isSaving, setIsSaving] = useState(false);
-  const [error, setError] = useState(false);
-
-  const createNewContactMutation = useNewContactMutation();
+  const {
+    mutate: createNewContact,
+    isLoading: isSaving,
+    error,
+  } = useNewContactMutation();
 
   if (isSaving) return <Loading />;
 
@@ -58,26 +58,18 @@ export default function CreateNewContact() {
         linkedInUrl: undefined,
         email: undefined,
         phone: undefined,
-        links: [""],
-        tags: [""],
+        links: [],
+        tags: [],
         location: undefined,
       }}
       validationSchema={toFormikValidationSchema(ValidationSchema)}
       onSubmit={(values) => {
-        setIsSaving(true);
+        values.links = values.links.filter((item) => item !== "");
+        values.tags = values.tags.filter((item) => item !== "");
 
-        values.links = links.filter((item) => item !== "");
-        values.tags = tags.filter((item) => item !== "");
-
-        createNewContactMutation.mutate(values, {
+        createNewContact(values, {
           onSuccess: () => {
-            setIsSaving(false);
             router.push("/dashboard");
-          },
-          onError: (error) => {
-            console.log(error);
-            setError(true);
-            setIsSaving(false);
           },
         });
       }}
@@ -89,6 +81,7 @@ export default function CreateNewContact() {
         values,
         touched,
         errors,
+        setValues,
       }) => (
         <>
           <View className="flex-row items-center">
@@ -117,7 +110,7 @@ export default function CreateNewContact() {
             showsVerticalScrollIndicator={false}
           >
             <View className="space-y-6 mt-4">
-              {error && (
+              {!!error && (
                 <Text className="text-error">
                   Unable to create the contact, please try again later!
                 </Text>
@@ -169,57 +162,36 @@ export default function CreateNewContact() {
                     Reminder *
                   </Text>
                   <View className="flex-row space-x-2">
-                    <Ripple
-                      className={`bg-dark-grey rounded-full ${
-                        selectedDays === 30 && "border border-light-blue"
-                      }`}
-                      onPress={() => {
-                        setSelectedDays(30);
-                        values.goalDays = 30;
+                    <GoalDaysButton
+                      onPress={async () => {
+                        await setValues({
+                          ...values,
+                          goalDays: 30,
+                        });
                       }}
-                    >
-                      <Text
-                        className={`text-sm px-4 py-2 ${
-                          selectedDays === 30 ? "text-light-blue" : "text-white"
-                        }`}
-                      >
-                        30 days
-                      </Text>
-                    </Ripple>
-                    <Ripple
-                      className={`bg-dark-grey rounded-full ${
-                        selectedDays === 60 && "border border-light-blue"
-                      }`}
-                      onPress={() => {
-                        setSelectedDays(60);
-                        values.goalDays = 60;
+                      goalDaysValue={values.goalDays}
+                      buttonValue={30}
+                    />
+                    <GoalDaysButton
+                      onPress={async () => {
+                        await setValues({
+                          ...values,
+                          goalDays: 60,
+                        });
                       }}
-                    >
-                      <Text
-                        className={`text-sm px-4 py-2 ${
-                          selectedDays === 60 ? "text-light-blue" : "text-white"
-                        }`}
-                      >
-                        60 days
-                      </Text>
-                    </Ripple>
-                    <Ripple
-                      className={`bg-dark-grey rounded-full ${
-                        selectedDays === 90 && "border border-light-blue"
-                      }`}
-                      onPress={() => {
-                        setSelectedDays(90);
-                        values.goalDays = 90;
+                      goalDaysValue={values.goalDays}
+                      buttonValue={60}
+                    />
+                    <GoalDaysButton
+                      onPress={async () => {
+                        await setValues({
+                          ...values,
+                          goalDays: 90,
+                        });
                       }}
-                    >
-                      <Text
-                        className={`text-sm px-4 py-2 ${
-                          selectedDays === 90 ? "text-light-blue" : "text-white"
-                        }`}
-                      >
-                        90 days
-                      </Text>
-                    </Ripple>
+                      goalDaysValue={values.goalDays}
+                      buttonValue={90}
+                    />
                   </View>
                 </View>
               </View>
@@ -256,62 +228,66 @@ export default function CreateNewContact() {
                   />
                 </View>
 
-                {links.map((link, index) => (
-                  <View key={index} className="space-y-1">
-                    <View className="flex-row items-center space-x-2">
-                      <Text className="text-white text-base w-[74]">
-                        {`Link ${index + 1}`}
-                      </Text>
-                      <TextInput
-                        className={`bg-dark-grey h-12 flex-1 text-white p-2 ${
-                          (focusedIndex === index &&
-                            "border border-white rounded") ||
-                          (errors.links?.[index] &&
-                            "border border-error rounded")
-                        }`}
-                        onChangeText={(value) => {
-                          setLinks((prevLinks) => {
-                            const updatedLinks = [...prevLinks];
-                            updatedLinks[index] = value;
-                            return updatedLinks;
-                          });
-                        }}
-                        onBlur={handleBlur("links")}
-                        value={links[index]}
-                        selectionColor={colors.white}
-                        onEndEditing={() => {
-                          setFocusedIndex(null);
-                          values.links[index] = links[index];
-                        }}
-                        onFocus={() => setFocusedIndex(index)}
-                      />
-                    </View>
-                    {touched.links && errors.links?.[index] && (
-                      <View className="flex-row items-center space-x-2">
-                        <Text className="text-white text-base w-[74]" />
-                        <View className="flex-row items-center space-x-1">
-                          <Warning
-                            color={colors.error}
-                            size={16}
-                            weight="fill"
-                          />
-                          <Text className="text-error">Invalid entry</Text>
+                <View>
+                  <FieldArray name="links">
+                    {({ push }: { push: (value: string) => void }) => (
+                      <View className="space-y-4">
+                        {values.links.length > 0 &&
+                          values.links.map((_link, index) => (
+                            <View key={index} className="space-y-1">
+                              <View className="flex-row items-center space-x-2">
+                                <Text className="text-white text-base w-[74]">
+                                  {`Link ${index + 1}`}
+                                </Text>
+                                <TextInput
+                                  className={`bg-dark-grey h-12 flex-1 text-white p-2 ${
+                                    (focusedLinkIndex === index &&
+                                      "border border-white rounded") ||
+                                    (errors.links?.[index] &&
+                                      "border border-error rounded")
+                                  }`}
+                                  onChangeText={handleChange(`links.${index}`)}
+                                  onBlur={handleBlur(`links.${index}`)}
+                                  value={values.links[index]}
+                                  selectionColor={colors.white}
+                                  onEndEditing={() => setFocusedLinkIndex(null)}
+                                  onFocus={() => setFocusedLinkIndex(index)}
+                                  autoCapitalize="none"
+                                  autoCorrect={false}
+                                />
+                              </View>
+                              {touched.links && errors.links?.[index] && (
+                                <View className="flex-row items-center space-x-2">
+                                  <Text className="text-white text-base w-[74]" />
+                                  <View className="flex-row items-center space-x-1">
+                                    <Warning
+                                      color={colors.error}
+                                      size={16}
+                                      weight="fill"
+                                    />
+                                    <Text className="text-error text-xs">
+                                      {errors.links?.[index]}
+                                    </Text>
+                                  </View>
+                                </View>
+                              )}
+                            </View>
+                          ))}
+                        <View className="flex-row justify-end">
+                          <Ripple
+                            onPress={() => push("")}
+                            className="flex-row items-center space-x-1"
+                          >
+                            <PlusCircle
+                              size={24}
+                              color={colors["light-blue"]}
+                            />
+                            <Text className="text-light-blue">Add Link</Text>
+                          </Ripple>
                         </View>
                       </View>
                     )}
-                  </View>
-                ))}
-
-                <View className="flex-row justify-end">
-                  <Ripple
-                    onPress={() => {
-                      setLinks((prevLinks) => [...prevLinks, ""]);
-                    }}
-                    className="flex-row items-center space-x-1"
-                  >
-                    <PlusCircle size={24} color={colors["light-blue"]} />
-                    <Text className="text-light-blue">Add Link</Text>
-                  </Ripple>
+                  </FieldArray>
                 </View>
               </View>
 
@@ -388,6 +364,8 @@ export default function CreateNewContact() {
 
                       setIsTagsFocused(false);
                     }}
+                    autoCorrect={false}
+                    autoCapitalize="none"
                   />
                 </Pressable>
               </View>
@@ -402,21 +380,11 @@ export default function CreateNewContact() {
                 <Text className="text-white text-sm">
                   Never forget where you met a contact again
                 </Text>
-                <View
-                  className={`bg-dark-grey min-h-[64] flex-1 p-4 mt-4 mb-12 ${
-                    isLocationFocused && "border border-white rounded"
-                  }`}
-                >
-                  <TextInput
-                    className="text-white"
-                    onChangeText={handleChange("location")}
-                    onBlur={handleBlur("location")}
-                    value={values.location}
-                    selectionColor={colors.white}
+                <View className="mt-4 mb-12">
+                  <FormikTextInput
+                    name="location"
                     placeholder="Add where you met here..."
                     placeholderTextColor="rgba(255, 255, 255, 0.70)"
-                    onFocus={() => setIsLocationFocused(true)}
-                    onEndEditing={() => setIsLocationFocused(false)}
                     multiline={true}
                   />
                 </View>
