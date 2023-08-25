@@ -8,22 +8,22 @@ const actionSchema = z.object({
     z.object({
       contactId: z.string(),
       contactFirstName: z.string(),
-      contactLastName: z.string(),
+      contactLastName: z.string().nullable(),
       days: z.number(),
       goalDays: z.number(),
-      title: z.string(),
-      contactCreatedAt: z.string().optional(),
+      title: z.string().nullable(),
+      isNewUser: z.boolean(),
     })
   ),
   upcomingActions: z.array(
     z.object({
       contactId: z.string(),
       contactFirstName: z.string(),
-      contactLastName: z.string(),
+      contactLastName: z.string().nullable(),
       days: z.number(),
       goalDays: z.number(),
-      title: z.string(),
-      contactCreatedAt: z.string().optional(),
+      title: z.string().nullable(),
+      isNewUser: z.boolean(),
     })
   ),
 });

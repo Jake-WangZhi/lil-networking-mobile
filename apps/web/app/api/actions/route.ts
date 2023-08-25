@@ -17,16 +17,15 @@ export async function GET() {
   const contacts = await prisma.contact.findMany({
     where: {
       userId: user.id,
+      isArchived: false,
     },
   });
 
-  const activeContacts = contacts.filter((c) => !c.isArchived);
-
-  const activeContactIds = activeContacts.map((c) => c.id);
+  const contactIds = contacts.map((c) => c.id);
 
   const activities = await prisma.activity.findMany({
     where: {
-      contactId: { in: activeContactIds },
+      contactId: { in: contactIds },
     },
     orderBy: [
       { type: "asc" },
@@ -40,11 +39,7 @@ export async function GET() {
     distinct: ["contactId"],
   });
 
-  const sortedActivities = activities.sort(
-    (a, b) => b.date.getTime() - a.date.getTime()
-  );
-
-  const actions = parseActions(activeContacts, sortedActivities);
+  const actions = parseActions(contacts, activities);
 
   return NextResponse.json({ ...actions, hasContacts: !!contacts.length });
 }
@@ -64,7 +59,7 @@ const parseActions = (contacts: Contact[], activities: Activity[]) => {
     if (contact) {
       const days = differenceInDays(new Date(), activity.date);
       const goalDays = contact.goalDays;
-      const isUserActivity = activity.type === ActivityType.USER;
+      const isSystemActivity = activity.type === ActivityType.SYSTEM;
 
       const action = {
         contactFirstName: contact.firstName,
@@ -73,13 +68,11 @@ const parseActions = (contacts: Contact[], activities: Activity[]) => {
         days,
         goalDays,
         title: contact.title,
-        ...(!isUserActivity && {
-          contactCreatedAt: activity.date.toISOString(),
-        }),
+        isNewUser: isSystemActivity,
       };
 
-      const pastDueThreshold = isUserActivity ? goalDays : 0;
-      const upcomingThreshold = goalDays + DAYS_BEFORE_PAST_DUE;
+      const pastDueThreshold = isSystemActivity ? 0 : goalDays;
+      const upcomingThreshold = pastDueThreshold + DAYS_BEFORE_PAST_DUE;
 
       if (days > upcomingThreshold) {
         pastActions.push(action);

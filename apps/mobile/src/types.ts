@@ -10,11 +10,11 @@ export interface Slide {
 export interface Action {
   contactId: string;
   contactFirstName: string;
-  contactLastName: string;
+  contactLastName: string | null;
   days: number;
   goalDays: number;
-  title: string;
-  contactCreatedAt?: string;
+  title: string | null;
+  isNewUser: boolean;
 }
 
 export enum ActionType {
