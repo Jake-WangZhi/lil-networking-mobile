@@ -32,11 +32,9 @@ const ValidationSchema = z.object({
 });
 
 export default function CreateNewContact() {
-  const [isLocationFocused, setIsLocationFocused] = useState(false);
+  const [focusedLinkIndex, setFocusedLinkIndex] = useState<number | null>(null);
+
   const [isTagsFocused, setIsTagsFocused] = useState(false);
-
-  const [focusedIndex, setFocusedIndex] = useState<number | null>(null);
-
   const [tagsInput, setTagsInput] = useState("");
   const [tags, setTags] = useState<string[]>([]);
   const inputRef = useRef<TextInput>(null);
@@ -243,7 +241,7 @@ export default function CreateNewContact() {
                                 </Text>
                                 <TextInput
                                   className={`bg-dark-grey h-12 flex-1 text-white p-2 ${
-                                    (focusedIndex === index &&
+                                    (focusedLinkIndex === index &&
                                       "border border-white rounded") ||
                                     (errors.links?.[index] &&
                                       "border border-error rounded")
@@ -252,8 +250,8 @@ export default function CreateNewContact() {
                                   onBlur={handleBlur(`links.${index}`)}
                                   value={values.links[index]}
                                   selectionColor={colors.white}
-                                  onEndEditing={() => setFocusedIndex(null)}
-                                  onFocus={() => setFocusedIndex(index)}
+                                  onEndEditing={() => setFocusedLinkIndex(null)}
+                                  onFocus={() => setFocusedLinkIndex(index)}
                                   autoCapitalize="none"
                                   autoCorrect={false}
                                 />
@@ -382,20 +380,14 @@ export default function CreateNewContact() {
                 <Text className="text-white text-sm">
                   Never forget where you met a contact again
                 </Text>
-                <TextInput
-                  className={`text-white bg-dark-grey min-h-[64] flex-1 p-4 mt-4 mb-12 ${
-                    isLocationFocused && "border border-white rounded"
-                  }`}
-                  onChangeText={handleChange("location")}
-                  onBlur={handleBlur("location")}
-                  value={values.location}
-                  selectionColor={colors.white}
-                  placeholder="Add where you met here..."
-                  placeholderTextColor="rgba(255, 255, 255, 0.70)"
-                  onFocus={() => setIsLocationFocused(true)}
-                  onEndEditing={() => setIsLocationFocused(false)}
-                  multiline={true}
-                />
+                <View className="mt-4 mb-12">
+                  <FormikTextInput
+                    name="location"
+                    placeholder="Add where you met here..."
+                    placeholderTextColor="rgba(255, 255, 255, 0.70)"
+                    multiline={true}
+                  />
+                </View>
               </View>
             </View>
           </ScrollView>
