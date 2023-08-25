@@ -40,10 +40,11 @@ export default function CreateNewContact() {
   const [tags, setTags] = useState<string[]>([]);
   const inputRef = useRef<TextInput>(null);
 
-  const [isSaving, setIsSaving] = useState(false);
-  const [error, setError] = useState(false);
-
-  const createNewContactMutation = useNewContactMutation();
+  const {
+    mutate: createNewContact,
+    isLoading: isSaving,
+    error,
+  } = useNewContactMutation();
 
   if (isSaving) return <Loading />;
 
@@ -64,20 +65,12 @@ export default function CreateNewContact() {
       }}
       validationSchema={toFormikValidationSchema(ValidationSchema)}
       onSubmit={(values) => {
-        setIsSaving(true);
-
         values.links = links.filter((item) => item !== "");
         values.tags = tags.filter((item) => item !== "");
 
-        createNewContactMutation.mutate(values, {
+        createNewContact(values, {
           onSuccess: () => {
-            setIsSaving(false);
             router.push("/dashboard");
-          },
-          onError: (error) => {
-            console.log(error);
-            setError(true);
-            setIsSaving(false);
           },
         });
       }}
@@ -117,7 +110,7 @@ export default function CreateNewContact() {
             showsVerticalScrollIndicator={false}
           >
             <View className="space-y-6 mt-4">
-              {error && (
+              {!!error && (
                 <Text className="text-error">
                   Unable to create the contact, please try again later!
                 </Text>

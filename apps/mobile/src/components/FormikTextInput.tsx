@@ -14,7 +14,7 @@ export const FormikTextInput = ({
   name,
 }: TextInputProps &
   FieldHookConfig<string> & { label: string; required?: boolean }) => {
-  const [field, meta] = useField(name);
+  const [field, meta] = useField<string>(name);
   const [isFocused, setIsFocused] = useState(false);
 
   return (
@@ -25,12 +25,11 @@ export const FormikTextInput = ({
           {required ? " *" : ""}
         </Text>
         <TextInput
-          className={`flex-1 bg-dark-grey h-12 text-white p-2 ${
-            (isFocused || meta.error) && "border rounded"
+          className={`flex-1 bg-dark-grey h-12 text-white p-2 rounded ${
+            (isFocused || meta.error) && "border"
           } ${isFocused && "border-white"} ${meta.error && "border-error"}`}
           onChangeText={onChangeText}
           onBlur={onBlur}
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
           value={field.value}
           selectionColor={colors.white}
           onFocus={() => setIsFocused(true)}
