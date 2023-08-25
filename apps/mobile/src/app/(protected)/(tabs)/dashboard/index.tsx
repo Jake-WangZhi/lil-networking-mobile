@@ -61,7 +61,7 @@ export default function Dashboard() {
       </View>
       <Ripple
         style={{ backgroundColor: "rgba(255, 255, 255, 0.05)" }}
-        className="flex justify-center items-center mt-6 border border-dashed border-white rounded-xl h-[140]"
+        className="flex justify-center items-center mt-6 border border-dashed border-white rounded-xl h-[140] mb-1"
       >
         <View className="flex flex-row items-center space-x-2">
           <PlusCircle color={colors.white} size={32} />
