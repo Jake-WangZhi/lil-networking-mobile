@@ -16,6 +16,7 @@ export default function ProtectedLayout() {
       <Stack.Screen name="(tabs)" />
       <Stack.Screen name="quote" />
       <Stack.Screen name="create_new_contact" />
+      <Stack.Screen name="profile/[contactId]/index" />
     </Stack>
   );
 }

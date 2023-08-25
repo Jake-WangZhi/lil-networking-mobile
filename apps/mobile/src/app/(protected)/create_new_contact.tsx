@@ -68,8 +68,8 @@ export default function CreateNewContact() {
         values.tags = values.tags.filter((item) => item !== "");
 
         createNewContact(values, {
-          onSuccess: () => {
-            router.push("/dashboard");
+          onSuccess: ({ contactId }) => {
+            router.push(`/profile/${contactId}`);
           },
         });
       }}

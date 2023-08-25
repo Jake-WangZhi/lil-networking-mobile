@@ -34,5 +34,5 @@ export async function POST(request: Request) {
     },
   });
 
-  return NextResponse.json(newContact);
+  return NextResponse.json({ contactId: newContact.id });
 }
