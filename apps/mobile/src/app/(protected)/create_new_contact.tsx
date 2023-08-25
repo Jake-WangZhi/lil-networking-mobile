@@ -395,24 +395,20 @@ export default function CreateNewContact() {
                 <Text className="text-white text-sm">
                   Never forget where you met a contact again
                 </Text>
-                <View
-                  className={`bg-dark-grey min-h-[64] flex-1 p-4 mt-4 mb-12 ${
+                <TextInput
+                  className={`text-white bg-dark-grey min-h-[64] flex-1 p-4 mt-4 mb-12 ${
                     isLocationFocused && "border border-white rounded"
                   }`}
-                >
-                  <TextInput
-                    className="text-white"
-                    onChangeText={handleChange("location")}
-                    onBlur={handleBlur("location")}
-                    value={values.location}
-                    selectionColor={colors.white}
-                    placeholder="Add where you met here..."
-                    placeholderTextColor="rgba(255, 255, 255, 0.70)"
-                    onFocus={() => setIsLocationFocused(true)}
-                    onEndEditing={() => setIsLocationFocused(false)}
-                    multiline={true}
-                  />
-                </View>
+                  onChangeText={handleChange("location")}
+                  onBlur={handleBlur("location")}
+                  value={values.location}
+                  selectionColor={colors.white}
+                  placeholder="Add where you met here..."
+                  placeholderTextColor="rgba(255, 255, 255, 0.70)"
+                  onFocus={() => setIsLocationFocused(true)}
+                  onEndEditing={() => setIsLocationFocused(false)}
+                  multiline={true}
+                />
               </View>
             </View>
           </ScrollView>

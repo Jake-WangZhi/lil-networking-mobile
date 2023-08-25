@@ -34,6 +34,7 @@ export const FormikTextInput = ({
           selectionColor={colors.white}
           onFocus={() => setIsFocused(true)}
           onEndEditing={() => setIsFocused(false)}
+          autoCapitalize="none"
         />
       </View>
       {meta.touched && meta.error && (
