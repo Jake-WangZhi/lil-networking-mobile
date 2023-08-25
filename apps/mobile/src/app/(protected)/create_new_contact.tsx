@@ -12,16 +12,20 @@ import { Loading } from "~/components/Loading";
 import { toFormikValidationSchema } from "zod-formik-adapter";
 import { colors } from "@foundrymakes/tailwind-config";
 import { FormikTextInput } from "~/components/FormikTextInput";
+import { GoalDaysButton } from "~/components/GoalDaysButton";
 
 const ValidationSchema = z.object({
-  firstName: z.string(),
+  firstName: z.string({ required_error: "Required field" }),
   lastName: z.string().optional(),
   title: z.string().optional(),
   company: z.string().optional(),
   goalDays: z.number(),
-  linkedInUrl: z.string().regex(linkedInUrlRegex).optional(),
-  email: z.string().email().optional(),
-  phone: z.string().regex(phoneRegex).optional(),
+  linkedInUrl: z
+    .string()
+    .regex(linkedInUrlRegex, "LinkedIn URLs must contain 'linkedin.com'")
+    .optional(),
+  email: z.string().email("Invalid Email").optional(),
+  phone: z.string().regex(phoneRegex, "Invalid Phone Number").optional(),
   links: z.array(z.string().url().optional()),
   tags: z.array(z.string().optional()),
   location: z.string().optional(),
@@ -30,8 +34,6 @@ const ValidationSchema = z.object({
 export default function CreateNewContact() {
   const [isLocationFocused, setIsLocationFocused] = useState(false);
   const [isTagsFocused, setIsTagsFocused] = useState(false);
-
-  const [selectedDays, setSelectedDays] = useState(30);
 
   const [links, setLinks] = useState<string[]>([]);
   const [focusedIndex, setFocusedIndex] = useState<number | null>(null);
@@ -82,6 +84,7 @@ export default function CreateNewContact() {
         values,
         touched,
         errors,
+        setValues,
       }) => (
         <>
           <View className="flex-row items-center">
@@ -162,57 +165,36 @@ export default function CreateNewContact() {
                     Reminder *
                   </Text>
                   <View className="flex-row space-x-2">
-                    <Ripple
-                      className={`bg-dark-grey rounded-full ${
-                        selectedDays === 30 && "border border-light-blue"
-                      }`}
-                      onPress={() => {
-                        setSelectedDays(30);
-                        values.goalDays = 30;
+                    <GoalDaysButton
+                      onPress={async () => {
+                        await setValues({
+                          ...values,
+                          goalDays: 30,
+                        });
                       }}
-                    >
-                      <Text
-                        className={`text-sm px-4 py-2 ${
-                          selectedDays === 30 ? "text-light-blue" : "text-white"
-                        }`}
-                      >
-                        30 days
-                      </Text>
-                    </Ripple>
-                    <Ripple
-                      className={`bg-dark-grey rounded-full ${
-                        selectedDays === 60 && "border border-light-blue"
-                      }`}
-                      onPress={() => {
-                        setSelectedDays(60);
-                        values.goalDays = 60;
+                      goalDaysValue={values.goalDays}
+                      buttonValue={30}
+                    />
+                    <GoalDaysButton
+                      onPress={async () => {
+                        await setValues({
+                          ...values,
+                          goalDays: 60,
+                        });
                       }}
-                    >
-                      <Text
-                        className={`text-sm px-4 py-2 ${
-                          selectedDays === 60 ? "text-light-blue" : "text-white"
-                        }`}
-                      >
-                        60 days
-                      </Text>
-                    </Ripple>
-                    <Ripple
-                      className={`bg-dark-grey rounded-full ${
-                        selectedDays === 90 && "border border-light-blue"
-                      }`}
-                      onPress={() => {
-                        setSelectedDays(90);
-                        values.goalDays = 90;
+                      goalDaysValue={values.goalDays}
+                      buttonValue={60}
+                    />
+                    <GoalDaysButton
+                      onPress={async () => {
+                        await setValues({
+                          ...values,
+                          goalDays: 90,
+                        });
                       }}
-                    >
-                      <Text
-                        className={`text-sm px-4 py-2 ${
-                          selectedDays === 90 ? "text-light-blue" : "text-white"
-                        }`}
-                      >
-                        90 days
-                      </Text>
-                    </Ripple>
+                      goalDaysValue={values.goalDays}
+                      buttonValue={90}
+                    />
                   </View>
                 </View>
               </View>
@@ -277,6 +259,8 @@ export default function CreateNewContact() {
                           values.links[index] = links[index];
                         }}
                         onFocus={() => setFocusedIndex(index)}
+                        autoCorrect={false}
+                        autoCapitalize="none"
                       />
                     </View>
                     {touched.links && errors.links?.[index] && (
@@ -288,7 +272,9 @@ export default function CreateNewContact() {
                             size={16}
                             weight="fill"
                           />
-                          <Text className="text-error">Invalid entry</Text>
+                          <Text className="text-error text-xs">
+                            Invalid Link
+                          </Text>
                         </View>
                       </View>
                     )}
@@ -381,6 +367,8 @@ export default function CreateNewContact() {
 
                       setIsTagsFocused(false);
                     }}
+                    autoCorrect={false}
+                    autoCapitalize="none"
                   />
                 </Pressable>
               </View>

@@ -42,9 +42,7 @@ export const FormikTextInput = ({
           <Text className="w-[74]" />
           <View className="flex flex-row items-center space-x-1">
             <Warning color="#FB5913" size={16} weight="fill" />
-            <Text className="text-error text-xs">
-              {required ? "Required field" : "Invalid entry"}
-            </Text>
+            <Text className="text-error text-xs">{meta.error}</Text>
           </View>
         </View>
       )}
