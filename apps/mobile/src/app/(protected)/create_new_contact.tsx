@@ -168,26 +168,33 @@ export default function CreateNewContact() {
                           ...values,
                           goalDays: 30,
                         });
+                        false;
                       }}
                       goalDaysValue={values.goalDays}
                       buttonValue={30}
                     />
                     <GoalDaysButton
                       onPress={async () => {
-                        await setValues({
-                          ...values,
-                          goalDays: 60,
-                        });
+                        await setValues(
+                          {
+                            ...values,
+                            goalDays: 60,
+                          },
+                          false
+                        );
                       }}
                       goalDaysValue={values.goalDays}
                       buttonValue={60}
                     />
                     <GoalDaysButton
                       onPress={async () => {
-                        await setValues({
-                          ...values,
-                          goalDays: 90,
-                        });
+                        await setValues(
+                          {
+                            ...values,
+                            goalDays: 90,
+                          },
+                          false
+                        );
                       }}
                       goalDaysValue={values.goalDays}
                       buttonValue={90}
