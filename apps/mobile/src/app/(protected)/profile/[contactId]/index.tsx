@@ -1,6 +1,7 @@
-import { Link } from "expo-router";
+import { router } from "expo-router";
 import { Text, View } from "react-native";
 import { useLocalSearchParams } from "expo-router";
+import Ripple from "react-native-material-ripple";
 
 export default function Profile() {
   const { contactId } = useLocalSearchParams<{ contactId: string }>();
@@ -10,9 +11,9 @@ export default function Profile() {
   return (
     <View className="flex-1 justify-center items-center">
       <Text className="text-white">{`Hello, ${contactId}`}</Text>
-      <Link href="/dashboard">
+      <Ripple onPress={() => router.back()}>
         <Text className="text-white">Dashboard</Text>
-      </Link>
+      </Ripple>
     </View>
   );
 }
