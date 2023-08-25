@@ -63,6 +63,8 @@ export default function CreateNewContact() {
         location: undefined,
       }}
       validationSchema={toFormikValidationSchema(ValidationSchema)}
+      validateOnChange={false}
+      validateOnBlur={false}
       onSubmit={(values) => {
         values.links = values.links.filter((item) => item !== "");
         values.tags = tags;
@@ -168,33 +170,26 @@ export default function CreateNewContact() {
                           ...values,
                           goalDays: 30,
                         });
-                        false;
                       }}
                       goalDaysValue={values.goalDays}
                       buttonValue={30}
                     />
                     <GoalDaysButton
                       onPress={async () => {
-                        await setValues(
-                          {
-                            ...values,
-                            goalDays: 60,
-                          },
-                          false
-                        );
+                        await setValues({
+                          ...values,
+                          goalDays: 60,
+                        });
                       }}
                       goalDaysValue={values.goalDays}
                       buttonValue={60}
                     />
                     <GoalDaysButton
                       onPress={async () => {
-                        await setValues(
-                          {
-                            ...values,
-                            goalDays: 90,
-                          },
-                          false
-                        );
+                        await setValues({
+                          ...values,
+                          goalDays: 90,
+                        });
                       }}
                       goalDaysValue={values.goalDays}
                       buttonValue={90}
