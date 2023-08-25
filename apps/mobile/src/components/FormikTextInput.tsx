@@ -42,7 +42,7 @@ export const FormikTextInput = (
           {...inputProps}
         />
       </View>
-      {meta.touched && meta.error && (
+      {meta.error && (
         <View className="flex-row items-center space-x-2">
           <Text className="w-[74]" />
           <View className="flex flex-row items-center space-x-1">
