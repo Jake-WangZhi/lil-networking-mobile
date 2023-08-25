@@ -387,6 +387,8 @@ export default function CreateNewContact() {
                     name="location"
                     placeholder="Add where you met here..."
                     placeholderTextColor="rgba(255, 255, 255, 0.70)"
+                    onChangeText={handleChange("location")}
+                    onBlur={handleBlur("location")}
                     multiline={true}
                   />
                 </View>
