@@ -77,6 +77,7 @@ const parseContact = (contact: Contact, activities: Activity[]) => {
     links,
     tags,
     isArchived,
+    linkedInUrl,
   } = contact;
 
   return {
@@ -90,6 +91,7 @@ const parseContact = (contact: Contact, activities: Activity[]) => {
     phone,
     links,
     tags,
+    linkedInUrl,
     activities: activities.filter(
       (activity) => activity.contactId === contact.id
     ),
