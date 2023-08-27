@@ -6,16 +6,40 @@ import { useActions } from "~/hooks/useActions";
 import { Loading } from "./Loading";
 import { View, Text, ScrollView, Image } from "react-native";
 import Collapsible from "react-native-collapsible";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Ripple from "react-native-material-ripple";
 import { CaretUp, CaretDown } from "phosphor-react-native";
 import { ActionCard } from "./ActionCard";
 import { ActionType } from "~/types";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const ActionList = () => {
   const { data: actions, isLoading, error } = useActions();
   const [isPriorityCollapsed, setIsPriorityCollapsed] = useState(false);
   const [isUpcomingCollapsed, setIsUpcomingCollapsed] = useState(false);
+
+  const loadPriorityCollapseSetting = async () => {
+    try {
+      const value = await AsyncStorage.getItem("@isPriorityCollapsed");
+      setIsPriorityCollapsed(value === "true");
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  const loadUpcomingCollapseSetting = async () => {
+    try {
+      const value = await AsyncStorage.getItem("@isUpcomingCollapsed");
+      setIsUpcomingCollapsed(value === "true");
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  useEffect(() => {
+    void loadPriorityCollapseSetting();
+    void loadUpcomingCollapseSetting();
+  }, []);
 
   if (isLoading) {
     return <Loading />;
@@ -82,7 +106,13 @@ export const ActionList = () => {
         <Text className="text-white">{JSON.stringify(error, null, 2)}</Text>
       )}
       <Ripple
-        onPress={() => setIsPriorityCollapsed((prev) => !prev)}
+        onPress={async () => {
+          await AsyncStorage.setItem(
+            "@isPriorityCollapsed",
+            `${!isPriorityCollapsed}`
+          );
+          setIsPriorityCollapsed((prev) => !prev);
+        }}
         className="py-3 mt-3 flex-row justify-between items-center"
       >
         <View className="flex-row items-center space-x-2">
@@ -105,7 +135,13 @@ export const ActionList = () => {
         ))}
       </Collapsible>
       <Ripple
-        onPress={() => setIsUpcomingCollapsed((prev) => !prev)}
+        onPress={async () => {
+          await AsyncStorage.setItem(
+            "@isUpcomingCollapsed",
+            `${!isUpcomingCollapsed}`
+          );
+          setIsUpcomingCollapsed((prev) => !prev);
+        }}
         className="py-3 mt-3 flex-row justify-between items-center"
       >
         <View className="flex-row items-center space-x-2">
