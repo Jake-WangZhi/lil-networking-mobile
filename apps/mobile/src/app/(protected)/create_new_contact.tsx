@@ -59,13 +59,14 @@ export default function CreateNewContact() {
         email: undefined,
         phone: undefined,
         links: [],
-        tags: [],
+        tags: [""],
         location: undefined,
       }}
       validationSchema={toFormikValidationSchema(ValidationSchema)}
+      validateOnChange={false}
       onSubmit={(values) => {
         values.links = values.links.filter((item) => item !== "");
-        values.tags = values.tags.filter((item) => item !== "");
+        values.tags = tags;
 
         createNewContact(values, {
           onSuccess: () => {
@@ -82,6 +83,7 @@ export default function CreateNewContact() {
         touched,
         errors,
         setValues,
+        validateField,
       }) => (
         <>
           <View className="flex-row items-center">
@@ -126,7 +128,10 @@ export default function CreateNewContact() {
                     name="firstName"
                     required
                     onChangeText={handleChange("firstName")}
-                    onBlur={handleBlur("firstName")}
+                    onBlur={async () => {
+                      handleBlur("firstName");
+                      await validateField("firstName");
+                    }}
                   />
                 </View>
 
@@ -135,7 +140,10 @@ export default function CreateNewContact() {
                     label="Last"
                     name="lastName"
                     onChangeText={handleChange("lastName")}
-                    onBlur={handleBlur("lastName")}
+                    onBlur={async () => {
+                      handleBlur("lastName");
+                      await validateField("lastName");
+                    }}
                   />
                 </View>
 
@@ -144,7 +152,10 @@ export default function CreateNewContact() {
                     label="Title"
                     name="title"
                     onChangeText={handleChange("title")}
-                    onBlur={handleBlur("title")}
+                    onBlur={async () => {
+                      handleBlur("title");
+                      await validateField("title");
+                    }}
                   />
                 </View>
 
@@ -153,7 +164,10 @@ export default function CreateNewContact() {
                     label="Company"
                     name="company"
                     onChangeText={handleChange("company")}
-                    onBlur={handleBlur("company")}
+                    onBlur={async () => {
+                      handleBlur("company");
+                      await validateField("company");
+                    }}
                   />
                 </View>
 
@@ -206,7 +220,10 @@ export default function CreateNewContact() {
                     label="LinkedIn"
                     name="linkedInUrl"
                     onChangeText={handleChange("linkedInUrl")}
-                    onBlur={handleBlur("linkedInUrl")}
+                    onBlur={async () => {
+                      handleBlur("linkedInUrl");
+                      await validateField("linkedInUrl");
+                    }}
                   />
                 </View>
 
@@ -215,7 +232,10 @@ export default function CreateNewContact() {
                     label="Email"
                     name="email"
                     onChangeText={handleChange("email")}
-                    onBlur={handleBlur("email")}
+                    onBlur={async () => {
+                      handleBlur("email");
+                      await validateField("email");
+                    }}
                   />
                 </View>
 
@@ -224,7 +244,10 @@ export default function CreateNewContact() {
                     label="Phone"
                     name="phone"
                     onChangeText={handleChange("phone")}
-                    onBlur={handleBlur("phone")}
+                    onBlur={async () => {
+                      handleBlur("phone");
+                      await validateField("phone");
+                    }}
                   />
                 </View>
 
@@ -247,7 +270,10 @@ export default function CreateNewContact() {
                                       "border border-error rounded")
                                   }`}
                                   onChangeText={handleChange(`links.${index}`)}
-                                  onBlur={handleBlur(`links.${index}`)}
+                                  onBlur={async () => {
+                                    handleBlur(`links.${index}`);
+                                    await validateField(`links.${index}`);
+                                  }}
                                   value={values.links[index]}
                                   selectionColor={colors.white}
                                   onEndEditing={() => setFocusedLinkIndex(null)}
@@ -385,6 +411,11 @@ export default function CreateNewContact() {
                     name="location"
                     placeholder="Add where you met here..."
                     placeholderTextColor="rgba(255, 255, 255, 0.70)"
+                    onChangeText={handleChange("location")}
+                    onBlur={async () => {
+                      handleBlur("location");
+                      await validateField("location");
+                    }}
                     multiline={true}
                   />
                 </View>
