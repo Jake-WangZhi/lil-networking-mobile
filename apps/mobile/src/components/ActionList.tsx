@@ -4,43 +4,23 @@ import empty_state_icon from "~/images/empty_state.png";
 import LottieView from "lottie-react-native";
 import { useActions } from "~/hooks/useActions";
 import { Loading } from "./Loading";
-import { View, Text, ScrollView, Image, FlatList } from "react-native";
+import { View, Text, Image, FlatList } from "react-native";
 import Collapsible from "react-native-collapsible";
-import { useEffect, useState } from "react";
 import Ripple from "react-native-material-ripple";
 import { CaretUp, CaretDown } from "phosphor-react-native";
 import { ActionCard } from "./ActionCard";
 import { ActionType } from "~/types";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import type { Action } from "@foundrymakes/validation";
+import { useCollapsibleStatus } from "~/hooks/useCollapsibleStatus";
 
 export const ActionList = () => {
   const { data: actions, isLoading, error } = useActions();
-  const [isPriorityCollapsed, setIsPriorityCollapsed] = useState(false);
-  const [isUpcomingCollapsed, setIsUpcomingCollapsed] = useState(false);
-
-  const loadPriorityCollapseSetting = async () => {
-    try {
-      const value = await AsyncStorage.getItem("@isPriorityCollapsed");
-      setIsPriorityCollapsed(value === "true");
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  };
-
-  const loadUpcomingCollapseSetting = async () => {
-    try {
-      const value = await AsyncStorage.getItem("@isUpcomingCollapsed");
-      setIsUpcomingCollapsed(value === "true");
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  };
-
-  useEffect(() => {
-    void loadPriorityCollapseSetting();
-    void loadUpcomingCollapseSetting();
-  }, []);
+  const {
+    isPriorityCollapsed,
+    isUpcomingCollapsed,
+    togglePriorityCollapse,
+    toggleUpcomingCollapse,
+  } = useCollapsibleStatus();
 
   if (isLoading) {
     return <Loading />;
@@ -81,7 +61,7 @@ export const ActionList = () => {
     );
   }
 
-  if (pastActions.length === 0 && upcomingActions.length === 0)
+  if (!(pastActions.length || upcomingActions.length))
     return (
       <View className="px-10 flex-1 justify-center items-center">
         <View className="flex justify-center items-center space-y-6">
@@ -102,18 +82,13 @@ export const ActionList = () => {
     );
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
+    <View>
       {!!error && (
         <Text className="text-white">{JSON.stringify(error, null, 2)}</Text>
       )}
+
       <Ripple
-        onPress={async () => {
-          await AsyncStorage.setItem(
-            "@isPriorityCollapsed",
-            `${!isPriorityCollapsed}`
-          );
-          setIsPriorityCollapsed((prev) => !prev);
-        }}
+        onPress={togglePriorityCollapse}
         className="py-3 mt-3 flex-row justify-between items-center"
       >
         <View className="flex-row items-center space-x-2">
@@ -135,14 +110,9 @@ export const ActionList = () => {
           keyExtractor={(item) => item.contactId}
         />
       </Collapsible>
+
       <Ripple
-        onPress={async () => {
-          await AsyncStorage.setItem(
-            "@isUpcomingCollapsed",
-            `${!isUpcomingCollapsed}`
-          );
-          setIsUpcomingCollapsed((prev) => !prev);
-        }}
+        onPress={toggleUpcomingCollapse}
         className="py-3 mt-3 flex-row justify-between items-center"
       >
         <View className="flex-row items-center space-x-2">
@@ -164,6 +134,6 @@ export const ActionList = () => {
           keyExtractor={(item) => item.contactId}
         />
       </Collapsible>
-    </ScrollView>
+    </View>
   );
 };

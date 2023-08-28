@@ -40,7 +40,7 @@ export const ActionCard = ({ action, actionType }: Props) => {
         <CalendarBlank size={24} color="white" />
         <View className="flex-row items-center">
           <Text className="text-white text-sm">
-            {goalDays} days •{" "}
+            {goalDays} days &bull;&nbsp;
             <Text
               className={`${
                 actionType === ActionType.PAST
