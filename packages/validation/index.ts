@@ -13,3 +13,15 @@ export const createContactPayloadSchema = z.object({
   links: z.array(z.string()),
   tags: z.array(z.string()),
 });
+
+export const ActionSchema = z.object({
+  contactId: z.string(),
+  contactFirstName: z.string(),
+  contactLastName: z.string().nullable(),
+  days: z.number(),
+  goalDays: z.number(),
+  title: z.string().nullable(),
+  isNewUser: z.boolean(),
+});
+
+export type Action = z.infer<typeof ActionSchema>;

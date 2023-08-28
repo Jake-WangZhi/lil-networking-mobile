@@ -1,10 +1,10 @@
 import { NextResponse } from "next/server";
 import prisma from "~/lib/prisma";
 import type { Activity, Contact } from "@prisma/client";
-import type { Action } from "~/types";
 import { ActivityType } from "~/types";
 import { differenceInDays } from "date-fns";
 import { currentUser } from "@clerk/nextjs";
+import type { Action } from "@foundrymakes/validation";
 
 const DAYS_BEFORE_PAST_DUE = 10;
 

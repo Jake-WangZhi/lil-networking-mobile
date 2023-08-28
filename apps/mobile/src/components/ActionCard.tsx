@@ -1,8 +1,8 @@
 import Ripple from "react-native-material-ripple";
-import type { Action } from "~/types";
 import { ActionType } from "~/types";
 import { Text, View } from "react-native";
 import { CalendarBlank } from "phosphor-react-native";
+import type { Action } from "@foundrymakes/validation";
 
 interface Props {
   action: Action;
@@ -18,6 +18,7 @@ export const ActionCard = ({ action, actionType }: Props) => {
     title,
     isNewUser,
   } = action;
+
   return (
     <Ripple className="bg-dark-grey p-4 rounded-lg mb-4 space-y-2">
       <View>

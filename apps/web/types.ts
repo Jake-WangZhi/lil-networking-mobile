@@ -1,13 +1,3 @@
-export interface Action {
-  contactId: string;
-  contactFirstName: string;
-  contactLastName: string | null;
-  days: number;
-  goalDays: number;
-  title: string | null;
-  isNewUser: boolean;
-}
-
 export interface Contact {
   id: string;
   firstName: string;

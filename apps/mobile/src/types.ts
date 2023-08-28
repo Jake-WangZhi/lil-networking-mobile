@@ -7,16 +7,6 @@ export interface Slide {
   image: ImageSourcePropType;
 }
 
-export interface Action {
-  contactId: string;
-  contactFirstName: string;
-  contactLastName: string | null;
-  days: number;
-  goalDays: number;
-  title: string | null;
-  isNewUser: boolean;
-}
-
 export const ActionType = {
   PAST: "past",
   UPCOMING: "upcoming",
