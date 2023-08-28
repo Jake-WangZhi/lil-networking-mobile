@@ -1,9 +1,9 @@
 export interface Action {
   contactId: string;
   contactFirstName: string;
-  contactLastName: string;
+  contactLastName: string | null;
   days: number;
-  description: string;
+  description: string | null;
   goalDays: number;
   contactCreatedAt?: string;
 }
