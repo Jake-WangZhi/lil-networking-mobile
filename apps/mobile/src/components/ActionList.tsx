@@ -130,7 +130,7 @@ export const ActionList = () => {
           <ActionCard
             key={index}
             action={action}
-            actionType={ActionType.Past}
+            actionType={ActionType.PAST}
           />
         ))}
       </Collapsible>
@@ -159,7 +159,7 @@ export const ActionList = () => {
           <ActionCard
             key={index}
             action={action}
-            actionType={ActionType.Upcoming}
+            actionType={ActionType.UPCOMING}
           />
         ))}
       </Collapsible>

@@ -8,11 +8,6 @@ export interface Action {
   isNewUser: boolean;
 }
 
-export enum ActionType {
-  Past = "past",
-  Upcoming = "upcoming",
-}
-
 export interface Contact {
   id: string;
   firstName: string;

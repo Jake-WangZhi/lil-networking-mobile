@@ -17,7 +17,11 @@ export interface Action {
   isNewUser: boolean;
 }
 
-export enum ActionType {
-  Past = "past",
-  Upcoming = "upcoming",
-}
+export const ActionType = {
+  PAST: "past",
+  UPCOMING: "upcoming",
+} as const;
+
+export type ObjectValues<T> = T[keyof T];
+
+export type ActionType = ObjectValues<typeof ActionType>;

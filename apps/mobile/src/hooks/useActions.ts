@@ -28,11 +28,6 @@ const actionSchema = z.object({
   ),
 });
 
-export enum ActionType {
-  Past = "past",
-  Upcoming = "upcoming",
-}
-
 const EXPO_PUBLIC_API_BASE_URL = process.env.EXPO_PUBLIC_API_BASE_URL;
 
 if (!EXPO_PUBLIC_API_BASE_URL)
