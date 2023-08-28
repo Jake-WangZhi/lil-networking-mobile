@@ -16,7 +16,15 @@ export default function ProtectedLayout() {
       <Stack.Screen name="(tabs)" />
       <Stack.Screen name="quote" />
       <Stack.Screen name="create_new_contact" />
-      <Stack.Screen name="profile/[contactId]/index" />
+      <Stack.Screen
+        name="profile/[contactId]/index"
+        options={{
+          contentStyle: {
+            backgroundColor: colors["dark-blue"],
+            paddingTop: 72,
+          },
+        }}
+      />
     </Stack>
   );
 }

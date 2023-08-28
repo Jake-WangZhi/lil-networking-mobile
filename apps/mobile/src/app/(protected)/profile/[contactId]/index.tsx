@@ -1,5 +1,5 @@
 import { router } from "expo-router";
-import { Text, View, Linking } from "react-native";
+import { Text, View, Linking, FlatList } from "react-native";
 import { useLocalSearchParams } from "expo-router";
 import Ripple from "react-native-material-ripple";
 import { useContact } from "~/hooks/useContact";
@@ -33,20 +33,23 @@ export default function Profile() {
     linkedInUrl,
     email,
     phone,
+    tags,
   } = contact;
 
   return (
     <View>
-      <View className="flex-row justify-between">
+      <View className="flex-row justify-between mx-4">
         <Ripple onPress={() => router.back()}>
           <X size={32} color={colors.white} />
         </Ripple>
       </View>
       {!!error && (
-        <Text className="text-white">{JSON.stringify(error, null, 2)}</Text>
+        <Text className="text-white px-4">
+          {JSON.stringify(error, null, 2)}
+        </Text>
       )}
       <View className="space-y-6 mt-2">
-        <View className="bg-dark-grey rounded-lg p-4 space-y-[6]">
+        <View className="bg-dark-grey rounded-lg p-4 space-y-[6] mx-4">
           <Text className="text-white text-2xl font-semibold">
             {firstName} {lastName}
           </Text>
@@ -63,61 +66,122 @@ export default function Profile() {
               className="flex-row items-center space-x-2"
             >
               <Link size={16} color={colors["light-blue"]} />
-              <Text className="text-light-blue text-base truncate line-clamp-1">
-                {link}
-              </Text>
+              <Text className="text-light-blue text-base">{link}</Text>
             </Ripple>
           ))}
         </View>
-        <View className="space-y-2">
+        <View className="space-y-2 mx-4">
           <Text className="text-white text-xl font-semibold">Connect</Text>
           <View className="flex-row justify-between">
-            {linkedInUrl && (
-              <Ripple
-                className="space-y-1 items-center"
-                onPress={() => Linking.openURL(linkedInUrl)}
+            <Ripple
+              className="space-y-1 items-center"
+              disabled={linkedInUrl ? false : true}
+              onPress={() => linkedInUrl && Linking.openURL(linkedInUrl)}
+            >
+              <View
+                className={`${
+                  linkedInUrl ? "bg-light-blue" : "bg-dark-grey"
+                } p-4 rounded-full items-center`}
               >
-                <View className="bg-light-blue p-4 rounded-full items-center">
-                  <LinkedinLogo size={24} />
-                </View>
-                <Text className="text-white text-sm">LinkedIn</Text>
-              </Ripple>
-            )}
-            {email && (
-              <Ripple
-                className="space-y-1 items-center"
-                onPress={() => Linking.openURL(`mailto:${email}`)}
+                <LinkedinLogo
+                  size={24}
+                  color={
+                    linkedInUrl
+                      ? colors["dark-blue"]
+                      : colors["supporting-text"]
+                  }
+                />
+              </View>
+              <Text className="text-white text-sm">LinkedIn</Text>
+            </Ripple>
+
+            <Ripple
+              className="space-y-1 items-center"
+              disabled={email ? false : true}
+              onPress={() => email && Linking.openURL(`mailto:${email}`)}
+            >
+              <View
+                className={`${
+                  email ? "bg-light-blue" : "bg-dark-grey"
+                } p-4 rounded-full items-center`}
               >
-                <View className="bg-light-blue p-4 rounded-full items-center">
-                  <Envelope size={24} />
-                </View>
-                <Text className="text-white text-sm">Email</Text>
-              </Ripple>
-            )}
-            {phone && (
-              <>
-                <Ripple
-                  className="space-y-1 items-center"
-                  onPress={() => Linking.openURL(`sms:${phone}`)}
-                >
-                  <View className="bg-light-blue p-4 rounded-full items-center">
-                    <ChatCircle size={24} />
-                  </View>
-                  <Text className="text-white text-sm">Message</Text>
-                </Ripple>
-                <Ripple
-                  className="space-y-1 items-center"
-                  onPress={() => Linking.openURL(`tel:${phone}`)}
-                >
-                  <View className="bg-light-blue p-4 rounded-full items-center">
-                    <Phone size={24} />
-                  </View>
-                  <Text className="text-white text-sm">Phone</Text>
-                </Ripple>
-              </>
-            )}
+                <Envelope
+                  size={24}
+                  color={
+                    email ? colors["dark-blue"] : colors["supporting-text"]
+                  }
+                />
+              </View>
+              <Text className="text-white text-sm">Email</Text>
+            </Ripple>
+
+            <Ripple
+              className="space-y-1 items-center"
+              disabled={phone ? false : true}
+              onPress={() => phone && Linking.openURL(`sms:${phone}`)}
+            >
+              <View
+                className={`${
+                  phone ? "bg-light-blue" : "bg-dark-grey"
+                } p-4 rounded-full items-center`}
+              >
+                <ChatCircle
+                  size={24}
+                  color={
+                    phone ? colors["dark-blue"] : colors["supporting-text"]
+                  }
+                />
+              </View>
+              <Text className="text-white text-sm">Message</Text>
+            </Ripple>
+
+            <Ripple
+              className="space-y-1 items-center"
+              disabled={phone ? false : true}
+              onPress={() => phone && Linking.openURL(`tel:${phone}`)}
+            >
+              <View
+                className={`${
+                  phone ? "bg-light-blue" : "bg-dark-grey"
+                } p-4 rounded-full items-center`}
+              >
+                <Phone
+                  size={24}
+                  color={
+                    phone ? colors["dark-blue"] : colors["supporting-text"]
+                  }
+                />
+              </View>
+              <Text className="text-white text-sm">Phone</Text>
+            </Ripple>
           </View>
         </View>
+        {tags.length && (
+          <View className="space-y-3">
+            <Text className="text-white text-xl font-semibold mx-4">Tags</Text>
+            <FlatList
+              data={tags}
+              renderItem={({
+                item,
+                index,
+              }: {
+                item: string;
+                index: number;
+              }) => (
+                <View
+                  className={`bg-dark-grey rounded-2xl px-4 py-[6] ${
+                    index === 0 ? "ml-4" : "ml-2"
+                  }`}
+                >
+                  <Text className="text-white">{item}</Text>
+                </View>
+              )}
+              showsHorizontalScrollIndicator={false}
+              horizontal
+              className="py-2"
+            />
+          </View>
+        )}
       </View>
     </View>
   );
