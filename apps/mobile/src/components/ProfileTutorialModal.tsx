@@ -8,13 +8,14 @@ const slides = [
   {
     id: "1",
     title: "Set Reminders",
-    description: "Copy about reminder",
+    description:
+      "Create new or easily import contacts from your phone to get started.",
     image: img1,
   },
   {
     id: "2",
     title: "Add Tags",
-    description: "Copy about tags",
+    description: "Set monthly goals to build and sustain your network.",
     image: img2,
   },
   {
