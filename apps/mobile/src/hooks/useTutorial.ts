@@ -1,22 +1,21 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useEffect, useState } from "react";
 
-export const useDashboardTutorial = () => {
-  const [hasViewedDashboardTutorial, setHasViewedDashboardTutorial] =
-    useState<boolean>(true);
+export const useTutorial = (name: string) => {
+  const [hasViewedTutorial, setHasViewedTutorial] = useState<boolean>(true);
 
   useEffect(() => {
     pauseFor(3000)
       .then(async () => {
-        const value = await AsyncStorage.getItem("@hasViewedDashboardTutorial");
-        if (value !== "true") setHasViewedDashboardTutorial(false);
+        const value = await AsyncStorage.getItem(name);
+        if (value !== "true") setHasViewedTutorial(false);
       })
       .catch((error) => {
         console.error(error);
       });
-  }, []);
+  }, [name]);
 
-  return { hasViewedDashboardTutorial };
+  return { hasViewedTutorial };
 };
 
 const pauseFor = async (milliseconds: number) =>

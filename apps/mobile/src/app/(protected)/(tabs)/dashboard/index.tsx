@@ -5,7 +5,7 @@ import Ripple from "react-native-material-ripple";
 import { DashboardTutorialModal } from "~/components/DashboardTutorialModal";
 import { Loading } from "~/components/Loading";
 import { Tooltip } from "~/components/Tooltip";
-import { useDashboardTutorial } from "~/hooks/useDashboardTutorial";
+import { useTutorial } from "~/hooks/useTutorial";
 import { Feather } from "@expo/vector-icons";
 import { Link } from "expo-router";
 import { ActionList } from "~/components/ActionList";
@@ -13,7 +13,7 @@ import { colors } from "@foundrymakes/tailwind-config";
 
 export default function Dashboard() {
   const { user } = useUser();
-  const { hasViewedDashboardTutorial } = useDashboardTutorial();
+  const { hasViewedTutorial } = useTutorial("@hasViewedDashboardTutorial");
 
   if (!user) {
     return <Loading />;
@@ -69,7 +69,7 @@ export default function Dashboard() {
         </View>
       </Ripple>
       <ActionList />
-      {!hasViewedDashboardTutorial && <DashboardTutorialModal />}
+      {!hasViewedTutorial && <DashboardTutorialModal />}
     </>
   );
 }

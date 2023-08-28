@@ -1,8 +1,8 @@
 import { TutorialModal } from "~/components/TutorialModal";
 
-import img1 from "~/images/tutorials/dashboard/add_contacts.png";
-import img3 from "~/images/tutorials/dashboard/priority.png";
+import img1 from "~/images/tutorials/dashboard/contacts.png";
 import img2 from "~/images/tutorials/dashboard/stats.png";
+import img3 from "~/images/tutorials/dashboard/priority.png";
 
 const slides = [
   {
@@ -28,5 +28,5 @@ const slides = [
 ];
 
 export const DashboardTutorialModal = () => {
-  return <TutorialModal slides={slides} />;
+  return <TutorialModal slides={slides} name="@hasViewedDashboardTutorial" />;
 };
