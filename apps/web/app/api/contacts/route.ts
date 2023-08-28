@@ -45,12 +45,11 @@ const parseContacts = (contacts: Contact[], activities: Activity[]) => {
       lastName: contact.lastName,
       title: contact.title,
       company: contact.company,
-      industry: contact.industry,
       goalDays: contact.goalDays,
       email: contact.email,
       phone: contact.phone,
       links: contact.links,
-      interests: contact.interests,
+      tags: contact.tags,
       activities: activities.filter(
         (activity) => activity.contactId === contact.id
       ),

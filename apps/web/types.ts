@@ -3,7 +3,6 @@ export interface Action {
   contactFirstName: string;
   contactLastName: string;
   days: number;
-  contactIndustry: string;
   description: string;
   goalDays: number;
   contactCreatedAt?: string;
