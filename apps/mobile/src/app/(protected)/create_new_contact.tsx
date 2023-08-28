@@ -26,8 +26,8 @@ const ValidationSchema = z.object({
     .optional(),
   email: z.string().email("Invalid Email").optional(),
   phone: z.string().regex(phoneRegex, "Invalid Phone Number").optional(),
-  links: z.array(z.string().url("Invalid Link")),
-  tags: z.array(z.string()),
+  links: z.array(z.string().url("Invalid Link").optional()),
+  tags: z.array(z.string().optional()),
   location: z.string().optional(),
 });
 
@@ -83,7 +83,6 @@ export default function CreateNewContact() {
         handleBlur,
         handleSubmit,
         values,
-        touched,
         errors,
         setValues,
         validateField,
@@ -285,7 +284,7 @@ export default function CreateNewContact() {
                                   autoCorrect={false}
                                 />
                               </View>
-                              {touched.links && errors.links?.[index] && (
+                              {errors.links?.[index] && (
                                 <View className="flex-row items-center space-x-2">
                                   <Text className="text-white text-base w-[74]" />
                                   <View className="flex-row items-center space-x-1">
