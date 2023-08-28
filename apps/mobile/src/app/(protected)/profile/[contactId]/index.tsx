@@ -160,32 +160,25 @@ export default function Profile() {
             </Ripple>
           </View>
         </View>
-        {tags.length && (
-          <View className="space-y-3">
-            <Text className="text-white text-xl font-semibold mx-4">Tags</Text>
-            <FlatList
-              data={tags}
-              renderItem={({
-                item,
-                index,
-              }: {
-                item: string;
-                index: number;
-              }) => (
-                <View
-                  className={`bg-dark-grey rounded-2xl px-4 py-[6] ${
-                    index === 0 ? "ml-4" : "ml-2"
-                  }`}
-                >
-                  <Text className="text-white">{item}</Text>
-                </View>
-              )}
-              showsHorizontalScrollIndicator={false}
-              horizontal
-              className="py-2"
-            />
-          </View>
-        )}
+
+        <View className="space-y-3">
+          <Text className="text-white text-xl font-semibold mx-4">Tags</Text>
+          <FlatList
+            data={tags}
+            renderItem={({ item, index }: { item: string; index: number }) => (
+              <View
+                className={`bg-dark-grey rounded-2xl px-4 py-[6] ${
+                  index === 0 ? "ml-4" : "ml-2"
+                }`}
+              >
+                <Text className="text-white">{item}</Text>
+              </View>
+            )}
+            showsHorizontalScrollIndicator={false}
+            horizontal
+            className="py-2"
+          />
+        </View>
       </View>
     </View>
   );
