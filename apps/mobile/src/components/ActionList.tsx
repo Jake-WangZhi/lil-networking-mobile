@@ -4,7 +4,7 @@ import empty_state_icon from "~/images/empty_state.png";
 import LottieView from "lottie-react-native";
 import { useActions } from "~/hooks/useActions";
 import { Loading } from "./Loading";
-import { View, Text, ScrollView, Image } from "react-native";
+import { View, Text, ScrollView, Image, FlatList } from "react-native";
 import Collapsible from "react-native-collapsible";
 import { useEffect, useState } from "react";
 import Ripple from "react-native-material-ripple";
@@ -12,6 +12,7 @@ import { CaretUp, CaretDown } from "phosphor-react-native";
 import { ActionCard } from "./ActionCard";
 import { ActionType } from "~/types";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import type { Action } from "@foundrymakes/validation";
 
 export const ActionList = () => {
   const { data: actions, isLoading, error } = useActions();
@@ -126,13 +127,13 @@ export const ActionList = () => {
         )}
       </Ripple>
       <Collapsible collapsed={isPriorityCollapsed}>
-        {pastActions.map((action, index) => (
-          <ActionCard
-            key={index}
-            action={action}
-            actionType={ActionType.PAST}
-          />
-        ))}
+        <FlatList
+          data={pastActions}
+          renderItem={({ item }: { item: Action }) => (
+            <ActionCard action={item} actionType={ActionType.PAST} />
+          )}
+          keyExtractor={(item) => item.contactId}
+        />
       </Collapsible>
       <Ripple
         onPress={async () => {
@@ -155,13 +156,13 @@ export const ActionList = () => {
         )}
       </Ripple>
       <Collapsible collapsed={isUpcomingCollapsed}>
-        {upcomingActions.map((action, index) => (
-          <ActionCard
-            key={index}
-            action={action}
-            actionType={ActionType.UPCOMING}
-          />
-        ))}
+        <FlatList
+          data={upcomingActions}
+          renderItem={({ item }: { item: Action }) => (
+            <ActionCard action={item} actionType={ActionType.UPCOMING} />
+          )}
+          keyExtractor={(item) => item.contactId}
+        />
       </Collapsible>
     </ScrollView>
   );
