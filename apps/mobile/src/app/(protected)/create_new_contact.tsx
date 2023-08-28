@@ -169,27 +169,33 @@ export default function CreateNewContact() {
                     Reminder *
                   </Text>
                   <View className="flex-row space-x-2">
-                    <GoalDaysButton
-                      onPress={async () => {
-                        await setFieldValue("goalDays", 30);
-                      }}
-                      goalDaysValue={values.goalDays}
-                      buttonValue={30}
-                    />
-                    <GoalDaysButton
-                      onPress={async () => {
-                        await setFieldValue("goalDays", 60);
-                      }}
-                      goalDaysValue={values.goalDays}
-                      buttonValue={60}
-                    />
-                    <GoalDaysButton
-                      onPress={async () => {
-                        await setFieldValue("goalDays", 90);
-                      }}
-                      goalDaysValue={values.goalDays}
-                      buttonValue={90}
-                    />
+                    <View>
+                      <GoalDaysButton
+                        onPress={async () => {
+                          await setFieldValue("goalDays", 30);
+                        }}
+                        goalDaysValue={values.goalDays}
+                        buttonValue={30}
+                      />
+                    </View>
+                    <View>
+                      <GoalDaysButton
+                        onPress={async () => {
+                          await setFieldValue("goalDays", 60);
+                        }}
+                        goalDaysValue={values.goalDays}
+                        buttonValue={60}
+                      />
+                    </View>
+                    <View>
+                      <GoalDaysButton
+                        onPress={async () => {
+                          await setFieldValue("goalDays", 90);
+                        }}
+                        goalDaysValue={values.goalDays}
+                        buttonValue={90}
+                      />
+                    </View>
                   </View>
                 </View>
               </View>
