@@ -79,7 +79,7 @@ export default function Profile() {
           <View className="flex-row justify-between">
             <Ripple
               className="space-y-1 items-center"
-              disabled={linkedInUrl ? false : true}
+              disabled={!linkedInUrl}
               onPress={() => linkedInUrl && Linking.openURL(linkedInUrl)}
             >
               <View
@@ -101,7 +101,7 @@ export default function Profile() {
 
             <Ripple
               className="space-y-1 items-center"
-              disabled={email ? false : true}
+              disabled={!email}
               onPress={() => email && Linking.openURL(`mailto:${email}`)}
             >
               <View
@@ -121,7 +121,7 @@ export default function Profile() {
 
             <Ripple
               className="space-y-1 items-center"
-              disabled={phone ? false : true}
+              disabled={!phone}
               onPress={() => phone && Linking.openURL(`sms:${phone}`)}
             >
               <View
@@ -141,7 +141,7 @@ export default function Profile() {
 
             <Ripple
               className="space-y-1 items-center"
-              disabled={phone ? false : true}
+              disabled={!phone}
               onPress={() => phone && Linking.openURL(`tel:${phone}`)}
             >
               <View
