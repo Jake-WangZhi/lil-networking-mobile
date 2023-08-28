@@ -26,8 +26,8 @@ const ValidationSchema = z.object({
     .optional(),
   email: z.string().email("Invalid Email").optional(),
   phone: z.string().regex(phoneRegex, "Invalid Phone Number").optional(),
-  links: z.array(z.string().url("Invalid Link").optional()),
-  tags: z.array(z.string().optional()),
+  links: z.array(z.string().url("Invalid Link")),
+  tags: z.array(z.string()),
   location: z.string().optional(),
 });
 
