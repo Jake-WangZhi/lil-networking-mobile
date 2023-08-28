@@ -1,18 +1,17 @@
-import { router } from "expo-router";
-import { View, Text, TextInput, ScrollView, Pressable } from "react-native";
-import Ripple from "react-native-material-ripple";
-import { FieldArray, Formik } from "formik";
-import { Warning, PlusCircle } from "phosphor-react-native";
-import { useRef, useState } from "react";
-import { z } from "zod";
-import { useNewContactMutation } from "~/hooks/useNewContactMutation";
-import { XCircle } from "phosphor-react-native";
-import { linkedInUrlRegex, phoneRegex } from "~/utils/regex";
-import { Loading } from "~/components/Loading";
-import { toFormikValidationSchema } from "zod-formik-adapter";
 import { colors } from "@foundrymakes/tailwind-config";
+import { router } from "expo-router";
+import { FieldArray, Formik } from "formik";
+import { PlusCircle, Warning, XCircle } from "phosphor-react-native";
+import { useRef, useState } from "react";
+import { Pressable, ScrollView, Text, TextInput, View } from "react-native";
+import Ripple from "react-native-material-ripple";
+import { z } from "zod";
+import { toFormikValidationSchema } from "zod-formik-adapter";
 import { FormikTextInput } from "~/components/FormikTextInput";
 import { GoalDaysButton } from "~/components/GoalDaysButton";
+import { Loading } from "~/components/Loading";
+import { useNewContactMutation } from "~/hooks/useNewContactMutation";
+import { linkedInUrlRegex, phoneRegex } from "~/utils/regex";
 
 const ValidationSchema = z.object({
   firstName: z.string({ required_error: "Required field" }),
@@ -27,7 +26,7 @@ const ValidationSchema = z.object({
   email: z.string().email("Invalid Email").optional(),
   phone: z.string().regex(phoneRegex, "Invalid Phone Number").optional(),
   links: z.array(z.string().url("Invalid Link").optional()),
-  tags: z.array(z.string().optional()),
+  tags: z.array(z.string()),
   location: z.string().optional(),
 });
 
@@ -36,7 +35,6 @@ export default function CreateNewContact() {
 
   const [isTagsFocused, setIsTagsFocused] = useState(false);
   const [tagsInput, setTagsInput] = useState("");
-  const [tags, setTags] = useState<string[]>([]);
   const inputRef = useRef<TextInput>(null);
 
   const {
@@ -50,25 +48,18 @@ export default function CreateNewContact() {
   return (
     <Formik
       initialValues={{
-        firstName: undefined,
-        lastName: undefined,
-        title: undefined,
-        company: undefined,
         goalDays: 30,
-        linkedInUrl: undefined,
-        email: undefined,
-        phone: undefined,
         links: [],
-        tags: [""],
-        location: undefined,
+        tags: [],
       }}
       validationSchema={toFormikValidationSchema(ValidationSchema)}
       validateOnChange={false}
+      validateOnBlur={false}
       onSubmit={(values) => {
         const valuesToSubmit = {
           ...values,
           links: values.links.filter(Boolean),
-          tags: tags,
+          tags: values.tags.filter(Boolean),
         };
 
         createNewContact(valuesToSubmit, {
@@ -84,7 +75,7 @@ export default function CreateNewContact() {
         handleSubmit,
         values,
         errors,
-        setValues,
+        setFieldValue,
         validateField,
       }) => (
         <>
@@ -180,30 +171,21 @@ export default function CreateNewContact() {
                   <View className="flex-row space-x-2">
                     <GoalDaysButton
                       onPress={async () => {
-                        await setValues({
-                          ...values,
-                          goalDays: 30,
-                        });
+                        await setFieldValue("goalDays", 30);
                       }}
                       goalDaysValue={values.goalDays}
                       buttonValue={30}
                     />
                     <GoalDaysButton
                       onPress={async () => {
-                        await setValues({
-                          ...values,
-                          goalDays: 60,
-                        });
+                        await setFieldValue("goalDays", 60);
                       }}
                       goalDaysValue={values.goalDays}
                       buttonValue={60}
                     />
                     <GoalDaysButton
                       onPress={async () => {
-                        await setValues({
-                          ...values,
-                          goalDays: 90,
-                        });
+                        await setFieldValue("goalDays", 90);
                       }}
                       goalDaysValue={values.goalDays}
                       buttonValue={90}
@@ -226,6 +208,8 @@ export default function CreateNewContact() {
                       handleBlur("linkedInUrl");
                       await validateField("linkedInUrl");
                     }}
+                    autoCapitalize="none"
+                    autoComplete="off"
                   />
                 </View>
 
@@ -335,17 +319,17 @@ export default function CreateNewContact() {
                     inputRef.current?.focus();
                   }}
                 >
-                  {tags.map((tag, index) => (
+                  {values.tags.map((tag, index) => (
                     <View
                       key={index}
                       className="px-4 py-[6] bg-light-grey rounded-full flex-row space-x-1"
                     >
                       <Text className="text-white">{tag}</Text>
                       <Ripple
-                        onPress={() => {
-                          setTags((prevState) =>
-                            prevState.filter((tag, i) => i !== index)
-                          );
+                        onPress={async () => {
+                          await setFieldValue("tags", [
+                            ...values.tags.filter((_tag, i) => i !== index),
+                          ]);
                         }}
                       >
                         <XCircle
@@ -360,32 +344,37 @@ export default function CreateNewContact() {
                     ref={inputRef}
                     className="text-white"
                     value={tagsInput}
-                    placeholder={tags.length ? "" : "Type interest here..."}
+                    placeholder={
+                      values.tags.length ? "" : "Type interest here..."
+                    }
                     placeholderTextColor="rgba(255, 255, 255, 0.70)"
                     selectionColor={colors.white}
-                    onKeyPress={(e) => {
+                    onKeyPress={async (e) => {
                       const { key } = e.nativeEvent;
 
                       if (
                         key === "Backspace" &&
                         !tagsInput.length &&
-                        tags.length
+                        values.tags.length
                       ) {
                         e.preventDefault();
-                        const tagsCopy = [...tags];
+                        const tagsCopy = [...values.tags];
                         tagsCopy.pop();
 
-                        setTags(tagsCopy);
+                        await setFieldValue("tags", tagsCopy);
                       }
                     }}
                     onChangeText={setTagsInput}
                     onFocus={() => setIsTagsFocused(true)}
-                    onEndEditing={() => {
+                    onEndEditing={async () => {
                       const trimmedInput = tagsInput.trim();
 
                       if (trimmedInput.length) {
+                        await setFieldValue("tags", [
+                          ...values.tags,
+                          trimmedInput,
+                        ]);
                         setTagsInput("");
-                        setTags((prevTags) => [...prevTags, trimmedInput]);
                       }
 
                       setIsTagsFocused(false);
