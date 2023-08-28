@@ -65,10 +65,13 @@ export default function CreateNewContact() {
       validationSchema={toFormikValidationSchema(ValidationSchema)}
       validateOnChange={false}
       onSubmit={(values) => {
-        values.links = values.links.filter((item) => item !== "");
-        values.tags = tags;
+        const valuesToSubmit = {
+          ...values,
+          links: values.links.filter(Boolean),
+          tags: tags,
+        };
 
-        createNewContact(values, {
+        createNewContact(valuesToSubmit, {
           onSuccess: () => {
             router.push("/dashboard");
           },
@@ -358,9 +361,7 @@ export default function CreateNewContact() {
                     ref={inputRef}
                     className="text-white"
                     value={tagsInput}
-                    placeholder={
-                      tags.length !== 0 ? "" : "Type interest here..."
-                    }
+                    placeholder={tags.length ? "" : "Type interest here..."}
                     placeholderTextColor="rgba(255, 255, 255, 0.70)"
                     selectionColor={colors.white}
                     onKeyPress={(e) => {
