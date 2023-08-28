@@ -14,16 +14,6 @@ const contactSchema = z.object({
   links: z.array(z.string()),
   tags: z.array(z.string()),
   linkedInUrl: z.string().nullable(),
-  //   activities: z.array({
-  //     id: z.string(),
-  //     createdAt: z.date(),
-  //     updatedAt: z.date(),
-  //     title: z.string(),
-  //     description: z.string().nullable(),
-  //     date: z.date(),
-  //     type: z.enum(["past", "upcoming"]),
-  //     contactId: z.string(),
-  //   }),
   isArchived: z.boolean(),
 });
 
