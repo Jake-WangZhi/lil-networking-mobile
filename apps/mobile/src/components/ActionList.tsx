@@ -10,6 +10,7 @@ import Ripple from "react-native-material-ripple";
 import { CaretUp, CaretDown } from "phosphor-react-native";
 import { ActionCard } from "./ActionCard";
 import { ActionType } from "~/types";
+import { Error } from "~/components/Error";
 
 export const ActionList = () => {
   const { data: actions, isLoading, error } = useActions();
@@ -18,6 +19,10 @@ export const ActionList = () => {
 
   if (isLoading) {
     return <Loading />;
+  }
+
+  if (error) {
+    return <Error error={error} />;
   }
 
   if (!actions) {
@@ -55,9 +60,6 @@ export const ActionList = () => {
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
-      {!!error && (
-        <Text className="text-white">{JSON.stringify(error, null, 2)}</Text>
-      )}
       <Ripple
         onPress={() => setIsPriorityCollapsed((prev) => !prev)}
         className="py-3 mt-3 flex-row justify-between items-center"

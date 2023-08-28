@@ -13,6 +13,8 @@ import {
   Phone,
 } from "phosphor-react-native";
 import { colors } from "@foundrymakes/tailwind-config";
+import { Error } from "~/components/Error";
+import { formatUrl } from "~/utils/formatUrl";
 
 export default function Profile() {
   const { contactId } = useLocalSearchParams<{ contactId: string }>();
@@ -20,6 +22,10 @@ export default function Profile() {
 
   if (isLoading) {
     return <Loading />;
+  }
+
+  if (error) {
+    return <Error error={error} />;
   }
 
   if (!contact) return null;
@@ -43,11 +49,7 @@ export default function Profile() {
           <X size={32} color={colors.white} />
         </Ripple>
       </View>
-      {!!error && (
-        <Text className="text-white px-4">
-          {JSON.stringify(error, null, 2)}
-        </Text>
-      )}
+
       <View className="space-y-6 mt-2">
         <View className="bg-dark-grey rounded-lg p-4 space-y-[6] mx-4">
           <Text className="text-white text-2xl font-semibold">
@@ -66,7 +68,9 @@ export default function Profile() {
               className="flex-row items-center space-x-2"
             >
               <Link size={16} color={colors["light-blue"]} />
-              <Text className="text-light-blue text-base">{link}</Text>
+              <Text className="text-light-blue text-base">
+                {formatUrl(link)}
+              </Text>
             </Ripple>
           ))}
         </View>
