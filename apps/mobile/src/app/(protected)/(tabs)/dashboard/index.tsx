@@ -10,23 +10,16 @@ import { Feather } from "@expo/vector-icons";
 import { Link } from "expo-router";
 import { ActionList } from "~/components/ActionList";
 import { colors } from "@foundrymakes/tailwind-config";
-import { useCallback, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
+import { usePullToRefresh } from "~/hooks/usePullToRefresh";
 
 export default function Dashboard() {
   const { user } = useUser();
   const { hasViewedDashboardTutorial } = useDashboardTutorial();
-  const [refreshing, setRefreshing] = useState(false);
   const queryClient = useQueryClient();
-
-  const onRefresh = useCallback(() => {
-    setRefreshing(true);
-
-    setTimeout(() => {
-      void queryClient.refetchQueries({ stale: true });
-      setRefreshing(false);
-    }, 2000);
-  }, [queryClient]);
+  const { isRefreshing, onRefresh } = usePullToRefresh(() =>
+    queryClient.refetchQueries({ stale: true })
+  );
 
   if (!user) {
     return <Loading />;
@@ -76,7 +69,7 @@ export default function Dashboard() {
         showsVerticalScrollIndicator={false}
         refreshControl={
           <RefreshControl
-            refreshing={refreshing}
+            refreshing={isRefreshing}
             onRefresh={onRefresh}
             tintColor={colors["light-blue"]}
           />
