@@ -7,6 +7,7 @@ export const colors = {
   "light-yellow": "#FFCF79",
   "light-grey": "#2C353E",
   "dark-grey": "#1B252F",
+  magenta: "#ED3293",
   white: "#FFFFFF",
   error: "#FB5913",
 };

@@ -1,9 +1,6 @@
-import animationData from "~/lottie/add-and-save.json";
-
 import { useUser } from "@clerk/clerk-expo";
-import { View, Text } from "react-native";
+import { View, Text, ScrollView, RefreshControl } from "react-native";
 import { PlusCircle } from "phosphor-react-native";
-import LottieView from "lottie-react-native";
 import Ripple from "react-native-material-ripple";
 import { DashboardTutorialModal } from "~/components/DashboardTutorialModal";
 import { Loading } from "~/components/Loading";
@@ -11,12 +8,18 @@ import { Tooltip } from "~/components/Tooltip";
 import { useDashboardTutorial } from "~/hooks/useDashboardTutorial";
 import { Feather } from "@expo/vector-icons";
 import { Link } from "expo-router";
+import { ActionList } from "~/components/ActionList";
 import { colors } from "@foundrymakes/tailwind-config";
+import { useQueryClient } from "@tanstack/react-query";
+import { usePullToRefresh } from "~/hooks/usePullToRefresh";
 
 export default function Dashboard() {
   const { user } = useUser();
-
   const { hasViewedDashboardTutorial } = useDashboardTutorial();
+  const queryClient = useQueryClient();
+  const { isRefreshing, onRefresh } = usePullToRefresh(() =>
+    queryClient.refetchQueries({ stale: true })
+  );
 
   if (!user) {
     return <Loading />;
@@ -62,39 +65,27 @@ export default function Dashboard() {
           </Link>
         </View>
       </View>
-      <Ripple
-        style={{ backgroundColor: "rgba(255, 255, 255, 0.05)" }}
-        className="flex justify-center items-center mt-6 border border-dashed border-white rounded-xl h-[140]"
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        refreshControl={
+          <RefreshControl
+            refreshing={isRefreshing}
+            onRefresh={onRefresh}
+            tintColor={colors["light-blue"]}
+          />
+        }
       >
-        <View className="flex flex-row items-center space-x-2">
-          <PlusCircle color={colors.white} size={32} />
-          <Text className="text-white font-normal">Add Goals</Text>
-        </View>
-      </Ripple>
-      <View className="px-10 flex-1 justify-center items-center">
-        <View className="flex justify-center items-center space-y-6">
-          <View>
-            <LottieView
-              autoPlay
-              style={{
-                width: 75,
-                height: 75,
-                backgroundColor: "transparent",
-              }}
-              source={animationData}
-              loop={false}
-            />
+        <Ripple
+          style={{ backgroundColor: "rgba(255, 255, 255, 0.05)" }}
+          className="flex justify-center items-center mt-6 border border-dashed border-white rounded-xl h-[140] mb-1"
+        >
+          <View className="flex flex-row items-center space-x-2">
+            <PlusCircle color={colors.white} size={32} />
+            <Text className="text-white font-normal">Add Goals</Text>
           </View>
-          <View>
-            <Text className="text-2xl text-white text-center">
-              Your Dashboard is empty
-            </Text>
-            <Text className="text-base text-white text-center">
-              Add contacts and your reminders will show up here.
-            </Text>
-          </View>
-        </View>
-      </View>
+        </Ripple>
+        <ActionList />
+      </ScrollView>
       {!hasViewedDashboardTutorial && <DashboardTutorialModal />}
     </>
   );

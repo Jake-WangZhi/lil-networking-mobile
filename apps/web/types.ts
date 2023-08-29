@@ -1,18 +1,3 @@
-export interface Action {
-  contactId: string;
-  contactFirstName: string;
-  contactLastName: string | null;
-  days: number;
-  description: string | null;
-  goalDays: number;
-  contactCreatedAt?: string;
-}
-
-export enum ActionType {
-  Past = "past",
-  Upcoming = "upcoming",
-}
-
 export interface Contact {
   id: string;
   firstName: string;
@@ -66,6 +51,7 @@ export interface GoalsArgs {
 }
 
 export enum SearchParams {
+  Type = "type",
   Email = "email",
   Name = "name",
   IsChanged = "is_changed",
