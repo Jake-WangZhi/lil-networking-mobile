@@ -8,6 +8,8 @@ import { AllCardsComplete } from "./AllCardsComplete";
 import { View } from "react-native";
 import { usePastActions } from "~/hooks/usePastActions";
 import { useUpcomingActions } from "~/hooks/useUpcomingActions";
+import { useFocusEffect } from "expo-router";
+import { useQueryClient } from "@tanstack/react-query";
 
 export const ActionList = () => {
   const {
@@ -25,6 +27,11 @@ export const ActionList = () => {
     isLoading: isContactsLoading,
     error: contactsError,
   } = useContacts();
+  const queryClient = useQueryClient();
+
+  useFocusEffect(() => {
+    void queryClient.refetchQueries({ stale: true });
+  });
 
   if (isContactsLoading || isPastLoading || isUpcomingLoading) {
     return <Loading />;
