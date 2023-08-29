@@ -37,7 +37,7 @@ export const UpcomingActions = ({ actions }: { actions: Action[] }) => {
             />
           )}
           keyExtractor={(item) => item.contactId}
-          showsVerticalScrollIndicator={false}
+          scrollEnabled={false}
         />
       </Collapsible>
     </>

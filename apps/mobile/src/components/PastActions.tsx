@@ -34,7 +34,7 @@ export const PastActions = ({ actions }: { actions: Action[] }) => {
             <ActionCard action={item} actionType={ActionTypeConstants.PAST} />
           )}
           keyExtractor={(item) => item.contactId}
-          showsVerticalScrollIndicator={false}
+          scrollEnabled={false}
         />
       </Collapsible>
     </>
