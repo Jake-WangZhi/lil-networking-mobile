@@ -14,6 +14,7 @@ import {
 } from "phosphor-react-native";
 import { colors } from "@foundrymakes/tailwind-config";
 import { Error } from "~/components/Error";
+import { ContactButton } from "~/components/ContactButton";
 
 export default function Profile() {
   const { contactId } = useLocalSearchParams<{ contactId: string }>();
@@ -76,95 +77,53 @@ export default function Profile() {
         <View className="space-y-2 mx-4">
           <Text className="text-white text-xl font-semibold">Connect</Text>
           <View className="flex-row justify-between">
-            <Ripple
-              className="space-y-1 items-center p-1"
+            <ContactButton
               disabled={!linkedInUrl}
               onPress={() => linkedInUrl && Linking.openURL(linkedInUrl)}
-            >
-              <View
-                className={`${
-                  linkedInUrl ? "bg-light-blue" : "bg-dark-grey"
-                } p-3 rounded-full items-center`}
-              >
+              icon={
                 <LinkedinLogo
                   size={24}
                   color={linkedInUrl ? colors["dark-blue"] : colors.disabled}
                 />
-              </View>
-              <Text
-                className={`${
-                  linkedInUrl ? "text-white" : "text-disabled"
-                } text-sm`}
-              >
-                LinkedIn
-              </Text>
-            </Ripple>
+              }
+              label="LinkedIn"
+            />
 
-            <Ripple
-              className="space-y-1 items-center p-1"
+            <ContactButton
               disabled={!email}
-              onPress={() => email && Linking.openURL(`mailto:${email}`)}
-            >
-              <View
-                className={`${
-                  email ? "bg-light-blue" : "bg-dark-grey"
-                } p-3 rounded-full items-center`}
-              >
+              onPress={() => email && Linking.openURL(email)}
+              icon={
                 <Envelope
                   size={24}
                   color={email ? colors["dark-blue"] : colors.disabled}
                 />
-              </View>
-              <Text
-                className={`${email ? "text-white" : "text-disabled"} text-sm`}
-              >
-                Email
-              </Text>
-            </Ripple>
+              }
+              label="Email"
+            />
 
-            <Ripple
-              className="space-y-1 items-center p-1"
+            <ContactButton
               disabled={!phone}
               onPress={() => phone && Linking.openURL(`sms:${phone}`)}
-            >
-              <View
-                className={`${
-                  phone ? "bg-light-blue" : "bg-dark-grey"
-                } p-3 rounded-full items-center`}
-              >
+              icon={
                 <ChatCircle
                   size={24}
                   color={phone ? colors["dark-blue"] : colors.disabled}
                 />
-              </View>
-              <Text
-                className={`${phone ? "text-white" : "text-disabled"} text-sm`}
-              >
-                Message
-              </Text>
-            </Ripple>
+              }
+              label="Message"
+            />
 
-            <Ripple
-              className="space-y-1 items-center p-1"
+            <ContactButton
               disabled={!phone}
               onPress={() => phone && Linking.openURL(`tel:${phone}`)}
-            >
-              <View
-                className={`${
-                  phone ? "bg-light-blue" : "bg-dark-grey"
-                } p-3 rounded-full items-center`}
-              >
+              icon={
                 <Phone
                   size={24}
                   color={phone ? colors["dark-blue"] : colors.disabled}
                 />
-              </View>
-              <Text
-                className={`${phone ? "text-white" : "text-disabled"} text-sm`}
-              >
-                Phone
-              </Text>
-            </Ripple>
+              }
+              label="Phone"
+            />
           </View>
         </View>
 
