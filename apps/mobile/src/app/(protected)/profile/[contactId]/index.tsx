@@ -14,11 +14,10 @@ import {
 } from "phosphor-react-native";
 import { colors } from "@foundrymakes/tailwind-config";
 import { Error } from "~/components/Error";
-import { formatUrl } from "~/utils/formatUrl";
 
 export default function Profile() {
   const { contactId } = useLocalSearchParams<{ contactId: string }>();
-  const { data: contact, isLoading, error } = useContact(contactId ?? "");
+  const { data: contact, isLoading, error } = useContact(contactId);
 
   if (isLoading) {
     return <Loading />;
@@ -69,7 +68,7 @@ export default function Profile() {
             >
               <Link size={16} color={colors["light-blue"]} />
               <Text className="text-light-blue text-base">
-                {formatUrl(link)}
+                {new URL(link).hostname}
               </Text>
             </Ripple>
           ))}

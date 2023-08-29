@@ -8,7 +8,7 @@ const EXPO_PUBLIC_API_BASE_URL = process.env.EXPO_PUBLIC_API_BASE_URL;
 if (!EXPO_PUBLIC_API_BASE_URL)
   throw new Error("Missing EXPO_PUBLIC_API_BASE_URL");
 
-export const useContact = (id: string) => {
+export const useContact = (id?: string) => {
   const { getToken } = useAuth();
 
   return useQuery({
@@ -27,5 +27,6 @@ export const useContact = (id: string) => {
 
       return contactSchema.parse(await response.json());
     },
+    enabled: !!id,
   });
 };
