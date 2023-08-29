@@ -9,33 +9,28 @@ import { View } from "react-native";
 import { usePastActions } from "~/hooks/usePastActions";
 import { useUpcomingActions } from "~/hooks/useUpcomingActions";
 import { useFocusEffect } from "expo-router";
+import { useQueryClient } from "@tanstack/react-query";
 
 export const ActionList = () => {
   const {
     data: pastActions,
     isLoading: isPastLoading,
     error: pastError,
-    refetch: refetchPast,
   } = usePastActions();
   const {
     data: upcomingActions,
     isLoading: isUpcomingLoading,
     error: upcomingError,
-    refetch: refetchUpcoming,
   } = useUpcomingActions();
   const {
     data: contacts,
     isLoading: isContactsLoading,
     error: contactsError,
-    refetch: refetchContacts,
   } = useContacts();
+  const queryClient = useQueryClient();
 
   useFocusEffect(() => {
-    const refetchData = async () => {
-      await Promise.all([refetchPast(), refetchUpcoming(), refetchContacts()]);
-    };
-
-    void refetchData();
+    void queryClient.refetchQueries({ stale: true });
   });
 
   if (isContactsLoading || isPastLoading || isUpcomingLoading) {
