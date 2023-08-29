@@ -57,13 +57,12 @@ const parseActions = (
 ) => {
   const actions: Action[] = [];
 
-  const contactIndex: Record<string, Contact> = {};
-  contacts.forEach((contact) => {
-    contactIndex[contact.id] = contact;
-  });
+  const contactsMap = new Map<string, Contact>();
+
+  contacts.forEach((contact) => contactsMap.set(contact.id, contact));
 
   for (const activity of activities) {
-    const contact = contactIndex[activity.contactId];
+    const contact = contactsMap.get(activity.contactId);
 
     if (contact) {
       const days = differenceInDays(new Date(), activity.date);
@@ -73,12 +72,15 @@ const parseActions = (
       const pastDueThreshold = isSystemActivity ? 0 : goalDays;
       const upcomingThreshold = pastDueThreshold + DAYS_BEFORE_PAST_DUE;
 
-      if (
-        (type === ActionType.PAST && days > upcomingThreshold) ||
-        (type === ActionType.UPCOMING &&
-          pastDueThreshold <= days &&
-          days <= upcomingThreshold)
-      ) {
+      const isPastDue = type === ActionType.PAST && days > upcomingThreshold;
+      const isUpcoming =
+        type === ActionType.UPCOMING &&
+        pastDueThreshold <= days &&
+        days <= upcomingThreshold;
+
+      const shouldIncludeAction = isPastDue || isUpcoming;
+
+      if (shouldIncludeAction) {
         actions.push({
           contactFirstName: contact.firstName,
           contactLastName: contact.lastName,
