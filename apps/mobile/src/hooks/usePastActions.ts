@@ -1,5 +1,5 @@
 import { useAuth } from "@clerk/clerk-expo";
-import { ActionArraySchema, ActionType } from "@foundrymakes/validation";
+import { actionArraySchema, ActionType } from "@foundrymakes/validation";
 import { useQuery } from "@tanstack/react-query";
 
 const EXPO_PUBLIC_API_BASE_URL = process.env.EXPO_PUBLIC_API_BASE_URL;
@@ -36,7 +36,7 @@ export const usePastActions = () => {
         throw new Error("Network response was not ok");
       }
 
-      return ActionArraySchema.parse(await response.json());
+      return actionArraySchema.parse(await response.json());
     },
   });
 };

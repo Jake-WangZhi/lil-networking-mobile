@@ -4,7 +4,7 @@ import type { Activity, Contact } from "@prisma/client";
 import { ActivityType, SearchParams } from "~/types";
 import { differenceInDays } from "date-fns";
 import { currentUser } from "@clerk/nextjs";
-import { ActionTypeSchema } from "@foundrymakes/validation";
+import { actionTypeSchema } from "@foundrymakes/validation";
 import type { Action } from "@foundrymakes/validation";
 import { ActionType } from "@foundrymakes/validation";
 
@@ -43,7 +43,7 @@ export async function GET(request: Request) {
 
   const { searchParams } = new URL(request.url);
   const type = searchParams.get(SearchParams.Type);
-  const parsedType = ActionTypeSchema.parse(type);
+  const parsedType = actionTypeSchema.parse(type);
 
   const actions = parseActions(contacts, activities, parsedType);
 

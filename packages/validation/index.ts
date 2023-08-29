@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const CreateContactPayloadSchema = z.object({
+export const createContactPayloadSchema = z.object({
   firstName: z.string(),
   lastName: z.string().optional(),
   title: z.string().optional(),
@@ -14,7 +14,7 @@ export const CreateContactPayloadSchema = z.object({
   tags: z.array(z.string()),
 });
 
-export const ActionSchema = z.object({
+export const actionSchema = z.object({
   contactId: z.string(),
   contactFirstName: z.string(),
   contactLastName: z.string().nullable(),
@@ -24,9 +24,9 @@ export const ActionSchema = z.object({
   isNewUser: z.boolean(),
 });
 
-export const ActionArraySchema = z.array(ActionSchema);
+export const actionArraySchema = z.array(actionSchema);
 
-export type Action = z.infer<typeof ActionSchema>;
+export type Action = z.infer<typeof actionSchema>;
 
 export const ActionType = {
   UPCOMING: "upcoming",
@@ -35,9 +35,9 @@ export const ActionType = {
 
 export type ActionType = (typeof ActionType)[keyof typeof ActionType];
 
-export const ActionTypeSchema = z.nativeEnum(ActionType);
+export const actionTypeSchema = z.nativeEnum(ActionType);
 
-export const ContactArraySchema = z.array(
+export const contactArraySchema = z.array(
   z.object({
     id: z.string(),
     firstName: z.string(),

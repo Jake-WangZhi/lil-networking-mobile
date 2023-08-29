@@ -1,5 +1,5 @@
 import { useAuth } from "@clerk/clerk-expo";
-import { ContactArraySchema } from "@foundrymakes/validation";
+import { contactArraySchema } from "@foundrymakes/validation";
 import { useQuery } from "@tanstack/react-query";
 
 const EXPO_PUBLIC_API_BASE_URL = process.env.EXPO_PUBLIC_API_BASE_URL;
@@ -33,7 +33,7 @@ export const useContacts = () => {
         throw new Error("Network response was not ok");
       }
 
-      return ContactArraySchema.parse(await response.json());
+      return contactArraySchema.parse(await response.json());
     },
   });
 };
