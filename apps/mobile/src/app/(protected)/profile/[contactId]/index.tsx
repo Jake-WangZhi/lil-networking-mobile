@@ -77,14 +77,14 @@ export default function Profile() {
           <Text className="text-white text-xl font-semibold">Connect</Text>
           <View className="flex-row justify-between">
             <Ripple
-              className="space-y-1 items-center"
+              className="space-y-1 items-center p-1"
               disabled={!linkedInUrl}
               onPress={() => linkedInUrl && Linking.openURL(linkedInUrl)}
             >
               <View
                 className={`${
                   linkedInUrl ? "bg-light-blue" : "bg-dark-grey"
-                } p-4 rounded-full items-center`}
+                } p-3 rounded-full items-center`}
               >
                 <LinkedinLogo
                   size={24}
@@ -101,14 +101,14 @@ export default function Profile() {
             </Ripple>
 
             <Ripple
-              className="space-y-1 items-center"
+              className="space-y-1 items-center p-1"
               disabled={!email}
               onPress={() => email && Linking.openURL(`mailto:${email}`)}
             >
               <View
                 className={`${
                   email ? "bg-light-blue" : "bg-dark-grey"
-                } p-4 rounded-full items-center`}
+                } p-3 rounded-full items-center`}
               >
                 <Envelope
                   size={24}
@@ -123,14 +123,14 @@ export default function Profile() {
             </Ripple>
 
             <Ripple
-              className="space-y-1 items-center"
+              className="space-y-1 items-center p-1"
               disabled={!phone}
               onPress={() => phone && Linking.openURL(`sms:${phone}`)}
             >
               <View
                 className={`${
                   phone ? "bg-light-blue" : "bg-dark-grey"
-                } p-4 rounded-full items-center`}
+                } p-3 rounded-full items-center`}
               >
                 <ChatCircle
                   size={24}
@@ -145,14 +145,14 @@ export default function Profile() {
             </Ripple>
 
             <Ripple
-              className="space-y-1 items-center"
+              className="space-y-1 items-center p-1"
               disabled={!phone}
               onPress={() => phone && Linking.openURL(`tel:${phone}`)}
             >
               <View
                 className={`${
                   phone ? "bg-light-blue" : "bg-dark-grey"
-                } p-4 rounded-full items-center`}
+                } p-3 rounded-full items-center`}
               >
                 <Phone
                   size={24}
