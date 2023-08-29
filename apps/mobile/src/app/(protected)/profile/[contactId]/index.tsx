@@ -6,7 +6,7 @@ import { useContact } from "~/hooks/useContact";
 import { Loading } from "~/components/Loading";
 import {
   X,
-  Link,
+  Link as LinkIcon,
   LinkedinLogo,
   Envelope,
   ChatCircle,
@@ -14,7 +14,6 @@ import {
 } from "phosphor-react-native";
 import { colors } from "@foundrymakes/tailwind-config";
 import { Error } from "~/components/Error";
-import { formatUrl } from "~/utils/formatUrl";
 import { useTutorial } from "~/hooks/useTutorial";
 import { ProfileTutorialModal } from "~/components/ProfileTutorialModal";
 
@@ -71,9 +70,9 @@ export default function Profile() {
                 onPress={() => Linking.openURL(link)}
                 className="flex-row items-center space-x-2"
               >
-                <Link size={16} color={colors["light-blue"]} />
+                <LinkIcon size={16} color={colors["light-blue"]} />
                 <Text className="text-light-blue text-base">
-                  {formatUrl(link)}
+                  {new URL(link).hostname}
                 </Text>
               </Ripple>
             ))}
@@ -83,7 +82,7 @@ export default function Profile() {
             <View className="flex-row justify-between">
               <Ripple
                 className="space-y-1 items-center"
-                disabled={linkedInUrl ? false : true}
+                disabled={!linkedInUrl}
                 onPress={() => linkedInUrl && Linking.openURL(linkedInUrl)}
               >
                 <View
@@ -93,19 +92,21 @@ export default function Profile() {
                 >
                   <LinkedinLogo
                     size={24}
-                    color={
-                      linkedInUrl
-                        ? colors["dark-blue"]
-                        : colors["supporting-text"]
-                    }
+                    color={linkedInUrl ? colors["dark-blue"] : colors.disabled}
                   />
                 </View>
-                <Text className="text-white text-sm">LinkedIn</Text>
+                <Text
+                  className={`${
+                    linkedInUrl ? "text-white" : "text-disabled"
+                  } text-sm`}
+                >
+                  LinkedIn
+                </Text>
               </Ripple>
 
               <Ripple
                 className="space-y-1 items-center"
-                disabled={email ? false : true}
+                disabled={!email}
                 onPress={() => email && Linking.openURL(`mailto:${email}`)}
               >
                 <View
@@ -115,17 +116,21 @@ export default function Profile() {
                 >
                   <Envelope
                     size={24}
-                    color={
-                      email ? colors["dark-blue"] : colors["supporting-text"]
-                    }
+                    color={email ? colors["dark-blue"] : colors.disabled}
                   />
                 </View>
-                <Text className="text-white text-sm">Email</Text>
+                <Text
+                  className={`${
+                    email ? "text-white" : "text-disabled"
+                  } text-sm`}
+                >
+                  Email
+                </Text>
               </Ripple>
 
               <Ripple
                 className="space-y-1 items-center"
-                disabled={phone ? false : true}
+                disabled={!phone}
                 onPress={() => phone && Linking.openURL(`sms:${phone}`)}
               >
                 <View
@@ -135,17 +140,21 @@ export default function Profile() {
                 >
                   <ChatCircle
                     size={24}
-                    color={
-                      phone ? colors["dark-blue"] : colors["supporting-text"]
-                    }
+                    color={phone ? colors["dark-blue"] : colors.disabled}
                   />
                 </View>
-                <Text className="text-white text-sm">Message</Text>
+                <Text
+                  className={`${
+                    phone ? "text-white" : "text-disabled"
+                  } text-sm`}
+                >
+                  Message
+                </Text>
               </Ripple>
 
               <Ripple
                 className="space-y-1 items-center"
-                disabled={phone ? false : true}
+                disabled={!phone}
                 onPress={() => phone && Linking.openURL(`tel:${phone}`)}
               >
                 <View
@@ -155,15 +164,20 @@ export default function Profile() {
                 >
                   <Phone
                     size={24}
-                    color={
-                      phone ? colors["dark-blue"] : colors["supporting-text"]
-                    }
+                    color={phone ? colors["dark-blue"] : colors.disabled}
                   />
                 </View>
-                <Text className="text-white text-sm">Phone</Text>
+                <Text
+                  className={`${
+                    phone ? "text-white" : "text-disabled"
+                  } text-sm`}
+                >
+                  Phone
+                </Text>
               </Ripple>
             </View>
           </View>
+
           <View className="space-y-3">
             <Text className="text-white text-xl font-semibold mx-4">Tags</Text>
             <FlatList
