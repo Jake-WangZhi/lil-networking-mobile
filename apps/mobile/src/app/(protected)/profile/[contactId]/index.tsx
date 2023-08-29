@@ -88,14 +88,16 @@ export default function Profile() {
               >
                 <LinkedinLogo
                   size={24}
-                  color={
-                    linkedInUrl
-                      ? colors["dark-blue"]
-                      : colors["supporting-text"]
-                  }
+                  color={linkedInUrl ? colors["dark-blue"] : colors.disabled}
                 />
               </View>
-              <Text className="text-white text-sm">LinkedIn</Text>
+              <Text
+                className={`${
+                  linkedInUrl ? "text-white" : "text-disabled"
+                } text-sm`}
+              >
+                LinkedIn
+              </Text>
             </Ripple>
 
             <Ripple
@@ -110,12 +112,14 @@ export default function Profile() {
               >
                 <Envelope
                   size={24}
-                  color={
-                    email ? colors["dark-blue"] : colors["supporting-text"]
-                  }
+                  color={email ? colors["dark-blue"] : colors.disabled}
                 />
               </View>
-              <Text className="text-white text-sm">Email</Text>
+              <Text
+                className={`${email ? "text-white" : "text-disabled"} text-sm`}
+              >
+                Email
+              </Text>
             </Ripple>
 
             <Ripple
@@ -130,12 +134,14 @@ export default function Profile() {
               >
                 <ChatCircle
                   size={24}
-                  color={
-                    phone ? colors["dark-blue"] : colors["supporting-text"]
-                  }
+                  color={phone ? colors["dark-blue"] : colors.disabled}
                 />
               </View>
-              <Text className="text-white text-sm">Message</Text>
+              <Text
+                className={`${phone ? "text-white" : "text-disabled"} text-sm`}
+              >
+                Message
+              </Text>
             </Ripple>
 
             <Ripple
@@ -150,12 +156,14 @@ export default function Profile() {
               >
                 <Phone
                   size={24}
-                  color={
-                    phone ? colors["dark-blue"] : colors["supporting-text"]
-                  }
+                  color={phone ? colors["dark-blue"] : colors.disabled}
                 />
               </View>
-              <Text className="text-white text-sm">Phone</Text>
+              <Text
+                className={`${phone ? "text-white" : "text-disabled"} text-sm`}
+              >
+                Phone
+              </Text>
             </Ripple>
           </View>
         </View>
