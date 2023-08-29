@@ -1,21 +1,30 @@
-import empty_state_icon from "~/images/empty_state.png";
+import animationData from "~/lottie/add-and-save.json";
 
-import { View, Image, Text } from "react-native";
+import { View, Text } from "react-native";
+import LottieView from "lottie-react-native";
 
 export const EmptyDashboard = () => {
   return (
-    <View className="px-10 flex-1 justify-center items-center">
+    <View className="px-10 mt-24">
       <View className="flex justify-center items-center space-y-6">
-        <Image
-          source={empty_state_icon}
-          alt="empty_state"
-          className="w-[82] h-[126]"
-        />
+        <View>
+          <LottieView
+            autoPlay
+            style={{
+              width: 75,
+              height: 75,
+              backgroundColor: "transparent",
+            }}
+            source={animationData}
+            loop={false}
+          />
+        </View>
         <View className="space-y-4">
-          <Text className="text-2xl text-white text-center">You Rock!</Text>
+          <Text className="text-2xl text-white text-center">
+            Your Dashboard is empty
+          </Text>
           <Text className="text-base text-white text-center">
-            Have you met anyone new? Add more contacts and continue growing your
-            network.
+            Add contacts and your reminders will show up here.
           </Text>
         </View>
       </View>

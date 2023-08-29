@@ -1,13 +1,13 @@
 import { useActions } from "~/hooks/useActions";
 import { Loading } from "./Loading";
-import { View } from "react-native";
 import { PastActions } from "./PastActions";
 import { UpcomingActions } from "./UpcomingActions";
 import { useContacts } from "~/hooks/useContacts";
 import { ActionTypeConstants } from "@foundrymakes/validation";
-import { NewDashboard } from "./NewDashboard";
 import { EmptyDashboard } from "./EmptyDashboard";
 import { Error } from "./Error";
+import { AllCardsComplete } from "./AllCardsComplete";
+import { View } from "react-native";
 
 export const ActionList = () => {
   const {
@@ -35,10 +35,10 @@ export const ActionList = () => {
 
   if (!contacts || !pastActions || !upcomingActions) return null;
 
-  if (!contacts.length) return <NewDashboard />;
+  if (!contacts.length) return <EmptyDashboard />;
 
   if (!(pastActions.length || upcomingActions.length))
-    return <EmptyDashboard />;
+    return <AllCardsComplete />;
 
   return (
     <View>
