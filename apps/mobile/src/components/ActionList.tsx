@@ -8,23 +8,37 @@ import { AllCardsComplete } from "./AllCardsComplete";
 import { View } from "react-native";
 import { usePastActions } from "~/hooks/usePastActions";
 import { useUpcomingActions } from "~/hooks/useUpcomingActions";
+import { useFocusEffect } from "expo-router";
 
 export const ActionList = () => {
   const {
     data: pastActions,
     isLoading: isPastLoading,
     error: pastError,
+    refetch: refetchPast,
   } = usePastActions();
   const {
     data: upcomingActions,
     isLoading: isUpcomingLoading,
     error: upcomingError,
+    refetch: refetchUpcoming,
   } = useUpcomingActions();
   const {
     data: contacts,
     isLoading: isContactsLoading,
     error: contactsError,
+    refetch: refetchContacts,
   } = useContacts();
+
+  useFocusEffect(() => {
+    const fetchData = async () => {
+      await refetchPast();
+      await refetchUpcoming();
+      await refetchContacts();
+    };
+
+    void fetchData();
+  });
 
   if (isContactsLoading || isPastLoading || isUpcomingLoading) {
     return <Loading />;
