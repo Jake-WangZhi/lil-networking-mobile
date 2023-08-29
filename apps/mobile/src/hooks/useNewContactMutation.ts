@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { useAuth } from "@clerk/clerk-expo";
-import { createContactPayloadSchema } from "@foundrymakes/validation";
+import { CreateContactPayloadSchema } from "@foundrymakes/validation";
 
 const EXPO_PUBLIC_API_BASE_URL = process.env.EXPO_PUBLIC_API_BASE_URL;
 
@@ -29,7 +29,7 @@ export const useNewContactMutation = () => {
         {
           headers: await headers(),
           body: JSON.stringify(
-            createContactPayloadSchema.parse(contactPayload)
+            CreateContactPayloadSchema.parse(contactPayload)
           ),
           method: "POST",
         }

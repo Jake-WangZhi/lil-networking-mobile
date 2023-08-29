@@ -1,6 +1,5 @@
 import { useAuth } from "@clerk/clerk-expo";
-import type { ActionType } from "@foundrymakes/validation";
-import { ActionArraySchema } from "@foundrymakes/validation";
+import { ContactArraySchema } from "@foundrymakes/validation";
 import { useQuery } from "@tanstack/react-query";
 
 const EXPO_PUBLIC_API_BASE_URL = process.env.EXPO_PUBLIC_API_BASE_URL;
@@ -8,7 +7,7 @@ const EXPO_PUBLIC_API_BASE_URL = process.env.EXPO_PUBLIC_API_BASE_URL;
 if (!EXPO_PUBLIC_API_BASE_URL)
   throw new Error("Missing EXPO_PUBLIC_API_BASE_URL");
 
-export const useActions = (type: ActionType) => {
+export const useContacts = () => {
   const { getToken } = useAuth();
 
   async function headers() {
@@ -24,20 +23,17 @@ export const useActions = (type: ActionType) => {
   }
 
   return useQuery({
-    queryKey: ["actions", type],
+    queryKey: ["contacts"],
     queryFn: async () => {
-      const response = await fetch(
-        `${EXPO_PUBLIC_API_BASE_URL}/api/actions?type=${type}`,
-        {
-          headers: await headers(),
-        }
-      );
+      const response = await fetch(`${EXPO_PUBLIC_API_BASE_URL}/api/contacts`, {
+        headers: await headers(),
+      });
 
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
 
-      return ActionArraySchema.parse(await response.json());
+      return ContactArraySchema.parse(await response.json());
     },
   });
 };

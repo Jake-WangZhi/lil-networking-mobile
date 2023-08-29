@@ -1,14 +1,18 @@
 import { NextResponse } from "next/server";
 import prisma from "~/lib/prisma";
 import type { Activity, Contact } from "@prisma/client";
-import { ActivityType } from "~/types";
+import { ActivityType, SearchParams } from "~/types";
 import { differenceInDays } from "date-fns";
 import { currentUser } from "@clerk/nextjs";
-import type { Action } from "@foundrymakes/validation";
+import {
+  ActionTypeConstants,
+  ActionTypeSchema,
+} from "@foundrymakes/validation";
+import type { Action, ActionType } from "@foundrymakes/validation";
 
 const DAYS_BEFORE_PAST_DUE = 10;
 
-export async function GET() {
+export async function GET(request: Request) {
   const user = await currentUser();
 
   if (!user)
@@ -39,14 +43,21 @@ export async function GET() {
     distinct: ["contactId"],
   });
 
-  const actions = parseActions(contacts, activities);
+  const { searchParams } = new URL(request.url);
+  const type = searchParams.get(SearchParams.Type);
+  const parsedType = ActionTypeSchema.parse(type);
 
-  return NextResponse.json({ ...actions, hasContacts: !!contacts.length });
+  const actions = parseActions(contacts, activities, parsedType);
+
+  return NextResponse.json(actions);
 }
 
-const parseActions = (contacts: Contact[], activities: Activity[]) => {
-  const pastActions: Action[] = [];
-  const upcomingActions: Action[] = [];
+const parseActions = (
+  contacts: Contact[],
+  activities: Activity[],
+  type: ActionType
+) => {
+  const actions: Action[] = [];
 
   const contactIndex: Record<string, Contact> = {};
   contacts.forEach((contact) => {
@@ -61,26 +72,27 @@ const parseActions = (contacts: Contact[], activities: Activity[]) => {
       const goalDays = contact.goalDays;
       const isSystemActivity = activity.type === ActivityType.SYSTEM;
 
-      const action = {
-        contactFirstName: contact.firstName,
-        contactLastName: contact.lastName,
-        contactId: contact.id,
-        days,
-        goalDays,
-        title: contact.title,
-        isNewUser: isSystemActivity,
-      };
-
       const pastDueThreshold = isSystemActivity ? 0 : goalDays;
       const upcomingThreshold = pastDueThreshold + DAYS_BEFORE_PAST_DUE;
 
-      if (days > upcomingThreshold) {
-        pastActions.push(action);
-      } else if (pastDueThreshold <= days && days <= upcomingThreshold) {
-        upcomingActions.push(action);
+      if (
+        (type === ActionTypeConstants.PAST && days > upcomingThreshold) ||
+        (type === ActionTypeConstants.UPCOMING &&
+          pastDueThreshold <= days &&
+          days <= upcomingThreshold)
+      ) {
+        actions.push({
+          contactFirstName: contact.firstName,
+          contactLastName: contact.lastName,
+          contactId: contact.id,
+          days,
+          goalDays,
+          title: contact.title,
+          isNewUser: isSystemActivity,
+        });
       }
     }
   }
 
-  return { pastActions, upcomingActions };
+  return actions;
 };

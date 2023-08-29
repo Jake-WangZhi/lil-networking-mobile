@@ -1,7 +1,7 @@
 import { currentUser } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
 import prisma from "~/lib/prisma";
-import { createContactPayloadSchema } from "@foundrymakes/validation";
+import { CreateContactPayloadSchema } from "@foundrymakes/validation";
 
 export async function POST(request: Request) {
   const user = await currentUser();
@@ -9,7 +9,7 @@ export async function POST(request: Request) {
   if (!user)
     return NextResponse.json({ error: "User Not Found" }, { status: 404 });
 
-  const data = createContactPayloadSchema.parse(await request.json());
+  const data = CreateContactPayloadSchema.parse(await request.json());
 
   const newContact = await prisma.contact.create({
     data: {
