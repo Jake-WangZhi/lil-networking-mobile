@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import prisma from "~/lib/prisma";
-import type { Activity, Contact, Prisma } from "@prisma/client";
+import type { Prisma } from "@prisma/client";
 import { SearchParams } from "~/types";
 import { currentUser } from "@clerk/nextjs";
 
@@ -14,51 +14,8 @@ export async function GET(request: Request) {
 
   const contacts = await getContacts(name, user.id);
 
-  const contactIds = contacts.map((c) => c.id);
-
-  const activities = await prisma.activity.findMany({
-    where: {
-      contactId: { in: contactIds },
-    },
-    orderBy: [
-      { type: "asc" },
-      {
-        date: "desc",
-      },
-      {
-        createdAt: "desc",
-      },
-    ],
-    distinct: ["contactId"],
-  });
-
-  const parsedContacts = parseContacts(contacts, activities);
-
-  return NextResponse.json(parsedContacts);
+  return NextResponse.json(contacts);
 }
-
-const parseContacts = (contacts: Contact[], activities: Activity[]) => {
-  const parsedContacts = contacts.map((contact) => {
-    return {
-      id: contact.id,
-      firstName: contact.firstName,
-      lastName: contact.lastName,
-      title: contact.title,
-      company: contact.company,
-      goalDays: contact.goalDays,
-      email: contact.email,
-      phone: contact.phone,
-      links: contact.links,
-      tags: contact.tags,
-      activities: activities.filter(
-        (activity) => activity.contactId === contact.id
-      ),
-      isArchived: contact.isArchived,
-    };
-  });
-
-  return parsedContacts;
-};
 
 const getContacts = async (name: string | null, userId: string) => {
   let whereClause: Prisma.ContactWhereInput = {
@@ -95,6 +52,14 @@ const getContacts = async (name: string | null, userId: string) => {
         lastName: "asc",
       },
     ],
+    select: {
+      id: true,
+      firstName: true,
+      lastName: true,
+      title: true,
+      tags: true,
+      isArchived: true,
+    },
   });
 
   return contacts;

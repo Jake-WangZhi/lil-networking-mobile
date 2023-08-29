@@ -1,5 +1,5 @@
 import { useUser } from "@clerk/clerk-expo";
-import { View, Text } from "react-native";
+import { View, Text, ScrollView } from "react-native";
 import { PlusCircle } from "phosphor-react-native";
 import Ripple from "react-native-material-ripple";
 import { DashboardTutorialModal } from "~/components/DashboardTutorialModal";
@@ -59,16 +59,18 @@ export default function Dashboard() {
           </Link>
         </View>
       </View>
-      <Ripple
-        style={{ backgroundColor: "rgba(255, 255, 255, 0.05)" }}
-        className="flex justify-center items-center mt-6 border border-dashed border-white rounded-xl h-[140] mb-1"
-      >
-        <View className="flex flex-row items-center space-x-2">
-          <PlusCircle color={colors.white} size={32} />
-          <Text className="text-white font-normal">Add Goals</Text>
-        </View>
-      </Ripple>
-      <ActionList />
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <Ripple
+          style={{ backgroundColor: "rgba(255, 255, 255, 0.05)" }}
+          className="flex justify-center items-center mt-6 border border-dashed border-white rounded-xl h-[140] mb-1"
+        >
+          <View className="flex flex-row items-center space-x-2">
+            <PlusCircle color={colors.white} size={32} />
+            <Text className="text-white font-normal">Add Goals</Text>
+          </View>
+        </Ripple>
+        <ActionList />
+      </ScrollView>
       {!hasViewedDashboardTutorial && <DashboardTutorialModal />}
     </>
   );

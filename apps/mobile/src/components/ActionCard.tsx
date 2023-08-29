@@ -1,9 +1,9 @@
 import Ripple from "react-native-material-ripple";
-import type { Action } from "~/types";
-import { ActionType } from "~/types";
 import { Text, View } from "react-native";
 import { CalendarBlank } from "phosphor-react-native";
 import { Link } from "expo-router";
+import { ActionType } from "@foundrymakes/validation";
+import type { Action } from "@foundrymakes/validation";
 
 interface Props {
   action: Action;
@@ -32,7 +32,7 @@ export const ActionCard = ({ action, actionType }: Props) => {
             {isNewUser && (
               <Text
                 className={`${
-                  actionType === ActionType.Past
+                  actionType === ActionType.PAST
                     ? "text-magenta"
                     : "text-light-yellow"
                 } text-sm font-semibold`}
@@ -52,7 +52,7 @@ export const ActionCard = ({ action, actionType }: Props) => {
               {goalDays} days •{" "}
               <Text
                 className={`${
-                  actionType === ActionType.Past
+                  actionType === ActionType.PAST
                     ? "text-magenta"
                     : "text-light-yellow"
                 }`}

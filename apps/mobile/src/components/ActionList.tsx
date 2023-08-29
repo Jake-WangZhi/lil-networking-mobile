@@ -1,170 +1,49 @@
-import animationData from "~/lottie/add-and-save.json";
-import empty_state_icon from "~/images/empty_state.png";
-
-import LottieView from "lottie-react-native";
-import { useActions } from "~/hooks/useActions";
 import { Loading } from "./Loading";
-import { View, Text, ScrollView, Image } from "react-native";
-import Collapsible from "react-native-collapsible";
-import { useEffect, useState } from "react";
-import Ripple from "react-native-material-ripple";
-import { CaretUp, CaretDown } from "phosphor-react-native";
-import { ActionCard } from "./ActionCard";
-import { ActionType } from "~/types";
-import { Error } from "~/components/Error";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { PastActions } from "./PastActions";
+import { UpcomingActions } from "./UpcomingActions";
+import { useContacts } from "~/hooks/useContacts";
+import { EmptyDashboard } from "./EmptyDashboard";
+import { Error } from "./Error";
+import { AllCardsComplete } from "./AllCardsComplete";
+import { View } from "react-native";
+import { usePastActions } from "~/hooks/usePastActions";
+import { useUpcomingActions } from "~/hooks/useUpcomingActions";
 
 export const ActionList = () => {
-  const { data: actions, isLoading, error } = useActions();
-  const [isPriorityCollapsed, setIsPriorityCollapsed] = useState(false);
-  const [isUpcomingCollapsed, setIsUpcomingCollapsed] = useState(false);
+  const {
+    data: pastActions,
+    isLoading: isPastLoading,
+    error: pastError,
+  } = usePastActions();
+  const {
+    data: upcomingActions,
+    isLoading: isUpcomingLoading,
+    error: upcomingError,
+  } = useUpcomingActions();
+  const {
+    data: contacts,
+    isLoading: isContactsLoading,
+    error: contactsError,
+  } = useContacts();
 
-  const loadPriorityCollapseSetting = async () => {
-    try {
-      const value = await AsyncStorage.getItem("@isPriorityCollapsed");
-      setIsPriorityCollapsed(value === "true");
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  };
-
-  const loadUpcomingCollapseSetting = async () => {
-    try {
-      const value = await AsyncStorage.getItem("@isUpcomingCollapsed");
-      setIsUpcomingCollapsed(value === "true");
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  };
-
-  useEffect(() => {
-    void loadPriorityCollapseSetting();
-    void loadUpcomingCollapseSetting();
-  }, []);
-
-  if (isLoading) {
+  if (isContactsLoading || isPastLoading || isUpcomingLoading) {
     return <Loading />;
   }
 
-  if (error) {
-    return <Error error={error} />;
-  }
+  if (contactsError || pastError || upcomingError)
+    return <Error error={contactsError || pastError || upcomingError} />;
 
-  if (!actions) {
-    return null;
-  }
+  if (!contacts || !pastActions || !upcomingActions) return null;
 
-  const { pastActions, upcomingActions, hasContacts } = actions;
+  if (!contacts.length) return <EmptyDashboard />;
 
-  if (!hasContacts) {
-    return (
-      <View className="px-10 flex-1 justify-center items-center">
-        <View className="flex justify-center items-center space-y-6">
-          <View>
-            <LottieView
-              autoPlay
-              style={{
-                width: 75,
-                height: 75,
-                backgroundColor: "transparent",
-              }}
-              source={animationData}
-              loop={false}
-            />
-          </View>
-          <View className="space-y-4">
-            <Text className="text-2xl text-white text-center">
-              Your Dashboard is empty
-            </Text>
-            <Text className="text-base text-white text-center">
-              Add contacts and your reminders will show up here.
-            </Text>
-          </View>
-        </View>
-      </View>
-    );
-  }
-
-  if (pastActions.length === 0 && upcomingActions.length === 0)
-    return (
-      <View className="px-10 flex-1 justify-center items-center">
-        <View className="flex justify-center items-center space-y-6">
-          <Image
-            source={empty_state_icon}
-            alt="empty_state"
-            className="w-[82] h-[126]"
-          />
-          <View className="space-y-4">
-            <Text className="text-2xl text-white text-center">You Rock!</Text>
-            <Text className="text-base text-white text-center">
-              Have you met anyone new? Add more contacts and continue growing
-              your network.
-            </Text>
-          </View>
-        </View>
-      </View>
-    );
+  if (!(pastActions.length || upcomingActions.length))
+    return <AllCardsComplete />;
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
-      <Ripple
-        onPress={async () => {
-          await AsyncStorage.setItem(
-            "@isPriorityCollapsed",
-            `${!isPriorityCollapsed}`
-          );
-          setIsPriorityCollapsed((prev) => !prev);
-        }}
-        className="py-3 mt-3 flex-row justify-between items-center"
-      >
-        <View className="flex-row items-center space-x-2">
-          <View className="bg-magenta w-1 h-4"></View>
-          <Text className="text-white text-xl font-semibold">{`Priority (${pastActions.length})`}</Text>
-        </View>
-        {isPriorityCollapsed ? (
-          <CaretDown size={24} color="white" />
-        ) : (
-          <CaretUp size={24} color="white" />
-        )}
-      </Ripple>
-      <Collapsible collapsed={isPriorityCollapsed}>
-        {pastActions.map((action, index) => (
-          <ActionCard
-            key={index}
-            action={action}
-            actionType={ActionType.Past}
-          />
-        ))}
-      </Collapsible>
-      <Ripple
-        onPress={async () => {
-          await AsyncStorage.setItem(
-            "@isUpcomingCollapsed",
-            `${!isUpcomingCollapsed}`
-          );
-          setIsUpcomingCollapsed((prev) => !prev);
-        }}
-        className="py-3 mt-3 flex-row justify-between items-center"
-      >
-        <View className="flex-row items-center space-x-2">
-          <View className="bg-light-yellow w-1 h-4"></View>
-          <Text className="text-white text-xl font-semibold">{`Upcoming (${upcomingActions.length})`}</Text>
-        </View>
-        {isUpcomingCollapsed ? (
-          <CaretDown size={24} color="white" />
-        ) : (
-          <CaretUp size={24} color="white" />
-        )}
-      </Ripple>
-      <Collapsible collapsed={isUpcomingCollapsed}>
-        {upcomingActions.map((action, index) => (
-          <ActionCard
-            key={index}
-            action={action}
-            actionType={ActionType.Upcoming}
-          />
-        ))}
-      </Collapsible>
-    </ScrollView>
+    <View>
+      <PastActions actions={pastActions} />
+      <UpcomingActions actions={upcomingActions} />
+    </View>
   );
 };
