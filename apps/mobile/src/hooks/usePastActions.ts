@@ -1,6 +1,8 @@
 import { useAuth } from "@clerk/clerk-expo";
-import type { ActionType } from "@foundrymakes/validation";
-import { ActionArraySchema } from "@foundrymakes/validation";
+import {
+  ActionArraySchema,
+  ActionTypeConstants,
+} from "@foundrymakes/validation";
 import { useQuery } from "@tanstack/react-query";
 
 const EXPO_PUBLIC_API_BASE_URL = process.env.EXPO_PUBLIC_API_BASE_URL;
@@ -8,7 +10,7 @@ const EXPO_PUBLIC_API_BASE_URL = process.env.EXPO_PUBLIC_API_BASE_URL;
 if (!EXPO_PUBLIC_API_BASE_URL)
   throw new Error("Missing EXPO_PUBLIC_API_BASE_URL");
 
-export const useActions = (type: ActionType) => {
+export const usePastActions = () => {
   const { getToken } = useAuth();
 
   async function headers() {
@@ -24,10 +26,10 @@ export const useActions = (type: ActionType) => {
   }
 
   return useQuery({
-    queryKey: ["actions", type],
+    queryKey: ["pastActions"],
     queryFn: async () => {
       const response = await fetch(
-        `${EXPO_PUBLIC_API_BASE_URL}/api/actions?type=${type}`,
+        `${EXPO_PUBLIC_API_BASE_URL}/api/actions?type=${ActionTypeConstants.PAST}`,
         {
           headers: await headers(),
         }
