@@ -31,13 +31,11 @@ export const ActionList = () => {
   } = useContacts();
 
   useFocusEffect(() => {
-    const fetchData = async () => {
-      await refetchPast();
-      await refetchUpcoming();
-      await refetchContacts();
+    const refetchData = async () => {
+      await Promise.all([refetchPast(), refetchUpcoming(), refetchContacts()]);
     };
 
-    void fetchData();
+    void refetchData();
   });
 
   if (isContactsLoading || isPastLoading || isUpcomingLoading) {
