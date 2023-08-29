@@ -28,14 +28,14 @@ export const ActionArraySchema = z.array(ActionSchema);
 
 export type Action = z.infer<typeof ActionSchema>;
 
-export const ActionTypeSchema = z.enum(["past", "upcoming"]);
+export const ActionType = {
+  UPCOMING: "upcoming",
+  PAST: "past",
+} as const;
 
-export type ActionType = z.infer<typeof ActionTypeSchema>;
+export type ActionType = (typeof ActionType)[keyof typeof ActionType];
 
-export const ActionTypeConstants = {
-  UPCOMING: "upcoming" as ActionType,
-  PAST: "past" as ActionType,
-};
+export const ActionTypeSchema = z.nativeEnum(ActionType);
 
 export const ContactArraySchema = z.array(
   z.object({

@@ -1,4 +1,4 @@
-import { ActionTypeConstants } from "@foundrymakes/validation";
+import { ActionType } from "@foundrymakes/validation";
 import type { Action } from "@foundrymakes/validation";
 import { CaretDown, CaretUp } from "phosphor-react-native";
 import { View, FlatList, Text } from "react-native";
@@ -31,10 +31,7 @@ export const UpcomingActions = ({ actions }: { actions: Action[] }) => {
         <FlatList
           data={actions}
           renderItem={({ item }: { item: Action }) => (
-            <ActionCard
-              action={item}
-              actionType={ActionTypeConstants.UPCOMING}
-            />
+            <ActionCard action={item} actionType={ActionType.UPCOMING} />
           )}
           keyExtractor={(item) => item.contactId}
           scrollEnabled={false}

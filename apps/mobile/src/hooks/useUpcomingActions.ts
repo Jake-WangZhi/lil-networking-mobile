@@ -1,8 +1,5 @@
 import { useAuth } from "@clerk/clerk-expo";
-import {
-  ActionArraySchema,
-  ActionTypeConstants,
-} from "@foundrymakes/validation";
+import { ActionArraySchema, ActionType } from "@foundrymakes/validation";
 import { useQuery } from "@tanstack/react-query";
 
 const EXPO_PUBLIC_API_BASE_URL = process.env.EXPO_PUBLIC_API_BASE_URL;
@@ -29,7 +26,7 @@ export const useUpcomingActions = () => {
     queryKey: ["upcomingActions"],
     queryFn: async () => {
       const response = await fetch(
-        `${EXPO_PUBLIC_API_BASE_URL}/api/actions?type=${ActionTypeConstants.UPCOMING}`,
+        `${EXPO_PUBLIC_API_BASE_URL}/api/actions?type=${ActionType.UPCOMING}`,
         {
           headers: await headers(),
         }

@@ -4,11 +4,9 @@ import type { Activity, Contact } from "@prisma/client";
 import { ActivityType, SearchParams } from "~/types";
 import { differenceInDays } from "date-fns";
 import { currentUser } from "@clerk/nextjs";
-import {
-  ActionTypeConstants,
-  ActionTypeSchema,
-} from "@foundrymakes/validation";
-import type { Action, ActionType } from "@foundrymakes/validation";
+import { ActionTypeSchema } from "@foundrymakes/validation";
+import type { Action } from "@foundrymakes/validation";
+import { ActionType } from "@foundrymakes/validation";
 
 const DAYS_BEFORE_PAST_DUE = 10;
 
@@ -76,8 +74,8 @@ const parseActions = (
       const upcomingThreshold = pastDueThreshold + DAYS_BEFORE_PAST_DUE;
 
       if (
-        (type === ActionTypeConstants.PAST && days > upcomingThreshold) ||
-        (type === ActionTypeConstants.UPCOMING &&
+        (type === ActionType.PAST && days > upcomingThreshold) ||
+        (type === ActionType.UPCOMING &&
           pastDueThreshold <= days &&
           days <= upcomingThreshold)
       ) {

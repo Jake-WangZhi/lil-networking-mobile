@@ -1,8 +1,8 @@
 import Ripple from "react-native-material-ripple";
 import { Text, View } from "react-native";
 import { CalendarBlank } from "phosphor-react-native";
-import { ActionTypeConstants } from "@foundrymakes/validation";
-import type { Action, ActionType } from "@foundrymakes/validation";
+import { ActionType } from "@foundrymakes/validation";
+import type { Action } from "@foundrymakes/validation";
 
 interface Props {
   action: Action;
@@ -43,7 +43,7 @@ export const ActionCard = ({ action, actionType }: Props) => {
             {goalDays} days &bull;&nbsp;
             <Text
               className={`${
-                actionType === ActionTypeConstants.PAST
+                actionType === ActionType.PAST
                   ? "text-magenta"
                   : "text-light-yellow"
               }`}
