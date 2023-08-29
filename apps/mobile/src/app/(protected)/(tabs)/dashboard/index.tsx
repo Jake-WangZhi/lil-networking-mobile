@@ -1,5 +1,5 @@
 import { useUser } from "@clerk/clerk-expo";
-import { View, Text } from "react-native";
+import { View, Text, ScrollView, RefreshControl } from "react-native";
 import { PlusCircle } from "phosphor-react-native";
 import Ripple from "react-native-material-ripple";
 import { DashboardTutorialModal } from "~/components/DashboardTutorialModal";
@@ -10,10 +10,16 @@ import { Feather } from "@expo/vector-icons";
 import { Link } from "expo-router";
 import { ActionList } from "~/components/ActionList";
 import { colors } from "@foundrymakes/tailwind-config";
+import { useQueryClient } from "@tanstack/react-query";
+import { usePullToRefresh } from "~/hooks/usePullToRefresh";
 
 export default function Dashboard() {
   const { user } = useUser();
   const { hasViewedTutorial } = useTutorial("@hasViewedDashboardTutorial");
+  const queryClient = useQueryClient();
+  const { isRefreshing, onRefresh } = usePullToRefresh(() =>
+    queryClient.refetchQueries({ stale: true })
+  );
 
   if (!user) {
     return <Loading />;
@@ -59,16 +65,27 @@ export default function Dashboard() {
           </Link>
         </View>
       </View>
-      <Ripple
-        style={{ backgroundColor: "rgba(255, 255, 255, 0.05)" }}
-        className="flex justify-center items-center mt-6 border border-dashed border-white rounded-xl h-[140] mb-1"
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        refreshControl={
+          <RefreshControl
+            refreshing={isRefreshing}
+            onRefresh={onRefresh}
+            tintColor={colors["light-blue"]}
+          />
+        }
       >
-        <View className="flex flex-row items-center space-x-2">
-          <PlusCircle color={colors.white} size={32} />
-          <Text className="text-white font-normal">Add Goals</Text>
-        </View>
-      </Ripple>
-      <ActionList />
+        <Ripple
+          style={{ backgroundColor: "rgba(255, 255, 255, 0.05)" }}
+          className="flex justify-center items-center mt-6 border border-dashed border-white rounded-xl h-[140] mb-1"
+        >
+          <View className="flex flex-row items-center space-x-2">
+            <PlusCircle color={colors.white} size={32} />
+            <Text className="text-white font-normal">Add Goals</Text>
+          </View>
+        </Ripple>
+        <ActionList />
+      </ScrollView>
       {!hasViewedTutorial && <DashboardTutorialModal />}
     </>
   );
