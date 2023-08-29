@@ -6,7 +6,7 @@ import { useContact } from "~/hooks/useContact";
 import { Loading } from "~/components/Loading";
 import {
   X,
-  Link,
+  Link as LinkIcon,
   LinkedinLogo,
   Envelope,
   ChatCircle,
@@ -66,7 +66,7 @@ export default function Profile() {
               onPress={() => Linking.openURL(link)}
               className="flex-row items-center space-x-2"
             >
-              <Link size={16} color={colors["light-blue"]} />
+              <LinkIcon size={16} color={colors["light-blue"]} />
               <Text className="text-light-blue text-base">
                 {new URL(link).hostname}
               </Text>
