@@ -47,3 +47,18 @@ export const contactArraySchema = z.array(
     isArchived: z.boolean(),
   })
 );
+
+export const contactSchema = z.object({
+  id: z.string(),
+  firstName: z.string(),
+  lastName: z.string().nullable(),
+  title: z.string().nullable(),
+  company: z.string().nullable(),
+  goalDays: z.number(),
+  email: z.string().nullable(),
+  phone: z.string().nullable(),
+  links: z.array(z.string()),
+  tags: z.array(z.string()),
+  linkedInUrl: z.string().nullable(),
+  isArchived: z.boolean(),
+});

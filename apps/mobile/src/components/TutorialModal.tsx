@@ -15,9 +15,10 @@ import Ripple from "react-native-material-ripple";
 
 interface Props {
   slides: Slide[];
+  name: string;
 }
 
-export const TutorialModal = ({ slides }: Props) => {
+export const TutorialModal = ({ slides, name }: Props) => {
   const slidesRef = useRef<FlatList>(null);
   const scrollX = useRef(new Animated.Value(0)).current;
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -40,9 +41,9 @@ export const TutorialModal = ({ slides }: Props) => {
       setShowModal(false);
 
       try {
-        await AsyncStorage.setItem("@hasViewedDashboardTutorial", "true");
+        await AsyncStorage.setItem(name, "true");
       } catch (err) {
-        console.log("Error @setHasViewedDashboardTutorial", err);
+        console.log("Error @setHasViewedTutorial", err);
       }
     }
   };
@@ -65,7 +66,7 @@ export const TutorialModal = ({ slides }: Props) => {
         isVisible={showModal}
         onBackdropPress={skip}
         animationIn="fadeIn"
-        animationOut="fadeIn"
+        animationOut="fadeOut"
       >
         <View className="bg-light-grey p-4 space-y-6">
           <FlatList

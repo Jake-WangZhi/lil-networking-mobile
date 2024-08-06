@@ -32,7 +32,10 @@ export async function POST(request: Request) {
         },
       },
     },
+    select: {
+      id: true,
+    },
   });
 
-  return NextResponse.json(newContact);
+  return NextResponse.json({ contactId: newContact.id });
 }

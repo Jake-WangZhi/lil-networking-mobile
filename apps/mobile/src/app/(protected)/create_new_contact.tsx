@@ -63,8 +63,8 @@ export default function CreateNewContact() {
         };
 
         createNewContact(valuesToSubmit, {
-          onSuccess: () => {
-            router.push("/dashboard");
+          onSuccess: ({ contactId }) => {
+            router.replace(`/profile/${contactId}`);
           },
         });
       }}

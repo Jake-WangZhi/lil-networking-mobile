@@ -5,7 +5,7 @@ import Ripple from "react-native-material-ripple";
 import { DashboardTutorialModal } from "~/components/DashboardTutorialModal";
 import { Loading } from "~/components/Loading";
 import { Tooltip } from "~/components/Tooltip";
-import { useDashboardTutorial } from "~/hooks/useDashboardTutorial";
+import { useTutorial } from "~/hooks/useTutorial";
 import { Feather } from "@expo/vector-icons";
 import { Link } from "expo-router";
 import { ActionList } from "~/components/ActionList";
@@ -15,7 +15,7 @@ import { usePullToRefresh } from "~/hooks/usePullToRefresh";
 
 export default function Dashboard() {
   const { user } = useUser();
-  const { hasViewedDashboardTutorial } = useDashboardTutorial();
+  const { hasViewedTutorial } = useTutorial("@hasViewedDashboardTutorial");
   const queryClient = useQueryClient();
   const { isRefreshing, onRefresh } = usePullToRefresh(() =>
     queryClient.refetchQueries({ stale: true })
@@ -86,7 +86,7 @@ export default function Dashboard() {
         </Ripple>
         <ActionList />
       </ScrollView>
-      {!hasViewedDashboardTutorial && <DashboardTutorialModal />}
+      {!hasViewedTutorial && <DashboardTutorialModal />}
     </>
   );
 }

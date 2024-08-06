@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
 import prisma from "~/lib/prisma";
-import type { Activity, Contact } from "@prisma/client";
 import type { ContactArgs } from "~/types";
 
 export async function GET(
@@ -11,28 +10,25 @@ export async function GET(
     where: {
       id: params.contactId,
     },
-  });
-
-  if (!contact) return NextResponse.json(contact);
-
-  const activities = await prisma.activity.findMany({
-    where: {
-      contactId: contact?.id,
+    include: {
+      activities: {
+        where: {
+          contactId: params.contactId,
+        },
+        orderBy: [
+          { type: "asc" },
+          {
+            date: "desc",
+          },
+          {
+            createdAt: "desc",
+          },
+        ],
+      },
     },
-    orderBy: [
-      { type: "asc" },
-      {
-        date: "desc",
-      },
-      {
-        createdAt: "desc",
-      },
-    ],
   });
 
-  const parsedContacts = parseContact(contact, activities);
-
-  return NextResponse.json(parsedContacts);
+  return NextResponse.json(contact);
 }
 
 export async function DELETE(
@@ -63,36 +59,3 @@ export async function PUT(
 
   return NextResponse.json(updatedContact);
 }
-
-const parseContact = (contact: Contact, activities: Activity[]) => {
-  const {
-    id,
-    firstName,
-    lastName,
-    title,
-    company,
-    goalDays,
-    email,
-    phone,
-    links,
-    tags,
-    isArchived,
-  } = contact;
-
-  return {
-    id,
-    firstName,
-    lastName,
-    title,
-    company,
-    goalDays,
-    email,
-    phone,
-    links,
-    tags,
-    activities: activities.filter(
-      (activity) => activity.contactId === contact.id
-    ),
-    isArchived,
-  };
-};
